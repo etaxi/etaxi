@@ -6,7 +6,7 @@ import entity.Taxi;
 
 import java.util.List;
 
-/**
+/** Проект etaxi
  * Класс для реализации функций над списком такси
  */
 public class TaxiManager {

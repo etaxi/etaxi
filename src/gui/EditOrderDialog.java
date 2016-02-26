@@ -11,6 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+/** Проект etaxi
+ *
+ */
+
 public class EditOrderDialog extends JDialog implements ActionListener
 {
     // Заголовки кнопок

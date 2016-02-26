@@ -3,7 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
+/** Проект etaxi
  * Фабрика объектов для работы с базой данных
 **/
 

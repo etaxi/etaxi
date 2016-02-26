@@ -6,7 +6,7 @@ import entity.Order;
 
 import java.util.List;
 
-/**
+/** Проект etaxi
  * Класс для реализации функций над списком заказов
  */
 

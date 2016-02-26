@@ -2,8 +2,8 @@ package setup;
 
 import java.sql.*;
 
-/**
- * первоначальное создание базы данных MySQL
+/** Проект etaxi
+        * первоначальное создание базы данных MySQL
  */
 
 public class DatabaseCreation {

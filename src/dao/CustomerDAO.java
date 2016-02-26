@@ -5,7 +5,9 @@ import entity.Customer;
 import java.sql.SQLException;
 import java.util.List;
 
-/** Объект для управления персистентным состоянием объекта Customer */
+/** Проект etaxi
+ * Объект для управления персистентным состоянием объекта Customer
+ * */
 public interface CustomerDAO {
 
     /** Создает новую запись и соответствующий ей объект */

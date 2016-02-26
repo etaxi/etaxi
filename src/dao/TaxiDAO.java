@@ -4,7 +4,7 @@ import entity.Taxi;
 
 import java.util.List;
 
-/**
+/** Проект etaxi
  * Интерфейс для определения функций хранлиза данных о такси
  */
 public interface TaxiDAO {

@@ -1,6 +1,6 @@
 package entity;
 
-/**
+/** Проект etaxi
  * Класс для хранения данных заказа
  */
 public class Order {

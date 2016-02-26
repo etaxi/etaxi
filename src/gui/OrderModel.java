@@ -4,6 +4,10 @@ import entity.Order;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+/** Проект etaxi
+ *
+ */
+
 public class OrderModel extends AbstractTableModel
 {
     // Список загловков для колонок в таблице

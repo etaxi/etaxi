@@ -1,6 +1,6 @@
 package dao;
 
-/**
+/** Проект etaxi
  * Фабрика для создания экземпляра TaxiDAO
  */
 public class TaxiDAOFactory {

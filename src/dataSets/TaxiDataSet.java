@@ -1,9 +1,9 @@
-package entity;
+package dataSets;
 
 /** Проект etaxi
  * Класс для хранения данных такси
  */
-public class Taxi {
+public class TaxiDataSet {
 
     // Идентификатор такси
     private Long taxiId;

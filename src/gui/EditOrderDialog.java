@@ -1,15 +1,8 @@
 package gui;
 
-import entity.Order;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
 
 /** Проект etaxi
  *

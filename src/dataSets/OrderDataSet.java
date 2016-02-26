@@ -1,9 +1,9 @@
-package entity;
+package dataSets;
 
 /** Проект etaxi
  * Класс для хранения данных заказа
  */
-public class Order {
+public class OrderDataSet {
 
     // Идентификатор заказа
     private Long orderId;

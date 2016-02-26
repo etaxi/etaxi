@@ -1,11 +1,7 @@
 package dao;
 
-import entity.Taxi;
-
-import java.util.List;
-
 /** Проект etaxi
- * Интерфейс для определения функций хранлиза данных о такси
+ * Интерфейс для реализации управления объектами класса TaxiDataSet
  */
 public interface TaxiDAO {
 

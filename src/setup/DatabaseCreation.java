@@ -1,49 +1,50 @@
 package setup;
 
+import dao.CustomerDAO;
+
 import java.sql.*;
 
 /** Проект etaxi
-        * первоначальное создание базы данных MySQL
+ * * первоначальное создание базы данных MySQL
  */
 
 public class DatabaseCreation {
 
         // JDBC driver name and database URL
         static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        static String DB_URL = "jdbc:mysql://localhost:3311/";
+        static String DB_URL = "jdbc:mysql://localhost:3306/";  // 3311
 
         //  Database credentials
         static final String USER = "root";
-        static final String PASS = "root";
+        static final String PASS = "dimok";
 
         public static void main(String[] args) {
-            Connection conn = null;
+            Connection connection = null;
             Statement stmt = null;
             try{
-                //STEP 2: Register JDBC driver
+                //STEP 2:  Register JDBC driver
                 Class.forName(JDBC_DRIVER);
 
-                //STEP 3: Open a connection
+                //STEP 3:  Open a connection
                 System.out.println("Connecting to database...");
-                conn = DriverManager.getConnection(DB_URL,USER,PASS);
+                connection = DriverManager.getConnection(DB_URL,USER,PASS);
 
                 //STEP 4: Execute a query
                 System.out.println("Creating...");
-                stmt = conn.createStatement();
+                stmt = connection.createStatement();
                 String sql;
 
-//IF DATABASE EXIST  - DELETE
-//               sql = "DROP DATABASE etaxi;";
-//                stmt.executeUpdate(sql);
+//              IF DATABASE EXIST  - DELETE
+//              sql = "DROP DATABASE etaxi;";
+//              stmt.executeUpdate(sql);
 
-                sql = "CREATE DATABASE etaxi;";
+                sql = "CREATE DATABASE etaxi IF NOT EXISTS;";
                 stmt.executeUpdate(sql);
 
                 sql = "USE etaxi;";
                 stmt.executeUpdate(sql);
 
-
-                sql = "CREATE TABLE taxis (" +
+                sql = "CREATE TABLE taxis IF NOT EXISTS (" +
                         "  taxiId int(6) NOT NULL auto_increment," +
                         "  name text," +
                         "  phone text," +
@@ -57,17 +58,12 @@ public class DatabaseCreation {
                         ");";
                 stmt.executeUpdate(sql);
 
-                sql = "CREATE TABLE customers (" +
-                        "  customerId int(6) NOT NULL auto_increment," +
-                        "  name text," +
-                        "  phone text," +
-                        "  login text," +
-                        "  password text," +
-                        "  PRIMARY KEY  (customerId)" +
-                        ");";
-                stmt.executeUpdate(sql);
 
-                sql = "CREATE TABLE orders (" +
+                CustomerDAO customerDao = new CustomerDAO(connection);
+                customerDao.createTable();
+
+
+                sql = "CREATE TABLE orders IF NOT EXISTS (" +
                         "  orderId int(6) NOT NULL auto_increment," +
                         "  customerId int(6)," +
                         "  datetime datetime," +
@@ -83,10 +79,8 @@ public class DatabaseCreation {
                         ");";
                 stmt.executeUpdate(sql);
 
-
-
                 stmt.close();
-                conn.close();
+                connection.close();
             }catch(SQLException se){
                 //Handle errors for JDBC
                 se.printStackTrace();
@@ -101,8 +95,8 @@ public class DatabaseCreation {
                 }catch(SQLException se2){
                 }// nothing we can do
                 try{
-                    if(conn!=null)
-                        conn.close();
+                    if(connection!=null)
+                        connection.close();
                 }catch(SQLException se){
                     se.printStackTrace();
                 }//end finally try

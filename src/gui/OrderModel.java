@@ -1,7 +1,5 @@
 package gui;
 
-import entity.Order;
-import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /** Проект etaxi

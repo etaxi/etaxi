@@ -3,7 +3,7 @@ package setup;
 import java.sql.*;
 
 /**
- * РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅРѕРµ СЃРѕР·РґР°РЅРёРµ Р±Р°Р·С‹ РґР°РЅРЅС‹С… MySQL
+ * первоначальное создание базы данных MySQL
  */
 
 public class DatabaseCreation {

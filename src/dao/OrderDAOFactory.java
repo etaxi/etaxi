@@ -1,7 +1,7 @@
 package dao;
 
 /**
- * Р¤Р°Р±СЂРёРєР° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СЌРєР·РµРјРїР»СЏСЂР° OrderDAO
+ * Фабрика для создания экземпляра OrderDAO
  */
 public class OrderDAOFactory {
 }

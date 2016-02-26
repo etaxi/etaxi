@@ -1,7 +1,7 @@
 package dao;
 
 /**
- * Р¤Р°Р±СЂРёРєР° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СЌРєР·РµРјРїР»СЏСЂР° CustomerDAO
+ * Фабрика для создания экземпляра CustomerDAO
  */
 public class CustomerDAOFactory {
 }

@@ -1,7 +1,7 @@
 package dao;
 
 /**
- * Р¤Р°Р±СЂРёРєР° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СЌРєР·РµРјРїР»СЏСЂР° TaxiDAO
+ * Фабрика для создания экземпляра TaxiDAO
  */
 public class TaxiDAOFactory {
 

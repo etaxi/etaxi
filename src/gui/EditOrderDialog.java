@@ -13,7 +13,7 @@ import javax.swing.SwingConstants;
 
 public class EditOrderDialog extends JDialog implements ActionListener
 {
-    // Заголовки кнопок
+    // Р—Р°РіРѕР»РѕРІРєРё РєРЅРѕРїРѕРє
     private static final String SAVE = "SAVE";
     private static final String CANCEL = "CANCEL";
 
@@ -22,30 +22,30 @@ public class EditOrderDialog extends JDialog implements ActionListener
 
     }
 
-/*    // Размер отступа
+/*    // Р Р°Р·РјРµСЂ РѕС‚СЃС‚СѓРїР°
     private static final int PAD = 10;
-    // Ширина метки
+    // РЁРёСЂРёРЅР° РјРµС‚РєРё
     private static final int W_L = 100;
-    //Ширина поля для ввода
+    //РЁРёСЂРёРЅР° РїРѕР»СЏ РґР»СЏ РІРІРѕРґР°
     private static final int W_T = 300;
-    // Ширина кнопки
+    // РЁРёСЂРёРЅР° РєРЅРѕРїРєРё
     private static final int W_B = 120;
-    // высота элемента - общая для всех
+    // РІС‹СЃРѕС‚Р° СЌР»РµРјРµРЅС‚Р° - РѕР±С‰Р°СЏ РґР»СЏ РІСЃРµС…
     private static final int H_B = 25;
 
-    // Поле для ввода Имени
+    // РџРѕР»Рµ РґР»СЏ РІРІРѕРґР° РРјРµРЅРё
     private final JTextPane txtFirstName = new JTextPane();
-    // Поле для ввода Фамилии
+    // РџРѕР»Рµ РґР»СЏ РІРІРѕРґР° Р¤Р°РјРёР»РёРё
     private final JTextPane txtLastName = new JTextPane();
-    // Поле для ввода Телефона
+    // РџРѕР»Рµ РґР»СЏ РІРІРѕРґР° РўРµР»РµС„РѕРЅР°
     private final JTextPane txtPhone = new JTextPane();
-    // Поле для ввода E-mail
+    // РџРѕР»Рµ РґР»СЏ РІРІРѕРґР° E-mail
     private final JTextPane txtEmail = new JTextPane();
 
-    // Поле для хранения ID контакта, если мы собираемся редактировать
-    // Если это новый контакт - cjntactId == null
+    // РџРѕР»Рµ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ ID РєРѕРЅС‚Р°РєС‚Р°, РµСЃР»Рё РјС‹ СЃРѕР±РёСЂР°РµРјСЃСЏ СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ
+    // Р•СЃР»Рё СЌС‚Рѕ РЅРѕРІС‹Р№ РєРѕРЅС‚Р°РєС‚ - cjntactId == null
     private Long contactId = null;
-    // Надо ли записывать изменения после закрытия диалога
+    // РќР°РґРѕ Р»Рё Р·Р°РїРёСЃС‹РІР°С‚СЊ РёР·РјРµРЅРµРЅРёСЏ РїРѕСЃР»Рµ Р·Р°РєСЂС‹С‚РёСЏ РґРёР°Р»РѕРіР°
     private boolean save = false;
 
     public EditOrderDialog() {
@@ -53,45 +53,45 @@ public class EditOrderDialog extends JDialog implements ActionListener
     }
 
     public EditOrderDialog(Contact contact) {
-        // Убираем layout - будем использовать абсолютные координаты
+        // РЈР±РёСЂР°РµРј layout - Р±СѓРґРµРј РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р°Р±СЃРѕР»СЋС‚РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹
         setLayout(null);
 
-        // Выстраиваем метки и поля для ввода
+        // Р’С‹СЃС‚СЂР°РёРІР°РµРј РјРµС‚РєРё Рё РїРѕР»СЏ РґР»СЏ РІРІРѕРґР°
         buildFields();
-        // Если нам передали контакт - заполняем поля формы
+        // Р•СЃР»Рё РЅР°Рј РїРµСЂРµРґР°Р»Рё РєРѕРЅС‚Р°РєС‚ - Р·Р°РїРѕР»РЅСЏРµРј РїРѕР»СЏ С„РѕСЂРјС‹
         initFields(contact);
-        // выстариваем кнопки
+        // РІС‹СЃС‚Р°СЂРёРІР°РµРј РєРЅРѕРїРєРё
         buildButtons();
 
-        // Диалог в модальном режиме - только он активен
+        // Р”РёР°Р»РѕРі РІ РјРѕРґР°Р»СЊРЅРѕРј СЂРµР¶РёРјРµ - С‚РѕР»СЊРєРѕ РѕРЅ Р°РєС‚РёРІРµРЅ
         setModal(true);
-        // Запрещаем изменение размеров
+        // Р—Р°РїСЂРµС‰Р°РµРј РёР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂРѕРІ
         setResizable(false);
-        // Выставляем размеры формы
+        // Р’С‹СЃС‚Р°РІР»СЏРµРј СЂР°Р·РјРµСЂС‹ С„РѕСЂРјС‹
         setBounds(300, 300, 450, 200);
-        // Делаем форму видимой
+        // Р”РµР»Р°РµРј С„РѕСЂРјСѓ РІРёРґРёРјРѕР№
         setVisible(true);
     }
 
-    // Размещаем метки и поля ввода на форме
+    // Р Р°Р·РјРµС‰Р°РµРј РјРµС‚РєРё Рё РїРѕР»СЏ РІРІРѕРґР° РЅР° С„РѕСЂРјРµ
     private void buildFields() {
-        // Набор метки и поля для Имени
-        JLabel lblFirstName = new JLabel("Имя:");
-        // Выравнивание текста с правой стороны
+        // РќР°Р±РѕСЂ РјРµС‚РєРё Рё РїРѕР»СЏ РґР»СЏ РРјРµРЅРё
+        JLabel lblFirstName = new JLabel("РРјСЏ:");
+        // Р’С‹СЂР°РІРЅРёРІР°РЅРёРµ С‚РµРєСЃС‚Р° СЃ РїСЂР°РІРѕР№ СЃС‚РѕСЂРѕРЅС‹
         lblFirstName.setHorizontalAlignment(SwingConstants.RIGHT);
-        // Выставляем координаты метки
+        // Р’С‹СЃС‚Р°РІР»СЏРµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ РјРµС‚РєРё
         lblFirstName.setBounds(new Rectangle(PAD, 0 * H_B + PAD, W_L, H_B));
-        // Кладем метку на форму
+        // РљР»Р°РґРµРј РјРµС‚РєСѓ РЅР° С„РѕСЂРјСѓ
         add(lblFirstName);
-        // Выставляем координаты поля
+        // Р’С‹СЃС‚Р°РІР»СЏРµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ РїРѕР»СЏ
         txtFirstName.setBounds(new Rectangle(W_L + 2 * PAD, 0 * H_B + PAD, W_T, H_B));
-        // Делаем "бордюр" для поля
+        // Р”РµР»Р°РµРј "Р±РѕСЂРґСЋСЂ" РґР»СЏ РїРѕР»СЏ
         txtFirstName.setBorder(BorderFactory.createEtchedBorder());
-        // Кладем поле на форму
+        // РљР»Р°РґРµРј РїРѕР»Рµ РЅР° С„РѕСЂРјСѓ
         add(txtFirstName);
 
-        // Набор метки и поля для Фамилии
-        JLabel lblLastName = new JLabel("Фамилия:");
+        // РќР°Р±РѕСЂ РјРµС‚РєРё Рё РїРѕР»СЏ РґР»СЏ Р¤Р°РјРёР»РёРё
+        JLabel lblLastName = new JLabel("Р¤Р°РјРёР»РёСЏ:");
         lblLastName.setHorizontalAlignment(SwingConstants.RIGHT);
         lblLastName.setBounds(new Rectangle(PAD, 1 * H_B + PAD, W_L, H_B));
         add(lblLastName);
@@ -99,8 +99,8 @@ public class EditOrderDialog extends JDialog implements ActionListener
         txtLastName.setBorder(BorderFactory.createEtchedBorder());
         add(txtLastName);
 
-        // Набор метки и поля для Телефона
-        JLabel lblPhone = new JLabel("Телефон:");
+        // РќР°Р±РѕСЂ РјРµС‚РєРё Рё РїРѕР»СЏ РґР»СЏ РўРµР»РµС„РѕРЅР°
+        JLabel lblPhone = new JLabel("РўРµР»РµС„РѕРЅ:");
         lblPhone.setHorizontalAlignment(SwingConstants.RIGHT);
         lblPhone.setBounds(new Rectangle(PAD, 2 * H_B + PAD, W_L, H_B));
         add(lblPhone);
@@ -108,7 +108,7 @@ public class EditOrderDialog extends JDialog implements ActionListener
         txtPhone.setBorder(BorderFactory.createEtchedBorder());
         add(txtPhone);
 
-        // Набор метки и поля для Email
+        // РќР°Р±РѕСЂ РјРµС‚РєРё Рё РїРѕР»СЏ РґР»СЏ Email
         JLabel lblEmail = new JLabel("Email:");
         lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
         lblEmail.setBounds(new Rectangle(PAD, 3 * H_B + PAD, W_L, H_B));
@@ -118,7 +118,7 @@ public class EditOrderDialog extends JDialog implements ActionListener
         add(txtEmail);
     }
 
-    // Если нам епередали контакт - заполняем поля из контакта
+    // Р•СЃР»Рё РЅР°Рј РµРїРµСЂРµРґР°Р»Рё РєРѕРЅС‚Р°РєС‚ - Р·Р°РїРѕР»РЅСЏРµРј РїРѕР»СЏ РёР· РєРѕРЅС‚Р°РєС‚Р°
     private void initFields(Contact contact) {
         if (contact != null) {
             contactId = contact.getContactId();
@@ -129,7 +129,7 @@ public class EditOrderDialog extends JDialog implements ActionListener
         }
     }
 
-    // Размещаем кнопки на форме
+    // Р Р°Р·РјРµС‰Р°РµРј РєРЅРѕРїРєРё РЅР° С„РѕСЂРјРµ
     private void buildButtons() {
         JButton btnSave = new JButton("SAVE");
         btnSave.setActionCommand(SAVE);
@@ -145,21 +145,21 @@ public class EditOrderDialog extends JDialog implements ActionListener
     }
 
     @Override
-    // Обработка нажатий кнопок
+    // РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёР№ РєРЅРѕРїРѕРє
     public void actionPerformed(ActionEvent ae) {
         String action = ae.getActionCommand();
-        // Если нажали кнопку SAVE (сохранить изменения) - запоминаем этой
+        // Р•СЃР»Рё РЅР°Р¶Р°Р»Рё РєРЅРѕРїРєСѓ SAVE (СЃРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ) - Р·Р°РїРѕРјРёРЅР°РµРј СЌС‚РѕР№
         save = SAVE.equals(action);
-        // Закрываем форму
+        // Р—Р°РєСЂС‹РІР°РµРј С„РѕСЂРјСѓ
         setVisible(false);
     }
 
-    // Надо ли сохранять изменения
+    // РќР°РґРѕ Р»Рё СЃРѕС…СЂР°РЅСЏС‚СЊ РёР·РјРµРЅРµРЅРёСЏ
     public boolean isSave() {
         return save;
     }
 
-    // Создаем контакт из заполенных полей, который можно будет записать
+    // РЎРѕР·РґР°РµРј РєРѕРЅС‚Р°РєС‚ РёР· Р·Р°РїРѕР»РµРЅРЅС‹С… РїРѕР»РµР№, РєРѕС‚РѕСЂС‹Р№ РјРѕР¶РЅРѕ Р±СѓРґРµС‚ Р·Р°РїРёСЃР°С‚СЊ
     public Contact getContact() {
         Contact contact = new Contact(contactId, txtFirstName.getText(),
                 txtLastName.getText(), txtPhone.getText(), txtEmail.getText());

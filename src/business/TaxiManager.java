@@ -7,7 +7,7 @@ import entity.Taxi;
 import java.util.List;
 
 /**
- * Класс для реализации функций над списком такси
+ * РљР»Р°СЃСЃ РґР»СЏ СЂРµР°Р»РёР·Р°С†РёРё С„СѓРЅРєС†РёР№ РЅР°Рґ СЃРїРёСЃРєРѕРј С‚Р°РєСЃРё
  */
 public class TaxiManager {
 
@@ -18,27 +18,27 @@ public class TaxiManager {
         dao = ContactDAOFactory.getContactDAO();
     }
 
-    // Добавление контакта - возвращает ID добавленного контакта
+    // Р”РѕР±Р°РІР»РµРЅРёРµ РєРѕРЅС‚Р°РєС‚Р° - РІРѕР·РІСЂР°С‰Р°РµС‚ ID РґРѕР±Р°РІР»РµРЅРЅРѕРіРѕ РєРѕРЅС‚Р°РєС‚Р°
     public Long addContact(Contact contact) {
         return dao.addContact(contact);
     }
 
-    // Редактирование контакта
+    // Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РєРѕРЅС‚Р°РєС‚Р°
     public void updateContact(Contact contact) {
         dao.updateContact(contact);
     }
 
-    // Удаление контакта по его ID
+    // РЈРґР°Р»РµРЅРёРµ РєРѕРЅС‚Р°РєС‚Р° РїРѕ РµРіРѕ ID
     public void deleteContact(Long contactId) {
         dao.deleteContact(contactId);
     }
 
-    // Получение одного контакта
+    // РџРѕР»СѓС‡РµРЅРёРµ РѕРґРЅРѕРіРѕ РєРѕРЅС‚Р°РєС‚Р°
     public Contact getContact(Long contactId) {
         return dao.getContact(contactId);
     }
 
-    // Получение списка контактов
+    // РџРѕР»СѓС‡РµРЅРёРµ СЃРїРёСЃРєР° РєРѕРЅС‚Р°РєС‚РѕРІ
     public List<Contact> findContacts() {
         return dao.findContacts();
     }

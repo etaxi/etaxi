@@ -53,10 +53,6 @@
     -feedback   [text]      текст отзыва (для статуса "выполнен")
 
 
-
-
-
-
 ПОЗЖЕ НЕОБХОДИМЫЙ ФУНКЦИОНАЛ:
 1. регистраця для такси и клиентов
  1.1. хранение в базе безопасного пароля НЕ в открытом виде   типо  http://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/

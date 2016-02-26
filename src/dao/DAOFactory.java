@@ -22,3 +22,4 @@ public interface DAOFactory {
     public OrderDAO getOrderDao(Connection connection);
 
 }
+

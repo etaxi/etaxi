@@ -24,7 +24,6 @@ public class DBService {
 
         Executor executor = new Executor(connection);
         executor.executeUpdate("CREATE DATABASE IF NOT EXISTS etaxi;");
-        executor.executeUpdate("USE etaxi;");
 
         CustomerDAO customerDao = new CustomerDAO(connection);
         customerDao.createTable();

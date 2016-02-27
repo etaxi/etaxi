@@ -15,10 +15,19 @@ public class Executor {
         this.connection = connection;
     }
 
-    public void executeUpdate(String sqlQueryText) throws SQLException {
+    public long executeUpdate(String sqlQueryText) throws SQLException {
         Statement statement = connection.createStatement();
-        statement.execute(sqlQueryText);
+        statement.execute(sqlQueryText, Statement.RETURN_GENERATED_KEYS);
+
+        long  lastGeneratedKey = 0;
+        ResultSet resultSet = statement.getGeneratedKeys();
+        if (resultSet.next()) {
+            lastGeneratedKey = resultSet.getInt(1);
+        }
+        resultSet.close();
+
         statement.close();
+        return lastGeneratedKey;
     }
 
     public <T> T executeQuery(String sqlQueryText, ResultHandler<T> handler) throws SQLException {

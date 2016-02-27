@@ -32,11 +32,11 @@ public class CustomerDAO {
     }
 
 
-    public void update(CustomerDataSet customer) throws SQLException {
+    public long update(CustomerDataSet customer) throws SQLException {
 
         executor.executeUpdate("USE etaxi;");
         if (customer.getCustomerId() > 0) {
-            executor.executeUpdate("UPDATE customers SET " +
+            return executor.executeUpdate("UPDATE customers SET " +
                                    " name = '" + customer.getName() + "'," +
                                    " phone = '" + customer.getPhone() + "'," +
                                    " login = '" + customer.getLogin() + "'," +
@@ -44,7 +44,7 @@ public class CustomerDAO {
                                    " WHERE id=" + customer.getCustomerId());
         }
         else {
-            executor.executeUpdate("INSERT INTO customers (name, phone, login, password) VALUES (" +
+            return executor.executeUpdate("INSERT INTO customers (name, phone, login, password) VALUES (" +
                                     "'" + customer.getName() + "'," +
                                     "'" + customer.getPhone() + "'," +
                                     "'" + customer.getLogin() + "'," +

@@ -10,7 +10,7 @@ import java.util.List;
 /** Проект etaxi
  * JUnit тесты для проекта etaxi
  * */
-public class JUnitTests {
+public class JUnitTestsForCustomer {
 
     @Test
     public void testСreateDataBaseWithTables() throws SQLException {
@@ -27,19 +27,21 @@ public class JUnitTests {
         Connection connection = dbService.getMysqlConnection();
         CustomerDAO customerDAO = new CustomerDAO(connection);
 
-        CustomerDataSet customer = new CustomerDataSet((long) 0, "Ivanov", "(+371)26094567", "login", "password");
-        customerDAO.update(customer);
-
+        CustomerDataSet customer = new CustomerDataSet((long) 0, "Oleg Ivanov", "(+371)26094567", "login", "password");
+        long newCustmerID = customerDAO.update(customer);
     }
 
     @Test
-    public void testCustomerRecord() throws SQLException {
+    public void testUpdateCustomerRecord() throws SQLException {
 
         DBService dbService = new DBService();
         Connection connection = dbService.getMysqlConnection();
         CustomerDAO customerDAO = new CustomerDAO(connection);
 
-        CustomerDataSet customer = new CustomerDataSet((long) 1, "Ivanovs", "(+371)26094567", "login", "password");
+        CustomerDataSet customer = new CustomerDataSet((long) 0, "Ivanova", "(+371)26094567", "login", "password");
+        customer.setCustomerId(customerDAO.update(customer));
+
+        customer = new CustomerDataSet(customer.getCustomerId(), "Olga Ivanova", "(+371)26094567", "login", "password");
         customerDAO.update(customer);
 
     }
@@ -51,9 +53,10 @@ public class JUnitTests {
         Connection connection = dbService.getMysqlConnection();
         CustomerDAO customerDAO = new CustomerDAO(connection);
 
-        CustomerDataSet customer = customerDAO.getById((long) 2);
+        CustomerDataSet customer = new CustomerDataSet((long) 0, "Olga Ivanova", "(+371)26094567", "login", "password");
+        customer.setCustomerId(customerDAO.update(customer));
 
-        System.out.println(customer.toString());
+        customer = customerDAO.getById(customer.getCustomerId());
     }
 
     @Test
@@ -63,7 +66,9 @@ public class JUnitTests {
         Connection connection = dbService.getMysqlConnection();
         CustomerDAO customerDAO = new CustomerDAO(connection);
 
-        CustomerDataSet customer = customerDAO.getById((long) 3);
+        CustomerDataSet customer = new CustomerDataSet((long) 0, "Olga Ivanova", "(+371)26094567", "login", "password");
+        customer.setCustomerId(customerDAO.update(customer));
+
         customerDAO.delete(customer);
 
     }

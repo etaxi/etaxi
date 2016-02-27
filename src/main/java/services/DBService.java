@@ -50,9 +50,7 @@ public class DBService {
                     append("3306/?").               //port
                     //append("etaxi?").             //db name
                     append("user=root&").           //login
-                    append("password=dimok");       //password
-
-            System.out.println("URL: " + url + "\n");
+                    append("password=toor");        //password
 
             Connection connection = DriverManager.getConnection(url.toString());
             return connection;

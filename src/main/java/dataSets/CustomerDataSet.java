@@ -65,5 +65,15 @@ public class CustomerDataSet {
     }
 
 
+    @Override
+    public String toString() {
+        return "CustomerDataSet{" +
+                "customerId=" + customerId +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
 

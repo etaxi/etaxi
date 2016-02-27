@@ -2,10 +2,8 @@ package dao;
 
 import dataSets.CustomerDataSet;
 import executor.Executor;
-import executor.ResultHandler;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +22,11 @@ public class CustomerDAO {
     }
 
     public CustomerDataSet getById(long id) throws SQLException {
-        return executor.executeQuery("select * from customers where Id=" + id, result -> {
-            result.next();
-            return new CustomerDataSet(result.getLong(1), result.getString(2), result.getString(3),
-                                       result.getString(4), result.getString(5));
+        executor.executeUpdate("USE etaxi;");
+        return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
+            resultSet.next();
+            return new CustomerDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                                       resultSet.getString(4), resultSet.getString(5));
 
         });
     }
@@ -35,49 +34,49 @@ public class CustomerDAO {
 
     public void update(CustomerDataSet customer) throws SQLException {
 
+        executor.executeUpdate("USE etaxi;");
         if (customer.getCustomerId() > 0) {
             executor.executeUpdate("UPDATE customers SET " +
-                                   " name = " + customer.getName() + "," +
-                                   " phone = " + customer.getPhone() + "," +
-                                   " login = " + customer.getLogin() + "," +
-                                   " password = " + customer.getPassword() + "," +
+                                   " name = '" + customer.getName() + "'," +
+                                   " phone = '" + customer.getPhone() + "'," +
+                                   " login = '" + customer.getLogin() + "'," +
+                                   " password = '" + customer.getPassword() + "'" +
                                    " WHERE id=" + customer.getCustomerId());
         }
         else {
-            executor.executeUpdate("INSERT INTO contract (name, phone, login, password) VALUES (" +
-                                    customer.getName() + "," +
-                                    customer.getPhone() + "," +
-                                    customer.getLogin() + "," +
-                                    customer.getPassword() + ")");
+            executor.executeUpdate("INSERT INTO customers (name, phone, login, password) VALUES (" +
+                                    "'" + customer.getName() + "'," +
+                                    "'" + customer.getPhone() + "'," +
+                                    "'" + customer.getLogin() + "'," +
+                                    "'" + customer.getPassword() + "')");
         }
 
     }
 
     public void delete(CustomerDataSet customer) throws SQLException {
-        executor.executeUpdate("delete * from customers where Id=" + customer.getCustomerId());
+        executor.executeUpdate("USE etaxi;");
+        executor.executeUpdate("delete from customers where Id=" + customer.getCustomerId());
     }
 
     public List<CustomerDataSet> getALL() throws SQLException {
+        executor.executeUpdate("USE etaxi;");
         return executor.executeQuery("select * from customers ",
-                new ResultHandler<List<CustomerDataSet>>() {
-                    @Override
-                    public List<CustomerDataSet> handle(ResultSet resultSet) throws SQLException {
-
-                        List<CustomerDataSet> list = new ArrayList<CustomerDataSet>();
-                        while (resultSet.next()) {
-                            list.add(new CustomerDataSet(resultSet.getLong(1),
-                                    resultSet.getString(2),
-                                    resultSet.getString(3),
-                                    resultSet.getString(4),
-                                    resultSet.getString(5)));
-                        }
-                        return list;
+                resultSet -> {
+                    List<CustomerDataSet> list = new ArrayList<CustomerDataSet>();
+                    while (resultSet.next()) {
+                        list.add(new CustomerDataSet(resultSet.getLong(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5)));
                     }
+                    return list;
                 }
         );
     }
 
     public void createTable() throws SQLException {
+        executor.executeUpdate("USE etaxi;");
         executor.executeUpdate("CREATE TABLE IF NOT EXISTS customers(" +
                             "   Id bigint(9) NOT NULL auto_increment," +
                             "   name varchar(256)," +

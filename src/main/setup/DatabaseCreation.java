@@ -16,7 +16,7 @@ public class DatabaseCreation {
 
         //  Database credentials
         static final String USER = "root";
-        static final String PASS = "dimok";
+        static final String PASS = "toor";
 
         public static void main(String[] args) {
             Connection connection = null;

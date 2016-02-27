@@ -24,3 +24,4 @@ public interface CustomerDAOinterface {
     /** Создает таблицу в базе данных для хранения объектов класса CustomerDataSet */
     public void createTable() throws SQLException;
 }
+

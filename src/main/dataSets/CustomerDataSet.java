@@ -1,4 +1,4 @@
-package dataSets;
+package main.dataSets;
 
 /** Проект etaxi
  * Класс для хранения данных клиента

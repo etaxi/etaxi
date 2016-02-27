@@ -1,6 +1,6 @@
-package setup;
+package main.setup;
 
-import dao.CustomerDAO;
+import main.dao.CustomerDAO;
 
 import java.sql.*;
 

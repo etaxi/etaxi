@@ -1,6 +1,6 @@
-package dao;
+package main.dao;
 
-import dataSets.CustomerDataSet;
+import main.dataSets.CustomerDataSet;
 import java.sql.SQLException;
 import java.util.List;
 

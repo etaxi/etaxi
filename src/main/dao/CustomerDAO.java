@@ -1,8 +1,8 @@
-package dao;
+package main.dao;
 
-import dataSets.CustomerDataSet;
-import executor.Executor;
-import executor.ResultHandler;
+import main.dataSets.CustomerDataSet;
+import main.executor.Executor;
+import main.executor.ResultHandler;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

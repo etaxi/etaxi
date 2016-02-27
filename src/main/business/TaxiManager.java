@@ -1,4 +1,4 @@
-package business;
+package main.business;
 
 /** Проект etaxi
  * Класс для реализации функций над списком такси

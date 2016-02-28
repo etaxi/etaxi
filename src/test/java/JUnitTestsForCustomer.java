@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /** Проект etaxi
  * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
  * */
@@ -89,7 +92,6 @@ public class JUnitTestsForCustomer {
         DBService dbService = new DBService();
         Connection connection = dbService.getMysqlConnection();
         CustomerDAO customerDAO = new CustomerDAO(connection);
-
         return customerDAO;
     }
 
@@ -138,10 +140,16 @@ public class JUnitTestsForCustomer {
 
         CustomerDAO customerDAO = aCustomerDAO();
 
-        CustomerDataSet customer = new CustomerDataSet((long) 0, "Ivanova", "(+371)26094567", "login", "password");
-        customer.setCustomerId(customerDAO.update(customer));
+        CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
+                .withId((long) 0)
+                .withName("Leskova")
+                .withPhone("(+371) 26099569")
+                .withLogin("lesk")
+                .withPassword("lesk123");
 
-        customer = new CustomerDataSet(customer.getCustomerId(), "Olga Ivanova", "(+371)26094567", "login", "password");
+        CustomerDataSet customer = customerBuilder.build();
+        customer.setCustomerId(customerDAO.update(customer));
+        customer.setName("Olga Leskova");
         customerDAO.update(customer);
 
     }
@@ -151,10 +159,18 @@ public class JUnitTestsForCustomer {
 
         CustomerDAO customerDAO = aCustomerDAO();
 
-        CustomerDataSet customer = new CustomerDataSet((long) 0, "Olga Ivanova", "(+371)26094567", "login", "password");
+        CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
+                .withId((long) 0)
+                .withName("Leskova")
+                .withPhone("(+371) 26099569")
+                .withLogin("lesk")
+                .withPassword("lesk123");
+
+        CustomerDataSet customer = customerBuilder.build();
         customer.setCustomerId(customerDAO.update(customer));
 
-        customer = customerDAO.getById(customer.getCustomerId());
+        CustomerDataSet customerGetById = customerDAO.getById(customer.getCustomerId());
+        assertEquals(customer.getCustomerId(), customerGetById.getCustomerId());
     }
 
     @Test
@@ -162,20 +178,29 @@ public class JUnitTestsForCustomer {
 
         CustomerDAO customerDAO = aCustomerDAO();
 
-        CustomerDataSet customer = new CustomerDataSet((long) 0, "Olga Ivanova", "(+371)26094567", "login", "password");
+        CustomerDataSet customer = CustomerBuilder.aCustomer().build();
         customer.setCustomerId(customerDAO.update(customer));
 
+        int countOfCustomersBeforeDeleteOperation = customerDAO.getALL().size();
+
         customerDAO.delete(customer);
+
+        int countOfCustomersAfterDeleteOperation = customerDAO.getALL().size();
+
+        assertTrue(countOfCustomersBeforeDeleteOperation-1 == countOfCustomersAfterDeleteOperation);
 
     }
 
     @Test
-    public void testgetListOfAllCustomers() throws SQLException {
+    public void testGetListOfAllCustomers() throws SQLException {
 
         CustomerDAO customerDAO = aCustomerDAO();
 
+        CustomerDataSet customer = CustomerBuilder.aCustomer().build();
+        customerDAO.update(customer);
+
         List<CustomerDataSet> listOfCustomers = customerDAO.getALL();
-        System.out.println(listOfCustomers.size());
+        assertTrue(listOfCustomers.size()>0);
 
     }
 

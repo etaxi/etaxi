@@ -7,9 +7,12 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.io.*;
+import java.util.Properties;
 
 /** Проект etaxi
- * * первоначальное создание базы данных MySQL
+ *  подключение к базе
+ *  и первоначальное создание базы данных MySQL
  */
 
 public class DBService {
@@ -41,18 +44,7 @@ public class DBService {
         try {
             DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
 
-            StringBuilder url = new StringBuilder();
-
-            url.
-                    append("jdbc:mysql://").        //db type
-                    append("localhost:").           //host name
-                    append("3306/?").               //port
-                    //append("etaxi?").             //db name
-                    append("user=root&").           //login
-                    append("password=toor");        //password
-
-            Connection connection = DriverManager.getConnection(url.toString());
-            return connection;
+            return DriverManager.getConnection(getDBUrl());
 
         } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -71,4 +63,38 @@ public class DBService {
         }
     }
 
+
+    private String getDBUrl(){
+        FileInputStream fis;
+        Properties property = new Properties();
+
+        try {
+
+            fis = new FileInputStream("src/main/resources/config.properties");
+            property.load(fis);
+            String host = property.getProperty("db.host");
+            String port = property.getProperty("db.port");
+            String login = property.getProperty("db.login");
+            String password = property.getProperty("db.password");
+
+            StringBuilder url = new StringBuilder();
+            url.
+                    append("jdbc:mysql://")     //db type
+                    .append(host)
+                    .append(":")
+                    .append(port)
+                    .append("/?")
+                    .append("user=")
+                    .append(login)
+                    .append("&")
+                    .append("password=")
+                    .append(password);
+
+            return url.toString();
+
+        } catch (IOException e) {
+            System.err.println("Error: properties file not found!");
+            return null;
+        }
+    }
 }

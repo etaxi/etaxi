@@ -5,16 +5,11 @@ package dataSets;
  */
 public class CustomerDataSet {
 
-    // Идентификатор клиента
-    private Long customerId;
-    // Имя, Фамилия
-    private String name;
-    // Телефон
-    private String phone;
-    // логин
-    private String login;
-    // пароль
-    private String password;
+    private Long customerId;    // Идентификатор клиента
+    private String name;        // Имя, Фамилия
+    private String phone;       // Телефон
+    private String login;       // логин
+    private String password;    // пароль
 
     public CustomerDataSet(Long customerId, String name, String phone, String login, String password) {
         this.customerId = customerId;

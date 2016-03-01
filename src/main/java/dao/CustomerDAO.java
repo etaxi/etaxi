@@ -11,7 +11,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса CustomerDataSet
  * */
-public class CustomerDAO {
+public class CustomerDAO{
 
     private Executor executor;
 

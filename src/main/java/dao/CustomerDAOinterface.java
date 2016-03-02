@@ -11,17 +11,17 @@ import java.util.List;
 public interface CustomerDAOinterface {
 
     /** Возвращает объект соответствующий записи с первичным ключом key или null */
-    public CustomerDataSet getById(long id) throws SQLException;
+    CustomerDataSet getById(long id) throws SQLException;
 
     /** Сохраняет состояние объекта Customer в базе данных (если ID нет, создаем новую запись) */
-    public void update(CustomerDataSet customer);
+    long update(CustomerDataSet customer) throws SQLException;
 
     /** Удаляет запись об объекте из базы данных */
-    public void delete(CustomerDataSet customer);
+    void delete(CustomerDataSet customer) throws SQLException;
 
     /** Возвращает список объектов соответствующих всем записям в базе данных */
-    public List<CustomerDataSet> getAll() throws SQLException;
+    List<CustomerDataSet> getAll() throws SQLException;
 
     /** Создает таблицу в базе данных для хранения объектов класса CustomerDataSet */
-    public void createTable() throws SQLException;
+    void createTable() throws SQLException;
 }

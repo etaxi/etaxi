@@ -15,8 +15,14 @@ public class Executor {
         this.connection = connection;
     }
 
+
     public long executeUpdate(String sqlQueryText) throws SQLException {
+
         Statement statement = connection.createStatement();
+        try {
+            statement.execute("USE etaxi"); }
+        catch (SQLException exception) {}
+
         statement.execute(sqlQueryText, Statement.RETURN_GENERATED_KEYS);
 
         long  lastGeneratedKey = 0;
@@ -25,15 +31,22 @@ public class Executor {
             lastGeneratedKey = resultSet.getInt(1);
         }
         resultSet.close();
-
         statement.close();
+
         return lastGeneratedKey;
     }
+
 
     public <T> T executeQuery(String sqlQueryText, ResultHandler<T> handler) throws SQLException {
 
         Statement statement = connection.createStatement();
+
+        try {
+            statement.execute("USE etaxi"); }
+        catch (SQLException exception) {}
+
         statement.execute(sqlQueryText);
+
         ResultSet resultSet = statement.getResultSet();
         T value = handler.handle(resultSet);
         resultSet.close();

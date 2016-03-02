@@ -11,7 +11,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса TaxiDataSet
  * */
-public class TaxiDAO {
+public class TaxiDAO implements TaxiDAOinterface {
 
     private Executor executor;
 
@@ -22,7 +22,6 @@ public class TaxiDAO {
     }
 
     public TaxiDataSet getById(long id) throws SQLException {
-        executor.executeUpdate("USE etaxi;");
         return executor.executeQuery("select * from taxis where Id=" + id, resultSet -> {
             resultSet.next();
             return new TaxiDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
@@ -34,7 +33,6 @@ public class TaxiDAO {
 
     public long update(TaxiDataSet taxi) throws SQLException {
 
-        executor.executeUpdate("USE etaxi;");
         if (taxi.getTaxiId() > 0) {
             return executor.executeUpdate("UPDATE taxis SET " +
                     " name = '" + taxi.getName() + "'," +
@@ -54,12 +52,10 @@ public class TaxiDAO {
     }
 
     public void delete(TaxiDataSet taxi) throws SQLException {
-        executor.executeUpdate("USE etaxi;");
         executor.executeUpdate("delete from taxis where Id=" + taxi.getTaxiId());
     }
 
-    public List<TaxiDataSet> getALL() throws SQLException {
-        executor.executeUpdate("USE etaxi;");
+    public List<TaxiDataSet> getAll() throws SQLException {
         return executor.executeQuery("select * from taxis ",
                 resultSet -> {
                     List<TaxiDataSet> list = new ArrayList<TaxiDataSet>();
@@ -77,7 +73,6 @@ public class TaxiDAO {
 
 
     public void createTable() throws SQLException {
-        executor.executeUpdate("USE etaxi;");
         executor.executeUpdate("CREATE TABLE IF NOT EXISTS taxis (" +
                 "  Id bigint(9) NOT NULL auto_increment," +
                 "  name varchar(256)," +

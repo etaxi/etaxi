@@ -28,13 +28,13 @@ public class DBService {
         Executor executor = new Executor(connection);
         executor.executeUpdate("CREATE DATABASE IF NOT EXISTS etaxi;");
 
-        CustomerDAO customerDao = new CustomerDAO(connection);
+        CustomerDAOinterface customerDao = new CustomerDAO(connection);
         customerDao.createTable();
 
-        OrderDAO orderDao = new OrderDAO(connection);
+        OrderDAOinterface orderDao = new OrderDAO(connection);
         orderDao.createTable();
 
-        TaxiDAO taxiDao = new TaxiDAO(connection);
+        TaxiDAOinterface taxiDao = new TaxiDAO(connection);
         taxiDao.createTable();
 
     }

@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
  * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
  * */
 
-
  class CustomerBuilder {
 
     public static final Long   DEFAULT_ID = (long) 0;
@@ -91,17 +90,9 @@ public class JUnitTestsForCustomer {
 
         DBService dbService = new DBService();
         Connection connection = dbService.getMysqlConnection();
-        CustomerDAO customerDAO = new CustomerDAO(connection);
-        return customerDAO;
+        return new CustomerDAO(connection);
     }
 
-    @Test
-    public void testСreateDataBaseWithTables() throws SQLException {
-
-        DBService dbService = new DBService();
-        dbService.createDataBaseWithTables();
-
-    }
 
     @Test
     public void testNewCustomerRecord() throws SQLException {
@@ -181,11 +172,11 @@ public class JUnitTestsForCustomer {
         CustomerDataSet customer = CustomerBuilder.aCustomer().build();
         customer.setCustomerId(customerDAO.update(customer));
 
-        int countOfCustomersBeforeDeleteOperation = customerDAO.getALL().size();
+        int countOfCustomersBeforeDeleteOperation = customerDAO.getAll().size();
 
         customerDAO.delete(customer);
 
-        int countOfCustomersAfterDeleteOperation = customerDAO.getALL().size();
+        int countOfCustomersAfterDeleteOperation = customerDAO.getAll().size();
 
         assertTrue(countOfCustomersBeforeDeleteOperation-1 == countOfCustomersAfterDeleteOperation);
 
@@ -199,7 +190,7 @@ public class JUnitTestsForCustomer {
         CustomerDataSet customer = CustomerBuilder.aCustomer().build();
         customerDAO.update(customer);
 
-        List<CustomerDataSet> listOfCustomers = customerDAO.getALL();
+        List<CustomerDataSet> listOfCustomers = customerDAO.getAll();
         assertTrue(listOfCustomers.size()>0);
 
     }

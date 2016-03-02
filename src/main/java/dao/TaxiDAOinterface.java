@@ -11,19 +11,19 @@ import java.util.List;
 public interface TaxiDAOinterface {
 
     /** Возвращает объект соответствующий записи с первичным ключом key или null */
-    public TaxiDataSet getById(long id) throws SQLException;
+    TaxiDataSet getById(long id) throws SQLException;
 
     /** Сохраняет состояние объекта Customer в базе данных (если ID нет, создаем новую запись) */
-    public void update(TaxiDataSet customer);
+    long update(TaxiDataSet customer) throws SQLException;
 
     /** Удаляет запись об объекте из базы данных */
-    public void delete(TaxiDataSet customer);
+    void delete(TaxiDataSet customer) throws SQLException;
 
     /** Возвращает список объектов соответствующих всем записям в базе данных */
-    public List<TaxiDataSet> getAll() throws SQLException;
+    List<TaxiDataSet> getAll() throws SQLException;
 
     /** Создает таблицу в базе данных для хранения объектов класса TaxiDataSet */
-    public void createTable() throws SQLException;
+    void createTable() throws SQLException;
 
 }
 

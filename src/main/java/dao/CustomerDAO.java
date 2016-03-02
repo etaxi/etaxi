@@ -11,7 +11,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса CustomerDataSet
  * */
-public class CustomerDAO{
+public class CustomerDAO implements CustomerDAOinterface {
 
     private Executor executor;
 
@@ -22,7 +22,6 @@ public class CustomerDAO{
     }
 
     public CustomerDataSet getById(long id) throws SQLException {
-        executor.executeUpdate("USE etaxi;");
         return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
             resultSet.next();
             return new CustomerDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
@@ -34,7 +33,6 @@ public class CustomerDAO{
 
     public long update(CustomerDataSet customer) throws SQLException {
 
-        executor.executeUpdate("USE etaxi;");
         if (customer.getCustomerId() > 0) {
             return executor.executeUpdate("UPDATE customers SET " +
                                    " name = '" + customer.getName() + "'," +
@@ -54,12 +52,10 @@ public class CustomerDAO{
     }
 
     public void delete(CustomerDataSet customer) throws SQLException {
-        executor.executeUpdate("USE etaxi;");
         executor.executeUpdate("delete from customers where Id=" + customer.getCustomerId());
     }
 
-    public List<CustomerDataSet> getALL() throws SQLException {
-        executor.executeUpdate("USE etaxi;");
+    public List<CustomerDataSet> getAll() throws SQLException {
         return executor.executeQuery("select * from customers ",
                 resultSet -> {
                     List<CustomerDataSet> list = new ArrayList<CustomerDataSet>();
@@ -76,7 +72,6 @@ public class CustomerDAO{
     }
 
     public void createTable() throws SQLException {
-        executor.executeUpdate("USE etaxi;");
         executor.executeUpdate("CREATE TABLE IF NOT EXISTS customers(" +
                             "   Id bigint(9) NOT NULL auto_increment," +
                             "   name varchar(256)," +

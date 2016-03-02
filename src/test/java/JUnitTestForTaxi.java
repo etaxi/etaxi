@@ -90,16 +90,7 @@ public class JUnitTestForTaxi {
 
         DBService dbService = new DBService();
         Connection connection = dbService.getMysqlConnection();
-        TaxiDAO taxiDAO = new TaxiDAO(connection);
-        return taxiDAO;
-    }
-
-    @Test
-    public void testСreateDataBaseWithTables() throws SQLException {
-
-        DBService dbService = new DBService();
-        dbService.createDataBaseWithTables();
-
+        return new TaxiDAO(connection);
     }
 
     @Test
@@ -180,11 +171,11 @@ public class JUnitTestForTaxi {
         TaxiDataSet taxi = TaxiBuilder.aTaxi().build();
         taxi.setTaxiId(taxiDAO.update(taxi));
 
-        int countOfTaxisBeforeDeleteOperation = taxiDAO.getALL().size();
+        int countOfTaxisBeforeDeleteOperation = taxiDAO.getAll().size();
 
         taxiDAO.delete(taxi);
 
-        int countOfTaxisAfterDeleteOperation = taxiDAO.getALL().size();
+        int countOfTaxisAfterDeleteOperation = taxiDAO.getAll().size();
 
         assertTrue(countOfTaxisBeforeDeleteOperation-1 == countOfTaxisAfterDeleteOperation);
 
@@ -198,7 +189,7 @@ public class JUnitTestForTaxi {
         TaxiDataSet taxi = TaxiBuilder.aTaxi().build();
         taxiDAO.update(taxi);
 
-        List<TaxiDataSet> listOfTaxis = taxiDAO.getALL();
+        List<TaxiDataSet> listOfTaxis = taxiDAO.getAll();
         assertTrue(listOfTaxis.size()>0);
 
     }

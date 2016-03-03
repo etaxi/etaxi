@@ -1,6 +1,4 @@
-import dao.CustomerDAO;
-import dao.OrderDAO;
-import dao.TaxiDAO;
+import dao.*;
 import dataSets.CustomerDataSet;
 import dataSets.OrderDataSet;
 import dataSets.TaxiDataSet;
@@ -141,8 +139,8 @@ public class JUnitTestsForOrder {
     public OrderDAO aOrderDAO() {
 
         DBService dbService = new DBService();
-        Connection connection = dbService.getMysqlConnection();
-        return new OrderDAO(connection);
+        return (new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName()));
+
     }
 
     @Test
@@ -257,15 +255,16 @@ public class JUnitTestsForOrder {
     @Test
     public void testNewOrderRecordWithNewCustomerAndTaxi() throws SQLException {
 
-        CustomerDataSet customer = CustomerBuilder.aCustomer().build();
-
         DBService dbService = new DBService();
         Connection connection = dbService.getMysqlConnection();
-        CustomerDAO customerDAO = new CustomerDAO(connection);
+        String databaseName = dbService.getDatabaseName();
+
+        CustomerDataSet customer = CustomerBuilder.aCustomer().build();
+        CustomerDAO customerDAO = new CustomerDAOImpl(connection, databaseName);
         customer.setCustomerId(customerDAO.update(customer));
 
         TaxiDataSet taxi = TaxiBuilder.aTaxi().build();
-        TaxiDAO taxiDAO = new TaxiDAO(connection);
+        TaxiDAO taxiDAO = new TaxiDAOImpl(connection, databaseName);
         taxi.setTaxiId(taxiDAO.update(taxi));
 
         OrderBuilder orderBuilder = OrderBuilder.aOrder()

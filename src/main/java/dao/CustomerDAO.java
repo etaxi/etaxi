@@ -1,86 +1,27 @@
 package dao;
 
 import dataSets.CustomerDataSet;
-import executor.Executor;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /** Проект etaxi
- * Реализация управления объектами класса CustomerDataSet
+ * Интерфейс для реализации управления объектами класса CustomerDataSet
  * */
-public class CustomerDAO implements CustomerDAOinterface {
+public interface CustomerDAO {
 
-    private Executor executor;
+    /** Возвращает объект соответствующий записи с первичным ключом key или null */
+    CustomerDataSet getById(long id) throws SQLException;
 
-    public CustomerDAO(Connection connection) {
+    /** Сохраняет состояние объекта Customer в базе данных (если ID нет, создаем новую запись) */
+    long update(CustomerDataSet customer) throws SQLException;
 
-        this.executor = new Executor(connection);
+    /** Удаляет запись об объекте из базы данных */
+    void delete(CustomerDataSet customer) throws SQLException;
 
-    }
+    /** Возвращает список объектов соответствующих всем записям в базе данных */
+    List<CustomerDataSet> getAll() throws SQLException;
 
-    public CustomerDataSet getById(long id) throws SQLException {
-        return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
-            resultSet.next();
-            return new CustomerDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                                       resultSet.getString(4), resultSet.getString(5));
-
-        });
-    }
-
-
-    public long update(CustomerDataSet customer) throws SQLException {
-
-        if (customer.getCustomerId() > 0) {
-            return executor.executeUpdate("UPDATE customers SET " +
-                                   " name = '" + customer.getName() + "'," +
-                                   " phone = '" + customer.getPhone() + "'," +
-                                   " login = '" + customer.getLogin() + "'," +
-                                   " password = '" + customer.getPassword() + "'" +
-                                   " WHERE id=" + customer.getCustomerId());
-        }
-        else {
-            return executor.executeUpdate("INSERT INTO customers (name, phone, login, password) VALUES (" +
-                                    "'" + customer.getName() + "'," +
-                                    "'" + customer.getPhone() + "'," +
-                                    "'" + customer.getLogin() + "'," +
-                                    "'" + customer.getPassword() + "')");
-        }
-
-    }
-
-    public void delete(CustomerDataSet customer) throws SQLException {
-        executor.executeUpdate("delete from customers where Id=" + customer.getCustomerId());
-    }
-
-    public List<CustomerDataSet> getAll() throws SQLException {
-        return executor.executeQuery("select * from customers ",
-                resultSet -> {
-                    List<CustomerDataSet> list = new ArrayList<CustomerDataSet>();
-                    while (resultSet.next()) {
-                        list.add(new CustomerDataSet(resultSet.getLong(1),
-                                resultSet.getString(2),
-                                resultSet.getString(3),
-                                resultSet.getString(4),
-                                resultSet.getString(5)));
-                    }
-                    return list;
-                }
-        );
-    }
-
-    public void createTable() throws SQLException {
-        executor.executeUpdate("CREATE TABLE IF NOT EXISTS customers(" +
-                            "   Id bigint(9) NOT NULL auto_increment," +
-                            "   name varchar(256)," +
-                            "   phone varchar(256)," +
-                            "   login varchar(256)," +
-                            "   password varchar(256)," +
-                            "   PRIMARY KEY (Id)" +
-                            "   );");
-    }
-
-
+    /** Создает таблицу в базе данных для хранения объектов класса CustomerDataSet */
+    void createTable() throws SQLException;
 }

@@ -1,9 +1,9 @@
 import dao.TaxiDAO;
+import dao.TaxiDAOImpl;
 import dataSets.TaxiDataSet;
 import org.junit.Test;
 import services.DBService;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -89,8 +89,7 @@ public class JUnitTestForTaxi {
     public TaxiDAO aTaxiDAO() {
 
         DBService dbService = new DBService();
-        Connection connection = dbService.getMysqlConnection();
-        return new TaxiDAO(connection);
+        return (new TaxiDAOImpl(dbService.getConnection(), dbService.getDatabaseName()));
     }
 
     @Test
@@ -102,7 +101,6 @@ public class JUnitTestForTaxi {
                 .withPassword("lybutton");
 
         TaxiDataSet taxi = taxiBuilder.build();
-
         long newTaxiID = aTaxiDAO().update(taxi);
     }
 

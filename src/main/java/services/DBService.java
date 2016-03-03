@@ -18,23 +18,33 @@ import java.util.Properties;
 public class DBService {
 
     private final Connection connection;
+    private String databaseName;
 
     public DBService() {
         this.connection = getMysqlConnection();
+        this.databaseName = getDatabaseNameFromFile();
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public String getDatabaseName() {
+        return databaseName;
     }
 
     public void createDataBaseWithTables() throws SQLException {
 
-        Executor executor = new Executor(connection);
-        executor.executeUpdate("CREATE DATABASE IF NOT EXISTS etaxi;");
+        Executor executor = new Executor(connection, "");
+        executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName + ";");
 
-        CustomerDAOinterface customerDao = new CustomerDAO(connection);
+        CustomerDAO customerDao = new CustomerDAOImpl(connection, databaseName);
         customerDao.createTable();
 
-        OrderDAOinterface orderDao = new OrderDAO(connection);
+        OrderDAO orderDao = new OrderDAOImpl(connection, databaseName);
         orderDao.createTable();
 
-        TaxiDAOinterface taxiDao = new TaxiDAO(connection);
+        TaxiDAO taxiDao = new TaxiDAOImpl(connection, databaseName);
         taxiDao.createTable();
 
     }
@@ -63,7 +73,6 @@ public class DBService {
         }
     }
 
-
     private String getDBUrl(){
         FileInputStream fis;
         Properties property = new Properties();
@@ -79,7 +88,7 @@ public class DBService {
 
             StringBuilder url = new StringBuilder();
             url.
-                    append("jdbc:mysql://")     //db type
+                     append("jdbc:mysql://")     //db type
                     .append(host)
                     .append(":")
                     .append(port)
@@ -91,6 +100,21 @@ public class DBService {
                     .append(password);
 
             return url.toString();
+
+        } catch (IOException e) {
+            System.err.println("Error: properties file not found!");
+            return null;
+        }
+    }
+
+    private String getDatabaseNameFromFile(){
+        FileInputStream fis;
+        Properties property = new Properties();
+
+        try {
+            fis = new FileInputStream("src/main/resources/config.properties");
+            property.load(fis);
+            return property.getProperty("db.database");
 
         } catch (IOException e) {
             System.err.println("Error: properties file not found!");

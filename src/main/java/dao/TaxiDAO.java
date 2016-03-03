@@ -1,90 +1,29 @@
 package dao;
 
 import dataSets.TaxiDataSet;
-import executor.Executor;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /** Проект etaxi
- * Реализация управления объектами класса TaxiDataSet
- * */
-public class TaxiDAO implements TaxiDAOinterface {
+ * Интерфейс для реализации управления объектами класса TaxiDataSet
+ */
+public interface TaxiDAO {
 
-    private Executor executor;
+    /** Возвращает объект соответствующий записи с первичным ключом key или null */
+    TaxiDataSet getById(long id) throws SQLException;
 
-    public TaxiDAO(Connection connection) {
+    /** Сохраняет состояние объекта Customer в базе данных (если ID нет, создаем новую запись) */
+    long update(TaxiDataSet customer) throws SQLException;
 
-        this.executor = new Executor(connection);
+    /** Удаляет запись об объекте из базы данных */
+    void delete(TaxiDataSet customer) throws SQLException;
 
-    }
+    /** Возвращает список объектов соответствующих всем записям в базе данных */
+    List<TaxiDataSet> getAll() throws SQLException;
 
-    public TaxiDataSet getById(long id) throws SQLException {
-        return executor.executeQuery("select * from taxis where Id=" + id, resultSet -> {
-            resultSet.next();
-            return new TaxiDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                    resultSet.getString(4), resultSet.getString(5));
-
-        });
-    }
-
-
-    public long update(TaxiDataSet taxi) throws SQLException {
-
-        if (taxi.getTaxiId() > 0) {
-            return executor.executeUpdate("UPDATE taxis SET " +
-                    " name = '" + taxi.getName() + "'," +
-                    " phone = '" + taxi.getPhone() + "'," +
-                    " login = '" + taxi.getLogin() + "'," +
-                    " password = '" + taxi.getPassword() + "'" +
-                    " WHERE id=" + taxi.getTaxiId());
-        }
-        else {
-            return executor.executeUpdate("INSERT INTO taxis (name, phone, login, password) VALUES (" +
-                    "'" + taxi.getName() + "'," +
-                    "'" + taxi.getPhone() + "'," +
-                    "'" + taxi.getLogin() + "'," +
-                    "'" + taxi.getPassword() + "')");
-        }
-
-    }
-
-    public void delete(TaxiDataSet taxi) throws SQLException {
-        executor.executeUpdate("delete from taxis where Id=" + taxi.getTaxiId());
-    }
-
-    public List<TaxiDataSet> getAll() throws SQLException {
-        return executor.executeQuery("select * from taxis ",
-                resultSet -> {
-                    List<TaxiDataSet> list = new ArrayList<TaxiDataSet>();
-                    while (resultSet.next()) {
-                        list.add(new TaxiDataSet(resultSet.getLong(1),
-                                resultSet.getString(2),
-                                resultSet.getString(3),
-                                resultSet.getString(4),
-                                resultSet.getString(5)));
-                    }
-                    return list;
-                }
-        );
-    }
-
-
-    public void createTable() throws SQLException {
-        executor.executeUpdate("CREATE TABLE IF NOT EXISTS taxis (" +
-                "  Id bigint(9) NOT NULL auto_increment," +
-                "  name varchar(256)," +
-                "  phone varchar(256)," +
-                "  taxiStatus int(1)," +
-                "  location varchar(256)," +
-                "  car varchar(256)," +
-                "  login varchar(256)," +
-                "  password varchar(256)," +
-                "  rating double," +
-                "  PRIMARY KEY  (Id)" +
-                ");");
-    }
+    /** Создает таблицу в базе данных для хранения объектов класса TaxiDataSet */
+    void createTable() throws SQLException;
 
 }
+

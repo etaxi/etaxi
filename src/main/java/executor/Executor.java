@@ -10,18 +10,24 @@ import java.sql.Statement;
  * */
 public class Executor {
     private final Connection connection;
+    private final String databaseName;
 
-    public Executor(Connection connection) {
+    public Executor(Connection connection, String databaseName) {
         this.connection = connection;
+        this.databaseName = databaseName;
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
 
     public long executeUpdate(String sqlQueryText) throws SQLException {
 
         Statement statement = connection.createStatement();
-        try {
-            statement.execute("USE etaxi"); }
-        catch (SQLException exception) {}
+
+        if (!databaseName.isEmpty()) {
+            statement.execute("USE " + databaseName);
+        }
 
         statement.execute(sqlQueryText, Statement.RETURN_GENERATED_KEYS);
 
@@ -41,9 +47,9 @@ public class Executor {
 
         Statement statement = connection.createStatement();
 
-        try {
-            statement.execute("USE etaxi"); }
-        catch (SQLException exception) {}
+        if (!databaseName.isEmpty()) {
+            statement.execute("USE " + databaseName);
+        }
 
         statement.execute(sqlQueryText);
 

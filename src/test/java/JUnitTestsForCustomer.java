@@ -1,9 +1,10 @@
+
 import dao.CustomerDAO;
+import dao.CustomerDAOImpl;
 import dataSets.CustomerDataSet;
 import org.junit.Test;
 import services.DBService;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -89,8 +90,7 @@ public class JUnitTestsForCustomer {
     public CustomerDAO aCustomerDAO() {
 
         DBService dbService = new DBService();
-        Connection connection = dbService.getMysqlConnection();
-        return new CustomerDAO(connection);
+        return (new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName()));
     }
 
 
@@ -98,9 +98,9 @@ public class JUnitTestsForCustomer {
     public void testNewCustomerRecord() throws SQLException {
 
         CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
-                .withName("Olga Zvonkova")
+                .withName("Olga Zvonova")
                 .withLogin("Olga")
-                .withPassword("olgazvonkova");
+                .withPassword("olgazvonova");
 
         CustomerDataSet customer = customerBuilder.build();
 

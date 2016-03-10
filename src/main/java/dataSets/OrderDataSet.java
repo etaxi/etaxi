@@ -138,18 +138,18 @@ public class OrderDataSet {
 
     @Override
     public String toString() {
-        return "OrderDataSet{" +
-                "  orderId=" + orderId +
-                ", customerId=" + customerId +
-                ", dateTime=" + dateTime +
-                ", orderStatus=" + orderStatus +
-                ", fromAdress='" + fromAdress + '\'' +
-                ", toAdress='" + toAdress + '\'' +
-                ", taxiId=" + taxiId +
-                ", distance=" + distance +
-                ", price=" + price +
-                ", rate=" + rate +
-                ", feedback='" + feedback + '\'' +
+        return "{" +
+                "\"orderId\":" + "\"" + orderId + "\"" +
+                ", \"customerId\":" + "\"" + customerId + "\"" +
+                ", \"dateTime\":" + "\"" + dateTime + "\"" +
+                ", \"orderStatus\":" + "\"" + orderStatus + "\"" +
+                ", \"fromAdress\":" + "\"" + fromAdress + "\"" +
+                ", \"toAdress\":" + "\"" + toAdress + "\"" +
+                ", \"taxiId\":" + "\"" + taxiId + "\"" +
+                ", \"distance\":" + "\"" + distance + "\"" +
+                ", \"price\":" + "\"" + price + "\"" +
+                ", \"rate\":" + "\"" + rate + "\"" +
+                ", \"feedback\":" + "\"" + feedback + "\"" +
                 '}';
     }
 

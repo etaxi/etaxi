@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Data</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+<h1>data from table</h1>
+
+<span><b>Web service: </b></span>
+<br/>
+<input type="text" id="server" value="http://localhost:8080/func" />
+<br/>
+<br/>
+
+<span><b>Formula: </b></span>
+<br/>
+
+<button>Get data from database table</button>
+<br/>
+<br/>
+
+<p id="table"></p>
+
+<script>
+ $("button").click(function(){
+ $.getJSON('http://localhost:8080/func?table=customers', function(data) {
+
+    var out = '<table border="1" style="width:100%">';
+    var i;
+    for(i = 0; i < data.customers.length; i++) {
+        out += '<tr> ' +
+        '<td>'+ data.customers[i].customerId + '</td>' +
+        '<td>'+ data.customers[i].name + '</td>' +
+        '<td>'+ data.customers[i].phone + '</td>' +
+        '<td>'+ data.customers[i].login + '</td>' +
+        + '</tr>';
+    }
+    out += '</table>';
+
+    document.getElementById("table").innerHTML = out;
+
+    });
+ });
+</script>
+
+
+</body>
+</html>
+

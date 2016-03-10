@@ -97,16 +97,16 @@ public class TaxiDataSet {
 
     @Override
     public String toString() {
-        return "TaxiDataSet{" +
-                "taxiId=" + taxiId +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", taxiStatus=" + taxiStatus +
-                ", location='" + location + '\'' +
-                ", car='" + car + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", rating=" + rating +
+        return "{" +
+                "\"taxiId\":" + "\"" + taxiId + "\"" +
+                ", \"name\":" + "\"" + name + "\"" +
+                ", \"phone\":" + "\"" + phone + "\"" +
+                ", \"taxiStatus\":" + "\"" + taxiStatus + "\"" +
+                ", \"location\":" + "\"" + location + "\"" +
+                ", \"car\":" + "\"" + car + "\"" +
+                ", \"login\":" + "\"" + login + "\"" +
+                ", \"password\":" + "\"" + password + "\"" +
+                ", \"rating\":" + "\"" + rating + "\"" +
                 '}';
     }
 }

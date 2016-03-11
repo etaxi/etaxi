@@ -6,7 +6,6 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-
 </head>
 
 <body>
@@ -15,11 +14,10 @@
 
 <span><b>Web service: </b></span>
 <br/>
-<input type="text" id="server" value="http://localhost:8080/func" />
+<input type="text" id="server" value="http://localhost:8080/func"/>
 <br/>
 <br/>
-
-<span><b>Formula: </b></span>
+<span><b>Formula:</b></span>
 <br/>
 
 <button>Get data from database table</button>
@@ -34,7 +32,7 @@
 
     var out = '<table border="1" style="width:100%">';
     var i;
-    for(i = 0; i < data.customers.length; i++) {
+    for (i = 0; i < data.customers.length; i++) {
         out += '<tr> ' +
         '<td>'+ data.customers[i].customerId + '</td>' +
         '<td>'+ data.customers[i].name + '</td>' +

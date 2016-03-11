@@ -6,16 +6,15 @@ import dataSets.OrderDataSet;
 import dataSets.TaxiDataSet;
 import services.DBService;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/SrvltCustomers")
 public class SrvltCustomers extends HttpServlet {
@@ -73,7 +72,6 @@ public class SrvltCustomers extends HttpServlet {
         String customers = "{\"customers\":[\n";
 
         DBService dbService = new DBService();
-        Connection connection = dbService.getMysqlConnection();
         CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
         List<CustomerDataSet> listOfCustomers = customerDAO.getAll();
 
@@ -89,7 +87,6 @@ public class SrvltCustomers extends HttpServlet {
         String taxis = "{\"taxis\":[\n";
 
         DBService dbService = new DBService();
-        Connection connection = dbService.getMysqlConnection();
         TaxiDAO taxiDAO = new TaxiDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
         List<TaxiDataSet> listOfTaxi = taxiDAO.getAll();
 
@@ -106,7 +103,6 @@ public class SrvltCustomers extends HttpServlet {
         String orders = "{\"orders\":[\n";
 
         DBService dbService = new DBService();
-        Connection connection = dbService.getMysqlConnection();
         OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
         List<OrderDataSet> listOfOrder = orderDAO.getAll();
 

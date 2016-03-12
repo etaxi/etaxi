@@ -22,6 +22,10 @@ public class ServletNewCustomer extends HttpServlet {
 
         Map<String, Object> pageVariables = new HashMap<>();
         pageVariables.put("message", "Please, enter information about new customer!");
+        pageVariables.put("name", "");
+        pageVariables.put("phone", "");
+        pageVariables.put("login", "");
+        pageVariables.put("password", "");
 
         response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
 
@@ -53,6 +57,7 @@ public class ServletNewCustomer extends HttpServlet {
             try {
                 newCustomer.setCustomerId(customerDAO.update(newCustomer));
                 message = "Registration successful (new customer ID: " + newCustomer.getCustomerId() + ")";
+                name = ""; phone = ""; login = ""; password = "";
             } catch (SQLException e) {
                 message = "Registration failed! Please try again!";
             }
@@ -63,6 +68,10 @@ public class ServletNewCustomer extends HttpServlet {
         }
 
         pageVariables.put("message", message);
+        pageVariables.put("name", name);
+        pageVariables.put("phone", phone);
+        pageVariables.put("login", login);
+        pageVariables.put("password", password);
         response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
 
         response.setContentType("text/html;charset=utf-8");

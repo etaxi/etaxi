@@ -107,6 +107,20 @@ public class JUnitTestsForCustomer {
         long newCustmerID = aCustomerDAO().update(customer);
     }
 
+    @Test
+    public void testNew10000CustomersRecord() throws SQLException {
+
+        CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
+                .withName("Olga Zvonova")
+                .withLogin("Olga")
+                .withPassword("olgazvonova");
+
+        for (int i = 1; i<=10000; i++) {
+
+            CustomerDataSet customer = customerBuilder.build();
+            long newCustmerID = aCustomerDAO().update(customer);
+        }
+    }
 
     @Test
     public void testNewCustomersRecord() throws SQLException {

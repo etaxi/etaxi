@@ -21,40 +21,50 @@ public class ServletListOfCustomers extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("table", "");
+        if (request.getSession().getAttribute("userId") == null) {
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        } else {
 
-        response.getWriter().println(PageGenerator.instance().getPage("customers.html", pageVariables));
+            Map<String, Object> pageVariables = new HashMap<>();
+            pageVariables.put("table", "");
 
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-
+            response.getWriter().println(PageGenerator.instance().getPage("customers.html", pageVariables));
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
     }
 
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
-        Map<String, Object> pageVariables = new HashMap<>();
+        if (request.getSession().getAttribute("userId") == null) {
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        } else {
 
-        DBService dbService = new DBService();
-        CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
+            Map<String, Object> pageVariables = new HashMap<>();
 
-        String htmlTable = "";
+            DBService dbService = new DBService();
+            CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
 
-        try {
-            List<CustomerDataSet> listOfCustomers = customerDAO.getAll();
-            htmlTable = generateHTMLTableForCustomers(listOfCustomers);
+            String htmlTable = "";
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                List<CustomerDataSet> listOfCustomers = customerDAO.getAll();
+                htmlTable = generateHTMLTableForCustomers(listOfCustomers);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+            pageVariables.put("table", htmlTable);
+            response.getWriter().println(PageGenerator.instance().getPage("customers.html", pageVariables));
+
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
         }
-
-
-        pageVariables.put("table", htmlTable);
-        response.getWriter().println(PageGenerator.instance().getPage("customers.html", pageVariables));
-
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     private String generateHTMLTableForCustomers(List<CustomerDataSet> listOfCustomers) {

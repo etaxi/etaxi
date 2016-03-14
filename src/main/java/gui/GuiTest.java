@@ -12,7 +12,7 @@ public class GuiTest {
             cf = new CustomerFrame();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        cf.setVisible(true);
-    }
 }
+        cf.setVisible(true);
+        }
+        }

@@ -2,15 +2,10 @@ package gui;
 
 import dataSets.CustomerDataSet;
 
-import java.awt.Rectangle;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
 
 
 public class EditCustomerDialog extends JDialog implements ActionListener
@@ -39,8 +34,10 @@ public class EditCustomerDialog extends JDialog implements ActionListener
     // Поле для ввода Телефон
     private final JTextPane txtPhone = new JTextPane();
 
+    private final JTextPane txtTariff = new JTextPane();
+
     // Поле для хранения ID клиента, если мы собираемся редактировать
-    // Если это новый клиент - custtomerId == 0
+    // Если это новый клиент - customerId == 0
     private Long customerId = (long) 0;
     // Надо ли записывать изменения после закрытия диалога
     private boolean save = false;
@@ -113,6 +110,14 @@ public class EditCustomerDialog extends JDialog implements ActionListener
         txtPhone.setBounds(new Rectangle(W_L + 2 * PAD, 2 * H_B + PAD, W_T, H_B));
         txtPhone.setBorder(BorderFactory.createEtchedBorder());
         add(txtPhone);
+
+        JLabel lblTariff = new JLabel("Тариф:");
+        lblTariff.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblTariff.setBounds(new Rectangle(PAD, 4 * H_B + PAD, W_L, H_B));
+        add(lblTariff);
+        txtTariff.setBounds(new Rectangle(W_L + 2 * PAD, 4 * H_B + PAD, W_T, H_B));
+        txtTariff.setBorder(BorderFactory.createEtchedBorder());
+        add(txtTariff);
    }
 
     // Если нам епередали клиента - заполняем поля из клиента
@@ -123,6 +128,7 @@ public class EditCustomerDialog extends JDialog implements ActionListener
             txtLogin.setText(customer.getLogin());
             txtPass.setText(customer.getPassword());
             txtPhone.setText(customer.getPhone());
+            txtTariff.setText(customer.getTariff());
         }
     }
 
@@ -158,7 +164,7 @@ public class EditCustomerDialog extends JDialog implements ActionListener
 
     // Создаем клиента из заполенных полей, который можно будет записать
     public CustomerDataSet getCustomer() {
-        CustomerDataSet customer = new CustomerDataSet(customerId, txtName.getText(), txtPhone.getText() ,txtLogin.getText(), txtPass.getText());
+        CustomerDataSet customer = new CustomerDataSet(customerId, txtName.getText(), txtPhone.getText() ,txtLogin.getText(), txtPass.getText(), txtTariff.getText());
         return customer;
     }
 }

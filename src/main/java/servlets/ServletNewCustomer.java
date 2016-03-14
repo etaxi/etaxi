@@ -26,6 +26,7 @@ public class ServletNewCustomer extends HttpServlet {
         pageVariables.put("phone", "");
         pageVariables.put("login", "");
         pageVariables.put("password", "");
+        pageVariables.put("tariff", "");
 
         response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
 
@@ -43,21 +44,23 @@ public class ServletNewCustomer extends HttpServlet {
         String phone    = request.getParameter("phone");
         String login    = request.getParameter("login");
         String password = request.getParameter("password");
+        String tariff = request.getParameter("tariff");
 
         String message = ((name == null || name.isEmpty()) ? "name, surname; " : "") +
                          ((phone == null || phone.isEmpty()) ? "phone; " : "") +
                          ((login == null || login.isEmpty()) ? "login; " : "") +
-                         ((password == null || password.isEmpty()) ? "password; " : "");
+                         ((password == null || password.isEmpty()) ? "password; " : "") +
+                         ((tariff == null || tariff.isEmpty()) ? "tariff; " : "");
 
         if (message.isEmpty()) {
 
             DBService dbService = new DBService();
             CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            CustomerDataSet newCustomer = new CustomerDataSet((long)0, name, phone, login, password);
+            CustomerDataSet newCustomer = new CustomerDataSet((long)0, name, phone, login, password, tariff);
             try {
                 newCustomer.setCustomerId(customerDAO.update(newCustomer));
                 message = "Registration successful (new customer ID: " + newCustomer.getCustomerId() + ")";
-                name = ""; phone = ""; login = ""; password = "";
+                name = ""; phone = ""; login = ""; password = ""; tariff = "";
             } catch (SQLException e) {
                 message = "Registration failed! Please try again!";
             }
@@ -72,6 +75,7 @@ public class ServletNewCustomer extends HttpServlet {
         pageVariables.put("phone", phone);
         pageVariables.put("login", login);
         pageVariables.put("password", password);
+        pageVariables.put("tariff", tariff);
         response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
 
         response.setContentType("text/html;charset=utf-8");

@@ -25,7 +25,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
             resultSet.next();
             return new CustomerDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                                       resultSet.getString(4), resultSet.getString(5));
+                                       resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
 
         });
     }
@@ -39,14 +39,16 @@ public class CustomerDAOImpl implements CustomerDAO {
                                    " phone = '" + customer.getPhone() + "'," +
                                    " login = '" + customer.getLogin() + "'," +
                                    " password = '" + customer.getPassword() + "'" +
+                                   " tariff = '" + customer.getTariff() + "'," +
                                    " WHERE id=" + customer.getCustomerId());
         }
         else {
-            return executor.executeUpdate("INSERT INTO customers (name, phone, login, password) VALUES (" +
+            return executor.executeUpdate("INSERT INTO customers (name, phone, login, password, tariff) VALUES (" +
                                     "'" + customer.getName() + "'," +
                                     "'" + customer.getPhone() + "'," +
                                     "'" + customer.getLogin() + "'," +
-                                    "'" + customer.getPassword() + "')");
+                                    "'" + customer.getPassword() + "'," +
+                                    "'" + customer.getTariff() + "')");
         }
 
     }
@@ -85,7 +87,8 @@ public class CustomerDAOImpl implements CustomerDAO {
                                 resultSet.getString(2),
                                 resultSet.getString(3),
                                 resultSet.getString(4),
-                                resultSet.getString(5)));
+                                resultSet.getString(5),
+                                resultSet.getString(6)));
                     }
                     return list;
                 }
@@ -99,6 +102,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                             "   phone varchar(256)," +
                             "   login varchar(256)," +
                             "   password varchar(256)," +
+                            "   tariff varchar(256)," +
                             "   PRIMARY KEY (Id)" +
                             "   );");
     }

@@ -9,7 +9,7 @@ import java.util.List;
 public class CustomerModel extends AbstractTableModel
 {
     // Список заголовков для колонок в таблице
-    private static final String[] headers = {"ID", "Имя", "Логин", "Пароль", "Телефон"};
+    private static final String[] headers = {"ID", "Имя", "Логин", "Пароль", "Телефон", "Тариф"};
 
     // Здесь мы храним список клиентов, которых будем отображать в таблице
     private final List<CustomerDataSet> customers;
@@ -28,7 +28,7 @@ public class CustomerModel extends AbstractTableModel
     // Получить количество столбцов - их у нас стольк же, сколько полей
     // у класса Customer - всего пять
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -52,8 +52,10 @@ public class CustomerModel extends AbstractTableModel
                 return customer.getLogin();
             case 3:
                 return customer.getPassword();
-            default:
+            case 4:
                 return customer.getPhone();
+            default:
+                return customer.getTariff();
         }
     }
 }

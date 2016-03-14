@@ -22,12 +22,14 @@ import static org.junit.Assert.assertTrue;
     public static final String DEFAULT_PHONE = "(+371) 26907856";
     public static final String DEFAULT_LOGIN = "login";
     public static final String DEFAULT_PASSWORD = "password";
+    public static final String DEFAULT_TARIFF = "standard";
 
     private Long id = DEFAULT_ID;
     private String login = DEFAULT_LOGIN;
     private String password = DEFAULT_PASSWORD;
     private String phone = DEFAULT_PHONE;
     private String name = DEFAULT_NAME;
+    private String tariff = DEFAULT_TARIFF;
 
     private CustomerBuilder() {}
 
@@ -70,6 +72,16 @@ import static org.junit.Assert.assertTrue;
         return this;
     }
 
+    public CustomerBuilder withTariff(String tariff) {
+        this.tariff = tariff;
+        return this;
+    }
+
+    public CustomerBuilder withNoTariff() {
+        this.tariff = null;
+        return this;
+    }
+
 
     public CustomerBuilder but() {
         return CustomerBuilder
@@ -77,11 +89,12 @@ import static org.junit.Assert.assertTrue;
                 .withName(name)
                 .withPhone(phone)
                 .withPassword(password)
-                .withLogin(login);
+                .withLogin(login)
+                .withTariff(tariff);
      }
 
     public CustomerDataSet build() {
-        return new CustomerDataSet(id, name, phone, login, password);
+        return new CustomerDataSet(id, name, phone, login, password, tariff);
     }
 }
 

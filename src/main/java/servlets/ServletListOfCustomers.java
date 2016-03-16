@@ -69,14 +69,15 @@ public class ServletListOfCustomers extends HttpServlet {
 
     private String generateHTMLTableForCustomers(List<CustomerDataSet> listOfCustomers) {
 
-        StringBuilder htmlString = new StringBuilder("<table border = 1 width=\"100%\">");
-        htmlString.append("<tr>")
+        StringBuilder htmlString = new StringBuilder("<table class=\"table\">");
+        htmlString.append("<thead><tr>")
                 .append("<th> ID </th>")
                 .append("<th> Name, Surname </th>")
                 .append("<th> Phone </th>")
                 .append("<th> Login </th>")
                 .append("<th> Password </th>")
-                .append("</tr>");
+                .append("</tr>")
+                .append("<tbody>");
 
         for (CustomerDataSet item : listOfCustomers) {
             htmlString.append("<tr>")
@@ -85,11 +86,13 @@ public class ServletListOfCustomers extends HttpServlet {
                     .append("<td>").append(item.getPhone())
                     .append("<td>").append(item.getLogin())
                     .append("<td>").append(item.getPassword())
+                    .append("<td><button type=\"button\" class=\"btn btn-delete\">Delete</button>\n")
+                    .append("<button type=\"button\" class=\"btn btn-edit\">Edit</button>")
                     .append("</tr>");
         }
 
-        htmlString.append("</table>");
-
+        htmlString.append("</tbody>")
+                  .append("</table>");
         return htmlString.toString();
     }
 

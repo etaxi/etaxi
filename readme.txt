@@ -67,3 +67,24 @@
         -integer  и соответвие в коде
         -строка с текстом статуса
         -тип данных enum в MySQl
+
+
+
+
+
+
+
+Материалы:
+
+1. DAO           https://stepic.org/lesson/JDBC-12404/step/1?unit=2834
+
+2. Servlets      https://github.com/vitaly-chibrikov/stepic_java_webserver
+
+3. Autorization  https://stepic.org/course/146/syllabus?module=2
+                 https://github.com/vitaly-chibrikov/stepic_java_webserver/tree/master/L2.1%20Authorization
+
+4. Bootstrap     http://www.w3schools.com/bootstrap/bootstrap_templates.asp
+
+5. password
+
+6. Google Maps   https://habrahabr.ru/post/148986/

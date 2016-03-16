@@ -22,11 +22,10 @@ public class TaxiDAOImpl implements TaxiDAO {
     }
 
     public TaxiDataSet getById(long id) throws SQLException {
-        return executor.executeQuery("select * from taxis where Id=" + id, resultSet -> {
+        return executor.executeQuery("select Id, name, car, phone, login, password from taxis where Id=" + id, resultSet -> {
             resultSet.next();
             return new TaxiDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                    resultSet.getString(4), resultSet.getString(5));
-
+                    resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
         });
     }
 
@@ -36,14 +35,16 @@ public class TaxiDAOImpl implements TaxiDAO {
         if (taxi.getTaxiId() > 0) {
             return executor.executeUpdate("UPDATE taxis SET " +
                     " name = '" + taxi.getName() + "'," +
+                    " car = '" + taxi.getCar() + "'," +
                     " phone = '" + taxi.getPhone() + "'," +
                     " login = '" + taxi.getLogin() + "'," +
                     " password = '" + taxi.getPassword() + "'" +
                     " WHERE id=" + taxi.getTaxiId());
         }
         else {
-            return executor.executeUpdate("INSERT INTO taxis (name, phone, login, password) VALUES (" +
+            return executor.executeUpdate("INSERT INTO taxis (name, car, phone, login, password) VALUES (" +
                     "'" + taxi.getName() + "'," +
+                    "'" + taxi.getCar() + "'," +
                     "'" + taxi.getPhone() + "'," +
                     "'" + taxi.getLogin() + "'," +
                     "'" + taxi.getPassword() + "')");
@@ -77,7 +78,7 @@ public class TaxiDAOImpl implements TaxiDAO {
     }
 
     public List<TaxiDataSet> getAll() throws SQLException {
-        return executor.executeQuery("select * from taxis ",
+        return executor.executeQuery("select Id, name, car, phone, login, password from taxis ",
                 resultSet -> {
                     List<TaxiDataSet> list = new ArrayList<TaxiDataSet>();
                     while (resultSet.next()) {
@@ -85,7 +86,8 @@ public class TaxiDAOImpl implements TaxiDAO {
                                 resultSet.getString(2),
                                 resultSet.getString(3),
                                 resultSet.getString(4),
-                                resultSet.getString(5)));
+                                resultSet.getString(5),
+                                resultSet.getString(6)));
                     }
                     return list;
                 }

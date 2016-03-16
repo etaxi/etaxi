@@ -1,8 +1,8 @@
 package servlets;
 
-import dao.CustomerDAO;
-import dao.CustomerDAOImpl;
-import dataSets.CustomerDataSet;
+import dao.TaxiDAO;
+import dao.TaxiDAOImpl;
+import dataSets.TaxiDataSet;
 import services.DBService;
 import templater.PageGenerator;
 
@@ -15,19 +15,23 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServletNewCustomer extends HttpServlet {
+public class ServletNewTaxi extends HttpServlet {
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
         Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("message", "Please, enter information about new customer!");
+        pageVariables.put("message", "Please, enter information about new taxi!");
         pageVariables.put("name", "");
         pageVariables.put("phone", "");
+        pageVariables.put("taxiStatus", "");
+        pageVariables.put("location", "");
+        pageVariables.put("car", "");
         pageVariables.put("login", "");
         pageVariables.put("password", "");
+        pageVariables.put("rating", "");
 
-        response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
+        response.getWriter().println(PageGenerator.instance().getPage("taxi.html", pageVariables));
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -41,23 +45,25 @@ public class ServletNewCustomer extends HttpServlet {
 
         String name     = request.getParameter("name");
         String phone    = request.getParameter("phone");
+        String car    = request.getParameter("car");
         String login    = request.getParameter("login");
         String password = request.getParameter("password");
 
         String message = ((name == null || name.isEmpty()) ? "name, surname; " : "") +
                          ((phone == null || phone.isEmpty()) ? "phone; " : "") +
+                         ((car == null || car.isEmpty()) ? "car; " : "") +
                          ((login == null || login.isEmpty()) ? "login; " : "") +
                          ((password == null || password.isEmpty()) ? "password; " : "");
 
         if (message.isEmpty()) {
 
             DBService dbService = new DBService();
-            CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            CustomerDataSet newCustomer = new CustomerDataSet((long)0, name, phone, login, password, "");
+            TaxiDAO taxiDAO = new TaxiDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
+            TaxiDataSet newTaxi = new TaxiDataSet((long)0, name, car, phone, login, password);
             try {
-                newCustomer.setCustomerId(customerDAO.update(newCustomer));
-                message = "Registration successful (new customer ID: " + newCustomer.getCustomerId() + ")";
-                name = ""; phone = ""; login = ""; password = "";
+                newTaxi.setTaxiId(taxiDAO.update(newTaxi));
+                message = "Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";
+                name = ""; car = ""; phone = ""; login = ""; password = "";
             } catch (SQLException e) {
                 message = "Registration failed! Please try again!";
             }
@@ -69,10 +75,11 @@ public class ServletNewCustomer extends HttpServlet {
 
         pageVariables.put("message", message);
         pageVariables.put("name", name);
+        pageVariables.put("car", car);
         pageVariables.put("phone", phone);
         pageVariables.put("login", login);
         pageVariables.put("password", password);
-        response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
+        response.getWriter().println(PageGenerator.instance().getPage("taxi.html", pageVariables));
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);

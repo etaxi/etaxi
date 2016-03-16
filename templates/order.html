@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>New taxi order registration</title>
+</head>
+
+<body>
+
+<h1>New taxi order registration</h1>
+
+<form name = form1 action="/order.html" method="POST">
+    <table width="100%" cellspacing="0" cellpadding="8">
+        <tr>
+            <td align="left" width="150">Customer ID:</td>
+            <td> <input type="text" name="customerID" size="40" value = '${customerID}'> </td>
+        </tr>
+        <tr>
+            <td align="left" width="150">From address:</td>
+            <td> <input type="text" name="fromAddress" size="40" value = '${fromAddress}'>  </td>
+        </tr>
+        <tr>
+            <td align="left" width="150">To address:</td>
+            <td> <input type="text" name="toAddress" size="40" value = '${toAddress}'> </td>
+        </tr>
+        <tr>
+            <td align="left" width="150">Feedback:</td>
+            <td> <input type="text" name="feedback" size="40" value = '${feedback}'> </td>
+        </tr>
+
+        <tr>
+            <td align="left" width="150"></td>
+            <td> <input type="submit" value="Register new taxi order" style='width:265px;'> </td>
+        </tr>
+
+        <tr>
+            <td align="left" width="150"></td>
+            <td> <p> Registration process: <b> ${message} </b> </p> </td>
+        </tr>
+
+    </table>
+</form>
+
+</body>
+</html>
+

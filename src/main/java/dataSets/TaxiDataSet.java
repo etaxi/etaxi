@@ -5,19 +5,20 @@ package dataSets;
  */
 public class TaxiDataSet {
 
-    private Long taxiId;     // Идентификатор такси
+    private Long   taxiId;     // Идентификатор такси
     private String name;     // Имя, Фамилия
     private String phone;    // Телефон
-    private byte taxiStatus; // статус (не работает, свободен, занят)
+    private byte   taxiStatus; // статус (не работает, свободен, занят)
     private String location; // местоположение десятичные градусы (вида 56.9613438,24.1900393)
     private String car;      // машины, рег.номер, бортовой номер
     private String login;    // логин
     private String password; // пароль
     private double rating;   // рейтинг по среднему значению отзывов
 
-    public TaxiDataSet(Long taxiId, String name, String phone, String login, String password) {
+    public TaxiDataSet(Long taxiId, String name, String car, String phone, String login, String password) {
         this.taxiId = taxiId;
         this.name = name;
+        this.car = car;
         this.phone = phone;
         this.login = login;
         this.password = password;

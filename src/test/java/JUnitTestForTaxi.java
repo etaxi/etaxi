@@ -18,12 +18,14 @@ class TaxiBuilder {
 
     public static final Long   DEFAULT_ID = (long) 0;
     public static final String DEFAULT_NAME = "Fernando Alonso Díaz";
+    public static final String DEFAULT_CAR = "Ford Mondeo 1.8L";
     public static final String DEFAULT_PHONE = "(+371) 000000000";
     public static final String DEFAULT_LOGIN = "login";
     public static final String DEFAULT_PASSWORD = "password";
 
     private Long id = DEFAULT_ID;
     private String login = DEFAULT_LOGIN;
+    private String car = DEFAULT_CAR;
     private String password = DEFAULT_PASSWORD;
     private String phone = DEFAULT_PHONE;
     private String name = DEFAULT_NAME;
@@ -41,6 +43,11 @@ class TaxiBuilder {
 
     public TaxiBuilder withName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public TaxiBuilder withCar(String car) {
+        this.car = car;
         return this;
     }
 
@@ -74,13 +81,14 @@ class TaxiBuilder {
         return TaxiBuilder
                 .aTaxi()
                 .withName(name)
+                .withCar(car)
                 .withPhone(phone)
                 .withPassword(password)
                 .withLogin(login);
     }
 
     public TaxiDataSet build() {
-        return new TaxiDataSet(id, name, phone, login, password);
+        return new TaxiDataSet(id, name, car, phone, login, password);
     }
 }
 
@@ -131,6 +139,7 @@ public class JUnitTestForTaxi {
         TaxiBuilder taxiBuilder = TaxiBuilder.aTaxi()
                 .withId((long) 0)
                 .withName("Lewis Carl Davidson Hamilton")
+                .withCar("BMW 530 SL")
                 .withPhone("(+371) 20100100")
                 .withLogin("hamilton")
                 .withPassword("lewis123");

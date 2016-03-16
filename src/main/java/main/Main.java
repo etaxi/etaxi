@@ -11,7 +11,7 @@ import servlets.*;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
         AccountService accountService = new AccountService();
 
@@ -24,19 +24,25 @@ public class Main {
         context.addServlet(new ServletHolder(new ServletNewCustomer()), "/customer.html");      // http://localhost:8080/customer.html
         context.addServlet(new ServletHolder(new ServletListOfCustomers()), "/customers.html"); // http://localhost:8080/customers.html
 
-            ResourceHandler resource_handler = new ResourceHandler();
-            resource_handler.setResourceBase("templates");
+        context.addServlet(new ServletHolder(new ServletNewTaxi()), "/taxi.html");      // http://localhost:8080/taxi.html
+        context.addServlet(new ServletHolder(new ServletListOfTaxi()), "/taxis.html");  // http://localhost:8080/taxis.html
 
-            HandlerList handlers = new HandlerList();
-            handlers.setHandlers(new Handler[]{resource_handler, context});
+        context.addServlet(new ServletHolder(new ServletNewOrder()), "/order.html");       // http://localhost:8080/order.html
+        context.addServlet(new ServletHolder(new ServletListOfOrders()), "/orders.html");  // http://localhost:8080/orders.html
 
-            Server server = new Server(8080);
-            System.out.println("Listening port: " + port);
-            server.setHandler(handlers);
+        ResourceHandler resource_handler = new ResourceHandler();
+        resource_handler.setResourceBase("templates");
 
-            server.start();
-            server.join();
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[]{resource_handler, context});
 
-	}
+        Server server = new Server(8080);
+        System.out.println("Listening port: " + port);
+        server.setHandler(handlers);
+
+        server.start();
+        server.join();
+
+    }
 
 }

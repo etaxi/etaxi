@@ -38,8 +38,8 @@ public class CustomerDAOImpl implements CustomerDAO {
                                    " name = '" + customer.getName() + "'," +
                                    " phone = '" + customer.getPhone() + "'," +
                                    " login = '" + customer.getLogin() + "'," +
-                                   " password = '" + customer.getPassword() + "'" +
-                                   " tariff = '" + customer.getTariff() + "'," +
+                                   " password = '" + customer.getPassword() + "'," +
+                                   " tariff = '" + customer.getTariff() + "'" +
                                    " WHERE id=" + customer.getCustomerId());
         }
         else {

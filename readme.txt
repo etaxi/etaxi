@@ -83,8 +83,10 @@
 3. Autorization  https://stepic.org/course/146/syllabus?module=2
                  https://github.com/vitaly-chibrikov/stepic_java_webserver/tree/master/L2.1%20Authorization
 
-4. Bootstrap     http://www.w3schools.com/bootstrap/bootstrap_templates.asp
+4. Bootstrap    http://bootstrap-3.ru/
+                http://www.w3schools.com/bootstrap/bootstrap_templates.asp
+                + можно почитать про "блочную вёрстку"  http://www.websovet.com/blochnaya-verstka-urok-1
 
-5. password
+5. password     http://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
 
 6. Google Maps   https://habrahabr.ru/post/148986/

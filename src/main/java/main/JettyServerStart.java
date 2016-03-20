@@ -9,7 +9,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.*;
 
-public class Main {
+public class JettyServerStart {
 
     public static void main(String[] args) throws Exception {
 

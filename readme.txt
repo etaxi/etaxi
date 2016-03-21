@@ -106,3 +106,7 @@ Administrator
 5. password     http://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
 
 6. Google Maps   https://habrahabr.ru/post/148986/
+
+7. Freemarker    http://viralpatel.net/blogs/freemarker-servlet-tutorial-example/
+
+8. intellij idea tomcat deploy      http://devcolibri.com/4249

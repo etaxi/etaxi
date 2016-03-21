@@ -106,3 +106,5 @@ Administrator
 5. password     http://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
 
 6. Google Maps   https://habrahabr.ru/post/148986/
+
+7. Intellij IDEA деплой на Tomcat  http://devcolibri.com/4249

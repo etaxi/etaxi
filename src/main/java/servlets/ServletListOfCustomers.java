@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class ServletListOfCustomers extends HttpServlet {
 
     public void doGet(HttpServletRequest request,
@@ -74,7 +75,6 @@ public class ServletListOfCustomers extends HttpServlet {
                 .append("<th> ID </th>")
                 .append("<th> Name, Surname </th>")
                 .append("<th> Phone </th>")
-                .append("<th> Login </th>")
                 .append("<th> Password </th>")
                 .append("</tr>")
                 .append("<tbody>");
@@ -84,7 +84,6 @@ public class ServletListOfCustomers extends HttpServlet {
                     .append("<td>").append(item.getCustomerId())
                     .append("<td>").append(item.getName())
                     .append("<td>").append(item.getPhone())
-                    .append("<td>").append(item.getLogin())
                     .append("<td>").append(item.getPassword())
                     .append("<td><button type=\"button\" class=\"btn btn-delete\">Delete</button>\n")
                     .append("<button type=\"button\" class=\"btn btn-edit\">Edit</button>")

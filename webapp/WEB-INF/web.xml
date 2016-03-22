@@ -6,16 +6,19 @@
            version="3.0">
 
 
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
     <servlet>
-        <servlet-name>HelloWorldServlet</servlet-name>
-        <servlet-class>servlets.TestServlet</servlet-class>
+        <servlet-name>SessionsServletForCustomer</servlet-name>
+        <servlet-class>servlets.SessionsServletForCustomer</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>HelloWorldServlet</servlet-name>
-        <url-pattern>/myTest</url-pattern>
+        <servlet-name>SessionsServletForCustomer</servlet-name>
+        <url-pattern>/signinCustomer</url-pattern>
     </servlet-mapping>
-
 
     <servlet>
         <servlet-name>ServletNewCustomer</servlet-name>
@@ -24,8 +27,9 @@
 
     <servlet-mapping>
         <servlet-name>ServletNewCustomer</servlet-name>
-        <url-pattern>/customer.html</url-pattern>
+        <url-pattern>/customer</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <servlet-name>ServletListOfCustomers</servlet-name>
@@ -34,7 +38,7 @@
 
     <servlet-mapping>
         <servlet-name>ServletListOfCustomers</servlet-name>
-        <url-pattern>/customers.html</url-pattern>
+        <url-pattern>/customers</url-pattern>
     </servlet-mapping>
 
 

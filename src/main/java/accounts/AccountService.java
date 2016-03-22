@@ -21,7 +21,7 @@ public class AccountService {
         List<CustomerDataSet> listOfCustomers = customerDAO.getAll();
 
         for(CustomerDataSet object: listOfCustomers){
-            UserProfile newUser = new UserProfile(object.getLogin(), object.getPassword(), object.getName());
+            UserProfile newUser = new UserProfile(object.getPhone(), object.getPassword(), object.getName());
             loginToProfile.put(newUser.getLogin(), newUser);
         }
 

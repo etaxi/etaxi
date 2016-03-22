@@ -25,11 +25,19 @@ public class CustomerDAOImpl implements CustomerDAO {
         return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
             resultSet.next();
             return new CustomerDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                                       resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
+                                       resultSet.getString(4));
 
         });
     }
 
+    public CustomerDataSet getByLogin(String phone) throws SQLException {
+        return executor.executeQuery("select * from customers where phone = '" + phone + "'", resultSet -> {
+            resultSet.next();
+            return new CustomerDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                    resultSet.getString(4));
+
+        });
+    }
 
     public long update(CustomerDataSet customer) throws SQLException {
 
@@ -37,18 +45,14 @@ public class CustomerDAOImpl implements CustomerDAO {
             return executor.executeUpdate("UPDATE customers SET " +
                                    " name = '" + customer.getName() + "'," +
                                    " phone = '" + customer.getPhone() + "'," +
-                                   " login = '" + customer.getLogin() + "'," +
-                                   " password = '" + customer.getPassword() + "'," +
-                                   " tariff = '" + customer.getTariff() + "'" +
+                                   " password = '" + customer.getPassword() + "'" +
                                    " WHERE id=" + customer.getCustomerId());
         }
         else {
-            return executor.executeUpdate("INSERT INTO customers (name, phone, login, password, tariff) VALUES (" +
+            return executor.executeUpdate("INSERT INTO customers (name, phone, password) VALUES (" +
                                     "'" + customer.getName() + "'," +
                                     "'" + customer.getPhone() + "'," +
-                                    "'" + customer.getLogin() + "'," +
-                                    "'" + customer.getPassword() + "'," +
-                                    "'" + customer.getTariff() + "')");
+                                    "'" + customer.getPassword() + "')");
         }
 
     }
@@ -86,9 +90,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                         list.add(new CustomerDataSet(resultSet.getLong(1),
                                 resultSet.getString(2),
                                 resultSet.getString(3),
-                                resultSet.getString(4),
-                                resultSet.getString(5),
-                                resultSet.getString(6)));
+                                resultSet.getString(4)));
                     }
                     return list;
                 }
@@ -100,9 +102,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                             "   Id bigint(9) NOT NULL auto_increment," +
                             "   name varchar(256)," +
                             "   phone varchar(256)," +
-                            "   login varchar(256)," +
                             "   password varchar(256)," +
-                            "   tariff varchar(256)," +
                             "   PRIMARY KEY (Id)" +
                             "   );");
     }

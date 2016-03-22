@@ -125,10 +125,8 @@ public class EditCustomerDialog extends JDialog implements ActionListener
         if (customer != null) {
             customerId = customer.getCustomerId();
             txtName.setText(customer.getName());
-            txtLogin.setText(customer.getLogin());
             txtPass.setText(customer.getPassword());
             txtPhone.setText(customer.getPhone());
-            txtTariff.setText(customer.getTariff());
         }
     }
 
@@ -164,7 +162,7 @@ public class EditCustomerDialog extends JDialog implements ActionListener
 
     // Создаем клиента из заполенных полей, который можно будет записать
     public CustomerDataSet getCustomer() {
-        CustomerDataSet customer = new CustomerDataSet(customerId, txtName.getText(), txtPhone.getText() ,txtLogin.getText(), txtPass.getText(), txtTariff.getText());
+        CustomerDataSet customer = new CustomerDataSet(customerId, txtName.getText(), txtPhone.getText(), txtPass.getText());
         return customer;
     }
 }

@@ -49,13 +49,10 @@ public class CustomerModel extends AbstractTableModel
             case 1:
                 return customer.getName().toString();
             case 2:
-                return customer.getLogin();
-            case 3:
                 return customer.getPassword();
-            case 4:
-                return customer.getPhone();
             default:
-                return customer.getTariff();
+                return customer.getPhone();
+
         }
     }
 }

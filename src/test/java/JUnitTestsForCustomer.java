@@ -20,16 +20,12 @@ import static org.junit.Assert.assertTrue;
     public static final Long   DEFAULT_ID = (long) 0;
     public static final String DEFAULT_NAME = "Oleg Ivanov";
     public static final String DEFAULT_PHONE = "(+371) 26907856";
-    public static final String DEFAULT_LOGIN = "login";
     public static final String DEFAULT_PASSWORD = "password";
-    public static final String DEFAULT_TARIFF = "standard";
 
     private Long id = DEFAULT_ID;
-    private String login = DEFAULT_LOGIN;
     private String password = DEFAULT_PASSWORD;
     private String phone = DEFAULT_PHONE;
     private String name = DEFAULT_NAME;
-    private String tariff = DEFAULT_TARIFF;
 
     private CustomerBuilder() {}
 
@@ -52,16 +48,6 @@ import static org.junit.Assert.assertTrue;
         return this;
     }
 
-    public CustomerBuilder withLogin(String login) {
-        this.login = login;
-        return this;
-    }
-
-    public CustomerBuilder withNoLogin() {
-        this.login = null;
-        return this;
-    }
-
     public CustomerBuilder withPassword(String password) {
         this.password = password;
         return this;
@@ -72,29 +58,16 @@ import static org.junit.Assert.assertTrue;
         return this;
     }
 
-    public CustomerBuilder withTariff(String tariff) {
-        this.tariff = tariff;
-        return this;
-    }
-
-    public CustomerBuilder withNoTariff() {
-        this.tariff = null;
-        return this;
-    }
-
-
     public CustomerBuilder but() {
         return CustomerBuilder
                 .aCustomer()
                 .withName(name)
                 .withPhone(phone)
-                .withPassword(password)
-                .withLogin(login)
-                .withTariff(tariff);
+                .withPassword(password);
      }
 
     public CustomerDataSet build() {
-        return new CustomerDataSet(id, name, phone, login, password, tariff);
+        return new CustomerDataSet(id, name, phone, password);
     }
 }
 
@@ -112,7 +85,6 @@ public class JUnitTestsForCustomer {
 
         CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
                 .withName("Olga Zvonova")
-                .withLogin("Olga")
                 .withPassword("olgazvonova");
 
         CustomerDataSet customer = customerBuilder.build();
@@ -120,21 +92,16 @@ public class JUnitTestsForCustomer {
         long newCustmerID = aCustomerDAO().update(customer);
     }
 
-    //ToDo: don't pass test
-//    @Test
-//    public void testNew1000CustomersRecord() throws SQLException {
-//
-//        CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
-//                .withName("Olga Zvonova")
-//                .withLogin("Olga")
-//                .withPassword("olgazvonova");
-//
-//        for (int i = 1; i<=1000; i++) {
-//
-//            CustomerDataSet customer = customerBuilder.build();
-//            long newCustmerID = aCustomerDAO().update(customer);
-//        }
-//    }
+    @Test
+    public void testNew1000CustomersRecord() throws SQLException {
+
+        CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
+                .withName("Olga Zvonova")
+                .withPassword("olgazvonova");
+
+        CustomerDataSet customer = customerBuilder.build();
+        long newCustmerID = aCustomerDAO().update(customer);
+    }
 
     @Test
     public void testNewCustomersRecord() throws SQLException {
@@ -143,7 +110,6 @@ public class JUnitTestsForCustomer {
 
         CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
                 .withName("Oleg Vasiljevs")
-                .withLogin("olgVas")
                 .withPassword("olg12345");
 
         CustomerDataSet customer1 = customerBuilder.build();
@@ -163,7 +129,6 @@ public class JUnitTestsForCustomer {
                 .withId((long) 0)
                 .withName("Leskova")
                 .withPhone("(+371) 26099569")
-                .withLogin("lesk")
                 .withPassword("lesk123");
 
         CustomerDataSet customer = customerBuilder.build();
@@ -182,7 +147,6 @@ public class JUnitTestsForCustomer {
                 .withId((long) 0)
                 .withName("Leskova")
                 .withPhone("(+371) 26099569")
-                .withLogin("lesk")
                 .withPassword("lesk123");
 
         CustomerDataSet customer = customerBuilder.build();
@@ -222,6 +186,5 @@ public class JUnitTestsForCustomer {
         assertTrue(listOfCustomers.size()>0);
 
     }
-
 
 }

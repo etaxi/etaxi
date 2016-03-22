@@ -13,6 +13,9 @@ public interface CustomerDAO {
     /** Возвращает объект соответствующий записи с первичным ключом key или null */
     CustomerDataSet getById(long id) throws SQLException;
 
+    /** Возвращает объект соответствующий записи с таким логином (он же номер телефона для данной таблицы) */
+    CustomerDataSet getByLogin(String phone) throws SQLException;
+
     /** Сохраняет состояние объекта Customer в базе данных (если ID нет, создаем новую запись) */
     long update(CustomerDataSet customer) throws SQLException;
 

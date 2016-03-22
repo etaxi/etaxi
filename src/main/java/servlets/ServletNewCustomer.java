@@ -24,7 +24,6 @@ public class ServletNewCustomer extends HttpServlet {
         pageVariables.put("message", "Please, enter information about new customer!");
         pageVariables.put("name", "");
         pageVariables.put("phone", "");
-        pageVariables.put("login", "");
         pageVariables.put("password", "");
 
         response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
@@ -41,27 +40,26 @@ public class ServletNewCustomer extends HttpServlet {
 
         String name     = request.getParameter("name");
         String phone    = request.getParameter("phone");
-        String login    = request.getParameter("login");
         String password = request.getParameter("password");
 
         String message = ((name == null || name.isEmpty()) ? "name, surname; " : "") +
                          ((phone == null || phone.isEmpty()) ? "phone; " : "") +
-                         ((login == null || login.isEmpty()) ? "login; " : "") +
                          ((password == null || password.isEmpty()) ? "password; " : "");
 
+        Boolean registrationSuccessful = false;
         if (message.isEmpty()) {
 
             DBService dbService = new DBService();
             CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            CustomerDataSet newCustomer = new CustomerDataSet((long)0, name, phone, login, password, "");
+            CustomerDataSet newCustomer = new CustomerDataSet((long)0, name, phone, password);
             try {
                 newCustomer.setCustomerId(customerDAO.update(newCustomer));
                 message = "Registration successful (new customer ID: " + newCustomer.getCustomerId() + ")";
-                name = ""; phone = ""; login = ""; password = "";
+                name = ""; phone = ""; password = "";
+                registrationSuccessful = true;
             } catch (SQLException e) {
                 message = "Registration failed! Please try again!";
             }
-
         }
         else {
             message = "Please, input information in fields: " + message;
@@ -70,12 +68,14 @@ public class ServletNewCustomer extends HttpServlet {
         pageVariables.put("message", message);
         pageVariables.put("name", name);
         pageVariables.put("phone", phone);
-        pageVariables.put("login", login);
         pageVariables.put("password", password);
         response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
+
+        if (registrationSuccessful) response.sendRedirect("mainMenuForCustomer.html");
+
     }
 
 }

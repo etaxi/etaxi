@@ -3,6 +3,7 @@ package servlets;
 import dao.TaxiDAO;
 import dao.TaxiDAOImpl;
 import dataSets.TaxiDataSet;
+import freemarker.template.Configuration;
 import services.DBService;
 import templater.PageGenerator;
 
@@ -25,6 +26,8 @@ public class ServletListOfTaxi extends HttpServlet {
 //            response.setContentType("text/html;charset=utf-8");
 //            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 //        } else {
+
+            Configuration cfg = new Configuration();
 
             Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("table", "");

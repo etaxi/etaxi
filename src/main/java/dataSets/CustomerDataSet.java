@@ -7,18 +7,14 @@ public class CustomerDataSet {
 
     private Long customerId;    // Идентификатор клиента
     private String name;        // Имя, Фамилия
-    private String phone;       // Телефон
-    private String login;       // логин
+    private String phone;       // Телефон (он же логин)
     private String password;    // пароль
-    private String tariff;
 
-    public CustomerDataSet(Long customerId, String name, String phone, String login, String password, String tariff) {
+    public CustomerDataSet(Long customerId, String name, String phone, String password) {
         this.customerId = customerId;
         this.name = name;
         this.phone = phone;
-        this.login = login;
         this.password = password;
-        this.tariff = tariff;
     }
 
     public Long getCustomerId() {
@@ -45,14 +41,6 @@ public class CustomerDataSet {
         this.phone = phone;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -61,13 +49,6 @@ public class CustomerDataSet {
         this.password = password;
     }
 
-    public String getTariff() {
-        return tariff;
-    }
-
-    public void setTariff(String tariff) {
-        this.tariff = tariff;
-    }
 
     @Override
     public String toString() {
@@ -75,12 +56,9 @@ public class CustomerDataSet {
                 "\"customerId\":" + "\"" + customerId + "\"" +
                 ", \"name\":" + "\"" + name + "\"" +
                 ", \"phone\":" + "\"" + phone + "\"" +
-                ", \"login\":" + "\"" + login + "\"" +
                 ", \"password\":" + "\"" + password + "\"" +
-                ", \"tariff\":" + "\"" + tariff + "\"" +
                 '}';
     }
-
 
 }
 

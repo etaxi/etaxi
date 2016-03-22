@@ -18,8 +18,8 @@ public class JettyServerStart {
         int port = 8080;
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/users");
-        context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/sessions");
+        //context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/users");
+        context.addServlet(new ServletHolder(new SessionsServletForCustomer()), "/signinCustomer.html");
 
         context.addServlet(new ServletHolder(new ServletNewCustomer()), "/customer.html");      // http://localhost:8080/customer.html
         context.addServlet(new ServletHolder(new ServletListOfCustomers()), "/customers.html"); // http://localhost:8080/customers.html

@@ -1,7 +1,9 @@
 package servlets;
 
-import accounts.AccountService;
-import accounts.UserProfile;
+import dao.CustomerDAO;
+import dao.CustomerDAOImpl;
+import dataSets.CustomerDataSet;
+import services.DBService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,26 +13,17 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-public class SessionsServlet extends HttpServlet {
-    private final AccountService accountService;
-
-    public SessionsServlet() throws SQLException {
-        this.accountService = new AccountService();
-    }
+public class SessionsServletForCustomer extends HttpServlet {
 
     //get logged user profile
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
-        String sessionId = request.getSession().getId();
-        UserProfile profile = accountService.getUserBySessionId(sessionId);
-
-        if (profile == null) {
+        if (request.getSession().getAttribute("userCustomerId") == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        } else {
 
-            request.getSession().setAttribute("userId", profile.getLogin());
+        } else {
 
             response.setStatus(HttpServletResponse.SC_OK);
             response.sendRedirect("mainMenuForCustomer.html");
@@ -42,24 +35,32 @@ public class SessionsServlet extends HttpServlet {
                        HttpServletResponse response) throws ServletException, IOException {
 
         String login = request.getParameter("login");
-        String pass = request.getParameter("pass");
+        String password = request.getParameter("password");
 
-        if (login == null || pass == null) {
+        if (login == null || password == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        UserProfile profile = accountService.getUserByLogin(login);
-        if (profile == null || !profile.getPass().equals(pass)) {
+        DBService dbService = new DBService();
+        CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
+        CustomerDataSet customerDataSet = null;
+        try {
+             customerDataSet = customerDAO.getByLogin(login);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (customerDataSet == null || !customerDataSet.getPassword().equals(password)) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
-        accountService.addSession(request.getSession().getId(), profile);
-
-        request.getSession().setAttribute("userId", profile.getLogin());
+        // сохраняем логин (телефон) пользователя в сессию, для дальнейшем идентификации клиента в системе
+        request.getSession().setAttribute("userCustomerId", customerDataSet.getPhone());
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.sendRedirect("mainMenuForCustomer.html");
@@ -68,13 +69,13 @@ public class SessionsServlet extends HttpServlet {
     //sign out
     public void doDelete(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        String sessionId = request.getSession().getId();
-        UserProfile profile = accountService.getUserBySessionId(sessionId);
-        if (profile == null) {
+
+        if (request.getSession().getAttribute("userCustomerId") == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
         } else {
-            accountService.deleteSession(sessionId);
+            request.getSession().setAttribute("userCustomerId", null);
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Goodbye!");
             response.setStatus(HttpServletResponse.SC_OK);

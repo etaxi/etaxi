@@ -21,12 +21,12 @@ public class ServletNewCustomer extends HttpServlet {
                       HttpServletResponse response) throws ServletException, IOException {
 
         Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("message", "Please, enter information about new customer!");
-        pageVariables.put("name", "");
-        pageVariables.put("phone", "");
-        pageVariables.put("password", "");
-
-        response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
+//        pageVariables.put("message", "Please, enter information about new customer!");
+//        pageVariables.put("name", "");
+//        pageVariables.put("phone", "");
+//        pageVariables.put("password", "");
+//
+//        response.getWriter().println(PageGenerator.instance().getPage("customer.html", pageVariables));
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);

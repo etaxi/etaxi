@@ -1,8 +1,8 @@
 import dao.TaxiDAO;
-import dao.TaxiDAOImpl;
-import dataSets.TaxiDataSet;
+import dao.jdbc.TaxiDAOImpl;
+import entity.Taxi;
 import org.junit.Test;
-import services.DBService;
+import dao.jdbc.DBService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -87,8 +87,8 @@ class TaxiBuilder {
                 .withLogin(login);
     }
 
-    public TaxiDataSet build() {
-        return new TaxiDataSet(id, name, car, phone, login, password);
+    public Taxi build() {
+        return new Taxi(id, name, car, phone, login, password);
     }
 }
 
@@ -108,7 +108,7 @@ public class JUnitTestForTaxi {
                 .withLogin("Lyons")
                 .withPassword("lybutton");
 
-        TaxiDataSet taxi = taxiBuilder.build();
+        Taxi taxi = taxiBuilder.build();
         long newTaxiID = aTaxiDAO().update(taxi);
     }
 
@@ -123,10 +123,10 @@ public class JUnitTestForTaxi {
                 .withLogin("Vettel")
                 .withPassword("sebastian12345");
 
-        TaxiDataSet taxi1 = taxiBuilder.build();
+        Taxi taxi1 = taxiBuilder.build();
         long newTaxiID1 = taxiDAO.update(taxi1);
 
-        TaxiDataSet taxi2 = TaxiBuilder.aTaxi().build();  //USE "DEFAULT USER"
+        Taxi taxi2 = TaxiBuilder.aTaxi().build();  //USE "DEFAULT USER"
         long newTaxiID2 = taxiDAO.update(taxi2);
 
     }
@@ -144,7 +144,7 @@ public class JUnitTestForTaxi {
                 .withLogin("hamilton")
                 .withPassword("lewis123");
 
-        TaxiDataSet taxi = taxiBuilder.build();
+        Taxi taxi = taxiBuilder.build();
         taxi.setTaxiId(taxiDAO.update(taxi));
         taxi.setName("Jenson Alexander Lyons Button");
         taxiDAO.update(taxi);
@@ -163,10 +163,10 @@ public class JUnitTestForTaxi {
                 .withLogin("kimi")
                 .withPassword("matki");
 
-        TaxiDataSet taxi = taxiBuilder.build();
+        Taxi taxi = taxiBuilder.build();
         taxi.setTaxiId(taxiDAO.update(taxi));
 
-        TaxiDataSet taxiGetById = taxiDAO.getById(taxi.getTaxiId());
+        Taxi taxiGetById = taxiDAO.getById(taxi.getTaxiId());
         assertEquals(taxi.getTaxiId(), taxiGetById.getTaxiId());
     }
 
@@ -175,7 +175,7 @@ public class JUnitTestForTaxi {
 
         TaxiDAO taxiDAO = aTaxiDAO();
 
-        TaxiDataSet taxi = TaxiBuilder.aTaxi().build();
+        Taxi taxi = TaxiBuilder.aTaxi().build();
         taxi.setTaxiId(taxiDAO.update(taxi));
 
         int countOfTaxisBeforeDeleteOperation = taxiDAO.getAll().size();
@@ -193,10 +193,10 @@ public class JUnitTestForTaxi {
 
         TaxiDAO taxiDAO = aTaxiDAO();
 
-        TaxiDataSet taxi = TaxiBuilder.aTaxi().build();
+        Taxi taxi = TaxiBuilder.aTaxi().build();
         taxiDAO.update(taxi);
 
-        List<TaxiDataSet> listOfTaxis = taxiDAO.getAll();
+        List<Taxi> listOfTaxis = taxiDAO.getAll();
         assertTrue(listOfTaxis.size()>0);
 
     }

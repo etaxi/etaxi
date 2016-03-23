@@ -1,9 +1,9 @@
 package servlets;
 
 import dao.OrderDAO;
-import dao.OrderDAOImpl;
-import dataSets.OrderDataSet;
-import services.DBService;
+import dao.jdbc.OrderDAOImpl;
+import entity.Order;
+import dao.jdbc.DBService;
 import templater.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -51,7 +51,7 @@ public class ServletListOfOrders extends HttpServlet {
             String htmlTable = "";
 
             try {
-                List<OrderDataSet> listOfOrders = orderDAO.getAll();
+                List<Order> listOfOrders = orderDAO.getAll();
                 htmlTable = generateHTMLTableForOrders(listOfOrders);
 
             } catch (SQLException e) {
@@ -66,7 +66,7 @@ public class ServletListOfOrders extends HttpServlet {
         }
     //}
 
-    private String generateHTMLTableForOrders(List<OrderDataSet> listOfOrders) {
+    private String generateHTMLTableForOrders(List<Order> listOfOrders) {
 
         StringBuilder htmlString = new StringBuilder("<table border = 1 width=\"100%\">");
         htmlString.append("<tr>")
@@ -83,7 +83,7 @@ public class ServletListOfOrders extends HttpServlet {
                 .append("<th> Feedback </th>")
                 .append("</tr>");
 
-        for (OrderDataSet item : listOfOrders) {
+        for (Order item : listOfOrders) {
             htmlString.append("<tr>")
                     .append("<td>").append(item.getOrderId())
                     .append("<td>").append(item.getCustomerId())

@@ -1,7 +1,6 @@
-package services;
+package dao.jdbc;
 
 import dao.*;
-import executor.Executor;
 
 import java.sql.Connection;
 import java.sql.Driver;

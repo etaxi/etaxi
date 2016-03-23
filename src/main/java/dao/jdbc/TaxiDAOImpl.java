@@ -1,7 +1,7 @@
-package dao;
+package dao.jdbc;
 
-import dataSets.TaxiDataSet;
-import executor.Executor;
+import dao.TaxiDAO;
+import entity.Taxi;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Проект etaxi
- * Реализация управления объектами класса TaxiDataSet
+ * Реализация управления объектами класса Taxi
  * */
 public class TaxiDAOImpl implements TaxiDAO {
 
@@ -21,16 +21,16 @@ public class TaxiDAOImpl implements TaxiDAO {
 
     }
 
-    public TaxiDataSet getById(long id) throws SQLException {
+    public Taxi getById(long id) throws SQLException {
         return executor.executeQuery("select Id, name, car, phone, login, password from taxis where Id=" + id, resultSet -> {
             resultSet.next();
-            return new TaxiDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+            return new Taxi(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
                     resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
         });
     }
 
 
-    public long update(TaxiDataSet taxi) throws SQLException {
+    public long update(Taxi taxi) throws SQLException {
 
         if (taxi.getTaxiId() > 0) {
             return executor.executeUpdate("UPDATE taxis SET " +
@@ -52,7 +52,7 @@ public class TaxiDAOImpl implements TaxiDAO {
 
     }
 
-    public void delete(TaxiDataSet taxi) throws SQLException {
+    public void delete(Taxi taxi) throws SQLException {
 
         Connection connection = executor.getConnection();
         try {
@@ -77,12 +77,12 @@ public class TaxiDAOImpl implements TaxiDAO {
 
     }
 
-    public List<TaxiDataSet> getAll() throws SQLException {
+    public List<Taxi> getAll() throws SQLException {
         return executor.executeQuery("select Id, name, car, phone, login, password from taxis ",
                 resultSet -> {
-                    List<TaxiDataSet> list = new ArrayList<TaxiDataSet>();
+                    List<Taxi> list = new ArrayList<Taxi>();
                     while (resultSet.next()) {
-                        list.add(new TaxiDataSet(resultSet.getLong(1),
+                        list.add(new Taxi(resultSet.getLong(1),
                                 resultSet.getString(2),
                                 resultSet.getString(3),
                                 resultSet.getString(4),

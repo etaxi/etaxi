@@ -1,4 +1,4 @@
-package business;
+package business.direction;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;

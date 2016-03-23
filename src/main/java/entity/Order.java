@@ -1,11 +1,11 @@
-package dataSets;
+package entity;
 
 import java.sql.Timestamp;
 
 /** Проект etaxi
  * Класс для хранения данных заказа
  */
-public class OrderDataSet {
+public class Order {
 
     public enum OrderStatus {WAITING, DRIVING, DELIVERED}
 
@@ -32,9 +32,9 @@ public class OrderDataSet {
     // отзыв
     private String feedback;
 
-    public OrderDataSet(Long orderId, Long customerId, Timestamp dateTime, OrderStatus orderStatus,
-                        String fromAdress, String toAdress, Long taxiId, double distance,
-                        double price, int rate, String feedback) {
+    public Order(Long orderId, Long customerId, Timestamp dateTime, OrderStatus orderStatus,
+                 String fromAdress, String toAdress, Long taxiId, double distance,
+                 double price, int rate, String feedback) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.dateTime = dateTime;

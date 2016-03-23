@@ -1,10 +1,10 @@
 package servlets;
 
 import dao.TaxiDAO;
-import dao.TaxiDAOImpl;
-import dataSets.TaxiDataSet;
+import dao.jdbc.TaxiDAOImpl;
+import entity.Taxi;
 import freemarker.template.Configuration;
-import services.DBService;
+import dao.jdbc.DBService;
 import templater.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -54,7 +54,7 @@ public class ServletListOfTaxi extends HttpServlet {
             String htmlTable = "";
 
             try {
-                List<TaxiDataSet> listOfTaxi = taxiDAO.getAll();
+                List<Taxi> listOfTaxi = taxiDAO.getAll();
                 htmlTable = generateHTMLTableForTaxi(listOfTaxi);
 
             } catch (SQLException e) {
@@ -69,7 +69,7 @@ public class ServletListOfTaxi extends HttpServlet {
         }
     //}
 
-    private String generateHTMLTableForTaxi(List<TaxiDataSet> listOfTaxi) {
+    private String generateHTMLTableForTaxi(List<Taxi> listOfTaxi) {
 
         StringBuilder htmlString = new StringBuilder("<table border = 1 width=\"100%\">");
         htmlString.append("<tr>")
@@ -81,7 +81,7 @@ public class ServletListOfTaxi extends HttpServlet {
                 .append("<th> Password </th>")
                 .append("</tr>");
 
-        for (TaxiDataSet item : listOfTaxi) {
+        for (Taxi item : listOfTaxi) {
             htmlString.append("<tr>")
                     .append("<td>").append(item.getTaxiId())
                     .append("<td>").append(item.getName())

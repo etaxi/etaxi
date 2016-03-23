@@ -1,28 +1,28 @@
 package dao;
 
-import dataSets.TaxiDataSet;
+import entity.Taxi;
 
 import java.sql.SQLException;
 import java.util.List;
 
 /** Проект etaxi
- * Интерфейс для реализации управления объектами класса TaxiDataSet
+ * Интерфейс для реализации управления объектами класса Taxi
  */
 public interface TaxiDAO {
 
     /** Возвращает объект соответствующий записи с первичным ключом key или null */
-    TaxiDataSet getById(long id) throws SQLException;
+    Taxi getById(long id) throws SQLException;
 
     /** Сохраняет состояние объекта Customer в базе данных (если ID нет, создаем новую запись) */
-    long update(TaxiDataSet customer) throws SQLException;
+    long update(Taxi customer) throws SQLException;
 
     /** Удаляет запись об объекте из базы данных */
-    void delete(TaxiDataSet customer) throws SQLException;
+    void delete(Taxi customer) throws SQLException;
 
     /** Возвращает список объектов соответствующих всем записям в базе данных */
-    List<TaxiDataSet> getAll() throws SQLException;
+    List<Taxi> getAll() throws SQLException;
 
-    /** Создает таблицу в базе данных для хранения объектов класса TaxiDataSet */
+    /** Создает таблицу в базе данных для хранения объектов класса Taxi */
     void createTable() throws SQLException;
 
 }

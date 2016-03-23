@@ -1,5 +1,5 @@
 import org.junit.Test;
-import services.DBService;
+import dao.jdbc.DBService;
 
 import java.sql.SQLException;
 

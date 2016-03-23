@@ -1,9 +1,9 @@
 
 import dao.CustomerDAO;
-import dao.CustomerDAOImpl;
-import dataSets.CustomerDataSet;
+import dao.jdbc.CustomerDAOImpl;
+import entity.Customer;
 import org.junit.Test;
-import services.DBService;
+import dao.jdbc.DBService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -66,8 +66,8 @@ import static org.junit.Assert.assertTrue;
                 .withPassword(password);
      }
 
-    public CustomerDataSet build() {
-        return new CustomerDataSet(id, name, phone, password);
+    public Customer build() {
+        return new Customer(id, name, phone, password);
     }
 }
 
@@ -87,7 +87,7 @@ public class JUnitTestsForCustomer {
                 .withName("Olga Zvonova")
                 .withPassword("olgazvonova");
 
-        CustomerDataSet customer = customerBuilder.build();
+        Customer customer = customerBuilder.build();
 
         long newCustmerID = aCustomerDAO().update(customer);
     }
@@ -99,7 +99,7 @@ public class JUnitTestsForCustomer {
                 .withName("Olga Zvonova")
                 .withPassword("olgazvonova");
 
-        CustomerDataSet customer = customerBuilder.build();
+        Customer customer = customerBuilder.build();
         long newCustmerID = aCustomerDAO().update(customer);
     }
 
@@ -112,10 +112,10 @@ public class JUnitTestsForCustomer {
                 .withName("Oleg Vasiljevs")
                 .withPassword("olg12345");
 
-        CustomerDataSet customer1 = customerBuilder.build();
+        Customer customer1 = customerBuilder.build();
         long newCustmerID1 = customerDAO.update(customer1);
 
-        CustomerDataSet customer2 = customerBuilder.aCustomer().build();  //USE "DEFAULT USER"
+        Customer customer2 = customerBuilder.aCustomer().build();  //USE "DEFAULT USER"
         long newCustmerID2 = customerDAO.update(customer2);
 
     }
@@ -131,7 +131,7 @@ public class JUnitTestsForCustomer {
                 .withPhone("(+371) 26099569")
                 .withPassword("lesk123");
 
-        CustomerDataSet customer = customerBuilder.build();
+        Customer customer = customerBuilder.build();
         customer.setCustomerId(customerDAO.update(customer));
         customer.setName("Olga Leskova");
         customerDAO.update(customer);
@@ -149,10 +149,10 @@ public class JUnitTestsForCustomer {
                 .withPhone("(+371) 26099569")
                 .withPassword("lesk123");
 
-        CustomerDataSet customer = customerBuilder.build();
+        Customer customer = customerBuilder.build();
         customer.setCustomerId(customerDAO.update(customer));
 
-        CustomerDataSet customerGetById = customerDAO.getById(customer.getCustomerId());
+        Customer customerGetById = customerDAO.getById(customer.getCustomerId());
         assertEquals(customer.getCustomerId(), customerGetById.getCustomerId());
     }
 
@@ -161,7 +161,7 @@ public class JUnitTestsForCustomer {
 
         CustomerDAO customerDAO = aCustomerDAO();
 
-        CustomerDataSet customer = CustomerBuilder.aCustomer().build();
+        Customer customer = CustomerBuilder.aCustomer().build();
         customer.setCustomerId(customerDAO.update(customer));
 
         int countOfCustomersBeforeDeleteOperation = customerDAO.getAll().size();
@@ -179,10 +179,10 @@ public class JUnitTestsForCustomer {
 
         CustomerDAO customerDAO = aCustomerDAO();
 
-        CustomerDataSet customer = CustomerBuilder.aCustomer().build();
+        Customer customer = CustomerBuilder.aCustomer().build();
         customerDAO.update(customer);
 
-        List<CustomerDataSet> listOfCustomers = customerDAO.getAll();
+        List<Customer> listOfCustomers = customerDAO.getAll();
         assertTrue(listOfCustomers.size()>0);
 
     }

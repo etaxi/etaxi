@@ -1,4 +1,4 @@
-package services;
+package dao.jdbc;
 
 /** Проект etaxi
  * * класс для определения исключений

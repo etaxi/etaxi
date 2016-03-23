@@ -1,16 +1,16 @@
-package dataSets;
+package entity;
 
 /** Проект etaxi
  * Класс для хранения данных клиента
  */
-public class CustomerDataSet {
+public class Customer {
 
     private Long customerId;    // Идентификатор клиента
     private String name;        // Имя, Фамилия
     private String phone;       // Телефон (он же логин)
     private String password;    // пароль
 
-    public CustomerDataSet(Long customerId, String name, String phone, String password) {
+    public Customer(Long customerId, String name, String phone, String password) {
         this.customerId = customerId;
         this.name = name;
         this.phone = phone;

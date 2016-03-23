@@ -1,9 +1,9 @@
-package dataSets;
+package entity;
 
 /** Проект etaxi
  * Класс для хранения данных такси
  */
-public class TaxiDataSet {
+public class Taxi {
 
     private Long   taxiId;     // Идентификатор такси
     private String name;     // Имя, Фамилия
@@ -15,7 +15,7 @@ public class TaxiDataSet {
     private String password; // пароль
     private double rating;   // рейтинг по среднему значению отзывов
 
-    public TaxiDataSet(Long taxiId, String name, String car, String phone, String login, String password) {
+    public Taxi(Long taxiId, String name, String car, String phone, String login, String password) {
         this.taxiId = taxiId;
         this.name = name;
         this.car = car;

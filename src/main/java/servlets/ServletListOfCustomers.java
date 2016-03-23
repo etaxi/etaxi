@@ -1,9 +1,9 @@
 package servlets;
 
 import dao.CustomerDAO;
-import dao.CustomerDAOImpl;
-import dataSets.CustomerDataSet;
-import services.DBService;
+import dao.jdbc.CustomerDAOImpl;
+import entity.Customer;
+import dao.jdbc.DBService;
 import templater.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -52,7 +52,7 @@ public class ServletListOfCustomers extends HttpServlet {
             String htmlTable = "";
 
             try {
-                List<CustomerDataSet> listOfCustomers = customerDAO.getAll();
+                List<Customer> listOfCustomers = customerDAO.getAll();
                 htmlTable = generateHTMLTableForCustomers(listOfCustomers);
 
             } catch (SQLException e) {
@@ -68,7 +68,7 @@ public class ServletListOfCustomers extends HttpServlet {
         }
   //  }
 
-    private String generateHTMLTableForCustomers(List<CustomerDataSet> listOfCustomers) {
+    private String generateHTMLTableForCustomers(List<Customer> listOfCustomers) {
 
         StringBuilder htmlString = new StringBuilder("<table class=\"table\">");
         htmlString.append("<thead><tr>")
@@ -79,7 +79,7 @@ public class ServletListOfCustomers extends HttpServlet {
                 .append("</tr>")
                 .append("<tbody>");
 
-        for (CustomerDataSet item : listOfCustomers) {
+        for (Customer item : listOfCustomers) {
             htmlString.append("<tr>")
                     .append("<td>").append(item.getCustomerId())
                     .append("<td>").append(item.getName())

@@ -1,9 +1,9 @@
 package servlets;
 
 import dao.CustomerDAO;
-import dao.CustomerDAOImpl;
-import dataSets.CustomerDataSet;
-import services.DBService;
+import dao.jdbc.CustomerDAOImpl;
+import entity.Customer;
+import dao.jdbc.DBService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,22 +45,22 @@ public class SessionsServletForCustomer extends HttpServlet {
 
         DBService dbService = new DBService();
         CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-        CustomerDataSet customerDataSet = null;
+        Customer customer = null;
         try {
-             customerDataSet = customerDAO.getByLogin(login);
+             customer = customerDAO.getByLogin(login);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        if (customerDataSet == null || !customerDataSet.getPassword().equals(password)) {
+        if (customer == null || !customer.getPassword().equals(password)) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
         // сохраняем логин (телефон) пользователя в сессию, для дальнейшем идентификации клиента в системе
-        request.getSession().setAttribute("userCustomerId", customerDataSet.getPhone());
+        request.getSession().setAttribute("userCustomerId", customer.getPhone());
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.sendRedirect("mainMenuForCustomer.html");

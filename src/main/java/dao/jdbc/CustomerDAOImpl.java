@@ -1,7 +1,7 @@
-package dao;
+package dao.jdbc;
 
-import dataSets.CustomerDataSet;
-import executor.Executor;
+import dao.CustomerDAO;
+import entity.Customer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Проект etaxi
- * Реализация управления объектами класса CustomerDataSet
+ * Реализация управления объектами класса Customer
  * */
 public class CustomerDAOImpl implements CustomerDAO {
 
@@ -21,25 +21,25 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     }
 
-    public CustomerDataSet getById(long id) throws SQLException {
+    public Customer getById(long id) throws SQLException {
         return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
             resultSet.next();
-            return new CustomerDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+            return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
                                        resultSet.getString(4));
 
         });
     }
 
-    public CustomerDataSet getByLogin(String phone) throws SQLException {
+    public Customer getByLogin(String phone) throws SQLException {
         return executor.executeQuery("select * from customers where phone = '" + phone + "'", resultSet -> {
             resultSet.next();
-            return new CustomerDataSet(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+            return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
                     resultSet.getString(4));
 
         });
     }
 
-    public long update(CustomerDataSet customer) throws SQLException {
+    public long update(Customer customer) throws SQLException {
 
         if (customer.getCustomerId() > 0) {
             return executor.executeUpdate("UPDATE customers SET " +
@@ -57,7 +57,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     }
 
-    public void delete(CustomerDataSet customer) throws SQLException {
+    public void delete(Customer customer) throws SQLException {
 
         Connection connection = executor.getConnection();
         try {
@@ -82,12 +82,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     }
 
-    public List<CustomerDataSet> getAll() throws SQLException {
+    public List<Customer> getAll() throws SQLException {
         return executor.executeQuery("select * from customers ",
                 resultSet -> {
-                    List<CustomerDataSet> list = new ArrayList<CustomerDataSet>();
+                    List<Customer> list = new ArrayList<Customer>();
                     while (resultSet.next()) {
-                        list.add(new CustomerDataSet(resultSet.getLong(1),
+                        list.add(new Customer(resultSet.getLong(1),
                                 resultSet.getString(2),
                                 resultSet.getString(3),
                                 resultSet.getString(4)));

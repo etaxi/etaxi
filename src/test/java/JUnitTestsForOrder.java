@@ -1,9 +1,12 @@
 import dao.*;
-import dataSets.CustomerDataSet;
-import dataSets.OrderDataSet;
-import dataSets.TaxiDataSet;
+import dao.jdbc.CustomerDAOImpl;
+import dao.jdbc.OrderDAOImpl;
+import dao.jdbc.TaxiDAOImpl;
+import entity.Customer;
+import entity.Order;
+import entity.Taxi;
 import org.junit.Test;
-import services.DBService;
+import dao.jdbc.DBService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 class OrderBuilder {
 
     public static final Long DEFAULT_ID = (long) 0;
-    public static final OrderDataSet.OrderStatus DEFAULT_ORDERSTATUS = OrderDataSet.OrderStatus.WAITING;
+    public static final Order.OrderStatus DEFAULT_ORDERSTATUS = Order.OrderStatus.WAITING;
     public static final String DEFAULT_FROMADRESS = "Riga, Elizabetes 123";
     public static final String DEFAULT_TOADRESS = "Riga, Skanstes 78b";
     public static final Double DEFAULT_DISTANCE = 100.00;
@@ -28,7 +31,7 @@ class OrderBuilder {
     public static final String DEFAULT_FEEDBACK = "Wonderful travel";
 
     private Long id = DEFAULT_ID;
-    private OrderDataSet.OrderStatus orderStatus = DEFAULT_ORDERSTATUS;
+    private Order.OrderStatus orderStatus = DEFAULT_ORDERSTATUS;
     private String fromAdress = DEFAULT_FROMADRESS;
     private String toAdress = DEFAULT_TOADRESS;
     private Double distance = DEFAULT_DISTANCE;
@@ -51,7 +54,7 @@ class OrderBuilder {
         return this;
     }
 
-    public OrderBuilder withOrderStatus(OrderDataSet.OrderStatus orderStatus) {
+    public OrderBuilder withOrderStatus(Order.OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
         return this;
     }
@@ -123,8 +126,8 @@ class OrderBuilder {
                 .withRate(rate);
     }
 
-    public OrderDataSet build() {
-        return new OrderDataSet(
+    public Order build() {
+        return new Order(
                 id, customerId, dateTime, orderStatus, fromAdress, toAdress, taxiId, distance, price, rate, feedback);
     }
 }
@@ -152,9 +155,9 @@ public class JUnitTestsForOrder {
                 .withPrice(12.45)
                 .withDistance(8.9)
                 .withDate(getCurrentDate())
-                .withOrderStatus(OrderDataSet.OrderStatus.DELIVERED);
+                .withOrderStatus(Order.OrderStatus.DELIVERED);
 
-        OrderDataSet order = orderBuilder.build();
+        Order order = orderBuilder.build();
         long newOrderID = aOrderDAO().update(order);
     }
 
@@ -170,12 +173,12 @@ public class JUnitTestsForOrder {
                 .withPrice(7.6)
                 .withDistance(9.9)
                 .withDate(getCurrentDate())
-                .withOrderStatus(OrderDataSet.OrderStatus.WAITING);
+                .withOrderStatus(Order.OrderStatus.WAITING);
 
-        OrderDataSet order1 = orderBuilder.build();
+        Order order1 = orderBuilder.build();
         long newOrderID1 = orderDAO.update(order1);
 
-        OrderDataSet order2 = orderBuilder.aOrder().build();  //USE "DEFAULT ORDER"
+        Order order2 = orderBuilder.aOrder().build();  //USE "DEFAULT ORDER"
         long newOrderID2 = orderDAO.update(order2);
 
     }
@@ -192,12 +195,12 @@ public class JUnitTestsForOrder {
                 .withDistance(12.0)
                 .withDate(getCurrentDate())
                 .withFeedback("Good driver!")
-                .withOrderStatus(OrderDataSet.OrderStatus.WAITING);
+                .withOrderStatus(Order.OrderStatus.WAITING);
 
-        OrderDataSet order = orderBuilder.build();
+        Order order = orderBuilder.build();
 
         order.setOrderId(orderDAO.update(order));
-        order.setOrderStatus(OrderDataSet.OrderStatus.DELIVERED);
+        order.setOrderStatus(Order.OrderStatus.DELIVERED);
         orderDAO.update(order);
     }
 
@@ -212,12 +215,12 @@ public class JUnitTestsForOrder {
                 .withPrice(5.0)
                 .withDistance(12.0)
                 .withDate(getCurrentDate())
-                .withOrderStatus(OrderDataSet.OrderStatus.WAITING);
+                .withOrderStatus(Order.OrderStatus.WAITING);
 
-        OrderDataSet order = orderBuilder.build();
+        Order order = orderBuilder.build();
         order.setOrderId(orderDAO.update(order));
 
-        OrderDataSet orderGetById = orderDAO.getById(order.getOrderId());
+        Order orderGetById = orderDAO.getById(order.getOrderId());
         assertTrue(order.getOrderId() == orderGetById.getOrderId());
     }
 
@@ -226,7 +229,7 @@ public class JUnitTestsForOrder {
 
         OrderDAO orderDAO = aOrderDAO();
 
-        OrderDataSet order = OrderBuilder.aOrder().build();
+        Order order = OrderBuilder.aOrder().build();
         order.setOrderId(orderDAO.update(order));
 
         int countOfOrdersBeforeDeleteOperation = orderDAO.getAll().size();
@@ -244,10 +247,10 @@ public class JUnitTestsForOrder {
 
         OrderDAO orderDAO = aOrderDAO();
 
-        OrderDataSet order = OrderBuilder.aOrder().build();
+        Order order = OrderBuilder.aOrder().build();
         orderDAO.update(order);
 
-        List<OrderDataSet> listOfOrders = orderDAO.getAll();
+        List<Order> listOfOrders = orderDAO.getAll();
         assertTrue(listOfOrders.size()>0);
 
     }
@@ -259,11 +262,11 @@ public class JUnitTestsForOrder {
         Connection connection = dbService.getMysqlConnection();
         String databaseName = dbService.getDatabaseName();
 
-        CustomerDataSet customer = CustomerBuilder.aCustomer().build();
+        Customer customer = CustomerBuilder.aCustomer().build();
         CustomerDAO customerDAO = new CustomerDAOImpl(connection, databaseName);
         customer.setCustomerId(customerDAO.update(customer));
 
-        TaxiDataSet taxi = TaxiBuilder.aTaxi().build();
+        Taxi taxi = TaxiBuilder.aTaxi().build();
         TaxiDAO taxiDAO = new TaxiDAOImpl(connection, databaseName);
         taxi.setTaxiId(taxiDAO.update(taxi));
 
@@ -275,9 +278,9 @@ public class JUnitTestsForOrder {
                 .withPrice(23.05)
                 .withDistance(14.5)
                 .withDate(getCurrentDate())
-                .withOrderStatus(OrderDataSet.OrderStatus.DELIVERED);
+                .withOrderStatus(Order.OrderStatus.DELIVERED);
 
-        OrderDataSet order = orderBuilder.build();
+        Order order = orderBuilder.build();
         long newOrderID = aOrderDAO().update(order);
     }
 

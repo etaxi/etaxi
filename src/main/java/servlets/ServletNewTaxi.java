@@ -1,9 +1,9 @@
 package servlets;
 
 import dao.TaxiDAO;
-import dao.TaxiDAOImpl;
-import dataSets.TaxiDataSet;
-import services.DBService;
+import dao.jdbc.TaxiDAOImpl;
+import entity.Taxi;
+import dao.jdbc.DBService;
 import templater.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -59,7 +59,7 @@ public class ServletNewTaxi extends HttpServlet {
 
             DBService dbService = new DBService();
             TaxiDAO taxiDAO = new TaxiDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            TaxiDataSet newTaxi = new TaxiDataSet((long)0, name, car, phone, login, password);
+            Taxi newTaxi = new Taxi((long)0, name, car, phone, login, password);
             try {
                 newTaxi.setTaxiId(taxiDAO.update(newTaxi));
                 message = "Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";

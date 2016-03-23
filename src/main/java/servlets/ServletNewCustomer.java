@@ -1,9 +1,9 @@
 package servlets;
 
 import dao.CustomerDAO;
-import dao.CustomerDAOImpl;
-import dataSets.CustomerDataSet;
-import services.DBService;
+import dao.jdbc.CustomerDAOImpl;
+import entity.Customer;
+import dao.jdbc.DBService;
 import templater.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -51,7 +51,7 @@ public class ServletNewCustomer extends HttpServlet {
 
             DBService dbService = new DBService();
             CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            CustomerDataSet newCustomer = new CustomerDataSet((long)0, name, phone, password);
+            Customer newCustomer = new Customer((long)0, name, phone, password);
             try {
                 newCustomer.setCustomerId(customerDAO.update(newCustomer));
                 message = "Registration successful (new customer ID: " + newCustomer.getCustomerId() + ")";

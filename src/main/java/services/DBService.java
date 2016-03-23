@@ -16,7 +16,7 @@ import java.util.Properties;
  */
 
 public class DBService {
-
+    private static final String DB_CONFIG_FILE = "config.properties";
     private final Connection connection;
     private String databaseName;
 
@@ -78,9 +78,11 @@ public class DBService {
         Properties property = new Properties();
 
         try {
+            property.load(DBService.class.getClassLoader().getResourceAsStream(DB_CONFIG_FILE));
 
-            fis = new FileInputStream("src/main/resources/config.properties");
-            property.load(fis);
+            //fis = new FileInputStream("src/main/resources/config.properties");
+            //property.load(fis);
+
             String host = property.getProperty("db.host");
             String port = property.getProperty("db.port");
             String login = property.getProperty("db.login");
@@ -102,7 +104,7 @@ public class DBService {
             return url.toString();
 
         } catch (IOException e) {
-            System.err.println("Error: properties file not found!");
+            System.out.println("Exception while reading JDBC configuration from file = " + DB_CONFIG_FILE);
             return null;
         }
     }

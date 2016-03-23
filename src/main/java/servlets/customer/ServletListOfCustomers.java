@@ -1,4 +1,4 @@
-package servlets;
+package servlets.customer;
 
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
@@ -30,7 +30,7 @@ public class ServletListOfCustomers extends HttpServlet {
             Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("table", "");
 
-            response.getWriter().println(PageGenerator.instance().getPage("customers.html", pageVariables));
+            response.getWriter().println(PageGenerator.instance().getPage("mainMenuForCustomer.html", pageVariables));
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
         }
@@ -59,9 +59,8 @@ public class ServletListOfCustomers extends HttpServlet {
                 e.printStackTrace();
             }
 
-
             pageVariables.put("table", htmlTable);
-            response.getWriter().println(PageGenerator.instance().getPage("customers.html", pageVariables));
+            response.getWriter().println(PageGenerator.instance().getPage("mainMenuForCustomer.html", pageVariables));
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);

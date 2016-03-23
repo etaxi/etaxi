@@ -8,6 +8,10 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.*;
+import servlets.customer.ServletListOfCustomers;
+import servlets.customer.ServletNewCustomer;
+import servlets.customer.ServletNewOrder;
+import servlets.customer.SessionsServletForCustomer;
 
 public class JettyServerStart {
 

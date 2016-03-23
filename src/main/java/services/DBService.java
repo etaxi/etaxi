@@ -80,9 +80,6 @@ public class DBService {
         try {
             property.load(DBService.class.getClassLoader().getResourceAsStream(DB_CONFIG_FILE));
 
-            //fis = new FileInputStream("src/main/resources/config.properties");
-            //property.load(fis);
-
             String host = property.getProperty("db.host");
             String port = property.getProperty("db.port");
             String login = property.getProperty("db.login");
@@ -110,12 +107,11 @@ public class DBService {
     }
 
     private String getDatabaseNameFromFile(){
-        FileInputStream fis;
+
         Properties property = new Properties();
 
         try {
-            fis = new FileInputStream("src/main/resources/config.properties");
-            property.load(fis);
+            property.load(DBService.class.getClassLoader().getResourceAsStream(DB_CONFIG_FILE));
             return property.getProperty("db.database");
 
         } catch (IOException e) {

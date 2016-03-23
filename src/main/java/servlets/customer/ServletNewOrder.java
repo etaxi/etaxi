@@ -1,4 +1,4 @@
-package servlets;
+package servlets.customer;
 
 import dao.OrderDAO;
 import dao.OrderDAOImpl;

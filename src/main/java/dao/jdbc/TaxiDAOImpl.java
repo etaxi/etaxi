@@ -29,6 +29,14 @@ public class TaxiDAOImpl implements TaxiDAO {
         });
     }
 
+    public Taxi getByLogin(String login) throws SQLException {
+        return executor.executeQuery("select * from taxis where login = '" + login + "'", resultSet -> {
+            resultSet.next();
+            return new Taxi(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                    resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
+
+        });
+    }
 
     public long update(Taxi taxi) throws SQLException {
 

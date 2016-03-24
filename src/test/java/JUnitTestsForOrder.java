@@ -6,7 +6,7 @@ import entity.Customer;
 import entity.Order;
 import entity.Taxi;
 import org.junit.Test;
-import dao.jdbc.DBService;
+import dao.jdbc.DBConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -141,8 +141,8 @@ public class JUnitTestsForOrder {
 
     public OrderDAO aOrderDAO() {
 
-        DBService dbService = new DBService();
-        return (new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName()));
+        DBConnection dbConnection = new DBConnection();
+        return (new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName()));
 
     }
 
@@ -221,7 +221,7 @@ public class JUnitTestsForOrder {
         order.setOrderId(orderDAO.update(order));
 
         Order orderGetById = orderDAO.getById(order.getOrderId());
-        assertTrue(order.getOrderId() == orderGetById.getOrderId());
+        assertTrue(order.getOrderId().equals(orderGetById.getOrderId()));
     }
 
     @Test
@@ -258,9 +258,9 @@ public class JUnitTestsForOrder {
     @Test
     public void testNewOrderRecordWithNewCustomerAndTaxi() throws SQLException {
 
-        DBService dbService = new DBService();
-        Connection connection = dbService.getMysqlConnection();
-        String databaseName = dbService.getDatabaseName();
+        DBConnection dbConnection = new DBConnection();
+        Connection connection = dbConnection.getMysqlConnection();
+        String databaseName = dbConnection.getDatabaseName();
 
         Customer customer = CustomerBuilder.aCustomer().build();
         CustomerDAO customerDAO = new CustomerDAOImpl(connection, databaseName);

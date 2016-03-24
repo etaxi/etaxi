@@ -12,7 +12,7 @@
 
     <servlet>
         <servlet-name>SessionsServletForCustomer</servlet-name>
-        <servlet-class>servlets.SessionsServletForCustomer</servlet-class>
+        <servlet-class>servlets.customer.SessionsServletForCustomer</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -22,7 +22,7 @@
 
     <servlet>
         <servlet-name>ServletNewCustomer</servlet-name>
-        <servlet-class>servlets.ServletNewCustomer</servlet-class>
+        <servlet-class>servlets.customer.ServletNewCustomer</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -33,7 +33,7 @@
 
     <servlet>
         <servlet-name>ServletListOfCustomers</servlet-name>
-        <servlet-class>servlets.ServletListOfCustomers</servlet-class>
+        <servlet-class>servlets.customer.ServletListOfCustomers</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -43,29 +43,8 @@
 
 
     <servlet>
-        <servlet-name>ServletNewTaxi</servlet-name>
-        <servlet-class>servlets.ServletNewTaxi</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ServletNewTaxi</servlet-name>
-        <url-pattern>/taxi</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ServletListOfTaxi</servlet-name>
-        <servlet-class>servlets.ServletListOfTaxi</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ServletListOfTaxi</servlet-name>
-        <url-pattern>/taxis</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
         <servlet-name>ServletNewOrder</servlet-name>
-        <servlet-class>servlets.ServletNewOrder</servlet-class>
+        <servlet-class>servlets.customer.SessionsServletForCustomer$ServletNewOrder</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -73,14 +52,5 @@
         <url-pattern>/order</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>ServletListOfOrders</servlet-name>
-        <servlet-class>servlets.ServletListOfOrders</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ServletListOfOrders</servlet-name>
-        <url-pattern>/orders</url-pattern>
-    </servlet-mapping>
 
 </web-app>

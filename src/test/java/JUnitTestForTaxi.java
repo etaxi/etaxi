@@ -2,7 +2,7 @@ import dao.TaxiDAO;
 import dao.jdbc.TaxiDAOImpl;
 import entity.Taxi;
 import org.junit.Test;
-import dao.jdbc.DBService;
+import dao.jdbc.DBConnection;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -96,8 +96,8 @@ public class JUnitTestForTaxi {
 
     public TaxiDAO aTaxiDAO() {
 
-        DBService dbService = new DBService();
-        return (new TaxiDAOImpl(dbService.getConnection(), dbService.getDatabaseName()));
+        DBConnection dbConnection = new DBConnection();
+        return (new TaxiDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName()));
     }
 
     @Test

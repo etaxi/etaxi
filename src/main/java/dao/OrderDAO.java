@@ -23,6 +23,12 @@ public interface OrderDAO {
     /** Возвращает список объектов соответствующих всем записям в базе данных */
     List<Order> getAll() throws SQLException;
 
+    /** Возвращает список открытых заказов */
+    List<Order> getOpenOrders() throws SQLException;
+
+    /** Возвращает список заказов такси*/
+    List<Order> getTaxiOrders(long id) throws SQLException;
+
     /** Создает таблицу в базе данных для хранения объектов класса Order */
     void createTable() throws SQLException;
 

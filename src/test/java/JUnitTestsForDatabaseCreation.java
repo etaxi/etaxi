@@ -1,5 +1,5 @@
 import org.junit.Test;
-import dao.jdbc.DBService;
+import dao.jdbc.DBConnection;
 
 import java.sql.SQLException;
 
@@ -11,8 +11,8 @@ public class JUnitTestsForDatabaseCreation {
     @Test
     public void testСreateDataBaseWithTables() throws SQLException {
 
-        DBService dbService = new DBService();
-        dbService.createDataBaseWithTables();
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.createDataBaseWithTables();
 
     }
 

@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  */
 public class Order {
 
-    public enum OrderStatus {WAITING, DRIVING, DELIVERED}
+    public enum OrderStatus {WAITING, DRIVING, DELIVERED, TAKEN}
 
     // Идентификатор заказа
     private Long orderId;

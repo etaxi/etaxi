@@ -1,9 +1,9 @@
 package servlets.customer;
 
 import dao.OrderDAO;
-import dao.OrderDAOImpl;
-import dataSets.OrderDataSet;
-import services.DBService;
+import dao.jdbc.OrderDAOImpl;
+import entity.Order;
+import dao.jdbc.DBConnection;
 import templater.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -51,11 +51,11 @@ public class ServletNewOrder extends HttpServlet {
 
         if (message.isEmpty()) {
 
-            DBService dbService = new DBService();
+            DBConnection dbService = new DBConnection();
             OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            OrderDataSet newOrder = new OrderDataSet((long)0, customerID,
+            Order newOrder = new Order((long)0, customerID,
                     new Timestamp(new java.util.Date().getTime()),
-                    OrderDataSet.OrderStatus.WAITING,
+                    Order.OrderStatus.WAITING,
                     fromAddress, toAddress, (long)0, 0, 0, 0, feedback);
             try {
                 newOrder.setOrderId(orderDAO.update(newOrder));

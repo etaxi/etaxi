@@ -1,9 +1,9 @@
 package servlets.customer;
 
 import dao.CustomerDAO;
-import dao.CustomerDAOImpl;
-import dataSets.CustomerDataSet;
-import services.DBService;
+import dao.jdbc.CustomerDAOImpl;
+import entity.Customer;
+import dao.jdbc.DBConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,9 +43,9 @@ public class SessionsServletForCustomer extends HttpServlet {
             return;
         }
 
-        DBService dbService = new DBService();
+        DBConnection dbService = new DBConnection();
         CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-        CustomerDataSet customerDataSet = null;
+        Customer customerDataSet = null;
         try {
              customerDataSet = customerDAO.getByLogin(login);
 

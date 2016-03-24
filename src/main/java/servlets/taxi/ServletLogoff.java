@@ -13,21 +13,21 @@ import java.io.IOException;
 @WebServlet(name = "ServletLogoff" , urlPatterns = {"/taxi/logoff"})
 public class ServletLogoff extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if (request.getSession().getAttribute("taxiId") == null) {
+        if (request.getSession().getAttribute("taxiId") != null) {
+            request.getSession().removeAttribute("taxiId");
+            request.getSession().removeAttribute("orderId");
+
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-        } else {
-            request.getSession().setAttribute("taxiId", null);
-            request.setAttribute("message", "just taken out of the system");
-            request.getRequestDispatcher("/taxi").forward(request, response);
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_OK);
         }
+
+        request.setAttribute("message", "");
+        request.getRequestDispatcher("/taxi/menustart.jsp").forward(request, response);
+
     }
 }

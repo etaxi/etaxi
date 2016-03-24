@@ -38,7 +38,7 @@ public class ServletCancelOrder extends HttpServlet {
                 order.setTaxiId((long) 0);
                 order.setOrderStatus(Order.OrderStatus.WAITING);
                 orderDAO.update(order);
-                request.getSession().setAttribute("orderId", null);
+                request.getSession().removeAttribute("orderId");
                 request.setAttribute("message", "Canceled order Id=" + orderId);
                 request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
 

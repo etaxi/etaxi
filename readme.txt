@@ -110,3 +110,5 @@ Administrator
 7. Intellij IDEA деплой на Tomcat  http://devcolibri.com/4249
 
 8. JSP  https://www3.ntu.edu.sg/home/ehchua/programming/java/JSPByExample.html
+
+9. GitHub Merging, Deleting, and Comparing Branches   https://www.jetbrains.com/help/phpstorm/2016.1/merging-deleting-and-comparing-branches.html?origin=old_help

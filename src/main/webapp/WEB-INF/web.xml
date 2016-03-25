@@ -10,47 +10,4 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
-    <servlet>
-        <servlet-name>SessionsServletForCustomer</servlet-name>
-        <servlet-class>servlets.customer.SessionsServletForCustomer</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>SessionsServletForCustomer</servlet-name>
-        <url-pattern>/signinCustomer</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ServletNewCustomer</servlet-name>
-        <servlet-class>servlets.customer.ServletNewCustomer</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ServletNewCustomer</servlet-name>
-        <url-pattern>/customer</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>ServletListOfCustomers</servlet-name>
-        <servlet-class>servlets.customer.ServletListOfCustomers</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ServletListOfCustomers</servlet-name>
-        <url-pattern>/customers</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>ServletNewOrder</servlet-name>
-        <servlet-class>servlets.customer.SessionsServletForCustomer$ServletNewOrder</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ServletNewOrder</servlet-name>
-        <url-pattern>/order</url-pattern>
-    </servlet-mapping>
-
-
 </web-app>

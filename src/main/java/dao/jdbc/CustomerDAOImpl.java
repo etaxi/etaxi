@@ -32,10 +32,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public Customer getByLogin(String phone) throws SQLException {
         return executor.executeQuery("select * from customers where phone = '" + phone + "'", resultSet -> {
-            resultSet.next();
-            return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                    resultSet.getString(4));
-
+            if (resultSet.next()) {
+                return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4));
+            }
+            else return null;
         });
     }
 

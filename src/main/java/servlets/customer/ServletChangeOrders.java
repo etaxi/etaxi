@@ -1,4 +1,4 @@
-package servlets.taxi;
+package servlets.customer;
 
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
@@ -15,32 +15,35 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by Aleks on 24.03.2016.
+ * Created by D.Lazorkin on 25.03.2016.
  */
-@WebServlet(name = "ServletOpenOrders", urlPatterns = {"/taxi/openorders"})
-public class ServletOpenOrders extends HttpServlet {
+@WebServlet(name = "ServletChangeOrders", urlPatterns = {"/customer/changeOrders"})
+public class ServletChangeOrders extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        DBConnection dbConnection = new DBConnection();
-        OrderDAO orderDAO = new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
+        if (request.getSession().getAttribute("customerId") != null) {
 
-        try {
-            List<Order> listOfOrders = orderDAO.getOpenOrders(0);
-            String htmlTable = generateHTMLTableForOrders(listOfOrders);
+            DBConnection dbConnection = new DBConnection();
+            OrderDAO orderDAO = new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
 
-            request.setAttribute("table", htmlTable);
-            request.getRequestDispatcher("/taxi/openorders.jsp").forward(request, response);
+            try {
+                long id = (long) request.getSession().getAttribute("customerId");
+                List<Order> listOfOrders = orderDAO.getOpenOrders(id);
+                String htmlTable = generateHTMLTableForOrders(listOfOrders);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+                request.setAttribute("table", htmlTable);
+                request.setAttribute("message", "Change data of orders");
+                request.getRequestDispatcher("/customer/history.jsp").forward(request, response);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
     }
-
 
     private String generateHTMLTableForOrders(List<Order> listOfOrders) {
 

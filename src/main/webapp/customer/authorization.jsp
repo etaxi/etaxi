@@ -5,10 +5,10 @@
 </head>
 <body>
 
-<h1>Taxi authorization</h1>
+<h1>Customer authorization</h1>
 <div class="container">
-    <form class="form-signin" action="/taxi/authorization" method="POST">
-        <h2 class="form-signin-heading">Dear taxi driver, please sign in</h2>
+    <form class="form-signin" action="/customer/authorization" method="POST">
+        <h2 class="form-signin-heading">Dear customer, please sign in</h2>
         <label for="inputEmail" class="sr-only">Phone</label>
         <input type="text" name="login" id="inputEmail" class="form-control" placeholder="Phone (+371xxxxxxxx)" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
@@ -19,6 +19,14 @@
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+</div> <!-- /container -->
+
+<b> ${message} </b>
+
+<div class="container">
+    <form class="form-signin" action="/customer/registration.jsp" method="GET">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">New customer registration</button>
     </form>
 </div> <!-- /container -->
 

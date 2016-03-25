@@ -16,30 +16,27 @@ import java.sql.SQLException;
 /**
  * Created by Aleks on 24.03.2016.
  */
-@WebServlet(name = "ServletCancelOrder", urlPatterns = {"/taxi/cancelorder"})
-public class ServletCancelOrder extends HttpServlet {
-
+@WebServlet(name = "ServletTaxiCompleteOrder", urlPatterns = {"/taxi/completeorder"})
+public class ServletTaxiCompleteOrder extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("orderId") == null){
-            request.setAttribute("message", "You dont have order to cancel");
+            request.setAttribute("message", "You dont have order to complite");
             request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
         }
         else {
-            long orderId     = Long.parseLong((String) request.getSession().getAttribute("orderId"));
+            long orderId = Long.parseLong((String) request.getSession().getAttribute("orderId"));
             DBConnection dbConnection = new DBConnection();
             OrderDAO orderDAO = new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
 
             try {
                 Order order = orderDAO.getById(orderId);
-                order.setTaxiId((long) 0);
-                order.setOrderStatus(Order.OrderStatus.WAITING);
+                order.setOrderStatus(Order.OrderStatus.DELIVERED);
                 orderDAO.update(order);
-                request.getSession().removeAttribute("orderId");
-                request.setAttribute("message", "Canceled order Id=" + orderId);
+                request.setAttribute("message", "Completed order Id=" + orderId);
                 request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
 
             } catch (SQLException e) {
@@ -47,6 +44,5 @@ public class ServletCancelOrder extends HttpServlet {
                 request.getRequestDispatcher("/taxi").forward(request, response);
             }
         }
-
     }
 }

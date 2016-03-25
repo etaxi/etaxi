@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * Created by Aleks on 24.03.2016.
  */
-@WebServlet(name = "ServletTakeOrder", urlPatterns = {"/taxi/takeorder"})
-public class ServletTakeOrder extends HttpServlet {
+@WebServlet(name = "ServletTaxiTakeOrder", urlPatterns = {"/taxi/takeorder"})
+public class ServletTaxiTakeOrder extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String orderId     = request.getParameter("orderId");
         DBConnection dbConnection = new DBConnection();

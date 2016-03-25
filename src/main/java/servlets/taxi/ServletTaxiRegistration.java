@@ -18,8 +18,8 @@ import java.util.Map;
 /**
  * Created by Aleks on 24.03.2016.
  */
-@WebServlet(name = "ServletRegistration", urlPatterns = {"/taxi/registration"})
-public class ServletRegistration extends HttpServlet {
+@WebServlet(name = "ServletTaxiRegistration", urlPatterns = {"/taxi/registration"})
+public class ServletTaxiRegistration extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setAttribute("message", "Please, enter information about new taxi!");

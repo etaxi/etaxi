@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * Created by Aleks on 24.03.2016.
  */
-@WebServlet(name = "ServletOpenOrders", urlPatterns = {"/taxi/openorders"})
-public class ServletOpenOrders extends HttpServlet {
+@WebServlet(name = "ServletTaxiOpenOrders", urlPatterns = {"/taxi/openorders"})
+public class ServletTaxiOpenOrders extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

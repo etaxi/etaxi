@@ -16,8 +16,8 @@ import java.sql.SQLException;
 /**
  * Created by Aleks on 24.03.2016.
  */
-@WebServlet(name = "ServletAuthorization" , urlPatterns = {"/taxi/authorization"})
-public class ServletAuthorization extends HttpServlet {
+@WebServlet(name = "ServletTaxiAuthorization" , urlPatterns = {"/taxi/authorization"})
+public class ServletTaxiAuthorization extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String login = request.getParameter("login");

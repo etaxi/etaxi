@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * Created by D.Lazorkin on 25.03.2016.
  */
-@WebServlet(name = "ServletHistoryOfOrders", urlPatterns = {"/customer/historyOfOrders"})
-public class ServletHistoryOfOrders extends HttpServlet {
+@WebServlet(name = "ServletCustomerChangeOrders", urlPatterns = {"/customer/changeOrders"})
+public class ServletCustomerChangeOrders extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -32,11 +32,11 @@ public class ServletHistoryOfOrders extends HttpServlet {
 
             try {
                 long id = (long) request.getSession().getAttribute("customerId");
-                List<Order> listOfOrders = orderDAO.getCustomerOrders(id);
+                List<Order> listOfOrders = orderDAO.getOpenOrders(id);
                 String htmlTable = generateHTMLTableForOrders(listOfOrders);
 
                 request.setAttribute("table", htmlTable);
-                request.setAttribute("message", "View the history of your orders");
+                request.setAttribute("message", "Change data of orders");
                 request.getRequestDispatcher("/customer/history.jsp").forward(request, response);
 
             } catch (SQLException e) {

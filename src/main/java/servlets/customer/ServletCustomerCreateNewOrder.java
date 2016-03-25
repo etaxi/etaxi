@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-@WebServlet(name = "ServletCreateNewOrder", urlPatterns = {"/customer/createNewOrder"})
-public class ServletCreateNewOrder extends HttpServlet {
+@WebServlet(name = "ServletCustomerCreateNewOrder", urlPatterns = {"/customer/createNewOrder"})
+public class ServletCustomerCreateNewOrder extends HttpServlet {
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {

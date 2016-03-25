@@ -16,8 +16,8 @@ import java.sql.SQLException;
 /**
  * Created by D.Lazorkin on 25.03.2016.
  */
-@WebServlet(name = "ServletEditProfile", urlPatterns = {"/customer/editProfileCustomer"})
-public class ServletEditProfile extends HttpServlet {
+@WebServlet(name = "ServletCustomerEditProfile", urlPatterns = {"/customer/editProfileCustomer"})
+public class ServletCustomerEditProfile extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

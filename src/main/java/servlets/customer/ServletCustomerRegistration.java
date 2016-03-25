@@ -18,8 +18,8 @@ import java.util.Map;
 /**
  * Created by D.Lazorkin on 25.03.2016.
  */
-@WebServlet(name = "ServletRegistration", urlPatterns = {"/customer/registration"})
-public class ServletRegistration extends HttpServlet {
+@WebServlet(name = "ServletCustomerRegistration", urlPatterns = {"/customer/registration"})
+public class ServletCustomerRegistration extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

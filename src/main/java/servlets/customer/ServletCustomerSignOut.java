@@ -10,8 +10,8 @@ import java.io.IOException;
 /**
  * Created by D.Lazorkin on 25.03.2016.
  */
-@WebServlet(name = "ServletSignOut" , urlPatterns = {"/customer/signOut"})
-public class ServletSignOut extends HttpServlet {
+@WebServlet(name = "ServletCustomerSignOut" , urlPatterns = {"/customer/signOut"})
+public class ServletCustomerSignOut extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);

@@ -20,7 +20,7 @@ import java.util.List;
 @WebServlet(name = "ServletCustomerChangeOrders", urlPatterns = {"/customer/changeOrders"})
 public class ServletCustomerChangeOrders extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+              doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,7 +32,7 @@ public class ServletCustomerChangeOrders extends HttpServlet {
 
             try {
                 long id = (long) request.getSession().getAttribute("customerId");
-                List<Order> listOfOrders = orderDAO.getOpenOrders(id);
+                List<Order> listOfOrders = orderDAO.getOpenOrdersOfCustomer(id);
                 String htmlTable = generateHTMLTableForOrders(listOfOrders);
 
                 request.setAttribute("table", htmlTable);
@@ -60,6 +60,7 @@ public class ServletCustomerChangeOrders extends HttpServlet {
                 .append("<th> Price </th>")
                 .append("<th> Rate </th>")
                 .append("<th> Feedback </th>")
+                .append("<th> Operation with order (delete/edit) </th>")
                 .append("</tr>");
 
         for (Order item : listOfOrders) {
@@ -75,6 +76,12 @@ public class ServletCustomerChangeOrders extends HttpServlet {
                     .append("<td>").append(item.getPrice())
                     .append("<td>").append(item.getRate())
                     .append("<td>").append(item.getFeedback())
+                    .append("<td><form action='/customer/deleteOrderByCustomer' method='get'>" +
+                            "<input type='hidden' name='orderId' value='" + item.getOrderId() + "'/>" +
+                            "<input type='submit' value='Delete'/></form>")
+                    .append("<form action='/customer/editOrderByCustomer' method='get'>" +
+                            "<input type='hidden' name='orderId' value='" + item.getOrderId() + "'/>" +
+                            "<input type='submit' value='Edit'/></form>")
                     .append("</tr>");
         }
 

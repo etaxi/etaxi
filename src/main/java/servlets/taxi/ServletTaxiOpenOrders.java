@@ -29,7 +29,7 @@ public class ServletTaxiOpenOrders extends HttpServlet {
         OrderDAO orderDAO = new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
 
         try {
-            List<Order> listOfOrders = orderDAO.getOpenOrders(0);
+            List<Order> listOfOrders = orderDAO.getOpenOrdersAll();
             String htmlTable = generateHTMLTableForOrders(listOfOrders);
 
             request.setAttribute("table", htmlTable);

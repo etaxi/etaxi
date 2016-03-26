@@ -4,6 +4,7 @@ import dao.OrderDAO;
 import entity.Order;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,88 +82,51 @@ public class OrderDAOImpl implements OrderDAO {
      */
     public List<Order> getAll() throws SQLException {
         return executor.executeQuery("select * from orders ",
-                resultSet -> {
-                    List<Order> list = new ArrayList<Order>();
-                    while (resultSet.next()) {
-                        list.add(new Order(resultSet.getLong(1),
-                                resultSet.getLong(2),
-                                resultSet.getTimestamp(3),
-                                Order.DetermineOrderStatus(resultSet.getString(4)),
-                                resultSet.getString(5),
-                                resultSet.getString(6),
-                                resultSet.getLong(7),
-                                resultSet.getDouble(8),
-                                resultSet.getDouble(9),
-                                resultSet.getInt(10),
-                                resultSet.getString(11)));
-                    }
-                    return list;
-                }
+                resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
-    public List<Order> getOpenOrders(long customerId) throws SQLException {
+    public List<Order> getOpenOrdersAll() throws SQLException {
+        return executor.executeQuery("select * from orders where orderStatus='WAITING'",
+                resultSet -> addOrderToListFromResultSet(resultSet)
+        );
+    }
+
+    public List<Order> getOpenOrdersOfCustomer(long customerId) throws SQLException {
         return executor.executeQuery("select * from orders where orderStatus='WAITING'" +
-                ((customerId != 0) ? " and customerId = " + customerId : ""),
-                resultSet -> {
-                    List<Order> list = new ArrayList<Order>();
-                    while (resultSet.next()) {
-                        list.add(new Order(resultSet.getLong(1),
-                                resultSet.getLong(2),
-                                resultSet.getTimestamp(3),
-                                Order.DetermineOrderStatus(resultSet.getString(4)),
-                                resultSet.getString(5),
-                                resultSet.getString(6),
-                                resultSet.getLong(7),
-                                resultSet.getDouble(8),
-                                resultSet.getDouble(9),
-                                resultSet.getInt(10),
-                                resultSet.getString(11)));
-                    }
-                    return list;
-                }
+                        ((customerId != 0) ? " and customerId = " + customerId : ""),
+                resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
     public List<Order> getTaxiOrders(long id) throws SQLException {
-        return executor.executeQuery("select * from orders where taxiId=" + id, resultSet -> {
-                    List<Order> list = new ArrayList<Order>();
-                    while (resultSet.next()) {
-                        list.add(new Order(resultSet.getLong(1),
-                                resultSet.getLong(2),
-                                resultSet.getTimestamp(3),
-                                Order.DetermineOrderStatus(resultSet.getString(4)),
-                                resultSet.getString(5),
-                                resultSet.getString(6),
-                                resultSet.getLong(7),
-                                resultSet.getDouble(8),
-                                resultSet.getDouble(9),
-                                resultSet.getInt(10),
-                                resultSet.getString(11)));
-                    }
-                    return list;
-                }
+        return executor.executeQuery("select * from orders where taxiId=" + id,
+                resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
+    private List<Order> addOrderToListFromResultSet(ResultSet resultSet) throws SQLException {
+
+        List<Order> list = new ArrayList<Order>();
+        while (resultSet.next()) {
+            list.add(new Order(resultSet.getLong(1),
+                    resultSet.getLong(2),
+                    resultSet.getTimestamp(3),
+                    Order.DetermineOrderStatus(resultSet.getString(4)),
+                    resultSet.getString(5),
+                    resultSet.getString(6),
+                    resultSet.getLong(7),
+                    resultSet.getDouble(8),
+                    resultSet.getDouble(9),
+                    resultSet.getInt(10),
+                    resultSet.getString(11)));
+        }
+        return list;
+    }
+
     public List<Order> getCustomerOrders(long id) throws SQLException {
-        return executor.executeQuery("select * from orders where customerId=" + id, resultSet -> {
-                    List<Order> list = new ArrayList<Order>();
-                    while (resultSet.next()) {
-                        list.add(new Order(resultSet.getLong(1),
-                                resultSet.getLong(2),
-                                resultSet.getTimestamp(3),
-                                Order.DetermineOrderStatus(resultSet.getString(4)),
-                                resultSet.getString(5),
-                                resultSet.getString(6),
-                                resultSet.getLong(7),
-                                resultSet.getDouble(8),
-                                resultSet.getDouble(9),
-                                resultSet.getInt(10),
-                                resultSet.getString(11)));
-                    }
-                    return list;
-                }
+        return executor.executeQuery("select * from orders where customerId=" + id,
+                resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 

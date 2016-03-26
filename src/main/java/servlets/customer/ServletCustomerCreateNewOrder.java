@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * Created by D.Lazorkin on 25.03.2016.
+ */
 @WebServlet(name = "ServletCustomerCreateNewOrder", urlPatterns = {"/customer/createNewOrder"})
 public class ServletCustomerCreateNewOrder extends HttpServlet {
 

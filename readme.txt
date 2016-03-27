@@ -113,3 +113,5 @@ Administrator
 8. JSP  https://www3.ntu.edu.sg/home/ehchua/programming/java/JSPByExample.html
 
 9. GitHub Merging, Deleting, and Comparing Branches   https://www.jetbrains.com/help/phpstorm/2016.1/merging-deleting-and-comparing-branches.html?origin=old_help
+
+10. HTTP     15 тривиальных фактов о правильной работе с протоколом HTTP     https://habrahabr.ru/company/yandex/blog/265569/

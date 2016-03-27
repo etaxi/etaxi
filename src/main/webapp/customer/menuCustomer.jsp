@@ -9,6 +9,7 @@
 <a href="/customer/createNewOrder">New order</a><br>
 <a href="/customer/historyOfOrders">History of own orders</a><br>
 <a href="/customer/changeOrders">Change data of opened orders</a><br>
+<a href="/customer/writeFeedbacks">Write feedback to completed order</a><br>
 <a href="/customer/signOut">Sing out</a><br>
 
 

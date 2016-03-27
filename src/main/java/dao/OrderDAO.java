@@ -29,6 +29,9 @@ public interface OrderDAO {
     /** Возвращает список открытых заказов */
     List<Order> getOpenOrdersOfCustomer(long customerId) throws SQLException;
 
+    /** Возвращает список открытых заказов */
+    List<Order> getCompletedOrdersOfCustomer(long customerId) throws SQLException;
+
     /** Возвращает список заказов такси*/
     List<Order> getTaxiOrders(long id) throws SQLException;
 

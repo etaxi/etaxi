@@ -99,6 +99,13 @@ public class OrderDAOImpl implements OrderDAO {
         );
     }
 
+    public List<Order> getCompletedOrdersOfCustomer(long customerId) throws SQLException {
+        return executor.executeQuery("select * from orders where orderStatus='WAITING'" +  //DELIVERED
+                        ((customerId != 0) ? " and customerId = " + customerId : ""),
+                resultSet -> addOrderToListFromResultSet(resultSet)
+        );
+    }
+
     public List<Order> getTaxiOrders(long id) throws SQLException {
         return executor.executeQuery("select * from orders where taxiId=" + id,
                 resultSet -> addOrderToListFromResultSet(resultSet)

@@ -19,8 +19,8 @@ import java.util.List;
  */
 @WebServlet(name = "ServletCustomerHistoryOfOrders", urlPatterns = {"/customer/historyOfOrders"})
 public class ServletCustomerHistoryOfOrders extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,6 +52,7 @@ public class ServletCustomerHistoryOfOrders extends HttpServlet {
                 .append("<th> ID </th>")
                 .append("<th> Customer ID </th>")
                 .append("<th> Date&Time </th>")
+                .append("<th> Ordered Date&Time </th>")
                 .append("<th> Status </th>")
                 .append("<th> From address </th>")
                 .append("<th> To address </th>")
@@ -67,6 +68,7 @@ public class ServletCustomerHistoryOfOrders extends HttpServlet {
                     .append("<td>").append(item.getOrderId())
                     .append("<td>").append(item.getCustomerId())
                     .append("<td>").append(item.getDateTime())
+                    .append("<td>").append(item.getOrderedDateTime())
                     .append("<td>").append(item.getOrderStatus())
                     .append("<td>").append(item.getFromAdress())
                     .append("<td>").append(item.getToAdress())

@@ -57,6 +57,7 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
             request.setAttribute("customer", currentCustomer.getName());
             request.setAttribute("orderId", orderToEdit.getOrderId());
             request.setAttribute("date", orderToEdit.getDateTime());
+            request.setAttribute("orderedDateTime", orderToEdit.getOrderedDateTime());
             request.setAttribute("fromAddress", orderToEdit.getFromAdress());
             request.setAttribute("toAddress", orderToEdit.getToAdress());
             request.setAttribute("feedback", orderToEdit.getFeedback());
@@ -116,6 +117,7 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
                 request.setAttribute("customer", currentCustomer.getName());
                 request.setAttribute("orderId", updatedOrder.getOrderId());
                 request.setAttribute("date", updatedOrder.getDateTime());
+                request.setAttribute("orderedDateTime", updatedOrder.getOrderedDateTime());
                 request.setAttribute("fromAddress", updatedOrder.getFromAdress());
                 request.setAttribute("toAddress", updatedOrder.getToAdress());
                 request.setAttribute("feedback", updatedOrder.getFeedback());

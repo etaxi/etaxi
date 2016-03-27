@@ -59,6 +59,7 @@ public class ServletCustomerEditOrder extends HttpServlet {
             request.setAttribute("orderId", orderToEdit.getOrderId());
             request.setAttribute("fromAddress", orderToEdit.getFromAdress());
             request.setAttribute("toAddress", orderToEdit.getToAdress());
+            request.setAttribute("orderedDateTime", orderToEdit.getOrderedDateTime());
 
             request.getRequestDispatcher("/customer/editOrder.jsp").forward(request, response);
 
@@ -77,9 +78,11 @@ public class ServletCustomerEditOrder extends HttpServlet {
             String orderId = request.getParameter("orderId");
             String fromAddress = request.getParameter("fromAddress");
             String toAddress = request.getParameter("toAddress");
+            String orderedDateTime = request.getParameter("orderedDateTime");
 
             String message = ((fromAddress == null || fromAddress.isEmpty()) ? "from address; " : "") +
-                    ((toAddress == null || toAddress.isEmpty()) ? "to address; " : "");
+                    ((toAddress == null || toAddress.isEmpty()) ? "to address; " : "") +
+                    ((orderedDateTime == null || orderedDateTime.isEmpty()) ? "date and time of ride; " : "");
 
             Boolean updateSuccessful = false;
             Order updatedOrder = null;
@@ -89,7 +92,7 @@ public class ServletCustomerEditOrder extends HttpServlet {
                 OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
                 updatedOrder = new Order(Long.parseLong(orderId), (long) request.getSession().getAttribute("customerId"),
                         new Timestamp(new java.util.Date().getTime()),
-                        new Timestamp(new java.util.Date().getTime()),
+                        Timestamp.valueOf(orderedDateTime),
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
                 try {

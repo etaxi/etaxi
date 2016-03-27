@@ -51,9 +51,11 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
 
             String fromAddress = request.getParameter("fromAddress");
             String toAddress = request.getParameter("toAddress");
+            String orderedDateTime = request.getParameter("orderedDateTime");
 
             String message = ((fromAddress == null || fromAddress.isEmpty()) ? "from address; " : "") +
-                    ((toAddress == null || toAddress.isEmpty()) ? "to address; " : "");
+                    ((toAddress == null || toAddress.isEmpty()) ? "to address; " : "") +
+                    ((orderedDateTime == null || orderedDateTime.isEmpty()) ? "date and time of ride; " : "");
 
             Boolean registrationSuccessful = false;
             if (message.isEmpty()) {
@@ -62,14 +64,13 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
                 OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
                 Order newOrder = new Order((long) 0, (long) request.getSession().getAttribute("customerId"),
                         new Timestamp(new java.util.Date().getTime()),
-                        new Timestamp(new java.util.Date().getTime()),
+                        Timestamp.valueOf(orderedDateTime),
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
                         registrationSuccessful = true;
                 try {
                     newOrder.setOrderId(orderDAO.update(newOrder));
                     message = "New order was created (new order ID: " + newOrder.getOrderId() + ")";
-                    fromAddress = "";  toAddress = "";
                     request.setAttribute("orderId", newOrder.getOrderId());
                 } catch (SQLException e) {
                     message = "New order creation failed! Please try again!";

@@ -89,20 +89,20 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public List<Order> getOpenOrdersAll() throws SQLException {
-        return executor.executeQuery("select * from orders where orderStatus='WAITING'",
+        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
     public List<Order> getOpenOrdersOfCustomer(long customerId) throws SQLException {
-        return executor.executeQuery("select * from orders where orderStatus='WAITING'" +
+        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +
                         ((customerId != 0) ? " and customerId = " + customerId : ""),
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
     public List<Order> getCompletedOrdersOfCustomer(long customerId) throws SQLException {
-        return executor.executeQuery("select * from orders where orderStatus='DELIVERED'" +
+        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.DELIVERED + "'" +
                         ((customerId != 0) ? " and customerId = " + customerId : ""),
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );

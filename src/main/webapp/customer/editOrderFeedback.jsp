@@ -11,9 +11,10 @@
 
         <h2 class="form-signin-heading">Please, ${customer} write feedback to order ID: ${orderId}:</h2>
 
-        <h3 class="form-signin-heading">Date&Time: ${date}</h3>
+        <h3 class="form-signin-heading">Date&Time of registration: ${date}</h3>
         <h3 class="form-signin-heading">From address: ${fromAddress}</h3>
         <h3 class="form-signin-heading">To address: ${toAddress}</h3>
+        <h3 class="form-signin-heading">Date&Time of ride: ${orderedDateTime}</h3>
 
         <label for="feedback" class="sr-only">Feedback</label>
         <input type="text" name="feedback" id="feedback" class="form-control" placeholder="Feedback" required>

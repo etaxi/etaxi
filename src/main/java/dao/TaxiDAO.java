@@ -16,7 +16,7 @@ public interface TaxiDAO {
     /** Возвращает объект соответствующий записи по логину */
     Taxi getByLogin(String login) throws SQLException;
 
-    /** Сохраняет состояние объекта Customer в базе данных (если ID нет, создаем новую запись) */
+    /** Сохраняет состояние объекта Taxi в базе данных (если ID нет, создаем новую запись) */
     long update(Taxi customer) throws SQLException;
 
     /** Удаляет запись об объекте из базы данных */

@@ -1,8 +1,6 @@
 package entity;
 
-/**
- * Created by Genady Zalesky on 27.03.2016
- */
+
 public class Admin {
 
     private Long adminId;       // Идентификатор

@@ -35,7 +35,7 @@ public class DBConnection {
     public void createDataBaseWithTables() throws SQLException {
 
         Executor executor = new Executor(connection, "");
-        executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName + ";");
+        executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
 
         CustomerDAO customerDao = new CustomerDAOImpl(connection, databaseName);
         customerDao.createTable();
@@ -83,7 +83,7 @@ public class DBConnection {
             String port = property.getProperty("db.port");
             String login = property.getProperty("db.login");
             String password = property.getProperty("db.password");
-            String database = property.getProperty("db.database");
+            //String database = property.getProperty("db.database");
 
             StringBuilder url = new StringBuilder();
             url.
@@ -91,8 +91,8 @@ public class DBConnection {
                     .append(host)
                     .append(":")
                     .append(port)
-                    .append("/")
-                    .append(database)
+                    //.append("/")
+                    //.append(database)
                     .append("?")
                     .append("user=")
                     .append(login)

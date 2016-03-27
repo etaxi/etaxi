@@ -13,8 +13,10 @@ public class Order {
     private Long orderId;
     // Клиент
     private Long customerId;
-    // Дата Время "2015-02-18T00:00:00"
+    // Дата Время "2015-02-18T00:00:00" (ввода или последнего изменения заказа)
     private Timestamp dateTime;
+    // Дата Время "2015-02-18T00:00:00" (на которую такси заказано)
+    private Timestamp orderedDateTime;
     // статус (ждёт, едет, выполнен)
     private OrderStatus orderStatus;
     // откуда строка
@@ -32,12 +34,13 @@ public class Order {
     // отзыв
     private String feedback;
 
-    public Order(Long orderId, Long customerId, Timestamp dateTime, OrderStatus orderStatus,
+    public Order(Long orderId, Long customerId, Timestamp dateTime, Timestamp orderedDateTime, OrderStatus orderStatus,
                  String fromAdress, String toAdress, Long taxiId, double distance,
                  double price, int rate, String feedback) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.dateTime = dateTime;
+        this.orderedDateTime = orderedDateTime;
         this.orderStatus = orderStatus;
         this.fromAdress = fromAdress;
         this.toAdress = toAdress;
@@ -70,6 +73,14 @@ public class Order {
 
     public void setDateTime(Timestamp  dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Timestamp  getOrderedDateTime() {
+        return orderedDateTime;
+    }
+
+    public void setOrderedDateTime(Timestamp  orderedDateTime) {
+        this.orderedDateTime = orderedDateTime;
     }
 
     public OrderStatus getOrderStatus() {
@@ -142,6 +153,7 @@ public class Order {
                 "\"orderId\":" + "\"" + orderId + "\"" +
                 ", \"customerId\":" + "\"" + customerId + "\"" +
                 ", \"dateTime\":" + "\"" + dateTime + "\"" +
+                ", \"orderedDateTime\":" + "\"" + orderedDateTime + "\"" +
                 ", \"orderStatus\":" + "\"" + orderStatus + "\"" +
                 ", \"fromAdress\":" + "\"" + fromAdress + "\"" +
                 ", \"toAdress\":" + "\"" + toAdress + "\"" +

@@ -39,6 +39,7 @@ class OrderBuilder {
     private int rate = DEFAULT_RATE;
     private String feedback = DEFAULT_FEEDBACK;
     private Timestamp dateTime = new Timestamp(new java.util.Date().getTime());
+    private Timestamp orderedDateTime = new Timestamp(new java.util.Date().getTime());
     private Long customerId = (long) 0;
     private Long taxiId = (long) 0;
 
@@ -94,6 +95,11 @@ class OrderBuilder {
         return this;
     }
 
+    public OrderBuilder withOrderedDate(Timestamp orderedDateTime) {
+        this.orderedDateTime = orderedDateTime;
+        return this;
+    }
+
     public OrderBuilder withCustomerID(long customerId) {
         this.customerId = customerId;
         return this;
@@ -115,6 +121,7 @@ class OrderBuilder {
         return OrderBuilder
                 .aOrder()
                 .withDate(dateTime)
+                .withOrderedDate(orderedDateTime)
                 .withCustomerID(customerId)
                 .withFromAdress(fromAdress)
                 .withToAdress(toAdress)
@@ -127,8 +134,8 @@ class OrderBuilder {
     }
 
     public Order build() {
-        return new Order(
-                id, customerId, dateTime, orderStatus, fromAdress, toAdress, taxiId, distance, price, rate, feedback);
+        return new Order( id, customerId, dateTime, orderedDateTime, orderStatus, fromAdress, toAdress,
+                taxiId, distance, price, rate, feedback);
     }
 }
 
@@ -154,6 +161,7 @@ public class JUnitTestsForOrder {
                 .withToAdress("Terbatas 34a")
                 .withPrice(12.45)
                 .withDistance(8.9)
+                .withOrderedDate(getCurrentDate())
                 .withDate(getCurrentDate())
                 .withOrderStatus(Order.OrderStatus.DELIVERED);
 
@@ -173,6 +181,7 @@ public class JUnitTestsForOrder {
                 .withPrice(7.6)
                 .withDistance(9.9)
                 .withDate(getCurrentDate())
+                .withOrderedDate(getCurrentDate())
                 .withOrderStatus(Order.OrderStatus.WAITING);
 
         Order order1 = orderBuilder.build();
@@ -194,6 +203,7 @@ public class JUnitTestsForOrder {
                 .withPrice(5.0)
                 .withDistance(12.0)
                 .withDate(getCurrentDate())
+                .withOrderedDate(getCurrentDate())
                 .withFeedback("Good driver!")
                 .withOrderStatus(Order.OrderStatus.WAITING);
 
@@ -215,6 +225,7 @@ public class JUnitTestsForOrder {
                 .withPrice(5.0)
                 .withDistance(12.0)
                 .withDate(getCurrentDate())
+                .withOrderedDate(getCurrentDate())
                 .withOrderStatus(Order.OrderStatus.WAITING);
 
         Order order = orderBuilder.build();
@@ -278,6 +289,7 @@ public class JUnitTestsForOrder {
                 .withPrice(23.05)
                 .withDistance(14.5)
                 .withDate(getCurrentDate())
+                .withOrderedDate(getCurrentDate())
                 .withOrderStatus(Order.OrderStatus.DELIVERED);
 
         Order order = orderBuilder.build();

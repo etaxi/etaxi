@@ -28,10 +28,10 @@ public class OrderDAOImpl implements OrderDAO {
     public Order getById(long id) throws SQLException {
         return executor.executeQuery("select * from orders where Id=" + id, resultSet -> {
             resultSet.next();
-            return new Order(resultSet.getLong(1), resultSet.getLong(2), resultSet.getTimestamp(3),
-                    Order.DetermineOrderStatus(resultSet.getString(4)), resultSet.getString(5),
-                    resultSet.getString(6), resultSet.getLong(7), resultSet.getDouble(8), resultSet.getDouble(9),
-                    resultSet.getInt(10), resultSet.getString(11));
+            return new Order(resultSet.getLong(1), resultSet.getLong(2), resultSet.getTimestamp(3), resultSet.getTimestamp(4),
+                    Order.DetermineOrderStatus(resultSet.getString(5)), resultSet.getString(6),
+                    resultSet.getString(7), resultSet.getLong(8), resultSet.getDouble(9), resultSet.getDouble(10),
+                    resultSet.getInt(11), resultSet.getString(12));
         });
     }
 
@@ -44,6 +44,7 @@ public class OrderDAOImpl implements OrderDAO {
             return executor.executeUpdate("UPDATE orders SET " +
                     " customerId = '" + order.getCustomerId() + "'," +
                     " datetime = '" + order.getDateTime() + "'," +
+                    " ordereddatetime = '" + order.getOrderedDateTime() + "'," +
                     " orderStatus = '" + order.getOrderStatus().toString() + "'," +
                     " fromAdress = '" + order.getFromAdress() + "'," +
                     " toAdress = '" + order.getToAdress() + "'," +
@@ -55,10 +56,11 @@ public class OrderDAOImpl implements OrderDAO {
                     " WHERE id=" + order.getOrderId());
         }
         else {
-            return executor.executeUpdate("INSERT INTO orders (customerId, datetime, orderStatus, fromAdress, toAdress, " +
-                    "taxiId, distance, price, rate, feedback) VALUES (" +
+            return executor.executeUpdate("INSERT INTO orders (customerId, datetime, ordereddatetime, orderStatus, " +
+                    "fromAdress, toAdress, taxiId, distance, price, rate, feedback) VALUES (" +
                     "'" + order.getCustomerId() + "'," +
                     "'" + order.getDateTime() + "'," +
+                    "'" + order.getOrderedDateTime() + "'," +
                     "'" + order.getOrderStatus().toString() + "'," +
                     "'" + order.getFromAdress() + "'," +
                     "'" + order.getToAdress() + "'," +
@@ -100,7 +102,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public List<Order> getCompletedOrdersOfCustomer(long customerId) throws SQLException {
-        return executor.executeQuery("select * from orders where orderStatus='WAITING'" +  //DELIVERED
+        return executor.executeQuery("select * from orders where orderStatus='DELIVERED'" +
                         ((customerId != 0) ? " and customerId = " + customerId : ""),
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
@@ -119,14 +121,15 @@ public class OrderDAOImpl implements OrderDAO {
             list.add(new Order(resultSet.getLong(1),
                     resultSet.getLong(2),
                     resultSet.getTimestamp(3),
-                    Order.DetermineOrderStatus(resultSet.getString(4)),
-                    resultSet.getString(5),
+                    resultSet.getTimestamp(4),
+                    Order.DetermineOrderStatus(resultSet.getString(5)),
                     resultSet.getString(6),
-                    resultSet.getLong(7),
-                    resultSet.getDouble(8),
+                    resultSet.getString(7),
+                    resultSet.getLong(8),
                     resultSet.getDouble(9),
-                    resultSet.getInt(10),
-                    resultSet.getString(11)));
+                    resultSet.getDouble(10),
+                    resultSet.getInt(11),
+                    resultSet.getString(12)));
         }
         return list;
     }
@@ -142,6 +145,7 @@ public class OrderDAOImpl implements OrderDAO {
                 "  Id bigint(9) NOT NULL auto_increment," +
                 "  customerId bigint(9)," +
                 "  datetime datetime," +
+                "  ordereddatetime datetime," +
                 "  orderStatus text," +
                 "  fromAdress text," +
                 "  toAdress text," +

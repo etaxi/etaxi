@@ -62,6 +62,7 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
                 OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
                 Order newOrder = new Order((long) 0, (long) request.getSession().getAttribute("customerId"),
                         new Timestamp(new java.util.Date().getTime()),
+                        new Timestamp(new java.util.Date().getTime()),
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
                         registrationSuccessful = true;

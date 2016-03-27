@@ -89,6 +89,7 @@ public class ServletCustomerEditOrder extends HttpServlet {
                 OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
                 updatedOrder = new Order(Long.parseLong(orderId), (long) request.getSession().getAttribute("customerId"),
                         new Timestamp(new java.util.Date().getTime()),
+                        new Timestamp(new java.util.Date().getTime()),
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
                 try {

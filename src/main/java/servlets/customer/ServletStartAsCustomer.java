@@ -18,13 +18,13 @@ public class ServletStartAsCustomer extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if (request.getSession().getAttribute("customerID") == null) {
+        if (request.getSession().getAttribute("customerId") == null) {
             request.setAttribute("message", "");
-            request.getRequestDispatcher("/customer/authorization.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
 
         } else {
             request.setAttribute("message", "");
-            request.getRequestDispatcher("/customer/menuautorized.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/CustomerMenu.jsp").forward(request, response);
         }
     }
 }

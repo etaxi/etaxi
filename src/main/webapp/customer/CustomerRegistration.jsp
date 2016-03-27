@@ -5,12 +5,11 @@
 </head>
 <body>
 
-
 <div class="container">
 
-    <h1>Customer data change</h1>
+    <h1>New customer registration</h1>
 
-    <form role="form" name = form1 action="/customer/editProfileCustomer" method="POST">
+    <form role="form" name = form1 action="/customer/registration" method="POST">
         <div class="form-group">
             <label for="usr">Name, Surname:</label>
             <input type="text" name="name" placeholder= "Name" class="form-control" id="usr">
@@ -23,8 +22,8 @@
             <label for="pwd">Password:</label>
             <input type="password" name="password" placeholder="Password" class="form-control" id="pwd">
         </div>
-        <input type="submit" value="Save data" style='width:265px;'>
-        <p> <b> ${message} </b> </p>
+        <input type="submit" value="Register new customer" style='width:265px;'>
+        <p> Registration process: <b> ${message} </b> </p>
     </form>
 
 </div> <!-- /container -->

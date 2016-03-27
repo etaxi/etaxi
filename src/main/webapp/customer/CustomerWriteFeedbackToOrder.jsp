@@ -5,7 +5,10 @@
 </head>
 <body>
 
+<a href="/customer"> Main menu </a> <br>
+
 <h1>Edit order by customer</h1>
+
 <div class="container">
     <form class="form-signin" action="/customer/writeFeedback" method="POST">
 

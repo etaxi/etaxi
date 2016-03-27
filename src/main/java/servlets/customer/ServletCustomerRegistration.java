@@ -24,7 +24,7 @@ public class ServletCustomerRegistration extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setAttribute("message", "Please, enter information about new customer!");
-        request.getRequestDispatcher("/customer/registration.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/CustomerRegistration.jsp").forward(request, response);
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -78,9 +78,9 @@ public class ServletCustomerRegistration extends HttpServlet {
         request.setAttribute("password", password);
 
         if (registrationSuccessful) {
-            request.getRequestDispatcher("/customer/menuCustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/CustomerMenu.jsp").forward(request, response);
         } else {
-            request.getRequestDispatcher("/customer/registration.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/CustomerRegistration.jsp").forward(request, response);
         }
 
         response.setContentType("text/html;charset=utf-8");

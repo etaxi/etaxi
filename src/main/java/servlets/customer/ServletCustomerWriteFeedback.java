@@ -62,13 +62,19 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
             request.setAttribute("toAddress", orderToEdit.getToAdress());
             request.setAttribute("feedback", orderToEdit.getFeedback());
 
-            request.getRequestDispatcher("/customer/editOrderFeedback.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/CustomerWriteFeedbackToOrder.jsp").forward(request, response);
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
 
         }
 
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 
@@ -121,12 +127,17 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
                 request.setAttribute("fromAddress", updatedOrder.getFromAdress());
                 request.setAttribute("toAddress", updatedOrder.getToAdress());
                 request.setAttribute("feedback", updatedOrder.getFeedback());
-                request.getRequestDispatcher("/customer/editOrderFeedback.jsp").forward(request, response);
+                request.getRequestDispatcher("/customer/CustomerWriteFeedbackToOrder.jsp").forward(request, response);
             }
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
-
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
     }

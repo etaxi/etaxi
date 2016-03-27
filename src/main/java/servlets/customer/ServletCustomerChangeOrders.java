@@ -37,11 +37,20 @@ public class ServletCustomerChangeOrders extends HttpServlet {
 
                 request.setAttribute("table", htmlTable);
                 request.setAttribute("message", "Change data of orders");
-                request.getRequestDispatcher("/customer/history.jsp").forward(request, response);
+                request.getRequestDispatcher("/customer/CustomerHistoryOfOrders.jsp").forward(request, response);
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 

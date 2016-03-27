@@ -37,11 +37,16 @@ public class ServletCustomerEditProfile extends HttpServlet {
             request.setAttribute("phone", currentCustomer.getPhone());
             request.setAttribute("password", currentCustomer.getPassword());
 
-            request.getRequestDispatcher("/customer/editProfile.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/CustomerEditProfile.jsp").forward(request, response);
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
-
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 
@@ -101,13 +106,19 @@ public class ServletCustomerEditProfile extends HttpServlet {
             request.setAttribute("password", password);
 
             if (registrationSuccessful) {
-                request.getRequestDispatcher("/customer/menuCustomer.jsp").forward(request, response);
+                request.getRequestDispatcher("/customer/CustomerMenu.jsp").forward(request, response);
             } else {
-                request.getRequestDispatcher("/customer/editProfile.jsp").forward(request, response);
+                request.getRequestDispatcher("/customer/CustomerEditProfile.jsp").forward(request, response);
             }
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
     }

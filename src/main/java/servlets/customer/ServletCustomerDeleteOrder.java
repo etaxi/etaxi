@@ -41,10 +41,16 @@ public class ServletCustomerDeleteOrder extends HttpServlet {
 
             request.setAttribute("messageAboutOperation", "Your order (ID: " + orderToDelete.getOrderId() + ") was deleted!");
             request.getRequestDispatcher("/customer/changeOrders").forward(request, response);
-        }
 
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
 
     }
 

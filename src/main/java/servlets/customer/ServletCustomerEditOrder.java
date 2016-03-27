@@ -61,7 +61,7 @@ public class ServletCustomerEditOrder extends HttpServlet {
             request.setAttribute("toAddress", orderToEdit.getToAdress());
             request.setAttribute("orderedDateTime", orderToEdit.getOrderedDateTime());
 
-            request.getRequestDispatcher("/customer/editOrder.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/CustomerEditOrder.jsp").forward(request, response);
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
@@ -115,12 +115,17 @@ public class ServletCustomerEditOrder extends HttpServlet {
                 request.setAttribute("orderId", orderId);
                 request.setAttribute("fromAddress", fromAddress);
                 request.setAttribute("toAddress", toAddress);
-                request.getRequestDispatcher("/customer/editOrder.jsp").forward(request, response);
+                request.getRequestDispatcher("/customer/CustomerEditOrder.jsp").forward(request, response);
             }
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
-
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
     }

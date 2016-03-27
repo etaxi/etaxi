@@ -37,11 +37,17 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
                 e.printStackTrace();
             }
             request.setAttribute("customer", customer.getName());
-            request.getRequestDispatcher("/customer/newOrder.jsp").forward(request, response);
-        }
+            request.getRequestDispatcher("/customer/CustomerNewOrder.jsp").forward(request, response);
 
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
     }
 
     public void doPost(HttpServletRequest request,
@@ -82,14 +88,19 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
 
             request.setAttribute("message", message);
             if (registrationSuccessful) {
-                request.getRequestDispatcher("/customer/menuCustomer.jsp").forward(request, response);
+                request.getRequestDispatcher("/customer/CustomerMenu.jsp").forward(request, response);
             } else {
-                request.getRequestDispatcher("/customer/newOrder.jsp").forward(request, response);
+                request.getRequestDispatcher("/customer/CustomerNewOrder.jsp").forward(request, response);
             }
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
-
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 

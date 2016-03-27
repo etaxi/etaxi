@@ -5,6 +5,8 @@
 </head>
 <body>
 
+<a href="/customer"> Main menu </a> <br>
+
 <h1>${message}</h1>
 
 <b> ${table} </b>

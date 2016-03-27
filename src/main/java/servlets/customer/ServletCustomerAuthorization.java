@@ -16,7 +16,7 @@ import java.sql.SQLException;
 /**
  * Created by D.Lazorkin on 25.03.2016.
  */
-@WebServlet(name = "ServletCustomerAuthorization" , urlPatterns = {"/customer/authorization"})
+@WebServlet(name = "ServletCustomerAuthorization" , urlPatterns = {"/customer/customerAuthorization"})
 public class ServletCustomerAuthorization extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -35,7 +35,7 @@ public class ServletCustomerAuthorization extends HttpServlet {
 
         if (customerDataSet == null || !customerDataSet.getPassword().equals(password)) {
             request.setAttribute("message", "Wrong username or password!");
-            request.getRequestDispatcher("/customer/authorization.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
@@ -45,7 +45,10 @@ public class ServletCustomerAuthorization extends HttpServlet {
         request.getSession().setAttribute("customerId", customerDataSet.getCustomerId());
 
         request.setAttribute("message", "Authorization successful: " + customerDataSet.getName());
-        request.getRequestDispatcher("/customer/menuCustomer.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/CustomerMenu.jsp").forward(request, response);
+
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
 
     }
 

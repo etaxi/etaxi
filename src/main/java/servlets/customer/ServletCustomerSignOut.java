@@ -21,13 +21,13 @@ public class ServletCustomerSignOut extends HttpServlet {
 
         if (request.getSession().getAttribute("customerId") != null) {
             request.getSession().removeAttribute("customerId");
-
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
         request.setAttribute("message", "");
-        request.getRequestDispatcher("/customer/authorization.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
     }
 }

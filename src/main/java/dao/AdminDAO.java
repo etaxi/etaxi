@@ -1,7 +1,6 @@
 package dao;
 
 import entity.Admin;
-import entity.Taxi;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,10 +12,10 @@ import java.util.List;
 public interface AdminDAO {
 
     /** Возвращает объект соответствующий записи с первичным ключом key или null */
-    Taxi getById(long id) throws SQLException;
+    Admin getById(long id) throws SQLException;
 
     /** Возвращает объект соответствующий записи по логину */
-    Taxi getByLogin(String login) throws SQLException;
+    Admin getByLogin(String login) throws SQLException;
 
     /** Сохраняет состояние объекта Admin в базе данных (если ID нет, создаем новую запись) */
     long update(Admin admin) throws SQLException;

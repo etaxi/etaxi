@@ -25,7 +25,7 @@ public class ServletTaxiMenu extends HttpServlet {
 
         } else {
             request.setAttribute("message", "");
-            request.getRequestDispatcher("/taxi/menuautorized.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
         }
 
 

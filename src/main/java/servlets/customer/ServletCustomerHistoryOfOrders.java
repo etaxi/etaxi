@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -19,15 +20,16 @@ import java.util.List;
 @WebServlet(name = "ServletCustomerHistoryOfOrders", urlPatterns = {"/customer/historyOfOrders"})
 public class ServletCustomerHistoryOfOrders extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if (request.getSession().getAttribute("customerId") != null) {
 
+            Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
+            Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
+
             try {
                 long id = (long) request.getSession().getAttribute("customerId");
-                List<Order> listOfOrders = new OrderManager().getOrdersByCustomerId(id);
+                List<Order> listOfOrders = new OrderManager().getOrdersByCustomerId(id, orderedDateTimeBegin, orderedDateTimeEnd);
                 String htmlTable = ServletHelper.generateHTMLTableForOrders(listOfOrders, false, false, false);
 
                 request.setAttribute("table", htmlTable);
@@ -38,6 +40,28 @@ public class ServletCustomerHistoryOfOrders extends HttpServlet {
                 e.printStackTrace();
             }
 
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        if (request.getSession().getAttribute("customerId") != null) {
+
+            request.setAttribute("message", "View the history of your orders");
+            request.setAttribute("orderedDateTimeBegin", new Timestamp(new java.util.Date().getTime()));
+            request.setAttribute("orderedDateTimeEnd", new Timestamp(new java.util.Date().getTime()));
+            request.setAttribute("servletToCall", "/customer/historyOfOrders");
+
+            request.getRequestDispatcher("/customer/CustomerListOrders.jsp").forward(request, response);
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
         }

@@ -6,6 +6,7 @@ import entity.Order;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,17 +96,19 @@ public class OrderDAOImpl implements OrderDAO {
         );
     }
 
-    public List<Order> getOpenOrdersOfCustomer(long customerId) throws SQLException {
+    public List<Order> getOpenOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
         return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +
                         ((customerId != 0) ? " and customerId = " + customerId : "") + " " +
+                        "AND (ordereddatetime  between '" + begin + "' AND '" + end + "') " +
                         "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
-    public List<Order> getCompletedOrdersOfCustomer(long customerId) throws SQLException {
+    public List<Order> getCompletedOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
         return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +  //DELIVERED
                         ((customerId != 0) ? " and customerId = " + customerId : "") + " " +
+                        "AND (ordereddatetime  between '" + begin + "' AND '" + end + "') " +
                         "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
@@ -138,8 +141,9 @@ public class OrderDAOImpl implements OrderDAO {
         return list;
     }
 
-    public List<Order> getCustomerOrders(long id) throws SQLException {
+    public List<Order> getCustomerOrders(long id, Timestamp begin, Timestamp end) throws SQLException {
         return executor.executeQuery("select * from orders where customerId=" + id + " " +
+                                     "AND (ordereddatetime  between '" + begin + "' AND '" + end + "') " +
                                      "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );

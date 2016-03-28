@@ -6,6 +6,7 @@ import dao.jdbc.OrderDAOImpl;
 import entity.Order;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /** Проект etaxi
@@ -47,19 +48,19 @@ public class OrderManager {
 
     }
 
-    public List<Order> getOrdersByCustomerId(long id) throws SQLException {
+    public List<Order> getOrdersByCustomerId(long id, Timestamp begin, Timestamp end) throws SQLException {
 
-        return orderDAO.getCustomerOrders(id);
+        return orderDAO.getCustomerOrders(id, begin, end);
     }
 
-    public List<Order> getOpenOrdersOfCustomer(long id) throws SQLException {
+    public List<Order> getOpenOrdersOfCustomer(long id, Timestamp begin, Timestamp end) throws SQLException {
 
-        return orderDAO.getOpenOrdersOfCustomer(id);
+        return orderDAO.getOpenOrdersOfCustomer(id, begin, end);
     }
 
-    public List<Order> getCompletedOrdersOfCustomer(long id) throws SQLException {
+    public List<Order> getCompletedOrdersOfCustomer(long id, Timestamp begin, Timestamp end) throws SQLException {
 
-        return  orderDAO.getCompletedOrdersOfCustomer(id);
+        return  orderDAO.getCompletedOrdersOfCustomer(id, begin, end);
     }
 }
 

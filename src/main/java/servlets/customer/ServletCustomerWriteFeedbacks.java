@@ -2,9 +2,6 @@ package servlets.customer;
 
 import business.OrderManager;
 import business.ServletHelper;
-import dao.OrderDAO;
-import dao.jdbc.DBConnection;
-import dao.jdbc.OrderDAOImpl;
 import entity.Order;
 
 import javax.servlet.ServletException;
@@ -14,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -23,19 +21,15 @@ import java.util.List;
 public class ServletCustomerWriteFeedbacks extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-              doGet(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if (request.getSession().getAttribute("customerId") != null) {
 
-            DBConnection dbConnection = new DBConnection();
-            OrderDAO orderDAO = new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
+            Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
+            Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
 
             try {
                 long id = (long) request.getSession().getAttribute("customerId");
-                List<Order> listOfOrders = new OrderManager().getCompletedOrdersOfCustomer(id);
+                List<Order> listOfOrders = new OrderManager().getCompletedOrdersOfCustomer(id, orderedDateTimeBegin, orderedDateTimeEnd);
                 String htmlTable = ServletHelper.generateHTMLTableForOrders(listOfOrders, false, false, true);
 
                 request.setAttribute("table", htmlTable);
@@ -55,6 +49,28 @@ public class ServletCustomerWriteFeedbacks extends HttpServlet {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        if (request.getSession().getAttribute("customerId") != null) {
+
+            request.setAttribute("message", "Write feedback to the orders");
+            request.setAttribute("orderedDateTimeBegin", new Timestamp(new java.util.Date().getTime()));
+            request.setAttribute("orderedDateTimeEnd", new Timestamp(new java.util.Date().getTime()));
+            request.setAttribute("servletToCall", "/customer/writeFeedbacks");
+
+            request.getRequestDispatcher("/customer/CustomerListOrders.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+
     }
 
 }

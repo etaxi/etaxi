@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -18,17 +19,17 @@ import java.util.List;
  */
 @WebServlet(name = "ServletCustomerChangeOrders", urlPatterns = {"/customer/changeOrders"})
 public class ServletCustomerChangeOrders extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-              doGet(request, response);
-    }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if (request.getSession().getAttribute("customerId") != null) {
 
+            Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
+            Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
+
             try {
                 long id = (long) request.getSession().getAttribute("customerId");
-                List<Order> listOfOrders = new OrderManager().getOpenOrdersOfCustomer(id);
+                List<Order> listOfOrders = new OrderManager().getOpenOrdersOfCustomer(id, orderedDateTimeBegin, orderedDateTimeEnd);
                 String htmlTable = ServletHelper.generateHTMLTableForOrders(listOfOrders, true, true, false);
 
                 request.setAttribute("table", htmlTable);
@@ -48,6 +49,30 @@ public class ServletCustomerChangeOrders extends HttpServlet {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
+
+    }
+
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        if (request.getSession().getAttribute("customerId") != null) {
+
+            request.setAttribute("message", "Change data of orders");
+            request.setAttribute("orderedDateTimeBegin", new Timestamp(new java.util.Date().getTime()));
+            request.setAttribute("orderedDateTimeEnd", new Timestamp(new java.util.Date().getTime()));
+            request.setAttribute("servletToCall", "/customer/changeOrders");
+
+            request.getRequestDispatcher("/customer/CustomerListOrders.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            request.setAttribute("message", "");
+            request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+
     }
 
 }

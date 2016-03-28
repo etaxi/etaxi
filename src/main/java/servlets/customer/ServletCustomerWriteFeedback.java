@@ -100,7 +100,8 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
 
             if (updateSuccessful) {
                 request.setAttribute("messageAboutOperation", message);
-                request.getRequestDispatcher("/customer/writeFeedbacks").forward(request, response);
+                //request.getRequestDispatcher("/customer/writeFeedbacks").forward(request, response);
+                response.sendRedirect("/customer/writeFeedbacks");
             } else {
                 Customer currentCustomer = null;
                 try {

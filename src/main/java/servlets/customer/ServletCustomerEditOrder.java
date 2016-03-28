@@ -97,7 +97,8 @@ public class ServletCustomerEditOrder extends HttpServlet {
 
             if (updateSuccessful) {
                 request.setAttribute("messageAboutOperation", message);
-                request.getRequestDispatcher("/customer/changeOrders").forward(request, response);
+                //request.getRequestDispatcher("/customer/changeOrders").forward(request, response);
+                response.sendRedirect("/customer/changeOrders");
             } else {
                 request.setAttribute("message", message);
                 request.setAttribute("orderId", orderId);

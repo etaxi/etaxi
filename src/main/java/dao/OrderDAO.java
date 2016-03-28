@@ -3,6 +3,7 @@ package dao;
 import entity.Order;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /** Проект etaxi
@@ -27,16 +28,16 @@ public interface OrderDAO {
     List<Order> getOpenOrdersAll() throws SQLException;
 
     /** Возвращает список открытых заказов */
-    List<Order> getOpenOrdersOfCustomer(long customerId) throws SQLException;
+    List<Order> getOpenOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException;
 
     /** Возвращает список открытых заказов */
-    List<Order> getCompletedOrdersOfCustomer(long customerId) throws SQLException;
+    List<Order> getCompletedOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException;
 
     /** Возвращает список заказов такси*/
     List<Order> getTaxiOrders(long id) throws SQLException;
 
     /** Возвращает список заказов по клиенту*/
-    List<Order> getCustomerOrders(long id) throws SQLException;
+    List<Order> getCustomerOrders(long id, Timestamp begin, Timestamp end) throws SQLException;
 
     /** Создает таблицу в базе данных для хранения объектов класса Order */
     void createTable() throws SQLException;

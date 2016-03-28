@@ -83,33 +83,37 @@ public class OrderDAOImpl implements OrderDAO {
      * Возвращает список объектов соответствующих всем записям в базе данных
      */
     public List<Order> getAll() throws SQLException {
-        return executor.executeQuery("select * from orders ",
+        return executor.executeQuery("select * from orders ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
     public List<Order> getOpenOrdersAll() throws SQLException {
-        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'",
+        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "' " +
+                "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
     public List<Order> getOpenOrdersOfCustomer(long customerId) throws SQLException {
         return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +
-                        ((customerId != 0) ? " and customerId = " + customerId : ""),
+                        ((customerId != 0) ? " and customerId = " + customerId : "") + " " +
+                        "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
     public List<Order> getCompletedOrdersOfCustomer(long customerId) throws SQLException {
         return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +  //DELIVERED
-                        ((customerId != 0) ? " and customerId = " + customerId : ""),
+                        ((customerId != 0) ? " and customerId = " + customerId : "") + " " +
+                        "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
     public List<Order> getTaxiOrders(long id) throws SQLException {
-        return executor.executeQuery("select * from orders where taxiId=" + id,
+        return executor.executeQuery("select * from orders where taxiId=" + id + " " +
+                "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
@@ -135,7 +139,8 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public List<Order> getCustomerOrders(long id) throws SQLException {
-        return executor.executeQuery("select * from orders where customerId=" + id,
+        return executor.executeQuery("select * from orders where customerId=" + id + " " +
+                                     "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }

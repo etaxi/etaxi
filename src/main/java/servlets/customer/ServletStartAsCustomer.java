@@ -12,9 +12,8 @@ import java.io.IOException;
  */
 @WebServlet(name = "ServletStartAsCustomer", urlPatterns = "/customer")
 public class ServletStartAsCustomer extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

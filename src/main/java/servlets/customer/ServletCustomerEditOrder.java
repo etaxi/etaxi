@@ -1,10 +1,7 @@
 package servlets.customer;
 
-import dao.CustomerDAO;
-import dao.OrderDAO;
-import dao.jdbc.CustomerDAOImpl;
-import dao.jdbc.DBConnection;
-import dao.jdbc.OrderDAOImpl;
+import business.CustomerManager;
+import business.OrderManager;
 import entity.Customer;
 import entity.Order;
 
@@ -31,20 +28,16 @@ public class ServletCustomerEditOrder extends HttpServlet {
             String orderIdToEdit = request.getParameter("orderId");
             Boolean changeIsPossible = false;
 
-            DBConnection dbService = new DBConnection();
-            CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-
             Customer currentCustomer = null;
             try {
-                currentCustomer = customerDAO.getById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             Order orderToEdit = null;
             try {
-                orderToEdit = orderDAO.getById(Long.valueOf(orderIdToEdit));
+                orderToEdit = new OrderManager().findOrderById(Long.valueOf(orderIdToEdit));
                 if (orderToEdit.getCustomerId() == request.getSession().getAttribute("customerId")) {
                     changeIsPossible = true;
                 }
@@ -53,20 +46,17 @@ public class ServletCustomerEditOrder extends HttpServlet {
             }
 
 
-        if (changeIsPossible) {
+            if (changeIsPossible) {
+                request.setAttribute("customer", currentCustomer.getName());
+                request.setAttribute("orderId", orderToEdit.getOrderId());
+                request.setAttribute("fromAddress", orderToEdit.getFromAdress());
+                request.setAttribute("toAddress", orderToEdit.getToAdress());
+                request.setAttribute("orderedDateTime", orderToEdit.getOrderedDateTime());
 
-            request.setAttribute("customer", currentCustomer.getName());
-            request.setAttribute("orderId", orderToEdit.getOrderId());
-            request.setAttribute("fromAddress", orderToEdit.getFromAdress());
-            request.setAttribute("toAddress", orderToEdit.getToAdress());
-            request.setAttribute("orderedDateTime", orderToEdit.getOrderedDateTime());
-
-            request.getRequestDispatcher("/customer/CustomerEditOrder.jsp").forward(request, response);
-
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-
-        }
+                request.getRequestDispatcher("/customer/CustomerEditOrder.jsp").forward(request, response);
+                response.setContentType("text/html;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_OK);
+            }
 
         }
     }
@@ -81,22 +71,20 @@ public class ServletCustomerEditOrder extends HttpServlet {
             String orderedDateTime = request.getParameter("orderedDateTime");
 
             String message = ((fromAddress == null || fromAddress.isEmpty()) ? "from address; " : "") +
-                    ((toAddress == null || toAddress.isEmpty()) ? "to address; " : "") +
-                    ((orderedDateTime == null || orderedDateTime.isEmpty()) ? "date and time of ride; " : "");
+                             ((toAddress == null || toAddress.isEmpty()) ? "to address; " : "") +
+                             ((orderedDateTime == null || orderedDateTime.isEmpty()) ? "date and time of ride; " : "");
 
             Boolean updateSuccessful = false;
             Order updatedOrder = null;
             if (message.isEmpty()) {
 
-                DBConnection dbService = new DBConnection();
-                OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
                 updatedOrder = new Order(Long.parseLong(orderId), (long) request.getSession().getAttribute("customerId"),
                         new Timestamp(new java.util.Date().getTime()),
                         Timestamp.valueOf(orderedDateTime),
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
                 try {
-                    orderDAO.update(updatedOrder);
+                    new OrderManager().updateOrder(updatedOrder);
                     updateSuccessful = true;
                     message = "Order ID: " + updatedOrder.getOrderId() + " was changed!";
                 } catch (SQLException e) {

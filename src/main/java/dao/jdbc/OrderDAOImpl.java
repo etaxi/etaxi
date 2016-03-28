@@ -102,7 +102,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public List<Order> getCompletedOrdersOfCustomer(long customerId) throws SQLException {
-        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.DELIVERED + "'" +
+        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +  //DELIVERED
                         ((customerId != 0) ? " and customerId = " + customerId : ""),
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );

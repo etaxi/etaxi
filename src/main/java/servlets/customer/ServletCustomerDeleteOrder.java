@@ -1,8 +1,6 @@
 package servlets.customer;
 
-import dao.OrderDAO;
-import dao.jdbc.DBConnection;
-import dao.jdbc.OrderDAOImpl;
+import business.OrderManager;
 import entity.Order;
 
 import javax.servlet.ServletException;
@@ -19,21 +17,19 @@ import java.sql.SQLException;
 @WebServlet(name = "ServletCustomerDeleteOrder", urlPatterns = {"/customer/deleteOrderByCustomer"})
 public class ServletCustomerDeleteOrder extends HttpServlet {
 
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if (request.getSession().getAttribute("customerId") != null) {
 
             // Get parameter from request
             String orderIdToDelete = request.getParameter("orderId");
 
-            DBConnection dbService = new DBConnection();
-            OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
             Order orderToDelete = null;
+            OrderManager orderManager = new OrderManager();
             try {
-                orderToDelete = orderDAO.getById(Long.valueOf(orderIdToDelete));
+                orderToDelete = orderManager.findOrderById(Long.valueOf(orderIdToDelete));
                 if (orderToDelete.getCustomerId() == request.getSession().getAttribute("customerId")) {
-                    orderDAO.delete(orderToDelete);
+                    orderManager.deleteOrder(orderToDelete);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -41,7 +37,6 @@ public class ServletCustomerDeleteOrder extends HttpServlet {
 
             request.setAttribute("messageAboutOperation", "Your order (ID: " + orderToDelete.getOrderId() + ") was deleted!");
             request.getRequestDispatcher("/customer/changeOrders").forward(request, response);
-
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
         }
@@ -54,10 +49,6 @@ public class ServletCustomerDeleteOrder extends HttpServlet {
 
     }
 
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 }
 

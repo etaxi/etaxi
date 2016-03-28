@@ -1,8 +1,6 @@
 package servlets.customer;
 
-import dao.CustomerDAO;
-import dao.jdbc.CustomerDAOImpl;
-import dao.jdbc.DBConnection;
+import business.CustomerManager;
 import entity.Customer;
 
 import javax.servlet.ServletException;
@@ -23,11 +21,9 @@ public class ServletCustomerEditProfile extends HttpServlet {
 
         if (request.getSession().getAttribute("customerId") != null) {
 
-            DBConnection dbConnection = new DBConnection();
-            CustomerDAO customerDAO = new CustomerDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
             Customer currentCustomer = null;
             try {
-                currentCustomer = customerDAO.getById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -38,7 +34,6 @@ public class ServletCustomerEditProfile extends HttpServlet {
             request.setAttribute("password", currentCustomer.getPassword());
 
             request.getRequestDispatcher("/customer/CustomerEditProfile.jsp").forward(request, response);
-
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
         }
@@ -54,11 +49,10 @@ public class ServletCustomerEditProfile extends HttpServlet {
 
         if (request.getSession().getAttribute("customerId") != null) {
 
-            DBConnection dbConnection = new DBConnection();
-            CustomerDAO customerDAO = new CustomerDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
+            CustomerManager customerManager = new CustomerManager();
             Customer currentCustomer = null;
             try {
-                currentCustomer = customerDAO.getById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = customerManager.findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -68,8 +62,8 @@ public class ServletCustomerEditProfile extends HttpServlet {
             String password = request.getParameter("password");
 
             String message = ((name == null || name.isEmpty()) ? "name, surname; " : "") +
-                    ((phone == null || phone.isEmpty()) ? "phone; " : "") +
-                    ((password == null || password.isEmpty()) ? "password; " : "");
+                             ((phone == null || phone.isEmpty()) ? "phone; " : "") +
+                             ((password == null || password.isEmpty()) ? "password; " : "");
 
             Boolean registrationSuccessful = false;
             if (message.isEmpty()) {
@@ -79,17 +73,14 @@ public class ServletCustomerEditProfile extends HttpServlet {
                 currentCustomer.setPhone(phone);
 
                 try {
-                    Customer presentCustomerWthSuchLogin = customerDAO.getByLogin(currentCustomer.getPhone());
+                    Customer presentCustomerWthSuchLogin = customerManager.findCustomerByLogin(currentCustomer.getPhone());
                     if ((presentCustomerWthSuchLogin != null)
                             && (presentCustomerWthSuchLogin.getCustomerId() != currentCustomer.getCustomerId())) {
                         message = "You can't use such phone! The customer with such phone already present!";
                     }
                     else{
-                        customerDAO.update(currentCustomer);
+                        customerManager.updateCustomer(currentCustomer);
                         message = "The data change is made (" + currentCustomer.getName() + ")";
-                        name = "";
-                        phone = "";
-                        password = "";
                         registrationSuccessful = true;
                     }
                 } catch (SQLException e) {
@@ -110,7 +101,6 @@ public class ServletCustomerEditProfile extends HttpServlet {
             } else {
                 request.getRequestDispatcher("/customer/CustomerEditProfile.jsp").forward(request, response);
             }
-
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
         }

@@ -1,10 +1,7 @@
 package servlets.customer;
 
-import dao.CustomerDAO;
-import dao.OrderDAO;
-import dao.jdbc.CustomerDAOImpl;
-import dao.jdbc.DBConnection;
-import dao.jdbc.OrderDAOImpl;
+import business.CustomerManager;
+import business.OrderManager;
 import entity.Customer;
 import entity.Order;
 
@@ -23,22 +20,18 @@ import java.sql.Timestamp;
 @WebServlet(name = "ServletCustomerCreateNewOrder", urlPatterns = {"/customer/createNewOrder"})
 public class ServletCustomerCreateNewOrder extends HttpServlet {
 
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if (request.getSession().getAttribute("customerId") != null) {
 
-            DBConnection dbService = new DBConnection();
-            CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            Customer customer = null;
+            Customer CurrentCustomer = null;
             try {
-                customer = customerDAO.getById((long) request.getSession().getAttribute("customerId"));
+                CurrentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            request.setAttribute("customer", customer.getName());
+            request.setAttribute("customer", CurrentCustomer.getName());
             request.getRequestDispatcher("/customer/CustomerNewOrder.jsp").forward(request, response);
-
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
         }
@@ -59,25 +52,22 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
             String toAddress = request.getParameter("toAddress");
             String orderedDateTime = request.getParameter("orderedDateTime");
 
-            String message = ((fromAddress == null || fromAddress.isEmpty()) ? "from address; " : "") +
-                    ((toAddress == null || toAddress.isEmpty()) ? "to address; " : "") +
-                    ((orderedDateTime == null || orderedDateTime.isEmpty()) ? "date and time of ride; " : "");
+            String message = ((fromAddress == null || fromAddress.isEmpty()) ? "ride from address; " : "") +
+                             ((toAddress == null || toAddress.isEmpty()) ? "ride to the address; " : "") +
+                             ((orderedDateTime == null || orderedDateTime.isEmpty()) ? "date and time of taxi ride; " : "");
 
-            Boolean registrationSuccessful = false;
+            Boolean orderCreationSuccessful = false;
             if (message.isEmpty()) {
 
-                DBConnection dbService = new DBConnection();
-                OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
                 Order newOrder = new Order((long) 0, (long) request.getSession().getAttribute("customerId"),
                         new Timestamp(new java.util.Date().getTime()),
                         Timestamp.valueOf(orderedDateTime),
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
-                        registrationSuccessful = true;
                 try {
-                    newOrder.setOrderId(orderDAO.update(newOrder));
+                    new OrderManager().createNewOrder(newOrder);
                     message = "New order was created (new order ID: " + newOrder.getOrderId() + ")";
-                    request.setAttribute("orderId", newOrder.getOrderId());
+                    orderCreationSuccessful = true;
                 } catch (SQLException e) {
                     message = "New order creation failed! Please try again!";
                 }
@@ -87,12 +77,11 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
             }
 
             request.setAttribute("message", message);
-            if (registrationSuccessful) {
+            if (orderCreationSuccessful) {
                 request.getRequestDispatcher("/customer/CustomerMenu.jsp").forward(request, response);
             } else {
                 request.getRequestDispatcher("/customer/CustomerNewOrder.jsp").forward(request, response);
             }
-
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
         }

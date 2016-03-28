@@ -1,10 +1,7 @@
 package servlets.customer;
 
-import dao.CustomerDAO;
-import dao.OrderDAO;
-import dao.jdbc.CustomerDAOImpl;
-import dao.jdbc.DBConnection;
-import dao.jdbc.OrderDAOImpl;
+import business.CustomerManager;
+import business.OrderManager;
 import entity.Customer;
 import entity.Order;
 
@@ -30,20 +27,16 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
             String orderIdToChange = request.getParameter("orderId");
             Boolean changeIsPossible = false;
 
-            DBConnection dbService = new DBConnection();
-            CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-            OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-
             Customer currentCustomer = null;
             try {
-                currentCustomer = customerDAO.getById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             Order orderToEdit = null;
             try {
-                orderToEdit = orderDAO.getById(Long.valueOf(orderIdToChange));
+                orderToEdit = new OrderManager().findOrderById(Long.valueOf(orderIdToChange));
                 if (orderToEdit.getCustomerId() == request.getSession().getAttribute("customerId")) {
                     changeIsPossible = true;
                 }
@@ -63,7 +56,6 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
             request.setAttribute("feedback", orderToEdit.getFeedback());
 
             request.getRequestDispatcher("/customer/CustomerWriteFeedbackToOrder.jsp").forward(request, response);
-
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
 
@@ -90,14 +82,12 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
             Boolean updateSuccessful = false;
             Order updatedOrder = null;
 
-            DBConnection dbService = new DBConnection();
-
             if (message.isEmpty()) {
-                OrderDAO orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
                 try {
-                    updatedOrder = orderDAO.getById(Long.parseLong(orderId));
+                    OrderManager orderManager = new OrderManager();
+                    updatedOrder = orderManager.findOrderById(Long.parseLong(orderId));
                     updatedOrder.setFeedback(feedback);
-                    orderDAO.update(updatedOrder);
+                    orderManager.updateOrder(updatedOrder);
                     updateSuccessful = true;
                     message = "Order ID: " + updatedOrder.getOrderId() + " was updated!";
                 } catch (SQLException e) {
@@ -113,9 +103,8 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
                 request.getRequestDispatcher("/customer/writeFeedbacks").forward(request, response);
             } else {
                 Customer currentCustomer = null;
-                CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
                 try {
-                    currentCustomer = customerDAO.getById((long) request.getSession().getAttribute("customerId"));
+                    currentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

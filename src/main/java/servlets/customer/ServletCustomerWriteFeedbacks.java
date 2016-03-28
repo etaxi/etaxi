@@ -1,5 +1,7 @@
 package servlets.customer;
 
+import business.OrderManager;
+import business.ServletHelper;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
@@ -33,12 +35,12 @@ public class ServletCustomerWriteFeedbacks extends HttpServlet {
 
             try {
                 long id = (long) request.getSession().getAttribute("customerId");
-                List<Order> listOfOrders = orderDAO.getCompletedOrdersOfCustomer(id);
-                String htmlTable = generateHTMLTableForOrders(listOfOrders);
+                List<Order> listOfOrders = new OrderManager().getCompletedOrdersOfCustomer(id);
+                String htmlTable = ServletHelper.generateHTMLTableForOrders(listOfOrders, false, false, true);
 
                 request.setAttribute("table", htmlTable);
                 request.setAttribute("message", "Write feedback to the orders");
-                request.getRequestDispatcher("/customer/CustomerHistoryOfOrders.jsp").forward(request, response);
+                request.getRequestDispatcher("/customer/CustomerListOrders.jsp").forward(request, response);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -53,50 +55,6 @@ public class ServletCustomerWriteFeedbacks extends HttpServlet {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
-    }
-
-    private String generateHTMLTableForOrders(List<Order> listOfOrders) {
-
-        StringBuilder htmlString = new StringBuilder("<table border = 1 width=\"100%\">");
-        htmlString.append("<tr>")
-                .append("<th> ID </th>")
-                .append("<th> Customer ID </th>")
-                .append("<th> Date&Time </th>")
-                .append("<th> Ordered Date&Time </th>")
-                .append("<th> Status </th>")
-                .append("<th> From address </th>")
-                .append("<th> To address </th>")
-                .append("<th> Taxi ID </th>")
-                .append("<th> Distance </th>")
-                .append("<th> Price </th>")
-                .append("<th> Rate </th>")
-                .append("<th> Feedback </th>")
-                .append("<th> Write feedback </th>")
-                .append("</tr>");
-
-        for (Order item : listOfOrders) {
-            htmlString.append("<tr>")
-                    .append("<td>").append(item.getOrderId())
-                    .append("<td>").append(item.getCustomerId())
-                    .append("<td>").append(item.getDateTime())
-                    .append("<td>").append(item.getOrderedDateTime())
-                    .append("<td>").append(item.getOrderStatus())
-                    .append("<td>").append(item.getFromAdress())
-                    .append("<td>").append(item.getToAdress())
-                    .append("<td>").append(item.getTaxiId())
-                    .append("<td>").append(item.getDistance())
-                    .append("<td>").append(item.getPrice())
-                    .append("<td>").append(item.getRate())
-                    .append("<td>").append(item.getFeedback())
-                    .append("<td><form action='/customer/writeFeedback' method='get'>" +
-                            "<input type='hidden' name='orderId' value='" + item.getOrderId() + "'/>" +
-                            "<input type='submit' value='Write feedback'/></form>")
-                    .append("</tr>");
-        }
-
-        htmlString.append("</table>");
-
-        return htmlString.toString();
     }
 
 }

@@ -1,8 +1,7 @@
 package servlets.customer;
 
-import dao.CustomerDAO;
-import dao.jdbc.CustomerDAOImpl;
-import dao.jdbc.DBConnection;
+
+import business.CustomerManager;
 import entity.Customer;
 
 import javax.servlet.ServletException;
@@ -18,22 +17,20 @@ import java.sql.SQLException;
  */
 @WebServlet(name = "ServletCustomerAuthorization" , urlPatterns = {"/customer/customerAuthorization"})
 public class ServletCustomerAuthorization extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        DBConnection dbService = new DBConnection();
-        CustomerDAO customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
-        Customer customerDataSet = null;
+        Customer customer = null;
         try {
-            customerDataSet = customerDAO.getByLogin(login);
-
+            customer = new CustomerManager().findCustomerByLogin(login);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        if (customerDataSet == null || !customerDataSet.getPassword().equals(password)) {
+        if (customer == null | !customer.getPassword().equals(password)) {
             request.setAttribute("message", "Wrong username or password!");
             request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
             response.setContentType("text/html;charset=utf-8");
@@ -42,17 +39,14 @@ public class ServletCustomerAuthorization extends HttpServlet {
         }
 
         // сохраняем логин (телефон) пользователя в сессию, для дальнейшем идентификации клиента в системе
-        request.getSession().setAttribute("customerId", customerDataSet.getCustomerId());
+        request.getSession().setAttribute("customerId", customer.getCustomerId());
 
-        request.setAttribute("message", "Authorization successful: " + customerDataSet.getName());
+        request.setAttribute("message", "Authorization successful: " + customer.getName());
         request.getRequestDispatcher("/customer/CustomerMenu.jsp").forward(request, response);
-
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 }

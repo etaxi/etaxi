@@ -1,8 +1,6 @@
 package servlets.customer;
 
-import dao.CustomerDAO;
-import dao.jdbc.CustomerDAOImpl;
-import dao.jdbc.DBConnection;
+import business.CustomerManager;
 import entity.Customer;
 
 import javax.servlet.ServletException;
@@ -12,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by D.Lazorkin on 25.03.2016.
@@ -25,39 +21,34 @@ public class ServletCustomerRegistration extends HttpServlet {
 
         request.setAttribute("message", "Please, enter information about new customer!");
         request.getRequestDispatcher("/customer/CustomerRegistration.jsp").forward(request, response);
-
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, Object> pageVariables = new HashMap<>();
 
         String name     = request.getParameter("name");
         String phone    = request.getParameter("phone");
         String password = request.getParameter("password");
 
         String message = ((name == null || name.isEmpty()) ? "name, surname; " : "") +
-                ((phone == null || phone.isEmpty()) ? "phone; " : "") +
-                ((password == null || password.isEmpty()) ? "password; " : "");
+                         ((phone == null || phone.isEmpty()) ? "phone; " : "") +
+                         ((password == null || password.isEmpty()) ? "password; " : "");
 
         Boolean registrationSuccessful = false;
+        CustomerManager customerManager = new CustomerManager();
         if (message.isEmpty()) {
 
-            DBConnection dbConnection = new DBConnection();
-            CustomerDAO customerDAO = new CustomerDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
-            Customer newCustomer = new Customer((long)0, name, phone, password);
-
             try {
-                if (customerDAO.getByLogin(newCustomer.getPhone()) != null) {
+                if (customerManager.findCustomerByLogin(phone) != null) {
                     message = "You can't use such phone! The customer with such phone already present!";
                 }
                 else {
-                    newCustomer.setCustomerId(customerDAO.update(newCustomer));
-                    message = "Registration successful: " + newCustomer.getName();
+                    Customer newCustomer = new Customer((long)0, name, phone, password);
+                    customerManager.createNewCustomer(newCustomer);
 
-                    name = ""; phone = ""; password = "";
+                    message = "Registration successful: " + newCustomer.getName();
                     registrationSuccessful = true;
 
                     // сохраняем логин (телефон) пользователя в сессию, для дальнейшем идентификации клиента в системе

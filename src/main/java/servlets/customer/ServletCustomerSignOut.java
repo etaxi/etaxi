@@ -25,9 +25,7 @@ public class ServletCustomerSignOut extends HttpServlet {
 
         request.setAttribute("message", "");
         request.getRequestDispatcher("/customer/CustomerAuthorization.jsp").forward(request, response);
-
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
     }
 }

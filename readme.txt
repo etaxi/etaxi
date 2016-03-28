@@ -59,7 +59,8 @@ Administrator
 3. orders
     -orderId    [long(9)]   ключ записи
     -customerId [long(9)]   ключ записи клиента
-    -datetime   [datetime]  дата и время заказа
+    -datetime   [datetime]  дата и время заказа ввода/последнего изменения заказа
+    -ordereddatetime   [datetime]  дата и время, на которое сделан заказ такси
     -orderStatus[text]      статус (в ожидани, в пути, заказ выполнен)
     -fromAdress [text]      откуда - адрес (строка)
     -toAdress   [text]      куда - адрес (строка)

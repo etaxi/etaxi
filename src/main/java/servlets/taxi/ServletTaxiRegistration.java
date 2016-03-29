@@ -1,8 +1,6 @@
 package servlets.taxi;
 
-import dao.TaxiDAO;
-import dao.jdbc.DBConnection;
-import dao.jdbc.TaxiDAOImpl;
+import business.TaxiManager;
 import entity.Taxi;
 
 import javax.servlet.ServletException;
@@ -49,14 +47,13 @@ public class ServletTaxiRegistration extends HttpServlet {
 
         if (message.isEmpty()) {
 
-            DBConnection dbConnection = new DBConnection();
-            TaxiDAO taxiDAO = new TaxiDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
+            TaxiManager taxiManager = new TaxiManager();
             Taxi newTaxi = new Taxi((long)0, name, car, phone, login, password);
             try {
-                newTaxi.setTaxiId(taxiDAO.update(newTaxi));
                 message = "Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";
-                name = ""; car = ""; phone = ""; login = ""; password = "";
+                taxiManager.createNewTaxi(newTaxi);
             } catch (SQLException e) {
+                e.printStackTrace();
                 message = "Registration failed! Please try again!";
             }
 
@@ -68,6 +65,8 @@ public class ServletTaxiRegistration extends HttpServlet {
 
         request.setAttribute("message", message);
         request.getRequestDispatcher("/taxi/TaxiMenuStart.jsp").forward(request, response);
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
 
     }
 }

@@ -1,5 +1,6 @@
 package servlets.taxi;
 
+import business.OrderManager;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
@@ -19,25 +20,39 @@ import java.util.List;
  */
 @WebServlet(name = "ServletTaxiTakeOrder", urlPatterns = {"/taxi/takeorder"})
 public class ServletTaxiTakeOrder extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String orderId     = request.getParameter("orderId");
-        DBConnection dbConnection = new DBConnection();
-        OrderDAO orderDAO = new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
 
-        try {
-            Order order = orderDAO.getById(Long.parseLong(orderId));
-            Long taxiId = (long) request.getSession().getAttribute("taxiID");
-            order.setTaxiId(taxiId);
-            order.setOrderStatus(Order.OrderStatus.TAKEN);
-            orderDAO.update(order);
-            request.getSession().setAttribute("orderId", orderId);
-            request.setAttribute("message", "Taken order Id="+ order.getOrderId());
-            request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
+        if (request.getSession().getAttribute("taxiID") != null) {
+            String orderId     = request.getParameter("orderId");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            request.getRequestDispatcher("/taxi").forward(request, response);
+            try {
+                Order order = new OrderManager().findOrderById(Long.parseLong(orderId));
+                Long taxiId = (long) request.getSession().getAttribute("taxiID");
+                order.setTaxiId(taxiId);
+                order.setOrderStatus(Order.OrderStatus.TAKEN);
+                new OrderManager().updateOrder(order);
+                request.getSession().setAttribute("orderId", orderId);
+
+                request.setAttribute("message", "Taken order Id="+ order.getOrderId());
+                request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
+                response.setContentType("text/html;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_OK);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                request.getRequestDispatcher("/taxi").forward(request, response);
+            }
+
+
         }
+        else {
+            request.setAttribute("message", " ");
+            request.getRequestDispatcher("/taxi/TaxiAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

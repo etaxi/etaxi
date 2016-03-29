@@ -1,5 +1,6 @@
 package servlets.taxi;
 
+import business.OrderManager;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
@@ -24,29 +25,39 @@ public class ServletTaxiCancelOrder extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute("orderId") == null){
-            request.setAttribute("message", "You dont have order to cancel");
-            request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
-        }
-        else {
-            long orderId     = Long.parseLong((String) request.getSession().getAttribute("orderId"));
-            DBConnection dbConnection = new DBConnection();
-            OrderDAO orderDAO = new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
 
+        if (request.getSession().getAttribute("taxiID") != null) {
+
+            if (request.getSession().getAttribute("orderId") == null){
+                request.setAttribute("message", "You dont have order to cancel");
+                request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
+            }
+
+            long orderId = Long.parseLong((String) request.getSession().getAttribute("orderId"));
             try {
-                Order order = orderDAO.getById(orderId);
+                Order order = new OrderManager().findOrderById(orderId);
                 order.setTaxiId((long) 0);
                 order.setOrderStatus(Order.OrderStatus.WAITING);
-                orderDAO.update(order);
+                new OrderManager().updateOrder(order);
                 request.getSession().removeAttribute("orderId");
+
                 request.setAttribute("message", "Canceled order Id=" + orderId);
                 request.getRequestDispatcher("/taxi/taxiMenuAuthorized.jsp").forward(request, response);
+                response.setContentType("text/html;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_OK);
 
             } catch (SQLException e) {
                 e.printStackTrace();
                 request.getRequestDispatcher("/taxi").forward(request, response);
             }
-        }
 
+
+        }
+        else {
+            request.setAttribute("message", " ");
+            request.getRequestDispatcher("/taxi/TaxiAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
     }
 }

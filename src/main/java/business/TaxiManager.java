@@ -1,43 +1,48 @@
 package business;
 
+import dao.TaxiDAO;
+import dao.jdbc.TaxiDAOImpl;
+import dao.jdbc.DBConnection;
+import entity.Taxi;
+
+import java.sql.SQLException;
+
 /** Проект etaxi
  * Класс для реализации функций над списком такси
  */
 public class TaxiManager {
 
+    private TaxiDAO taxiDAO;
 
-   /* private ContactDAO dao;
-
-    public ContactManager() {
-        dao = ContactDAOFactory.getContactDAO();
+    public TaxiManager() {
+        DBConnection dbService = new DBConnection();
+        this.taxiDAO = new TaxiDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
     }
 
-    // Добавление контакта - возвращает ID добавленного контакта
-    public Long addContact(Contact contact) {
-        return dao.addContact(contact);
+    public Taxi findTaxiByLogin(String login) throws SQLException {
+
+        return taxiDAO.getByLogin(login);
+
     }
 
-    // Редактирование контакта
-    public void updateContact(Contact contact) {
-        dao.updateContact(contact);
+    public Taxi findTaxiById(long Id) throws SQLException {
+
+        return taxiDAO.getById(Id);
+
     }
 
-    // Удаление контакта по его ID
-    public void deleteContact(Long contactId) {
-        dao.deleteContact(contactId);
+    public void createNewTaxi(Taxi taxi) throws SQLException {
+
+        taxi.setTaxiId(taxiDAO.update(taxi));
+
     }
 
-    // Получение одного контакта
-    public Contact getContact(Long contactId) {
-        return dao.getContact(contactId);
+    public void updateTaxi(Taxi taxi) throws SQLException {
+
+        taxiDAO.update(taxi);
+
     }
 
-    // Получение списка контактов
-    public List<Contact> findContacts() {
-        return dao.findContacts();
-    }
-
-    */
 
 }
 

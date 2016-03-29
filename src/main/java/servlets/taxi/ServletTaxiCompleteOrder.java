@@ -1,5 +1,6 @@
 package servlets.taxi;
 
+import business.OrderManager;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
@@ -23,26 +24,30 @@ public class ServletTaxiCompleteOrder extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute("orderId") == null){
-            request.setAttribute("message", "You dont have order to complite");
-            request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
-        }
-        else {
+
+        if (request.getSession().getAttribute("taxiID") != null) {
             long orderId = Long.parseLong((String) request.getSession().getAttribute("orderId"));
-            DBConnection dbConnection = new DBConnection();
-            OrderDAO orderDAO = new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
 
             try {
-                Order order = orderDAO.getById(orderId);
+                Order order = new OrderManager().findOrderById(orderId);
                 order.setOrderStatus(Order.OrderStatus.DELIVERED);
-                orderDAO.update(order);
+                new OrderManager().updateOrder(order);
                 request.setAttribute("message", "Completed order Id=" + orderId);
                 request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
+                response.setContentType("text/html;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_OK);
 
             } catch (SQLException e) {
                 e.printStackTrace();
                 request.getRequestDispatcher("/taxi").forward(request, response);
             }
+
+        }
+        else {
+            request.setAttribute("message", " ");
+            request.getRequestDispatcher("/taxi/TaxiAuthorization.jsp").forward(request, response);
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }

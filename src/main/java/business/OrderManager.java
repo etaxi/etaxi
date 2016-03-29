@@ -62,5 +62,17 @@ public class OrderManager {
 
         return  orderDAO.getCompletedOrdersOfCustomer(id, begin, end);
     }
+
+    public List<Order> getTaxiOrders(long id) throws SQLException {
+
+        return  orderDAO.getTaxiOrders(id);
+    }
+
+    public List<Order> getOpenOrdersAll() throws SQLException {
+
+        return  orderDAO.getOpenOrdersAll();
+    }
+
+
 }
 

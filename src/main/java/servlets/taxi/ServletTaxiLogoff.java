@@ -21,13 +21,11 @@ public class ServletTaxiLogoff extends HttpServlet {
         if (request.getSession().getAttribute("taxiId") != null) {
             request.getSession().removeAttribute("taxiId");
             request.getSession().removeAttribute("orderId");
-
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
         request.setAttribute("message", "");
         request.getRequestDispatcher("/taxi/TaxiMenuStart.jsp").forward(request, response);
-
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 }

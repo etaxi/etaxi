@@ -1,5 +1,6 @@
 package servlets.taxi;
 
+import business.TaxiManager;
 import dao.TaxiDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.TaxiDAOImpl;
@@ -13,9 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-/**
- * Created by Aleks on 24.03.2016.
- */
 @WebServlet(name = "ServletTaxiAuthorization" , urlPatterns = {"/taxi/authorization"})
 public class ServletTaxiAuthorization extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,11 +27,9 @@ public class ServletTaxiAuthorization extends HttpServlet {
             return;
         }
 
-        DBConnection dbConnection = new DBConnection();
-        TaxiDAO taxiDAO = new TaxiDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName());
         Taxi taxi = null;
         try {
-            taxi = taxiDAO.getByLogin(login);
+            taxi = new TaxiManager().findTaxiByLogin(login);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,9 +46,11 @@ public class ServletTaxiAuthorization extends HttpServlet {
         // сохраняем логин (телефон) в сессию, для дальнейшей идентификации
         request.getSession().setAttribute("taxiID", taxi.getTaxiId());
 
-
         request.setAttribute("message", "Autorization compliete as "+ taxi.getName());
         request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * Created by Genady Zalesky on 29.03.2016
  */
 
-@WebServlet(name = "ServletCustomerRegistration", urlPatterns = {"/admin/registration"})
+@WebServlet(name = "ServletAdminRegistration", urlPatterns = {"/admin/registration"})
 public class ServletAdminRegistration extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

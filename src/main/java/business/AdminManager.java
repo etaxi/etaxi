@@ -35,7 +35,7 @@ public class AdminManager {
         admin.setAdminId(adminDAO.update(admin));
     }
 
-    public void updateCustomer(Admin admin) throws SQLException {
+    public void updateAdmin(Admin admin) throws SQLException {
 
         adminDAO.update(admin);
     }

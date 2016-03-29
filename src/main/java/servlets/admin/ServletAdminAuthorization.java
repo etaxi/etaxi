@@ -47,7 +47,7 @@ public class ServletAdminAuthorization extends HttpServlet {
         request.getSession().setAttribute("customerId", adminDataSet.getAdminId());
 
         request.setAttribute("message", "Authorization successful: " + adminDataSet.getName());
-        request.getRequestDispatcher("/admin/menuAdmin.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin/AdminMenu.jsp").forward(request, response);
 
     }
 

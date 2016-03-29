@@ -26,7 +26,7 @@ public class ServletTaxiCancelOrder extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("orderId") == null){
             request.setAttribute("message", "You dont have order to cancel");
-            request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
         }
         else {
             long orderId     = Long.parseLong((String) request.getSession().getAttribute("orderId"));
@@ -40,7 +40,7 @@ public class ServletTaxiCancelOrder extends HttpServlet {
                 orderDAO.update(order);
                 request.getSession().removeAttribute("orderId");
                 request.setAttribute("message", "Canceled order Id=" + orderId);
-                request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
+                request.getRequestDispatcher("/taxi/taxiMenuAuthorized.jsp").forward(request, response);
 
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -34,7 +34,7 @@ public class ServletTaxiHistory extends HttpServlet {
             String htmlTable = generateHTMLTableForOrders(listOfOrders);
 
             request.setAttribute("table", htmlTable);
-            request.getRequestDispatcher("/taxi/history.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/TaxiHistory.jsp").forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();

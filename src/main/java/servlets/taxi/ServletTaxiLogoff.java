@@ -27,7 +27,7 @@ public class ServletTaxiLogoff extends HttpServlet {
         }
 
         request.setAttribute("message", "");
-        request.getRequestDispatcher("/taxi/menustart.jsp").forward(request, response);
+        request.getRequestDispatcher("/taxi/TaxiMenuStart.jsp").forward(request, response);
 
     }
 }

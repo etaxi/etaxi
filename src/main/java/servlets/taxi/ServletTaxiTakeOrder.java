@@ -32,7 +32,7 @@ public class ServletTaxiTakeOrder extends HttpServlet {
             orderDAO.update(order);
             request.getSession().setAttribute("orderId", orderId);
             request.setAttribute("message", "Taken order Id="+ order.getOrderId());
-            request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();

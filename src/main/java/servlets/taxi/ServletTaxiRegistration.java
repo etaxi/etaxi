@@ -23,7 +23,7 @@ public class ServletTaxiRegistration extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setAttribute("message", "Please, enter information about new taxi!");
-        request.getRequestDispatcher("/taxi/registration.jsp").forward(request, response);
+        request.getRequestDispatcher("/taxi/TaxiRegistration.jsp").forward(request, response);
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -67,7 +67,7 @@ public class ServletTaxiRegistration extends HttpServlet {
         System.out.println(message);
 
         request.setAttribute("message", message);
-        request.getRequestDispatcher("/taxi/menustart.jsp").forward(request, response);
+        request.getRequestDispatcher("/taxi/TaxiMenuStart.jsp").forward(request, response);
 
     }
 }

@@ -21,11 +21,11 @@ public class ServletTaxiMenu extends HttpServlet {
 
         if (request.getSession().getAttribute("taxiID") == null) {
             request.setAttribute("message", "");
-            request.getRequestDispatcher("/taxi/menustart.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/TaxiMenuStart.jsp").forward(request, response);
 
         } else {
             request.setAttribute("message", "");
-            request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
         }
 
 

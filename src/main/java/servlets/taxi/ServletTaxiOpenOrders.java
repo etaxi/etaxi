@@ -33,7 +33,7 @@ public class ServletTaxiOpenOrders extends HttpServlet {
             String htmlTable = generateHTMLTableForOrders(listOfOrders);
 
             request.setAttribute("table", htmlTable);
-            request.getRequestDispatcher("/taxi/openorders.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/TaxiOpenOrders.jsp").forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();

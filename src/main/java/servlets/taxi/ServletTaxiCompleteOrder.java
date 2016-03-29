@@ -25,7 +25,7 @@ public class ServletTaxiCompleteOrder extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("orderId") == null){
             request.setAttribute("message", "You dont have order to complite");
-            request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
         }
         else {
             long orderId = Long.parseLong((String) request.getSession().getAttribute("orderId"));
@@ -37,7 +37,7 @@ public class ServletTaxiCompleteOrder extends HttpServlet {
                 order.setOrderStatus(Order.OrderStatus.DELIVERED);
                 orderDAO.update(order);
                 request.setAttribute("message", "Completed order Id=" + orderId);
-                request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
+                request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
 
             } catch (SQLException e) {
                 e.printStackTrace();

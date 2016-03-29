@@ -41,7 +41,7 @@ public class ServletTaxiAuthorization extends HttpServlet {
 
         if (taxi == null || !taxi.getPassword().equals(password)) {
             request.setAttribute("message", "Wrong username or password");
-            request.getRequestDispatcher("/taxi/menustart.jsp").forward(request, response);
+            request.getRequestDispatcher("/taxi/TaxiMenuStart.jsp").forward(request, response);
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
@@ -52,7 +52,7 @@ public class ServletTaxiAuthorization extends HttpServlet {
 
 
         request.setAttribute("message", "Autorization compliete as "+ taxi.getName());
-        request.getRequestDispatcher("/taxi/menuauthorized.jsp").forward(request, response);
+        request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

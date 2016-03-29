@@ -1,4 +1,4 @@
-package business.direction;
+package business;
 
 import dao.AdminDAO;
 import dao.jdbc.AdminDAOImpl;

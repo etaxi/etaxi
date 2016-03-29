@@ -1,6 +1,6 @@
 package servlets.admin;
 
-import business.direction.AdminManager;
+import business.AdminManager;
 import entity.Admin;
 
 import javax.servlet.ServletException;

@@ -20,7 +20,7 @@
 <b> ${message} </b>
 
 <div class="container">
-    <form class="form-signin" action="/customer/CustomerRegistration.jsp" method="GET">
+    <form class="form-signin" action="/customer/customerRegistration" method="GET">
         <button class="btn btn-lg btn-primary btn-block" type="submit">New customer registration</button>
     </form>
 </div> <!-- /container -->

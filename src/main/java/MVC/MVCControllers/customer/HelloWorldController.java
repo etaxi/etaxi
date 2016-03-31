@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HelloWorldController implements MVCController {
 
     @Override
-    public MVCModel handleRequest(HttpServletRequest req) {
+    public MVCModel handleRequest(HttpServletRequest request) {
 
         return new MVCModel("/customer/Hello.jsp", "Hello MVC");
 

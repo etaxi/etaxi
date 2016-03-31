@@ -1,6 +1,6 @@
 package MVC;
 
-import MVC.MVCControllers.customer.HelloWorldController;
+import MVC.MVCControllers.customer.*;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,12 @@ public class MVCFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         urlToControllerMap = new HashMap<>();
-        urlToControllerMap.put("/hello", new HelloWorldController());
+        urlToControllerMap.put("/customer", new StartAsCustomerController());
+        urlToControllerMap.put("/customer/customerAuthorization", new CustomerAuthorizationController());
+        urlToControllerMap.put("/customer/customerRegistration", new CustomerRegistrationController());
+
+
+       //urlToControllerMap.put("/hello", new HelloWorldController());
     }
 
     @Override

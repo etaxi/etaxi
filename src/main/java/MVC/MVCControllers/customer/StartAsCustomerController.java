@@ -11,7 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 public class StartAsCustomerController implements MVCController {
 
     @Override
-    public MVCModel handleRequest(HttpServletRequest request) {
+    public MVCModel handleGetRequest(HttpServletRequest request) {
+
+        if (request.getSession().getAttribute("customerId") == null) {
+            return new MVCModel("/customer/CustomerAuthorization.jsp", "");
+        } else {
+            return new MVCModel("/customer/CustomerMenu.jsp", "");
+        }
+
+    }
+
+
+    @Override
+    public MVCModel handlePostRequest(HttpServletRequest request) {
 
         if (request.getSession().getAttribute("customerId") == null) {
             return new MVCModel("/customer/CustomerAuthorization.jsp", "");

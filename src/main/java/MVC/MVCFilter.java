@@ -1,11 +1,13 @@
 package MVC;
 
 import MVC.MVCControllers.customer.*;
+import MVC.MVCControllers.taxi.*;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,18 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/customer/customerRegistration", new CustomerRegistrationController());
 
 
+        urlToControllerMap.put("/taxi", new TaxiMenuController());
+        urlToControllerMap.put("/taxi/registration", new TaxiRegistrationController());
+        urlToControllerMap.put("/taxi/authorization", new TaxiAuthorizationController());
+        urlToControllerMap.put("/taxi/logoff", new TaxiLogoffController());
+        urlToControllerMap.put("/taxi/history", new TaxiHistoryController());
+        urlToControllerMap.put("/taxi/openorders", new TaxiOpenOrdersController());
+        urlToControllerMap.put("/taxi/takeorder", new TaxiTakeOrderController());
+        urlToControllerMap.put("/taxi/completeorder", new TaxiCompleteOrderController());
+        urlToControllerMap.put("/taxi/cancelorder", new TaxiCancelOrderController());
+        urlToControllerMap.put("/taxi/editprofile", new TaxiEditProfileController());
+
+
        //urlToControllerMap.put("/hello", new HelloWorldController());
     }
 
@@ -32,6 +46,7 @@ public class MVCFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String contextURL = request.getServletPath();
+        MVCModel model = null;
 
         if (contextURL.equals("/index.html")) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -39,7 +54,17 @@ public class MVCFilter implements Filter {
         else {
 
             MVCController controller = urlToControllerMap.get(contextURL);
-            MVCModel model = controller.handleRequest(request);
+
+            if (request.getMethod().equals("POST")){
+                model = controller.handlePostRequest(request);
+            }
+            else{
+                try {
+                    model = controller.handleGetRequest(request);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
 
             request.setAttribute("model", model.getData());
 

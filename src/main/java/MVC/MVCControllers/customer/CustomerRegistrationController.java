@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomerRegistrationController implements MVCController {
 
     @Override
-    public MVCModel handleRequest(HttpServletRequest request) {
+    public MVCModel handleGetRequest(HttpServletRequest request) {
 
 //        if (request.getMethod().equals("GET"))  {
             return new MVCModel("/customer/CustomerRegistration.jsp", "Please, enter information about new customer!");
@@ -21,4 +21,18 @@ public class CustomerRegistrationController implements MVCController {
 //        }
 
     }
+
+
+    @Override
+    public MVCModel handlePostRequest(HttpServletRequest request) {
+
+//        if (request.getMethod().equals("GET"))  {
+//        return new MVCModel("/customer/CustomerRegistration.jsp", "Please, enter information about new customer!");
+//        }
+//        else {
+            return  new MVCModel("/customer/CustomerRegistration.jsp", "");
+//        }
+
+    }
+
 }

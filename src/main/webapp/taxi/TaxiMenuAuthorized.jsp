@@ -1,3 +1,4 @@
+<%@ page import="entity.Taxi" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -24,7 +25,12 @@
 <a href="/taxi/completeorder">Complete the order</a><br>
 <a href="/taxi/logoff">Logoff</a><br>
 
+    <%  Taxi taxi = (Taxi)session.getAttribute("taxi"); %>
+    <div><b>Hello, <%=taxi.getName()%>   <%=taxi.getCar()%>!</b></div>
+<br>
 
-        <b> ${message} </b>
+<%-- <div id="message">< <b> ${message} </b> </div>>
+--%>
+
 </body>
 </html>

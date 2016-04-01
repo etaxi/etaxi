@@ -11,6 +11,9 @@
     <title>Title</title>
 </head>
 <body>
+
+<jsp:include page="/taxi/TaxiMenu.jsp" />
+
 <h1>Cancel order</h1>
 </body>
 </html>

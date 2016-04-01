@@ -1,35 +1,28 @@
-package servlets.taxi;
+package MVC.MVCControllers.taxi;
 
+import MVC.MVCController;
+import MVC.MVCModel;
 import business.TaxiManager;
 import entity.Taxi;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Aleks on 24.03.2016.
+ * Created by Aleks on 01.04.2016.
  */
-//@WebServlet(name = "ServletTaxiRegistration", urlPatterns = {"/taxi/registration"})
-public class ServletTaxiRegistration extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.setAttribute("message", "Please, enter information about new taxi!");
-        request.getRequestDispatcher("/taxi/TaxiRegistration.jsp").forward(request, response);
-
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-
+public class TaxiRegistrationController implements MVCController {
+    @Override
+    public MVCModel handleGetRequest(HttpServletRequest request) {
+        return new MVCModel("/taxi/TaxiRegistration.jsp", "");
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, Object> pageVariables = new HashMap<>();
+    @Override
+    public MVCModel handlePostRequest(HttpServletRequest request) {
+       // Map<String, Object> pageVariables = new HashMap<>();
 
         String name     = request.getParameter("name");
         String phone    = request.getParameter("phone");
@@ -50,7 +43,7 @@ public class ServletTaxiRegistration extends HttpServlet {
             TaxiManager taxiManager = new TaxiManager();
             Taxi newTaxi = new Taxi((long)0, name, car, phone, login, password);
             try {
-                message = "Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";
+                message = " Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";
                 taxiManager.createNewTaxi(newTaxi);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -63,10 +56,7 @@ public class ServletTaxiRegistration extends HttpServlet {
         }
         System.out.println(message);
 
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/taxi/TaxiMenuStart.jsp").forward(request, response);
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
+        return new MVCModel("/taxi/TaxiMenu.jsp", message);
 
     }
 }

@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+
+<jsp:include page="/taxi/TaxiMenu.jsp" />
+
 <h1>Edit profile</h1>
 </body>
 </html>

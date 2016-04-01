@@ -5,6 +5,8 @@
 </head>
 <body>
 
+<jsp:include page="/taxi/TaxiMenu.jsp" />
+
 <h1>Taxi authorization</h1>
 <div class="container">
     <form class="form-signin" action="/taxi/authorization" method="POST">

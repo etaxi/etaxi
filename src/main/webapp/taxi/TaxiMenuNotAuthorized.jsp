@@ -5,9 +5,9 @@
    <input onclick="showContent('./registration.jsp', 'contentBody')" type="button" value="Registration">
 --%>
 
-   <a href="/taxi/TaxiAuthorization.jsp">Authorization</a>
+   <a href="/taxi/authorization">Authorization</a>
     <br>
-   <a href="/taxi/TaxiRegistration.jsp">Registration</a>
+   <a href="/taxi/registration">Registration</a>
     <br>
     <b> ${message} </b>
 </form>

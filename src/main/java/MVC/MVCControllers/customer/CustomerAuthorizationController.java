@@ -14,7 +14,12 @@ import java.sql.SQLException;
 public class CustomerAuthorizationController implements MVCController {
 
     @Override
-    public MVCModel handleRequest(HttpServletRequest request) {
+    public MVCModel handleGetRequest(HttpServletRequest request) {
+        return new MVCModel("/customer/CustomerAuthorization.jsp", "Wrong username or password!");
+    }
+
+    @Override
+    public MVCModel handlePostRequest(HttpServletRequest request) {
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");

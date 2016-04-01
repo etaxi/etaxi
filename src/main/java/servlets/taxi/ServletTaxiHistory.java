@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Aleks on 24.03.2016.
  */
-@WebServlet(name = "ServletTaxiHistory", urlPatterns = {"/taxi/history"})
+//@WebServlet(name = "ServletTaxiHistory", urlPatterns = {"/taxi/history"})
 public class ServletTaxiHistory extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

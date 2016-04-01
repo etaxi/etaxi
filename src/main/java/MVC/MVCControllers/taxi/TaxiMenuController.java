@@ -1,4 +1,4 @@
-package MVC.MVCControllers.customer;
+package MVC.MVCControllers.taxi;
 
 import MVC.MVCController;
 import MVC.MVCModel;
@@ -6,22 +6,24 @@ import MVC.MVCModel;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by D.Lazorkin on 31.03.2016.
+ * Created by Aleks on 01.04.2016.
  */
-public class HelloWorldController implements MVCController {
+public class TaxiMenuController implements MVCController {
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/Hello.jsp", "Hello MVC");
+        return new MVCModel("/taxi/TaxiMenu.jsp", "");
 
     }
 
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/Hello.jsp", "Hello MVC");
+        return new MVCModel("/taxi/TaxiMenu.jsp", "");
 
     }
 
+
 }
+

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ServletTaxiAuthorization" , urlPatterns = {"/taxi/authorization"})
+//@WebServlet(name = "ServletTaxiAuthorization" , urlPatterns = {"/taxi/authorization"})
 public class ServletTaxiAuthorization extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

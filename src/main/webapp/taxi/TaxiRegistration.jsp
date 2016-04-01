@@ -5,6 +5,8 @@
 </head>
 <body>
 
+<jsp:include page="/taxi/TaxiMenu.jsp" />
+
 <h1>New taxi registration</h1>
 
 <form role="form" name = form1 action="/taxi/registration" method="POST">
@@ -29,7 +31,7 @@
         <input type="password" name="password" placeholder="Password" class="form-control" id="pwd">
     </div>
     <input type="submit" value="Register new taxi" style='width:265px;'>
-    <p> Registration process: <b> ${message} </b> </p>
+
 </form>
 
 </body>

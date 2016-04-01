@@ -17,7 +17,7 @@ import java.sql.SQLException;
 /**
  * Created by Aleks on 24.03.2016.
  */
-@WebServlet(name = "ServletTaxiCompleteOrder", urlPatterns = {"/taxi/completeorder"})
+//@WebServlet(name = "ServletTaxiCompleteOrder", urlPatterns = {"/taxi/completeorder"})
 public class ServletTaxiCompleteOrder extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

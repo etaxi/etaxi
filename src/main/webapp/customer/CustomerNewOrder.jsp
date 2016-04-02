@@ -1,3 +1,4 @@
+<%@ page import="entity.Customer" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -5,12 +6,16 @@
 </head>
 <body>
 
-<a href="/customer"> Main menu </a> <br>
+<a href="/customer"> Main customer menu </a> <br>
 
 <h1>New order creation</h1>
+
 <div class="container">
-    <form class="form-signin" action="/customer/createNewOrder" method="POST">
-        <h2 class="form-signin-heading">Please, ${customer} enter new order information:</h2>
+    <form class="form-signin" action="/customer/customerCreateNewOrder" method="POST">
+
+        <%  Customer customer = (Customer)session.getAttribute("customer"); %>
+        <div><h3>Please, <%=customer.getName()%> enter new order information: </h3></div>
+
         <label for="fromAddress" class="sr-only">Address from</label>
         <input input type="text" name="fromAddress" id="fromAddress" class="form-control" placeholder="Ride from address" required autofocus>
         <label for="toAddress" class="sr-only">Address to</label>
@@ -21,7 +26,7 @@
     </form>
 </div> <!-- /container -->
 
-<b> ${message} </b>
+<h3><%=request.getAttribute("model")%></h3>
 
 </body>
 </html>

@@ -15,7 +15,7 @@ public class CustomerAuthorizationController implements MVCController {
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
-        return new MVCModel("/customer/CustomerAuthorization.jsp", "Wrong username or password!");
+        return new MVCModel("/customer/CustomerAuthorization.jsp", "");
     }
 
     @Override
@@ -24,21 +24,24 @@ public class CustomerAuthorizationController implements MVCController {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        Customer customer = null;
+        Customer currentCustomer = null;
         try {
-            customer = new CustomerManager().findCustomerByLogin(login);
+            currentCustomer = new CustomerManager().findCustomerByLogin(login);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        if (customer == null | !customer.getPassword().equals(password)) {
+        if (currentCustomer == null) {
+            return new MVCModel("/customer/CustomerAuthorization.jsp", "Wrong username or password!");
+        }
+        else if (!currentCustomer.getPassword().equals(password)) {
             return new MVCModel("/customer/CustomerAuthorization.jsp", "Wrong username or password!");
         }
 
-        // сохраняем логин (телефон) пользователя в сессию, для дальнейшем идентификации клиента в системе
-        request.getSession().setAttribute("customerId", customer.getCustomerId());
+        // сохраняем пользователя в сессию, для дальнейшей идентификации клиента в системе
+        request.getSession().setAttribute("customer", currentCustomer);
 
-        return new MVCModel("/customer/CustomerMenu.jsp", "Authorization successful: " + customer.getName());
+        return new MVCModel("/customer/CustomerMenu.jsp", "Authorization successful: " + currentCustomer.getName());
 
     }
 

@@ -5,13 +5,13 @@
 </head>
 <body>
 
-<a href="/customer"> Main menu </a> <br>
+<a href="/customer"> Main customer menu </a> <br>
 
 <div class="container">
 
     <h1>Customer data change</h1>
 
-    <form role="form" name = form1 action="/customer/editProfileCustomer" method="POST">
+    <form role="form" name = form1 action="/customer/customerEditProfile" method="POST">
         <div class="form-group">
             <label for="usr">Name, Surname:</label>
             <input type="text" name="name" placeholder= "Name" class="form-control" id="usr">
@@ -25,7 +25,8 @@
             <input type="password" name="password" placeholder="Password" class="form-control" id="pwd">
         </div>
         <input type="submit" value="Save data" style='width:265px;'>
-        <p> <b> ${message} </b> </p>
+
+        <h3><%=request.getAttribute("model")%></h3>
     </form>
 
 </div> <!-- /container -->

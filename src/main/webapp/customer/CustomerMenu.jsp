@@ -1,3 +1,4 @@
+<%@ page import="entity.Customer" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -5,16 +6,15 @@
 </head>
 <body>
 
-<a href="/customer/editProfileCustomer">Edit profile</a><br>
-<a href="/customer/createNewOrder">New order</a><br>
-<a href="/customer/historyOfOrders">History of own orders</a><br>
-<a href="/customer/changeOrders">Change data of opened orders</a><br>
-<a href="/customer/writeFeedbacks">Write feedback to completed order</a><br>
-<a href="/customer/signOut">Sing out</a><br>
-
-
-<b> ${message} </b>
+    <%
+        Customer customer = (Customer)session.getAttribute("customer");
+        if (customer != null) {  %>
+            <div id="menu"> <jsp:include page="/customer/CustomerMenuAuthorized.jsp" /> </div>
+        <%}
+        else {%>
+            <div id="menu"> <jsp:include page="/customer/CustomerAuthorization.jsp" /> </div>
+        <%}
+    %>
 
 </body>
 </html>
-

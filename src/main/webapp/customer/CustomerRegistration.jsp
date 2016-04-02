@@ -9,7 +9,7 @@
 
     <h1>New customer registration</h1>
 
-    <form role="form" name = form1 action="/customer/registration" method="POST">
+    <form role="form" name = form1 action="/customer/customerRegistration" method="POST">
         <div class="form-group">
             <label for="usr">Name, Surname:</label>
             <input type="text" name="name" placeholder= "Name" class="form-control" id="usr">
@@ -23,11 +23,12 @@
             <input type="password" name="password" placeholder="Password" class="form-control" id="pwd">
         </div>
         <input type="submit" value="Register new customer" style='width:265px;'>
-        <p> Registration process: <b> ${message} </b> </p>
     </form>
 
 </div> <!-- /container -->
 
+
+<h3><%=request.getAttribute("model")%></h3>
 
 </body>
 </html>

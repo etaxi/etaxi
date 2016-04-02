@@ -5,6 +5,7 @@
 </head>
 <body>
 
+
 <h1>Customer authorization</h1>
 <div class="container">
     <form class="form-signin" action="/customer/customerAuthorization" method="POST">
@@ -17,13 +18,13 @@
     </form>
 </div> <!-- /container -->
 
-<b> ${message} </b>
-
 <div class="container">
     <form class="form-signin" action="/customer/customerRegistration" method="GET">
         <button class="btn btn-lg btn-primary btn-block" type="submit">New customer registration</button>
     </form>
 </div> <!-- /container -->
+
+<h3><%=request.getAttribute("model")%></h3>
 
 </body>
 </html>

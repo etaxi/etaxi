@@ -8,19 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by D.Lazorkin on 31.03.2016.
  */
-public class HelloWorldController implements MVCController {
+public class CustomerMenuController implements MVCController {
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/Hello.jsp", "Hello MVC");
+        return new MVCModel("/customer/CustomerMenu.jsp", "");
 
     }
+
 
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/Hello.jsp", "Hello MVC");
+        return new MVCModel("/customer/CustomerMenu.jsp", "");
 
     }
 

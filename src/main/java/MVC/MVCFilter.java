@@ -20,9 +20,13 @@ public class MVCFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         urlToControllerMap = new HashMap<>();
-        urlToControllerMap.put("/customer", new StartAsCustomerController());
+        urlToControllerMap.put("/customer", new CustomerMenuController());
         urlToControllerMap.put("/customer/customerAuthorization", new CustomerAuthorizationController());
         urlToControllerMap.put("/customer/customerRegistration", new CustomerRegistrationController());
+        urlToControllerMap.put("/customer/customerEditProfile", new CustomerEditProfileController());
+        urlToControllerMap.put("/customer/customerCreateNewOrder", new CustomerCreateNewOrderController());
+
+        urlToControllerMap.put("/customer/signOut", new CustomerSignOutController());
 
 
         urlToControllerMap.put("/taxi", new TaxiMenuController());
@@ -35,9 +39,6 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/taxi/completeorder", new TaxiCompleteOrderController());
         urlToControllerMap.put("/taxi/cancelorder", new TaxiCancelOrderController());
         urlToControllerMap.put("/taxi/editprofile", new TaxiEditProfileController());
-
-
-       //urlToControllerMap.put("/hello", new HelloWorldController());
     }
 
     @Override

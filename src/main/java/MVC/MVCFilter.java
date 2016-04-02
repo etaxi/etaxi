@@ -25,7 +25,12 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/customer/customerRegistration", new CustomerRegistrationController());
         urlToControllerMap.put("/customer/customerEditProfile", new CustomerEditProfileController());
         urlToControllerMap.put("/customer/customerCreateNewOrder", new CustomerCreateNewOrderController());
-
+        urlToControllerMap.put("/customer/customerHistoryOfOrders", new CustomerHistoryOfOrdersController());
+        urlToControllerMap.put("/customer/customerEditDeleteOrders", new CustomerOrdersEditDeleteController());
+        urlToControllerMap.put("/customer/customerDeleteOrder", new CustomerOrderDeleteController());
+        urlToControllerMap.put("/customer/customerEditOrder", new CustomerOrderEditController());
+        urlToControllerMap.put("/customer/customerWriteFeedbacksToOrders", new CustomerWriteFeedbacksController());
+        urlToControllerMap.put("/customer/writeFeedbackToOrder", new CustomerWriteFeedbackController());
         urlToControllerMap.put("/customer/signOut", new CustomerSignOutController());
 
 
@@ -57,7 +62,11 @@ public class MVCFilter implements Filter {
             MVCController controller = urlToControllerMap.get(contextURL);
 
             if (request.getMethod().equals("POST")){
-                model = controller.handlePostRequest(request);
+                try {
+                    model = controller.handlePostRequest(request);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             else{
                 try {
@@ -68,6 +77,7 @@ public class MVCFilter implements Filter {
             }
 
             request.setAttribute("model", model.getData());
+            request.setAttribute("message", model.getMessage());
 
             ServletContext context = request.getServletContext();
             RequestDispatcher requestDispatcher = context.getRequestDispatcher(model.getJspName());

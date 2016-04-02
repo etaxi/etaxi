@@ -10,6 +10,6 @@ public interface MVCController {
 
     MVCModel handleGetRequest(HttpServletRequest request) throws SQLException;
 
-    MVCModel handlePostRequest(HttpServletRequest request);
+    MVCModel handlePostRequest(HttpServletRequest request) throws SQLException;
 
 }

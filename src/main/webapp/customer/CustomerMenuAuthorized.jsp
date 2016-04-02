@@ -13,9 +13,9 @@
 
 <a href="/customer/customerEditProfile">Edit profile</a><br>
 <a href="/customer/customerCreateNewOrder">Create new order</a><br>
-<a href="/customer/historyOfOrders">History of own orders</a><br>
-<a href="/customer/changeOrders">Change data of opened orders</a><br>
-<a href="/customer/writeFeedbacks">Write feedback to completed order</a><br>
+<a href="/customer/customerHistoryOfOrders">History of your orders</a><br>
+<a href="/customer/customerEditDeleteOrders">Change data of opened orders</a><br>
+<a href="/customer/customerWriteFeedbacksToOrders">Write feedback to completed orders</a><br>
 <a href="/customer/signOut">Sing out</a><br>
 
 <h3><%=request.getAttribute("model")%></h3>

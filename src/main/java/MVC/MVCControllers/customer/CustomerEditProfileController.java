@@ -16,7 +16,8 @@ public class CustomerEditProfileController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/CustomerEditProfile.jsp", "Please, enter new your information!");
+        Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
+        return new MVCModel("/customer/CustomerEditProfile.jsp", currentCustomer ,"Please, enter your new information!");
 
     }
 
@@ -63,7 +64,7 @@ public class CustomerEditProfileController implements MVCController {
         if (registrationSuccessful) {
             return new MVCModel("/customer/CustomerMenu.jsp", message);
         } else {
-            return new MVCModel("/customer/CustomerEditProfile.jsp", message);
+            return new MVCModel("/customer/CustomerEditProfile.jsp", null, message);
         }
 
     }

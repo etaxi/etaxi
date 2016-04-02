@@ -12,10 +12,10 @@
 <a href="/customer"> Main customer menu </a> <br>
 
 <%  Customer customer = (Customer)session.getAttribute("customer"); %>
-<div><h3>History of <%=customer.getName()%> orders by period:</h3></div>
+<div><h3><%=customer.getName()%>, you can change orders by period:</h3></div>
 
 <div class="container">
-    <form class="form-signin" action='/customer/customerHistoryOfOrders' method="POST">
+    <form class="form-signin" action='/customer/customerEditDeleteOrders' method="POST">
         <label for="orderedDateTimeBegin" class="sr-only">Select orders from:</label>
         <input type="datetime-local" value="2016-01-01 00:00:00" name="orderedDateTimeBegin" id="orderedDateTimeBegin" required>
         <label for="orderedDateTimeEnd" class="sr-only"> to:</label>
@@ -46,6 +46,9 @@
             <td width="50"><b>Price </b></td>
             <td width="50"><b>Rate </b></td>
             <td width="200"><b>Feedback </b></td>
+            <td width="200"><b>Delete order</b></td>
+            <td width="200"><b>Edit order</b></td>
+
         </tr>
 
         <%
@@ -78,10 +81,20 @@
             </td>
             <td width="200"><%=order.getFeedback()%>
             </td>
+            <td>
+                <form action='/customer/customerDeleteOrder' method='post'>
+                <input type='hidden' name='orderId' value="<%=order.getOrderId()%>">
+                <input type='submit' value='Delete order'/></form>
+            </td>
+            <td>
+                <form action='/customer/customerEditOrder' method='get'>
+                    <input type='hidden' name='orderId' value="<%=order.getOrderId()%>">
+                    <input type='submit' value='Edit order'/></form>
+            </td>
         </tr>
 
         <%
-            }}
+         }}
         %>
 
     </table>

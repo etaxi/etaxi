@@ -24,7 +24,7 @@
     </form>
 </div> <!-- /container -->
 
-<h3><%=request.getAttribute("model")%></h3>
+<h3><%=request.getAttribute("message")%></h3>
 
 </body>
 </html>

@@ -39,10 +39,52 @@ public class CustomerManager {
 
     }
 
-    public void updateCustomer(Customer customer) throws SQLException {
+    public void updateCustomerInDataBase(Customer customer) throws SQLException {
 
         customerDAO.update(customer);
 
+    }
+
+    public Customer CheckAuthorization(String login, String password) {
+
+        Customer customer = null;
+        try {
+            customer = findCustomerByLogin(login);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (customer != null) {
+            if (!customer.getPassword().equals(password)) {
+                return null;
+            }
+        }
+
+        return customer;
+    }
+
+
+    public boolean checkCustomerByLogin(Customer customer) {
+        try {
+            Customer presentCustomerWithSuchLogin = findCustomerByLogin(customer.getPhone());
+            if ((presentCustomerWithSuchLogin != null)
+                    && (presentCustomerWithSuchLogin.getCustomerId() != customer.getCustomerId())) {
+                return false;
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateCustomer(Customer customer) {
+        try {
+            updateCustomerInDataBase(customer);
+            return true;
+        }
+        catch (SQLException e) {
+            return false;
+        }
     }
 
 }

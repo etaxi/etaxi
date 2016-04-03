@@ -18,9 +18,9 @@
 <div class="container">
     <form class="form-signin" action="/customer/customerEditOrder" method="POST">
         <label for="fromAddress" class="sr-only">Address from</label>
-        <input input type="text" name="fromAddress" value="<%=order.getFromAdress()%>" id="fromAddress" class="form-control" placeholder="Ride from address" autofocus>
+        <input input type="text" name="fromAddress" value="<%=order.getFromAdress()%>" id="fromAddress" class="form-control" placeholder="Ride from address" autofocus required>
         <label for="toAddress" class="sr-only">Address to</label>
-        <input type="text" name="toAddress" value="<%=order.getToAdress()%>" id="toAddress" class="form-control" placeholder="Ride to address">
+        <input type="text" name="toAddress" value="<%=order.getToAdress()%>" id="toAddress" class="form-control" placeholder="Ride to address" required>
         <label for="orderedDateTime" class="sr-only">Date and time of ride:</label>
         <input type="datetime-local" value="<%=order.getOrderedDateTime()%>" name="orderedDateTime" id="orderedDateTime" required>
         <input type="hidden" name="orderId" value="<%=order.getOrderId()%>"/>

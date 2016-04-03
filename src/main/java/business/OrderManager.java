@@ -3,6 +3,7 @@ package business;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
+import entity.Customer;
 import entity.Order;
 
 import java.sql.SQLException;
@@ -71,6 +72,50 @@ public class OrderManager {
     public List<Order> getOpenOrdersAll() throws SQLException {
 
         return  orderDAO.getOpenOrdersAll();
+    }
+
+    public Order createNewOrderInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime) {
+
+        Order newOrder = new Order((long) 0, customer.getCustomerId(),
+                new Timestamp(new java.util.Date().getTime()),
+                Timestamp.valueOf(orderedDateTime),
+                Order.OrderStatus.WAITING,
+                fromAddress, toAddress, (long) 0, 0, 0, 0, "");
+        try {
+            createNewOrder(newOrder);
+            return newOrder;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public boolean updateOrderInDataBase(Order order, String fromAddress, String toAddress,
+                                         String orderedDateTime, String feedback) {
+
+        order.setFromAdress(fromAddress);
+        order.setToAdress(toAddress);
+        order.setOrderedDateTime(Timestamp.valueOf(orderedDateTime));
+        order.setFeedback(feedback);
+
+        try {
+            updateOrder(order);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+
+    public boolean checkOrderChangePossibility(Customer customer, Order order) {
+        return  (order.getCustomerId() == customer.getCustomerId());
+    }
+
+    public Order findOrderById(String orderId) {
+        try {
+            return findOrderById(Long.valueOf(orderId));
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
 

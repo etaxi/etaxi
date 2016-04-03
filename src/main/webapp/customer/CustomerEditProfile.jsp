@@ -17,15 +17,15 @@
     <form role="form" name = form1 action="/customer/customerEditProfile" method="POST">
         <div class="form-group">
             <label for="usr">Name, Surname:</label>
-            <input type="text" name="name" value="<%=customer.getName()%>" placeholder= "Name" class="form-control" id="usr">
+            <input type="text" name="name" value="<%=customer.getName()%>" placeholder= "Name" class="form-control" id="usr" required>
         </div>
         <div class="form-group">
             <label for="phone">Phone:</label>
-            <input type="text" name="phone" value="<%=customer.getPhone()%>" placeholder= "you phone (+371xxxxxxx)" class="form-control" id="phone">
+            <input type="text" name="phone" value="<%=customer.getPhone()%>" placeholder= "you phone (+371xxxxxxx)" class="form-control" id="phone" required>
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" name="password" value="<%=customer.getPassword()%>" placeholder="Password" class="form-control" id="pwd">
+            <input type="password" name="password" value="<%=customer.getPassword()%>" placeholder="Password" class="form-control" id="pwd" required>
         </div>
         <input type="submit" value="Save data" style='width:265px;'>
 

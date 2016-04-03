@@ -79,7 +79,7 @@ public class ServletAdminEditCustomerProfile extends HttpServlet {
                         message = "You can't use such phone! The customer with such phone already present!";
                     }
                     else{
-                        customerManager.updateCustomer(currentCustomer);
+                        customerManager.updateCustomerInDataBase(currentCustomer);
                         message = "The data change is made (" + currentCustomer.getName() + ")";
                         registrationSuccessful = true;
                     }

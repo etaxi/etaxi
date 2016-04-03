@@ -7,8 +7,6 @@ import entity.Customer;
 import entity.Order;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 
 /**
  * Created by D.Lazorkin on 02.04.2016.
@@ -19,20 +17,13 @@ public class CustomerOrderEditController implements MVCController {
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
         Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
-        String orderIdToChange = request.getParameter("orderId");
+        String orderId = request.getParameter("orderId");
 
-        Boolean changeIsPossible = false;
-        Order orderToChange = null;
-        try {
-            orderToChange = new OrderManager().findOrderById(Long.valueOf(orderIdToChange));
-            if (orderToChange.getCustomerId() == currentCustomer.getCustomerId()) {
-                changeIsPossible = true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        OrderManager orderManager = new OrderManager();
+        Order currentOrder = orderManager.findOrderById(orderId);
 
-        return  (changeIsPossible) ? new MVCModel("/customer/CustomerEditOrder.jsp", orderToChange, "") :  null;
+        Boolean changeIsPossible = orderManager.checkOrderChangePossibility(currentCustomer, currentOrder);
+        return  changeIsPossible ? new MVCModel("/customer/CustomerEditOrder.jsp", currentOrder, "") :  null;
 
     }
 
@@ -41,41 +32,33 @@ public class CustomerOrderEditController implements MVCController {
 
         Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
 
-        String orderId = request.getParameter("orderId");
-        String fromAddress = request.getParameter("fromAddress");
-        String toAddress = request.getParameter("toAddress");
-        String orderedDateTime = request.getParameter("orderedDateTime");
+        OrderManager orderManager = new OrderManager();
+        Order currentOrder = orderManager.findOrderById(request.getParameter("orderId"));
+        Boolean changeIsPossible = orderManager.checkOrderChangePossibility(currentCustomer, currentOrder);
 
-        String message = ((fromAddress == null || fromAddress.isEmpty()) ? "from address; " : "") +
-                         ((toAddress == null || toAddress.isEmpty()) ? "to address; " : "") +
-                         ((orderedDateTime == null || orderedDateTime.isEmpty()) ? "date and time of ride; " : "");
+        if (changeIsPossible) {
 
-        Boolean updateSuccessful = false;
-        Order updatedOrder = null;
-        if (message.isEmpty()) {
+            Boolean updateSuccessful = orderManager.updateOrderInDataBase(
+                    currentOrder,
+                    request.getParameter("fromAddress"),
+                    request.getParameter("toAddress"),
+                    request.getParameter("orderedDateTime"),
+                    currentOrder.getFeedback());
 
-            updatedOrder = new Order(Long.parseLong(orderId), currentCustomer.getCustomerId(),
-                    new Timestamp(new java.util.Date().getTime()),
-                    Timestamp.valueOf(orderedDateTime),
-                    Order.OrderStatus.WAITING,
-                    fromAddress, toAddress, (long) 0, 0, 0, 0, "");
-            try {
-                new OrderManager().updateOrder(updatedOrder);
-                updateSuccessful = true;
-                message = "Order ID: " + updatedOrder.getOrderId() + " was changed!";
-            } catch (SQLException e) {
-                message = "Order information update failed! Please try again!";
+            String message = (updateSuccessful) ?
+                    "Order ID: " + currentOrder.getOrderId() + " was changed!" :
+                    "Order information update failed! Please try again!";
+
+            if (updateSuccessful) {
+                return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", null, message);
+            } else {
+                return new MVCModel("/customer/CustomerEditOrder.jsp", currentOrder, message);
             }
 
         } else {
-            message = "Please, input information in fields: " + message;
+            return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", null, "");
         }
 
-        if (updateSuccessful) {
-            return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", null, message);
-        } else {
-            return new MVCModel("/customer/CustomerEditOrder.jsp", updatedOrder, message);
-        }
     }
 
 }

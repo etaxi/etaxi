@@ -18,7 +18,7 @@
 <a href="/customer/customerWriteFeedbacksToOrders">Write feedback to completed orders</a><br>
 <a href="/customer/signOut">Sing out</a><br>
 
-<h3><%=request.getAttribute("model")%></h3>
+<h3><%=request.getAttribute("message")%></h3>
 
 </body>
 </html>

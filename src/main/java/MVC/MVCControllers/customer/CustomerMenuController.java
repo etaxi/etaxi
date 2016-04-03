@@ -13,7 +13,7 @@ public class CustomerMenuController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/CustomerMenu.jsp", "");
+        return new MVCModel("/customer/CustomerMenu.jsp", null, "");
 
     }
 
@@ -21,7 +21,7 @@ public class CustomerMenuController implements MVCController {
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/CustomerMenu.jsp", "");
+        return new MVCModel("/customer/CustomerMenu.jsp", null, "");
 
     }
 

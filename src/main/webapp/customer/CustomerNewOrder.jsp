@@ -1,4 +1,5 @@
 <%@ page import="entity.Customer" %>
+<%@ page import="java.sql.Timestamp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -21,12 +22,12 @@
         <label for="toAddress" class="sr-only">Address to</label>
         <input type="text" name="toAddress" id="toAddress" class="form-control" placeholder="Ride to address" required>
         <label for="orderedDateTime" class="sr-only">Date and time of ride:</label>
-        <input type="datetime-local" value="2016-01-01 00:00:00" name="orderedDateTime" id="orderedDateTime" required>
+        <input type="datetime-local" value="<%= new Timestamp(new java.util.Date().getTime())%>" name="orderedDateTime" id="orderedDateTime" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Create new order</button>
     </form>
 </div> <!-- /container -->
 
-<h3><%=request.getAttribute("model")%></h3>
+<h3><%=request.getAttribute("message")%></h3>
 
 </body>
 </html>

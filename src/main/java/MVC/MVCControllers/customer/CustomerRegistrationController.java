@@ -16,7 +16,7 @@ public class CustomerRegistrationController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/CustomerRegistration.jsp", "Please, enter information about new customer!");
+        return new MVCModel("/customer/CustomerRegistration.jsp", null, "Please, enter information about new customer!");
 
     }
 
@@ -58,7 +58,7 @@ public class CustomerRegistrationController implements MVCController {
             message = "Please, input information in fields: " + message;
         }
 
-        return new MVCModel("/customer/CustomerMenu.jsp", message);
+        return new MVCModel("/customer/CustomerMenu.jsp", null, message);
 
     }
 

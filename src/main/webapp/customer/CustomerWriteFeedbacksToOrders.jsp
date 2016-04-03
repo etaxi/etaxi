@@ -1,5 +1,6 @@
 <%@ page import="entity.Customer" %>
 <%@ page import="entity.Order" %>
+<%@ page import="java.sql.Timestamp" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,9 +18,9 @@
 <div class="container">
     <form class="form-signin" action='/customer/customerWriteFeedbacksToOrders' method="POST">
         <label for="orderedDateTimeBegin" class="sr-only">Select orders from:</label>
-        <input type="datetime-local" value="2016-01-01 00:00:00" name="orderedDateTimeBegin" id="orderedDateTimeBegin" required>
+        <input type="datetime-local" value="<%= new Timestamp(new java.util.Date(System.currentTimeMillis() - 2628000000l).getTime())%>" name="orderedDateTimeBegin" id="orderedDateTimeBegin" required>
         <label for="orderedDateTimeEnd" class="sr-only"> to:</label>
-        <input type="datetime-local" value="2016-01-01 00:00:00" name="orderedDateTimeEnd" id="orderedDateTimeEnd" required>
+        <input type="datetime-local" value="<%= new Timestamp(new java.util.Date(System.currentTimeMillis() + 2628000000l).getTime())%>" name="orderedDateTimeEnd" id="orderedDateTimeEnd" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Show order by period</button>
     </form>
 </div> <!-- /container -->

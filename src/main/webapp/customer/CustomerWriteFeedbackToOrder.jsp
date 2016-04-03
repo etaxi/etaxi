@@ -26,7 +26,7 @@
         <h3 class="form-signin-heading">Date&Time of ride: <%=order.getOrderedDateTime()%></h3>
 
         <label for="feedback" class="sr-only">Feedback</label>
-        <input type="text" name="feedback" id="feedback" class="form-control" placeholder="Feedback" required>
+        <input type="text" name="feedback" id="feedback" value="<%=order.getFeedback()%>" class="form-control" placeholder="Feedback" required>
 
         <input type="hidden" name="orderId" value="<%=order.getOrderId()%>"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Send feedback</button>

@@ -25,17 +25,19 @@ public class CustomerOrderDeleteController implements MVCController {
         Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
         String orderIdToDelete = request.getParameter("orderId");
 
-        String message  = "";
-        Order orderToDelete = null;
-        try {
-            OrderManager orderManager = new OrderManager();
-            orderToDelete = orderManager.findOrderById(Long.valueOf(orderIdToDelete));
-            if (orderToDelete.getCustomerId() == currentCustomer.getCustomerId()) {
-                orderManager.deleteOrder(orderToDelete);
-                message = "Your order (ID: " + orderToDelete.getOrderId() + ") was deleted!";
+        OrderManager orderManager = new OrderManager();
+        Order currentOrder = orderManager.findOrderById(orderIdToDelete);
+        Boolean changeIsPossible = orderManager.checkOrderChangePossibility(currentCustomer, currentOrder);
+
+        String message = "";
+        if (changeIsPossible) {
+
+            try {
+                orderManager.deleteOrder(currentOrder);
+                message = "Your order (ID: " + currentOrder.getOrderId() + ") was deleted!";
+            } catch (SQLException e) {
+                message = "Order information delete failed! Please try again!";
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", null, message);

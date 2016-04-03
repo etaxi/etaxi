@@ -33,7 +33,7 @@ public class CustomerManager {
 
     }
 
-    public void createNewCustomer(Customer customer) throws SQLException {
+    public void createNewCustomerInDataBase(Customer customer) throws SQLException {
 
         customer.setCustomerId(customerDAO.update(customer));
 
@@ -80,6 +80,16 @@ public class CustomerManager {
     public boolean updateCustomer(Customer customer) {
         try {
             updateCustomerInDataBase(customer);
+            return true;
+        }
+        catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public boolean createNewCustomer(Customer customer) {
+        try {
+            createNewCustomerInDataBase(customer);
             return true;
         }
         catch (SQLException e) {

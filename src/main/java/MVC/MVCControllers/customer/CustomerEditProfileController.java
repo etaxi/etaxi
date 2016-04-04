@@ -16,14 +16,21 @@ public class CustomerEditProfileController implements MVCController {
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
         Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
-        return new MVCModel("/customer/CustomerEditProfile.jsp", currentCustomer, "Please, enter your new information!");
+        if (currentCustomer == null) {
+            return new MVCModel("/customer/CustomerMenu.jsp", null, "");
+        }
 
+        return new MVCModel("/customer/CustomerEditProfile.jsp", currentCustomer, "Please, enter your new information!");
     }
 
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
 
         Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
+        if (currentCustomer == null) {
+            return new MVCModel("/customer/CustomerMenu.jsp", null, "");
+        }
+
         currentCustomer.setName(request.getParameter("name"));
         currentCustomer.setPhone(request.getParameter("phone"));
         currentCustomer.setPassword(request.getParameter("password"));

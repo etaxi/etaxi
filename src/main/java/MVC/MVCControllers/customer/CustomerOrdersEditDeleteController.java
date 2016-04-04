@@ -18,25 +18,29 @@ public class CustomerOrdersEditDeleteController implements MVCController {
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
-           return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", null, "");
+
+        Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
+        if (currentCustomer == null) {
+            return new MVCModel("/customer/CustomerMenu.jsp", null, "");
+        }
+
+        return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", null, "");
     }
 
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) throws SQLException {
 
-        Customer CurrentCustomer = (Customer) request.getSession().getAttribute("customer");
-        if (CurrentCustomer != null) {
-
-            Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
-            Timestamp orderedDateTimeEnd   = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
-
-            List<Order> listOfOrders = new OrderManager().getOpenOrdersOfCustomer(
-                                           CurrentCustomer.getCustomerId(), orderedDateTimeBegin, orderedDateTimeEnd);
-            return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", listOfOrders, "");
-        }
-        else{
+        Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
+        if (currentCustomer == null) {
             return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
+
+        Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
+        Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
+
+        List<Order> listOfOrders = new OrderManager().getOpenOrdersOfCustomer(
+                currentCustomer.getCustomerId(), orderedDateTimeBegin, orderedDateTimeEnd);
+        return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", listOfOrders, "");
 
     }
 

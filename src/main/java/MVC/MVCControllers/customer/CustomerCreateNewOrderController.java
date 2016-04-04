@@ -16,14 +16,21 @@ public class CustomerCreateNewOrderController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
-        return new MVCModel("/customer/CustomerNewOrder.jsp", "", "");
+        Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
+        if (currentCustomer == null) {
+            return new MVCModel("/customer/CustomerMenu.jsp", null, "");
+        }
 
+        return new MVCModel("/customer/CustomerNewOrder.jsp", "", "");
     }
 
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
 
         Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
+        if (currentCustomer == null) {
+            return new MVCModel("/customer/CustomerMenu.jsp", null, "");
+        }
 
         Order newOrder = new OrderManager().createNewOrderInDataBase(
                 currentCustomer,

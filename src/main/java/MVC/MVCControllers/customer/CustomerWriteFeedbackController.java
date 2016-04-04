@@ -17,13 +17,18 @@ public class CustomerWriteFeedbackController implements MVCController {
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
         Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
+        if (currentCustomer == null) {
+            return new MVCModel("/customer/CustomerMenu.jsp", null, "");
+        }
+
         String orderId = request.getParameter("orderId");
 
         OrderManager orderManager = new OrderManager();
         Order currentOrder = orderManager.findOrderById(orderId);
 
-        Boolean changeIsPossible = orderManager.checkOrderChangePossibility(currentCustomer, currentOrder);
-        return  changeIsPossible ? new MVCModel("/customer/CustomerWriteFeedbackToOrder.jsp", currentOrder, "") :  null;
+        return  (orderManager.checkOrderChangePossibility(currentCustomer, currentOrder)) ?
+                new MVCModel("/customer/CustomerWriteFeedbackToOrder.jsp", currentOrder, "") :
+                new MVCModel("/customer/CustomerMenu.jsp", null, "");
 
     }
 
@@ -31,34 +36,26 @@ public class CustomerWriteFeedbackController implements MVCController {
     public MVCModel handlePostRequest(HttpServletRequest request) {
 
         Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
-
-        OrderManager orderManager = new OrderManager();
-        Order currentOrder = orderManager.findOrderById(request.getParameter("orderId"));
-        Boolean changeIsPossible = orderManager.checkOrderChangePossibility(currentCustomer, currentOrder);
-
-        if (changeIsPossible) {
-
-            Boolean updateSuccessful = orderManager.updateOrderInDataBase(
-                    currentOrder,
-                    currentOrder.getFromAdress(),
-                    currentOrder.getToAdress(),
-                    String.valueOf(currentOrder.getOrderedDateTime()),
-                    request.getParameter("feedback"));
-
-            String message = (updateSuccessful) ?
-                    "Order ID: " + currentOrder.getOrderId() + " was changed!" :
-                    "Order information update failed! Please try again!";
-
-            if (updateSuccessful) {
-                return new MVCModel("/customer/CustomerWriteFeedbacksToOrders.jsp", null, message);
-            } else {
-                return new MVCModel("/customer/CustomerWriteFeedbackToOrder.jsp", currentOrder, message);
-            }
-
-        } else {
-            return new MVCModel("/customer/CustomerWriteFeedbacksToOrders.jsp", null, "");
+        if (currentCustomer == null) {
+            return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
 
+        Boolean updateSuccessful = new OrderManager().updateOrderByIdByCustomer(
+                currentCustomer,
+                request.getParameter("orderId"),
+                "", "", "",
+                request.getParameter("feedback"));
+
+        String message = (updateSuccessful) ?
+                "Order ID: " + request.getParameter("orderId") + " was changed!" :
+                "Order information update failed! Please try again!";
+
+        if (updateSuccessful) {
+            return new MVCModel("/customer/CustomerWriteFeedbacksToOrders.jsp", null, message);
+        } else {
+            Order currentOrder = new OrderManager().findOrderById(request.getParameter("orderId"));
+            return new MVCModel("/customer/CustomerWriteFeedbackToOrder.jsp", currentOrder, message);
+        }
     }
 
 }

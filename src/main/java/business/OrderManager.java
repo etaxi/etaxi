@@ -89,22 +89,6 @@ public class OrderManager {
         }
     }
 
-    public boolean updateOrderInDataBase(Order order, String fromAddress, String toAddress,
-                                         String orderedDateTime, String feedback) {
-
-        order.setFromAdress(fromAddress);
-        order.setToAdress(toAddress);
-        order.setOrderedDateTime(Timestamp.valueOf(orderedDateTime));
-        order.setFeedback(feedback);
-
-        try {
-            updateOrder(order);
-            return true;
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-
 
     public boolean checkOrderChangePossibility(Customer customer, Order order) {
         return  (order.getCustomerId() == customer.getCustomerId());
@@ -118,6 +102,43 @@ public class OrderManager {
         }
     }
 
+    public boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete) {
 
+        Order currentOrder = findOrderById(orderIdToDelete);
+        if (currentOrder != null) {
+            if (checkOrderChangePossibility(customer, currentOrder)) {
+                try {
+                    deleteOrder(currentOrder);
+                    return true;
+                } catch (SQLException e) {
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public  boolean updateOrderByIdByCustomer(Customer customer, String orderIdToUpdate, String fromAddress,
+                                               String toAddress, String orderedDateTime, String feedback) {
+
+        Order currentOrder = findOrderById(orderIdToUpdate);
+        if (currentOrder != null) {
+
+            if (checkOrderChangePossibility(customer, currentOrder)) {
+
+                currentOrder.setFromAdress((fromAddress.isEmpty()) ? currentOrder.getFromAdress() : fromAddress);
+                currentOrder.setToAdress((toAddress.isEmpty()) ? currentOrder.getToAdress() : toAddress);
+                currentOrder.setOrderedDateTime((orderedDateTime.isEmpty()) ? currentOrder.getOrderedDateTime() : Timestamp.valueOf(orderedDateTime));
+                currentOrder.setFeedback((feedback.isEmpty()) ? currentOrder.getFeedback() : feedback);
+
+                try {
+                    updateOrder(currentOrder);
+                    return true;
+                } catch (SQLException e) {}
+            }
+        }
+
+        return false;
+    }
 }
 

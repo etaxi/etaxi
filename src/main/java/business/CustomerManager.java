@@ -77,24 +77,30 @@ public class CustomerManager {
         return true;
     }
 
-    public boolean updateCustomer(Customer customer) {
-        try {
-            updateCustomerInDataBase(customer);
-            return true;
+    public String updateCustomer(Customer customer) {
+
+        if (!checkCustomerByLogin(customer)) {
+            return "You can't use such phone! The customer with such phone already present!";
+        } else {
+            try {
+                updateCustomerInDataBase(customer);
+                return "";
+            } catch (SQLException e) {}
         }
-        catch (SQLException e) {
-            return false;
-        }
+        return "Data update failed! Please try again!";
     }
 
-    public boolean createNewCustomer(Customer customer) {
-        try {
-            createNewCustomerInDataBase(customer);
-            return true;
+    public String createNewCustomer(Customer customer) {
+
+        if (!checkCustomerByLogin(customer)) {
+            return "You can't use such phone! The customer with such phone already present!";
+        } else {
+            try {
+                createNewCustomerInDataBase(customer);
+                return "";
+            } catch (SQLException e) {}
         }
-        catch (SQLException e) {
-            return false;
-        }
+        return  "Registration failed! Please try again!";
     }
 
 }

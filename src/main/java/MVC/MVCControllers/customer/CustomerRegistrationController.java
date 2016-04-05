@@ -28,24 +28,14 @@ public class CustomerRegistrationController implements MVCController {
                 request.getParameter("phone"),
                 request.getParameter("password"));
 
-        String message = "";
-        Boolean registrationSuccessful = false;
+        String errorMessage = new CustomerManager().createNewCustomer(newCustomer);
 
-        CustomerManager customerManager = new CustomerManager();
-        if (!customerManager.checkCustomerByLogin(newCustomer)) {
-            message = "You can't use such phone! The customer with such phone already present!";
-        } else {
-            registrationSuccessful = customerManager.createNewCustomer(newCustomer);
-            message = (registrationSuccessful) ?
-                    "Registration successful: " + newCustomer.getName() :
-                    "Registration failed! Please try again!";
-        }
-
-        if (registrationSuccessful) {
+        if (errorMessage.isEmpty()) {
             request.getSession().setAttribute("customer", newCustomer);
+            errorMessage = "Registration successful: " + newCustomer.getName();
         }
 
-        return new MVCModel("/customer/CustomerMenu.jsp", newCustomer, message);
+        return new MVCModel("/customer/CustomerMenu.jsp", newCustomer, errorMessage);
     }
 
 }

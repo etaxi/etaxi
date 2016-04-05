@@ -110,8 +110,7 @@ public class OrderManager {
                 try {
                     deleteOrder(currentOrder);
                     return true;
-                } catch (SQLException e) {
-                }
+                } catch (SQLException e) {}
             }
         }
         return false;

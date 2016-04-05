@@ -35,23 +35,13 @@ public class CustomerEditProfileController implements MVCController {
         currentCustomer.setPhone(request.getParameter("phone"));
         currentCustomer.setPassword(request.getParameter("password"));
 
-        String message = "";
-        Boolean updateSuccessful = false;
+        String errorMessage = new CustomerManager().updateCustomer(currentCustomer);
 
-        CustomerManager customerManager = new CustomerManager();
-        if (!customerManager.checkCustomerByLogin(currentCustomer)) {
-            message = "You can't use such phone! The customer with such phone already present!";
+        if (errorMessage.isEmpty()) {
+            errorMessage = "The data change was made (" + currentCustomer.getName() + ")";
+            return new MVCModel("/customer/CustomerMenu.jsp", currentCustomer, errorMessage);
         } else {
-            updateSuccessful = customerManager.updateCustomer(currentCustomer);
-            message =  (updateSuccessful) ?
-                       "The data change was made (" + currentCustomer.getName() + ")" :
-                       "Registration failed! Please try again!";
-        }
-
-        if (updateSuccessful) {
-            return new MVCModel("/customer/CustomerMenu.jsp", currentCustomer, message);
-        } else {
-            return new MVCModel("/customer/CustomerEditProfile.jsp", null, message);
+            return new MVCModel("/customer/CustomerEditProfile.jsp", null, errorMessage);
         }
 
     }

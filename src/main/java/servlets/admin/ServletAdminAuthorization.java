@@ -17,7 +17,7 @@ import java.sql.SQLException;
  * Created by Genady Zalesky on 27.03.2016
  */
 
-@WebServlet(name = "ServletAdminAuthorization" , urlPatterns = {"/admin/authorization"})
+@WebServlet(name = "ServletAdminAuthorization" , urlPatterns = {"/admin/adminAuthorization"})
 public class ServletAdminAuthorization extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,7 +37,7 @@ public class ServletAdminAuthorization extends HttpServlet {
 
         if (adminDataSet == null || !adminDataSet.getPassword().equals(password)) {
             request.setAttribute("message", "Wrong username or password!");
-            request.getRequestDispatcher("/admin/authorization.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/AdminAuthorization.jsp").forward(request, response);
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;

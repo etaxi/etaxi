@@ -43,7 +43,7 @@ public class ServletAdminRegistration extends HttpServlet {
 
             try {
                 if (adminManager.findAdminByLogin(login) != null) {
-                    message = "You can't use such phone! The customer with such phone already present!";
+                    message = "You can't use such login! The admin with such login already present!";
                 }
                 else {
                     Admin newAdmin = new Admin((long)0, name, login, password);

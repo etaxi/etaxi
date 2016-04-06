@@ -15,5 +15,4 @@ public class JUnitTestsForDatabaseCreation {
         dbConnection.createDataBaseWithTables();
 
     }
-
 }

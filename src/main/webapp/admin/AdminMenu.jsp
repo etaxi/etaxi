@@ -1,4 +1,4 @@
-<%--
+<%@ page import="entity.Admin" %><%--
   Created by IntelliJ IDEA.
   User: G
   Date: 29.03.2016
@@ -11,6 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-
+<%
+    Admin admin = (Admin) session.getAttribute("admin");
+    if (admin != null) {  %>
+<div id="menu"> <jsp:include page="/admin/AdminMenuAuthorized.jsp" /> </div>
+<%}
+else {%>
+<div id="menu"> <jsp:include page="/admin/AdminAuthorization.jsp" /> </div>
+<%}
+%>
 </body>
 </html>

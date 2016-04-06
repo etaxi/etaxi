@@ -8,9 +8,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>JSP page</title>
 </head>
 <body>
+
+<h1>Admin authorization</h1>
+<div class="container">
+    <form class="form-signin" action="/admin/adminAuthorization" method="POST">
+        <h2 class="form-signin-heading">Dear admin, please sign in</h2>
+        <label for="inputLogin" class="sr-only">Login</label>
+        <input type="text" name="login" id="inputLogin" class="form-control" placeholder="Login" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+</div> <!-- /container -->
+
+<div class="container">
+    <form class="form-signin" action="/admin/adminRegistration" method="GET">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">New admin registration</button>
+    </form>
+</div> <!-- /container -->
+
+<h3><%=request.getAttribute("message")%></h3>
 
 </body>
 </html>

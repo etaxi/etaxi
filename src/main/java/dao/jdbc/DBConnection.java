@@ -46,6 +46,9 @@ public class DBConnection {
         TaxiDAO taxiDao = new TaxiDAOImpl(connection, databaseName);
         taxiDao.createTable();
 
+        AdminDAO adminDAO = new AdminDAOImpl(connection, databaseName);
+        adminDAO.createTable();
+
     }
 
 

@@ -24,7 +24,7 @@ public class AdminDAOImpl implements AdminDAO{
     }
 
     public Admin getById(long id) throws SQLException {
-        return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
+        return executor.executeQuery("select * from admins where Id=" + id, resultSet -> {
             resultSet.next();
             return new Admin(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
                     resultSet.getString(4));
@@ -33,7 +33,7 @@ public class AdminDAOImpl implements AdminDAO{
     }
 
     public Admin getByLogin(String login) throws SQLException {
-        return executor.executeQuery("select * from customers where login = '" + login + "'", resultSet -> {
+        return executor.executeQuery("select * from admins where login = '" + login + "'", resultSet -> {
             if (resultSet.next()) {
                 return new Admin(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
                         resultSet.getString(4));
@@ -52,7 +52,7 @@ public class AdminDAOImpl implements AdminDAO{
                     " WHERE id=" + admin.getAdminId());
         }
         else {
-            return executor.executeUpdate("INSERT INTO customers (name, login, password) VALUES (" +
+            return executor.executeUpdate("INSERT INTO admins (name, login, password) VALUES (" +
                     "'" + admin.getName() + "'," +
                     "'" + admin.getLogin() + "'," +
                     "'" + admin.getPassword() + "')");

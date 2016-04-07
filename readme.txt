@@ -118,5 +118,10 @@ Administrator
 10. HTTP     15 тривиальных фактов о правильной работе с протоколом HTTP     https://habrahabr.ru/company/yandex/blog/265569/
 
 11. Spring MVC     http://devcolibri.com/3669
+                   http://mai.pmoproject.ru/pages/viewpage.action?pageId=4424007
 
 12. JSP Tutorial   http://www.tutorialspoint.com/jsp/index.htm
+
+14. Spring 3 MVC + Spring Security + Hibernate    https://habrahabr.ru/post/111102/
+
+15. REST сервис   http://devcolibri.com/3732

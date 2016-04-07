@@ -15,7 +15,7 @@ public class AdminEditProfileController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
-        Admin currentAdmin = (Admin) request.getSession().getAttribute("admin");
+        Admin currentAdmin = (Admin)request.getSession().getAttribute("admin");
         if (currentAdmin == null) {
             return new MVCModel("/admin/AdminMenu.jsp", null, "");
         }
@@ -26,7 +26,7 @@ public class AdminEditProfileController implements MVCController {
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
 
-        Admin currentAdmin = (Admin) request.getSession().getAttribute("customer");
+        Admin currentAdmin = (Admin)request.getSession().getAttribute("admin");
         if (currentAdmin == null) {
             return new MVCModel("/admin/AdminMenu.jsp", null, "");
         }

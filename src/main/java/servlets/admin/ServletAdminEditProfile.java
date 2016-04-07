@@ -15,12 +15,12 @@ import java.sql.SQLException;
  * Created by Genady Zalesky on 29.03.2016
  */
 
-@WebServlet(name = "ServletAdminEditProfile", urlPatterns = {"/admin/editProfile"})
+@WebServlet(name = "ServletAdminEditProfile", urlPatterns = {"/admin/adminEditProfile"})
 public class ServletAdminEditProfile extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if (request.getSession().getAttribute("customerId") != null) {
+        if (request.getSession().getAttribute("adminId") != null) {
 
             Admin currentAdmin = null;
             try {
@@ -31,7 +31,7 @@ public class ServletAdminEditProfile extends HttpServlet {
 
             request.setAttribute("message", "Please, enter new information about admin!");
             request.setAttribute("name", currentAdmin.getName());
-            request.setAttribute("phone", currentAdmin.getLogin());
+            request.setAttribute("login", currentAdmin.getLogin());
             request.setAttribute("password", currentAdmin.getPassword());
 
             request.getRequestDispatcher("/admin/AdminEditProfile.jsp").forward(request, response);
@@ -77,7 +77,7 @@ public class ServletAdminEditProfile extends HttpServlet {
                     Admin presentAdminWthSuchLogin = adminManager.findAdminByLogin(currentAdmin.getLogin());
                     if ((presentAdminWthSuchLogin != null)
                             && (presentAdminWthSuchLogin.getAdminId() != currentAdmin.getAdminId())) {
-                        message = "You can't use this login! The customer with such login already present!";
+                        message = "You can't use this login! The admin with such login already present!";
                     }
                     else{
                         adminManager.updateAdmin(currentAdmin);

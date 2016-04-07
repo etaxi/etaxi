@@ -1,15 +1,11 @@
 package servlets.admin;
 
-import business.CustomerManager;
-import entity.Customer;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * Created by Genady Zalesky on 29.03.2016
@@ -19,7 +15,7 @@ public class ServletAdminEditCustomerProfile extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if (request.getSession().getAttribute("customerId") != null) {
+       /* if (request.getSession().getAttribute("customerId") != null) {
 
             Customer currentCustomer = null;
             try {
@@ -42,12 +38,12 @@ public class ServletAdminEditCustomerProfile extends HttpServlet {
             request.getRequestDispatcher("/admin/AdminMenu.jsp").forward(request, response);
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }
+        }*/
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if (request.getSession().getAttribute("customerId") != null) {
+       /* if (request.getSession().getAttribute("customerId") != null) {
 
             CustomerManager customerManager = new CustomerManager();
             Customer currentCustomer = null;
@@ -109,6 +105,6 @@ public class ServletAdminEditCustomerProfile extends HttpServlet {
             request.getRequestDispatcher("/admin/AdminMenu.jsp").forward(request, response);
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }
+        }*/
     }
 }

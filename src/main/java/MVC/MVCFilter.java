@@ -1,9 +1,6 @@
 package MVC;
 
-import MVC.MVCControllers.admin.AdminAuthorizationController;
-import MVC.MVCControllers.admin.AdminMenuController;
-import MVC.MVCControllers.admin.AdminRegistrationController;
-import MVC.MVCControllers.admin.AdminSignOutController;
+import MVC.MVCControllers.admin.*;
 import MVC.MVCControllers.customer.*;
 import MVC.MVCControllers.taxi.*;
 
@@ -53,6 +50,7 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/admin", new AdminMenuController());
         urlToControllerMap.put("/admin/adminAuthorization", new AdminAuthorizationController());
         urlToControllerMap.put("/admin/adminRegistration", new AdminRegistrationController());
+        urlToControllerMap.put("/admin/adminEditProfile", new AdminEditProfileController());
         urlToControllerMap.put("/admin/signOut", new AdminSignOutController());
     }
 

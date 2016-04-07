@@ -35,7 +35,7 @@ public class AdminManager {
         admin.setAdminId(adminDAO.update(admin));
     }
 
-    public String updateAdmin(Admin admin) throws SQLException {
+    public String updateAdmin(Admin admin) {
 
         if (!checkAdminByLogin(admin)) {
             return "You can't use such login! The admin with such login already exists!";
@@ -71,7 +71,7 @@ public class AdminManager {
         return admin;
     }
 
-    public String createNewAdmin(Admin admin) throws SQLException {
+    public String createNewAdmin(Admin admin) {
 
         if (!checkAdminByLogin(admin)) {
             return "You can't use such login! The admin with such login already exists!";

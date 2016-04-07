@@ -125,3 +125,9 @@ Administrator
 14. Spring 3 MVC + Spring Security + Hibernate    https://habrahabr.ru/post/111102/
 
 15. REST сервис   http://devcolibri.com/3732
+
+16. DTO   http://design-pattern.ru/patterns/data-transfer-object.html
+
+17. Spring IoC   http://spring-projects.ru/guides/lessons/lesson-2/
+
+18. Виртуальная машина Java   http://ermak.cs.nstu.ru/trans/Trans472.htm

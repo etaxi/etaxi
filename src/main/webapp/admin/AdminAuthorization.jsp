@@ -30,6 +30,8 @@
     </form>
 </div> <!-- /container -->
 
+<a href="index.html">eTaxi portal</a><br>
+
 <h3><%=request.getAttribute("message")%></h3>
 
 </body>

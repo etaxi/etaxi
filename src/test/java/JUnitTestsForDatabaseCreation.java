@@ -1,5 +1,5 @@
 import org.junit.Test;
-import dao.jdbc.DBConnection;
+import lv.etaxi.dao.jdbc.DBConnection;
 
 import java.sql.SQLException;
 

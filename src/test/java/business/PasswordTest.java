@@ -1,8 +1,9 @@
 package business;
 
+import lv.etaxi.business.Password;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Aleks on 03.03.2016.

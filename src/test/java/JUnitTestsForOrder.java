@@ -1,12 +1,12 @@
-import dao.CustomerDAO;
-import dao.OrderDAO;
-import dao.TaxiDAO;
-import dao.jdbc.CustomerDAOImpl;
-import dao.jdbc.OrderDAOImpl;
-import dao.jdbc.TaxiDAOImpl;
-import entity.Customer;
-import entity.Order;
-import entity.Taxi;
+import lv.etaxi.dao.CustomerDAO;
+import lv.etaxi.dao.OrderDAO;
+import lv.etaxi.dao.TaxiDAO;
+import lv.etaxi.dao.jdbc.CustomerDAOImpl;
+import lv.etaxi.dao.jdbc.OrderDAOImpl;
+import lv.etaxi.dao.jdbc.TaxiDAOImpl;
+import lv.etaxi.entity.Customer;
+import lv.etaxi.entity.Order;
+import lv.etaxi.entity.Taxi;
 import org.junit.Test;
 
 import java.sql.SQLException;

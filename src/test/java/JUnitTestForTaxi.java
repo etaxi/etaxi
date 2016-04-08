@@ -1,6 +1,6 @@
-import dao.TaxiDAO;
-import dao.jdbc.TaxiDAOImpl;
-import entity.Taxi;
+import lv.etaxi.dao.TaxiDAO;
+import lv.etaxi.dao.jdbc.TaxiDAOImpl;
+import lv.etaxi.entity.Taxi;
 import org.junit.Test;
 
 import java.sql.SQLException;

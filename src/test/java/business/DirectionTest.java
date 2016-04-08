@@ -1,6 +1,6 @@
 package business;
 
-import business.direction.Direction;
+import lv.etaxi.business.direction.Direction;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;

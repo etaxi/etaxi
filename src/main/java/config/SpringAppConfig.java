@@ -1,10 +1,10 @@
 package config;
 
-
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = {"etaxi"})
-public class SpringConfig {
+@ComponentScan (basePackages = {"etaxi"})
+public class SpringAppConfig {
+
 }

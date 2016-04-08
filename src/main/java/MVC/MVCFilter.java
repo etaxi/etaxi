@@ -1,9 +1,7 @@
 package MVC;
 
-import MVC.MVCControllers.admin.*;
-import MVC.MVCControllers.customer.*;
-import MVC.MVCControllers.taxi.*;
-import config.SpringConfig;
+import MVC.MVCControllers.customer.HelloWorldController;
+import config.SpringAppConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -19,17 +17,23 @@ import java.util.Map;
  * Created by D.Lazorkin on 31.03.2016.
  */
 public class MVCFilter implements Filter {
+
     private Map<String, MVCController> urlToControllerMap;
     private ApplicationContext springContext;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        springContext = new AnnotationConfigApplicationContext(SpringConfig.class);
+
+        springContext = new AnnotationConfigApplicationContext(SpringAppConfig.class);
 
         urlToControllerMap = new HashMap<>();
-//        urlToControllerMap.put("/customer", getBean(CustomerMenuController.class));
-//        urlToControllerMap.put("/customer/customerAuthorization", getBean(CustomerAuthorizationController.class));
-//        urlToControllerMap.put("/customer/customerRegistration", getBean(CustomerRegistrationController.class));
+
+        urlToControllerMap.put("/hello", getBean(HelloWorldController.class));
+
+        //urlToControllerMap.put("/customer", getBean(CustomerMenuController.class));
+        //urlToControllerMap.put("/customer/customerAuthorization", getBean(CustomerAuthorizationController.class));
+        //urlToControllerMap.put("/customer/customerRegistration", getBean(CustomerRegistrationController.class));
+
 //        urlToControllerMap.put("/customer/customerEditProfile", getBean(CustomerEditProfileController.class));
 //        urlToControllerMap.put("/customer/customerCreateNewOrder", getBean(CustomerCreateNewOrderController.class));
 //        urlToControllerMap.put("/customer/customerHistoryOfOrders", getBean(CustomerHistoryOfOrdersController.class));
@@ -74,7 +78,6 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/customer/writeFeedbackToOrder", new CustomerWriteFeedbackController());
         urlToControllerMap.put("/customer/signOut", new CustomerSignOutController());
 
-
         urlToControllerMap.put("/taxi", new TaxiMenuController());
         urlToControllerMap.put("/taxi/registration", new TaxiRegistrationController());
         urlToControllerMap.put("/taxi/authorization", new TaxiAuthorizationController());
@@ -85,7 +88,6 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/taxi/completeorder", new TaxiCompleteOrderController());
         urlToControllerMap.put("/taxi/cancelorder", new TaxiCancelOrderController());
         urlToControllerMap.put("/taxi/editprofile", new TaxiEditProfileController());
-
 
         urlToControllerMap.put("/admin", new AdminMenuController());
         urlToControllerMap.put("/admin/adminAuthorization", new AdminAuthorizationController());

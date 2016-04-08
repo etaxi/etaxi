@@ -1,6 +1,7 @@
 package servlets.taxi;
 
 import business.TaxiManager;
+import business.TaxiManagerImpl;
 import dao.TaxiDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.TaxiDAOImpl;
@@ -29,7 +30,7 @@ public class ServletTaxiAuthorization extends HttpServlet {
 
         Taxi taxi = null;
         try {
-            taxi = new TaxiManager().findTaxiByLogin(login);
+            taxi = new TaxiManagerImpl().findTaxiByLogin(login);
 
         } catch (SQLException e) {
             e.printStackTrace();

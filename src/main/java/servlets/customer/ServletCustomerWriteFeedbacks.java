@@ -1,6 +1,7 @@
 package servlets.customer;
 
 import business.OrderManager;
+import business.OrderManagerImpl;
 import business.ServletHelper;
 import entity.Order;
 
@@ -29,7 +30,7 @@ public class ServletCustomerWriteFeedbacks extends HttpServlet {
 
             try {
                 long id = (long) request.getSession().getAttribute("customerId");
-                List<Order> listOfOrders = new OrderManager().getCompletedOrdersOfCustomer(id, orderedDateTimeBegin, orderedDateTimeEnd);
+                List<Order> listOfOrders = new OrderManagerImpl().getCompletedOrdersOfCustomer(id, orderedDateTimeBegin, orderedDateTimeEnd);
                 String htmlTable = ServletHelper.generateHTMLTableForOrders(listOfOrders, false, false, true);
 
                 request.setAttribute("table", htmlTable);

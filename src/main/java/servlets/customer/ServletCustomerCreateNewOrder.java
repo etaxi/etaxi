@@ -1,7 +1,7 @@
 package servlets.customer;
 
-import business.CustomerManager;
-import business.OrderManager;
+import business.CustomerManagerImpl;
+import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
 
@@ -26,7 +26,7 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
 
             Customer CurrentCustomer = null;
             try {
-                CurrentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
+                CurrentCustomer = new CustomerManagerImpl().findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -65,7 +65,7 @@ public class ServletCustomerCreateNewOrder extends HttpServlet {
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
                 try {
-                    new OrderManager().createNewOrder(newOrder);
+                    new OrderManagerImpl().createNewOrder(newOrder);
                     message = "New order was created (new order ID: " + newOrder.getOrderId() + ")";
                     orderCreationSuccessful = true;
                 } catch (SQLException e) {

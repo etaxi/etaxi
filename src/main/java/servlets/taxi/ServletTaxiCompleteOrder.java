@@ -1,6 +1,6 @@
 package servlets.taxi;
 
-import business.OrderManager;
+import business.OrderManagerImpl;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
@@ -29,9 +29,9 @@ public class ServletTaxiCompleteOrder extends HttpServlet {
             long orderId = Long.parseLong((String) request.getSession().getAttribute("orderId"));
 
             try {
-                Order order = new OrderManager().findOrderById(orderId);
+                Order order = new OrderManagerImpl().findOrderById(orderId);
                 order.setOrderStatus(Order.OrderStatus.DELIVERED);
-                new OrderManager().updateOrder(order);
+                new OrderManagerImpl().updateOrder(order);
                 request.setAttribute("message", "Completed order Id=" + orderId);
                 request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
                 response.setContentType("text/html;charset=utf-8");

@@ -1,7 +1,7 @@
 package servlets.customer;
 
-import business.CustomerManager;
-import business.OrderManager;
+import business.CustomerManagerImpl;
+import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
 
@@ -30,14 +30,14 @@ public class ServletCustomerEditOrder extends HttpServlet {
 
             Customer currentCustomer = null;
             try {
-                currentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = new CustomerManagerImpl().findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             Order orderToEdit = null;
             try {
-                orderToEdit = new OrderManager().findOrderById(Long.valueOf(orderIdToEdit));
+                orderToEdit = new OrderManagerImpl().findOrderById(Long.valueOf(orderIdToEdit));
                 if (orderToEdit.getCustomerId() == request.getSession().getAttribute("customerId")) {
                     changeIsPossible = true;
                 }
@@ -84,7 +84,7 @@ public class ServletCustomerEditOrder extends HttpServlet {
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
                 try {
-                    new OrderManager().updateOrder(updatedOrder);
+                    new OrderManagerImpl().updateOrder(updatedOrder);
                     updateSuccessful = true;
                     message = "Order ID: " + updatedOrder.getOrderId() + " was changed!";
                 } catch (SQLException e) {

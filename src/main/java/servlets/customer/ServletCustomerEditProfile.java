@@ -1,6 +1,7 @@
 package servlets.customer;
 
 import business.CustomerManager;
+import business.CustomerManagerImpl;
 import entity.Customer;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ public class ServletCustomerEditProfile extends HttpServlet {
 
             Customer currentCustomer = null;
             try {
-                currentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = new CustomerManagerImpl().findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -49,7 +50,7 @@ public class ServletCustomerEditProfile extends HttpServlet {
 
         if (request.getSession().getAttribute("customerId") != null) {
 
-            CustomerManager customerManager = new CustomerManager();
+            CustomerManager customerManager = new CustomerManagerImpl();
             Customer currentCustomer = null;
             try {
                 currentCustomer = customerManager.findCustomerById((long) request.getSession().getAttribute("customerId"));

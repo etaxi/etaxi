@@ -1,6 +1,6 @@
 package servlets.customer;
 
-import business.OrderManager;
+import business.OrderManagerImpl;
 import business.ServletHelper;
 import entity.Order;
 
@@ -29,7 +29,7 @@ public class ServletCustomerChangeOrders extends HttpServlet {
 
             try {
                 long id = (long) request.getSession().getAttribute("customerId");
-                List<Order> listOfOrders = new OrderManager().getOpenOrdersOfCustomer(id, orderedDateTimeBegin, orderedDateTimeEnd);
+                List<Order> listOfOrders = new OrderManagerImpl().getOpenOrdersOfCustomer(id, orderedDateTimeBegin, orderedDateTimeEnd);
                 String htmlTable = ServletHelper.generateHTMLTableForOrders(listOfOrders, true, true, false);
 
                 request.setAttribute("table", htmlTable);

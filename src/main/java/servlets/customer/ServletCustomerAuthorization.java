@@ -1,7 +1,7 @@
 package servlets.customer;
 
 
-import business.CustomerManager;
+import business.CustomerManagerImpl;
 import entity.Customer;
 
 import javax.servlet.ServletException;
@@ -25,7 +25,7 @@ public class ServletCustomerAuthorization extends HttpServlet {
 
         Customer customer = null;
         try {
-            customer = new CustomerManager().findCustomerByLogin(login);
+            customer = new CustomerManagerImpl().findCustomerByLogin(login);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package servlets.customer;
 
 import business.CustomerManager;
+import business.CustomerManagerImpl;
 import entity.Customer;
 
 import javax.servlet.ServletException;
@@ -37,7 +38,7 @@ public class ServletCustomerRegistration extends HttpServlet {
                          ((password == null || password.isEmpty()) ? "password; " : "");
 
         Boolean registrationSuccessful = false;
-        CustomerManager customerManager = new CustomerManager();
+        CustomerManager customerManager = new CustomerManagerImpl();
         if (message.isEmpty()) {
 
             try {

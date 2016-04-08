@@ -25,15 +25,14 @@ public class ServletAdminAuthorization extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        DBConnection dbService = new DBConnection();
-        AdminDAO adminDAO = new AdminDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
         Admin adminDataSet = null;
         try {
-            adminDataSet = adminDAO.getByLogin(login);
+            adminDataSet = new AdminDAOImpl().getByLogin(login);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
         if (adminDataSet == null || !adminDataSet.getPassword().equals(password)) {
             request.setAttribute("message", "Wrong username or password!");

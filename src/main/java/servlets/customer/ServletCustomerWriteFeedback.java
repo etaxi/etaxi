@@ -1,7 +1,8 @@
 package servlets.customer;
 
-import business.CustomerManager;
+import business.CustomerManagerImpl;
 import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
 
@@ -29,14 +30,14 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
 
             Customer currentCustomer = null;
             try {
-                currentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = new CustomerManagerImpl().findCustomerById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             Order orderToEdit = null;
             try {
-                orderToEdit = new OrderManager().findOrderById(Long.valueOf(orderIdToChange));
+                orderToEdit = new OrderManagerImpl().findOrderById(Long.valueOf(orderIdToChange));
                 if (orderToEdit.getCustomerId() == request.getSession().getAttribute("customerId")) {
                     changeIsPossible = true;
                 }
@@ -84,7 +85,7 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
 
             if (message.isEmpty()) {
                 try {
-                    OrderManager orderManager = new OrderManager();
+                    OrderManager orderManager = new OrderManagerImpl();
                     updatedOrder = orderManager.findOrderById(Long.parseLong(orderId));
                     updatedOrder.setFeedback(feedback);
                     orderManager.updateOrder(updatedOrder);
@@ -105,7 +106,7 @@ public class ServletCustomerWriteFeedback extends HttpServlet {
             } else {
                 Customer currentCustomer = null;
                 try {
-                    currentCustomer = new CustomerManager().findCustomerById((long) request.getSession().getAttribute("customerId"));
+                    currentCustomer = new CustomerManagerImpl().findCustomerById((long) request.getSession().getAttribute("customerId"));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

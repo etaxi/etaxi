@@ -1,6 +1,7 @@
 package servlets.customer;
 
 import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Order;
 
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ public class ServletCustomerDeleteOrder extends HttpServlet {
             String orderIdToDelete = request.getParameter("orderId");
 
             Order orderToDelete = null;
-            OrderManager orderManager = new OrderManager();
+            OrderManager orderManager = new OrderManagerImpl();
             try {
                 orderToDelete = orderManager.findOrderById(Long.valueOf(orderIdToDelete));
                 if (orderToDelete.getCustomerId() == request.getSession().getAttribute("customerId")) {

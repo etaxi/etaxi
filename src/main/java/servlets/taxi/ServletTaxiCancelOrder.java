@@ -1,6 +1,6 @@
 package servlets.taxi;
 
-import business.OrderManager;
+import business.OrderManagerImpl;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
@@ -35,10 +35,10 @@ public class ServletTaxiCancelOrder extends HttpServlet {
 
             long orderId = Long.parseLong((String) request.getSession().getAttribute("orderId"));
             try {
-                Order order = new OrderManager().findOrderById(orderId);
+                Order order = new OrderManagerImpl().findOrderById(orderId);
                 order.setTaxiId((long) 0);
                 order.setOrderStatus(Order.OrderStatus.WAITING);
-                new OrderManager().updateOrder(order);
+                new OrderManagerImpl().updateOrder(order);
                 request.getSession().removeAttribute("orderId");
 
                 request.setAttribute("message", "Canceled order Id=" + orderId);

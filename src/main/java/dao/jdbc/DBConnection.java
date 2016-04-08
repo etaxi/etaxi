@@ -1,12 +1,10 @@
 package dao.jdbc;
 
-import dao.*;
-
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.io.*;
 import java.util.Properties;
 
 /** Проект etaxi
@@ -37,17 +35,13 @@ public class DBConnection {
         Executor executor = new Executor(connection, "");
         executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
 
-        CustomerDAO customerDao = new CustomerDAOImpl();
-        customerDao.createTable();
+        new CustomerDAOImpl().createTable();
 
-        OrderDAO orderDao = new OrderDAOImpl(connection, databaseName);
-        orderDao.createTable();
+        new OrderDAOImpl(connection, databaseName).createTable();
 
-        TaxiDAO taxiDao = new TaxiDAOImpl(connection, databaseName);
-        taxiDao.createTable();
+        new TaxiDAOImpl(connection, databaseName).createTable();
 
-        AdminDAO adminDAO = new AdminDAOImpl(connection, databaseName);
-        adminDAO.createTable();
+        new AdminDAOImpl(connection, databaseName).createTable();
 
     }
 
@@ -76,7 +70,6 @@ public class DBConnection {
     }
 
     private String getDBUrl(){
-        FileInputStream fis;
         Properties property = new Properties();
 
         try {

@@ -2,7 +2,7 @@ package MVC.MVCControllers.customer;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.CustomerManager;
+import business.CustomerManagerImpl;
 import entity.Customer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class CustomerRegistrationController implements MVCController {
                 request.getParameter("phone"),
                 request.getParameter("password"));
 
-        String errorMessage = new CustomerManager().createNewCustomer(newCustomer);
+        String errorMessage = new CustomerManagerImpl().createNewCustomer(newCustomer);
 
         if (errorMessage.isEmpty()) {
             request.getSession().setAttribute("customer", newCustomer);

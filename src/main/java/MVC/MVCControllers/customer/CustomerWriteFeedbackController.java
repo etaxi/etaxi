@@ -3,6 +3,7 @@ package MVC.MVCControllers.customer;
 import MVC.MVCController;
 import MVC.MVCModel;
 import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
 
@@ -23,7 +24,7 @@ public class CustomerWriteFeedbackController implements MVCController {
 
         String orderId = request.getParameter("orderId");
 
-        OrderManager orderManager = new OrderManager();
+        OrderManager orderManager = new OrderManagerImpl();
         Order currentOrder = orderManager.findOrderById(orderId);
 
         return  (orderManager.checkOrderChangePossibility(currentCustomer, currentOrder)) ?
@@ -40,7 +41,8 @@ public class CustomerWriteFeedbackController implements MVCController {
             return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
 
-        Boolean updateSuccessful = new OrderManager().updateOrderByIdByCustomer(
+        OrderManager orderManager = new OrderManagerImpl();
+        Boolean updateSuccessful = orderManager.updateOrderByIdByCustomer(
                 currentCustomer,
                 request.getParameter("orderId"),
                 "", "", "",
@@ -53,7 +55,7 @@ public class CustomerWriteFeedbackController implements MVCController {
         if (updateSuccessful) {
             return new MVCModel("/customer/CustomerWriteFeedbacksToOrders.jsp", null, message);
         } else {
-            Order currentOrder = new OrderManager().findOrderById(request.getParameter("orderId"));
+            Order currentOrder = orderManager.findOrderById(request.getParameter("orderId"));
             return new MVCModel("/customer/CustomerWriteFeedbackToOrder.jsp", currentOrder, message);
         }
     }

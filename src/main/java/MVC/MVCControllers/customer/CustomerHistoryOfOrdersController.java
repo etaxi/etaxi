@@ -2,7 +2,7 @@ package MVC.MVCControllers.customer;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
 
@@ -37,7 +37,7 @@ public class CustomerHistoryOfOrdersController implements MVCController {
         Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
         Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
 
-        List<Order> listOfOrders = new OrderManager().getOrdersByCustomerId(
+        List<Order> listOfOrders = new OrderManagerImpl().getOrdersByCustomerId(
                 currentCustomer.getCustomerId(), orderedDateTimeBegin, orderedDateTimeEnd);
 
         return new MVCModel("/customer/CustomerListOrders.jsp", listOfOrders, "");

@@ -2,7 +2,7 @@ package MVC.MVCControllers.customer;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
 
@@ -32,7 +32,7 @@ public class CustomerCreateNewOrderController implements MVCController {
             return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
 
-        Order newOrder = new OrderManager().createNewOrderInDataBase(
+        Order newOrder = new OrderManagerImpl().createNewOrderInDataBase(
                 currentCustomer,
                 request.getParameter("fromAddress"),
                 request.getParameter("toAddress"),

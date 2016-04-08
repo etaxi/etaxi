@@ -2,7 +2,7 @@ package MVC.MVCControllers.customer;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Customer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ public class CustomerOrderDeleteController implements MVCController {
 
         String orderIdToDelete = request.getParameter("orderId");
 
-        String message = (new OrderManager().deleteOrderByIdByCustomer(currentCustomer, orderIdToDelete)) ?
+        String message = (new OrderManagerImpl().deleteOrderByIdByCustomer(currentCustomer, orderIdToDelete)) ?
                          "Your order (ID: " + orderIdToDelete + ") was deleted!" :
                          "Order information delete failed! Please try again!";
 

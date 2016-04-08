@@ -2,7 +2,7 @@ package MVC.MVCControllers.customer;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.CustomerManager;
+import business.CustomerManagerImpl;
 import entity.Customer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class CustomerEditProfileController implements MVCController {
         currentCustomer.setPhone(request.getParameter("phone"));
         currentCustomer.setPassword(request.getParameter("password"));
 
-        String errorMessage = new CustomerManager().updateCustomer(currentCustomer);
+        String errorMessage = new CustomerManagerImpl().updateCustomer(currentCustomer);
 
         if (errorMessage.isEmpty()) {
             errorMessage = "The data change was made (" + currentCustomer.getName() + ")";

@@ -2,7 +2,7 @@ package MVC.MVCControllers.customer;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.CustomerManager;
+import business.CustomerManagerImpl;
 import entity.Customer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class CustomerAuthorizationController implements MVCController {
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
 
-        Customer currentCustomer = new CustomerManager().CheckAuthorization(
+        Customer currentCustomer = new CustomerManagerImpl().CheckAuthorization(
                 request.getParameter("login"),
                 request.getParameter("password"));
 

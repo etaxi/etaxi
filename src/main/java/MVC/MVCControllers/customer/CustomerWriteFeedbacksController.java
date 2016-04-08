@@ -2,7 +2,7 @@ package MVC.MVCControllers.customer;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
 
@@ -38,7 +38,7 @@ public class CustomerWriteFeedbacksController implements MVCController {
         Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
         Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
 
-        List<Order> listOfOrders = new OrderManager().getCompletedOrdersOfCustomer(
+        List<Order> listOfOrders = new OrderManagerImpl().getCompletedOrdersOfCustomer(
                 currentCustomer.getCustomerId(), orderedDateTimeBegin, orderedDateTimeEnd);
         return new MVCModel("/customer/CustomerWriteFeedbacksToOrders.jsp", listOfOrders, "");
     }

@@ -17,7 +17,6 @@ public class CustomerMenuController implements MVCController {
 
     }
 
-
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
 

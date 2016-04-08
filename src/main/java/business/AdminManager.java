@@ -2,7 +2,6 @@ package business;
 
 import dao.AdminDAO;
 import dao.jdbc.AdminDAOImpl;
-import dao.jdbc.DBConnection;
 import entity.Admin;
 
 import java.sql.SQLException;
@@ -16,8 +15,7 @@ public class AdminManager {
 
     public AdminManager() {
 
-        DBConnection dbService = new DBConnection();
-        this.adminDAO = new AdminDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
+        this.adminDAO = new AdminDAOImpl();
     }
 
     public Admin findAdminByLogin(String login) throws SQLException {

@@ -16,6 +16,7 @@ public class CustomerManager {
     private CustomerDAO customerDAO;
 
     public CustomerManager() {
+
         this.customerDAO = new CustomerDAOImpl();
     }
 

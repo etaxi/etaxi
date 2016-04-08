@@ -1,4 +1,6 @@
-import dao.*;
+import dao.CustomerDAO;
+import dao.OrderDAO;
+import dao.TaxiDAO;
 import dao.jdbc.CustomerDAOImpl;
 import dao.jdbc.OrderDAOImpl;
 import dao.jdbc.TaxiDAOImpl;
@@ -6,9 +8,7 @@ import entity.Customer;
 import entity.Order;
 import entity.Taxi;
 import org.junit.Test;
-import dao.jdbc.DBConnection;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -148,8 +148,7 @@ public class JUnitTestsForOrder {
 
     public OrderDAO aOrderDAO() {
 
-        DBConnection dbConnection = new DBConnection();
-        return (new OrderDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName()));
+        return new OrderDAOImpl();
 
     }
 
@@ -269,16 +268,12 @@ public class JUnitTestsForOrder {
     @Test
     public void testNewOrderRecordWithNewCustomerAndTaxi() throws SQLException {
 
-        DBConnection dbConnection = new DBConnection();
-        Connection connection = dbConnection.getMysqlConnection();
-        String databaseName = dbConnection.getDatabaseName();
-
         Customer customer = CustomerBuilder.aCustomer().build();
-        CustomerDAO customerDAO = new CustomerDAOImpl(connection, databaseName);
+        CustomerDAO customerDAO = new CustomerDAOImpl();
         customer.setCustomerId(customerDAO.update(customer));
 
         Taxi taxi = TaxiBuilder.aTaxi().build();
-        TaxiDAO taxiDAO = new TaxiDAOImpl(connection, databaseName);
+        TaxiDAO taxiDAO = new TaxiDAOImpl();
         taxi.setTaxiId(taxiDAO.update(taxi));
 
         OrderBuilder orderBuilder = OrderBuilder.aOrder()
@@ -293,7 +288,7 @@ public class JUnitTestsForOrder {
                 .withOrderStatus(Order.OrderStatus.DELIVERED);
 
         Order order = orderBuilder.build();
-        long newOrderID = aOrderDAO().update(order);
+        aOrderDAO().update(order);
     }
 
 }

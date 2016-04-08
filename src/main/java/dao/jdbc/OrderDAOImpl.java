@@ -3,7 +3,6 @@ package dao.jdbc;
 import dao.OrderDAO;
 import entity.Order;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -15,18 +14,11 @@ import java.util.List;
  * */
 public class OrderDAOImpl implements OrderDAO {
 
-    private Executor executor;
-
-    public OrderDAOImpl(Connection connection, String databaseName) {
-
-        this.executor = new Executor(connection, databaseName);
-
-    }
-
     /**
      * Возвращает объект соответствующий записи с первичным ключом key или null
      */
     public Order getById(long id) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders where Id=" + id, resultSet -> {
             resultSet.next();
             return new Order(resultSet.getLong(1), resultSet.getLong(2), resultSet.getTimestamp(3), resultSet.getTimestamp(4),
@@ -41,6 +33,7 @@ public class OrderDAOImpl implements OrderDAO {
      */
     public long update(Order order) throws SQLException {
 
+        Executor executor = GetExecutor();
         if (order.getOrderId() > 0) {
             return executor.executeUpdate("UPDATE orders SET " +
                     " customerId = '" + order.getCustomerId() + "'," +
@@ -77,6 +70,7 @@ public class OrderDAOImpl implements OrderDAO {
      * Удаляет запись об объекте из базы данных
      */
     public void delete(Order order) throws SQLException {
+        Executor executor = GetExecutor();
         executor.executeUpdate("delete from orders where Id=" + order.getOrderId());
     }
 
@@ -84,12 +78,14 @@ public class OrderDAOImpl implements OrderDAO {
      * Возвращает список объектов соответствующих всем записям в базе данных
      */
     public List<Order> getAll() throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
 
     public List<Order> getOpenOrdersAll() throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "' " +
                 "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
@@ -97,6 +93,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public List<Order> getOpenOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +
                         ((customerId != 0) ? " and customerId = " + customerId : "") + " " +
                         "AND (ordereddatetime  between '" + begin + "' AND '" + end + "') " +
@@ -106,6 +103,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public List<Order> getCompletedOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +  //DELIVERED
                         ((customerId != 0) ? " and customerId = " + customerId : "") + " " +
                         "AND (ordereddatetime  between '" + begin + "' AND '" + end + "') " +
@@ -115,6 +113,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public List<Order> getTaxiOrders(long id) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders where taxiId=" + id + " " +
                 "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
@@ -142,6 +141,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public List<Order> getCustomerOrders(long id, Timestamp begin, Timestamp end) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders where customerId=" + id + " " +
                                      "AND (ordereddatetime  between '" + begin + "' AND '" + end + "') " +
                                      "ORDER BY ordereddatetime ASC",
@@ -150,6 +150,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public void createTable() throws SQLException {
+        Executor executor = GetExecutor();
         executor.executeUpdate("CREATE TABLE IF NOT EXISTS orders (" +
                 "  Id bigint(9) NOT NULL auto_increment," +
                 "  customerId bigint(9)," +
@@ -165,6 +166,13 @@ public class OrderDAOImpl implements OrderDAO {
                 "  feedback text," +
                 "  PRIMARY KEY (Id)" +
                 ");");
+    }
+
+    private Executor GetExecutor() {
+
+        DBConnection dbService = new DBConnection();
+        return (new Executor(dbService.getConnection(), dbService.getDatabaseName()));
+
     }
 
 }

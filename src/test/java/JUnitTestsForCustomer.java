@@ -3,7 +3,6 @@ import dao.CustomerDAO;
 import dao.jdbc.CustomerDAOImpl;
 import entity.Customer;
 import org.junit.Test;
-import dao.jdbc.DBConnection;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -75,8 +74,7 @@ public class JUnitTestsForCustomer {
 
     public CustomerDAO aCustomerDAO() {
 
-        DBConnection dbConnection = new DBConnection();
-        return (new CustomerDAOImpl(dbConnection.getConnection(), dbConnection.getDatabaseName()));
+        return new CustomerDAOImpl();
     }
 
 

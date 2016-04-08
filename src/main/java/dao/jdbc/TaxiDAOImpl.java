@@ -13,15 +13,8 @@ import java.util.List;
  * */
 public class TaxiDAOImpl implements TaxiDAO {
 
-    private Executor executor;
-
-    public TaxiDAOImpl(Connection connection, String databaseName) {
-
-        this.executor = new Executor(connection, databaseName);
-
-    }
-
     public Taxi getById(long id) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select Id, name, car, phone, login, password from taxis where Id=" + id, resultSet -> {
             resultSet.next();
             return new Taxi(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
@@ -30,6 +23,7 @@ public class TaxiDAOImpl implements TaxiDAO {
     }
 
     public Taxi getByLogin(String login) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from taxis where login = '" + login + "'", resultSet -> {
             resultSet.next();
             return new Taxi(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
@@ -40,6 +34,7 @@ public class TaxiDAOImpl implements TaxiDAO {
 
     public long update(Taxi taxi) throws SQLException {
 
+        Executor executor = GetExecutor();
         if (taxi.getTaxiId() > 0) {
             return executor.executeUpdate("UPDATE taxis SET " +
                     " name = '" + taxi.getName() + "'," +
@@ -62,6 +57,7 @@ public class TaxiDAOImpl implements TaxiDAO {
 
     public void delete(Taxi taxi) throws SQLException {
 
+        Executor executor = GetExecutor();
         Connection connection = executor.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -86,6 +82,7 @@ public class TaxiDAOImpl implements TaxiDAO {
     }
 
     public List<Taxi> getAll() throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select Id, name, car, phone, login, password from taxis ",
                 resultSet -> {
                     List<Taxi> list = new ArrayList<Taxi>();
@@ -103,6 +100,7 @@ public class TaxiDAOImpl implements TaxiDAO {
     }
 
     public void createTable() throws SQLException {
+        Executor executor = GetExecutor();
         executor.executeUpdate("CREATE TABLE IF NOT EXISTS taxis (" +
                 "  Id bigint(9) NOT NULL auto_increment," +
                 "  name varchar(256)," +
@@ -115,6 +113,13 @@ public class TaxiDAOImpl implements TaxiDAO {
                 "  rating double," +
                 "  PRIMARY KEY  (Id)" +
                 ");");
+    }
+
+    private Executor GetExecutor() {
+
+        DBConnection dbService = new DBConnection();
+        return (new Executor(dbService.getConnection(), dbService.getDatabaseName()));
+
     }
 
 }

@@ -1,7 +1,6 @@
 package business;
 
 import dao.OrderDAO;
-import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
 import entity.Customer;
 import entity.Order;
@@ -21,8 +20,7 @@ public class OrderManager {
 
     public OrderManager() {
 
-        DBConnection dbService = new DBConnection();
-        this.orderDAO = new OrderDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
+        this.orderDAO = new OrderDAOImpl();
     }
 
     public void createNewOrder(Order order) throws SQLException {

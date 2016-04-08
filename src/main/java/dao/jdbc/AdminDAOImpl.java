@@ -15,15 +15,9 @@ import java.util.List;
 
 public class AdminDAOImpl implements AdminDAO{
 
-    private Executor executor;
-
-    public AdminDAOImpl(Connection connection, String databaseName) {
-
-        this.executor = new Executor(connection, databaseName);
-
-    }
 
     public Admin getById(long id) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from admins where Id=" + id, resultSet -> {
             resultSet.next();
             return new Admin(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
@@ -33,6 +27,7 @@ public class AdminDAOImpl implements AdminDAO{
     }
 
     public Admin getByLogin(String login) throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from admins where login = '" + login + "'", resultSet -> {
             if (resultSet.next()) {
                 return new Admin(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
@@ -44,6 +39,7 @@ public class AdminDAOImpl implements AdminDAO{
 
     public long update(Admin admin) throws SQLException {
 
+        Executor executor = GetExecutor();
         if (admin.getAdminId() > 0) {
             return executor.executeUpdate("UPDATE admins SET " +
                     " name = '" + admin.getName() + "'," +
@@ -61,6 +57,7 @@ public class AdminDAOImpl implements AdminDAO{
 
     public void delete(Admin admin) throws SQLException {
 
+        Executor executor = GetExecutor();
         Connection connection = executor.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -83,6 +80,7 @@ public class AdminDAOImpl implements AdminDAO{
     }
 
     public List<Admin> getAll() throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from admins ",
                 resultSet -> {
                     List<Admin> list = new ArrayList<Admin>();
@@ -98,6 +96,7 @@ public class AdminDAOImpl implements AdminDAO{
     }
 
     public void createTable() throws SQLException {
+        Executor executor = GetExecutor();
         executor.executeUpdate("CREATE TABLE IF NOT EXISTS admins(" +
                 "   Id bigint(9) NOT NULL auto_increment," +
                 "   name varchar(256)," +
@@ -105,6 +104,13 @@ public class AdminDAOImpl implements AdminDAO{
                 "   password varchar(256)," +
                 "   PRIMARY KEY (Id)" +
                 "   );");
+    }
+
+    private Executor GetExecutor() {
+
+        DBConnection dbService = new DBConnection();
+        return (new Executor(dbService.getConnection(), dbService.getDatabaseName()));
+
     }
 
 }

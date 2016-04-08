@@ -37,11 +37,11 @@ public class DBConnection {
 
         new CustomerDAOImpl().createTable();
 
-        new OrderDAOImpl(connection, databaseName).createTable();
+        new OrderDAOImpl().createTable();
 
-        new TaxiDAOImpl(connection, databaseName).createTable();
+        new TaxiDAOImpl().createTable();
 
-        new AdminDAOImpl(connection, databaseName).createTable();
+        new AdminDAOImpl().createTable();
 
     }
 

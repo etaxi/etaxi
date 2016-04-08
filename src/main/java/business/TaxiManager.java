@@ -2,7 +2,6 @@ package business;
 
 import dao.TaxiDAO;
 import dao.jdbc.TaxiDAOImpl;
-import dao.jdbc.DBConnection;
 import entity.Taxi;
 
 import java.sql.SQLException;
@@ -15,8 +14,8 @@ public class TaxiManager {
     private TaxiDAO taxiDAO;
 
     public TaxiManager() {
-        DBConnection dbService = new DBConnection();
-        this.taxiDAO = new TaxiDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
+
+        this.taxiDAO = new TaxiDAOImpl();
     }
 
     public Taxi findTaxiByLogin(String login) throws SQLException {

@@ -4,6 +4,7 @@ import MVC.MVCController;
 import MVC.MVCModel;
 import business.AdminManager;
 import entity.Admin;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 /**
  * Created by Genady Zalesky on 06.04.2016
  */
+@Component
 public class AdminAuthorizationController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {

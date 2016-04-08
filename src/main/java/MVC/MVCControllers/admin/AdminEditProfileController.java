@@ -4,12 +4,14 @@ import MVC.MVCController;
 import MVC.MVCModel;
 import business.AdminManager;
 import entity.Admin;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Genady Zalesky on 07.04.2016
  */
+@Component
 public class AdminEditProfileController implements MVCController {
 
     @Override

@@ -2,6 +2,7 @@ package dao.jdbc;
 
 import dao.AdminDAO;
 import entity.Admin;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ import java.util.List;
  * Реализация управления объектами класса Admin
  * Created by Genady Zalesky on 27.03.2016
  */
-
+@Component
 public class AdminDAOImpl implements AdminDAO{
 
 

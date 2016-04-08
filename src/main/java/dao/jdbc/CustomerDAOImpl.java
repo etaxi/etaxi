@@ -2,6 +2,7 @@ package dao.jdbc;
 
 import dao.CustomerDAO;
 import entity.Customer;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Customer
  * */
+@Component
 public class CustomerDAOImpl implements CustomerDAO {
 
     public Customer getById(long id) throws SQLException {

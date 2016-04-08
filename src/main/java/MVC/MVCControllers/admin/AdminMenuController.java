@@ -2,6 +2,7 @@ package MVC.MVCControllers.admin;
 
 import MVC.MVCController;
 import MVC.MVCModel;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 /**
  * Created by Genady Zalesky on 06.04.2016
  */
+@Component
 public class AdminMenuController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {

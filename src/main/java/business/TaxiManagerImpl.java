@@ -3,12 +3,14 @@ package business;
 import dao.TaxiDAO;
 import dao.jdbc.TaxiDAOImpl;
 import entity.Taxi;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 
 /** Проект etaxi
  * Класс для реализации функций над списком такси
  */
+@Component
 public class TaxiManagerImpl implements TaxiManager {
 
     private TaxiDAO taxiDAO;

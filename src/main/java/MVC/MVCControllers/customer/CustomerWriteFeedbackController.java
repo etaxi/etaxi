@@ -6,12 +6,14 @@ import business.OrderManager;
 import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by D.Lazorkin on 02.04.2016.
  */
+@Component
 public class CustomerWriteFeedbackController implements MVCController {
 
     @Override

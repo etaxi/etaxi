@@ -2,6 +2,7 @@ package dao.jdbc;
 
 import dao.OrderDAO;
 import entity.Order;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Order
  * */
+@Component
 public class OrderDAOImpl implements OrderDAO {
 
     /**

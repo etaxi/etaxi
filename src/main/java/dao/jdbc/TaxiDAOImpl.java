@@ -2,6 +2,7 @@ package dao.jdbc;
 
 import dao.TaxiDAO;
 import entity.Taxi;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Taxi
  * */
+@Component
 public class TaxiDAOImpl implements TaxiDAO {
 
     public Taxi getById(long id) throws SQLException {

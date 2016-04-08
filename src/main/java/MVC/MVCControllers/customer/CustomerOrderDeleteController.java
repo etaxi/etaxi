@@ -4,12 +4,14 @@ import MVC.MVCController;
 import MVC.MVCModel;
 import business.OrderManagerImpl;
 import entity.Customer;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by D.Lazorkin on 02.04.2016.
  */
+@Component
 public class CustomerOrderDeleteController implements MVCController {
 
     @Override

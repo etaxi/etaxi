@@ -3,6 +3,7 @@ package business;
 import dao.CustomerDAO;
 import dao.jdbc.CustomerDAOImpl;
 import entity.Customer;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 
@@ -11,6 +12,7 @@ import java.sql.SQLException;
  * Created by D.Lazorkin on 25.03.2016.
  * Класс для реализации функций со стороны клиента
  */
+@Component
 public class CustomerManagerImpl implements CustomerManager {
 
     private CustomerDAO customerDAO;

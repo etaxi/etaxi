@@ -5,6 +5,7 @@ import MVC.MVCModel;
 import business.OrderManagerImpl;
 import entity.Order;
 import entity.Taxi;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 /**
  * Created by Aleks on 01.04.2016.
  */
+@Component
 public class TaxiTakeOrderController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

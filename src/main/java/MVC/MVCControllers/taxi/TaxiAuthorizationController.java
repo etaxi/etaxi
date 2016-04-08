@@ -4,6 +4,7 @@ import MVC.MVCController;
 import MVC.MVCModel;
 import business.TaxiManagerImpl;
 import entity.Taxi;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 /**
  * Created by Aleks on 01.04.2016.
  */
+@Component
 public class TaxiAuthorizationController implements MVCController {
 
     @Override

@@ -5,6 +5,7 @@ import MVC.MVCModel;
 import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by D.Lazorkin on 02.04.2016.
  */
+@Component
 public class CustomerWriteFeedbacksController implements MVCController {
 
     @Override

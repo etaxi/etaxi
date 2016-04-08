@@ -5,12 +5,14 @@ import MVC.MVCModel;
 import business.OrderManagerImpl;
 import entity.Customer;
 import entity.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by D.Lazorkin on 31.03.2016.
  */
+@Component
 public class CustomerCreateNewOrderController implements MVCController {
 
     @Override

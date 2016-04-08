@@ -4,6 +4,7 @@ import dao.OrderDAO;
 import dao.jdbc.OrderDAOImpl;
 import entity.Customer;
 import entity.Order;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by D.Lazorkin on 25.03.2016.
  * Интерфейс для реализации функций над заказами
  */
-
+@Component
 public class OrderManagerImpl implements OrderManager{
 
     private OrderDAO orderDAO;

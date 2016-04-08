@@ -1,6 +1,6 @@
 package servlets.taxi;
 
-import business.OrderManager;
+import business.OrderManagerImpl;
 import business.ServletHelper;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
@@ -30,7 +30,7 @@ public class ServletTaxiOpenOrders extends HttpServlet {
         if (request.getSession().getAttribute("taxiID") != null) {
 
             try {
-                List<Order> listOfOrders = new OrderManager().getOpenOrdersAll();
+                List<Order> listOfOrders = new OrderManagerImpl().getOpenOrdersAll();
                 String htmlTable = ServletHelper.generateHTMLTableForOrders(listOfOrders, false, false, false);
 
                 request.setAttribute("table", htmlTable);

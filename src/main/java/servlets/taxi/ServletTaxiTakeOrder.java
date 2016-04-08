@@ -1,6 +1,6 @@
 package servlets.taxi;
 
-import business.OrderManager;
+import business.OrderManagerImpl;
 import dao.OrderDAO;
 import dao.jdbc.DBConnection;
 import dao.jdbc.OrderDAOImpl;
@@ -27,11 +27,11 @@ public class ServletTaxiTakeOrder extends HttpServlet {
             String orderId     = request.getParameter("orderId");
 
             try {
-                Order order = new OrderManager().findOrderById(Long.parseLong(orderId));
+                Order order = new OrderManagerImpl().findOrderById(Long.parseLong(orderId));
                 Long taxiId = (long) request.getSession().getAttribute("taxiID");
                 order.setTaxiId(taxiId);
                 order.setOrderStatus(Order.OrderStatus.TAKEN);
-                new OrderManager().updateOrder(order);
+                new OrderManagerImpl().updateOrder(order);
                 request.getSession().setAttribute("orderId", orderId);
 
                 request.setAttribute("message", "Taken order Id="+ order.getOrderId());

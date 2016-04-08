@@ -1,5 +1,6 @@
 package servlets.taxi;
 
+import business.TaxiManagerImpl;
 import business.TaxiManager;
 import entity.Taxi;
 
@@ -47,7 +48,7 @@ public class ServletTaxiRegistration extends HttpServlet {
 
         if (message.isEmpty()) {
 
-            TaxiManager taxiManager = new TaxiManager();
+            TaxiManager taxiManager = new TaxiManagerImpl();
             Taxi newTaxi = new Taxi((long)0, name, car, phone, login, password);
             try {
                 message = "Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";

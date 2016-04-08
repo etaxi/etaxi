@@ -2,7 +2,7 @@ package MVC.MVCControllers.admin;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.AdminManager;
+import business.AdminManagerImpl;
 import entity.Admin;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +37,7 @@ public class AdminEditProfileController implements MVCController {
         currentAdmin.setLogin(request.getParameter("login"));
         currentAdmin.setPassword(request.getParameter("password"));
 
-        String errorMessage = new AdminManager().updateAdmin(currentAdmin);
+        String errorMessage = new AdminManagerImpl().updateAdmin(currentAdmin);
 
         if (errorMessage.isEmpty()) {
             errorMessage = "The data change was made (" + currentAdmin.getName() + ")";

@@ -1,6 +1,7 @@
 package servlets.admin;
 
 import business.AdminManager;
+import business.AdminManagerImpl;
 import entity.Admin;
 
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class ServletAdminEditProfile extends HttpServlet {
 
             Admin currentAdmin = null;
             try {
-                currentAdmin = new AdminManager().findAdminById((long) request.getSession().getAttribute("adminId"));
+                currentAdmin = new AdminManagerImpl().findAdminById((long) request.getSession().getAttribute("adminId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -50,7 +51,7 @@ public class ServletAdminEditProfile extends HttpServlet {
 
         if (request.getSession().getAttribute("adminId") != null) {
 
-            AdminManager adminManager = new AdminManager();
+            AdminManager adminManager = new AdminManagerImpl();
             Admin currentAdmin = null;
             try {
                 currentAdmin = adminManager.findAdminById((long) request.getSession().getAttribute("adminId"));

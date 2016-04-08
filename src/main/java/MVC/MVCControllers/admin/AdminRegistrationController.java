@@ -2,7 +2,7 @@ package MVC.MVCControllers.admin;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.AdminManager;
+import business.AdminManagerImpl;
 import entity.Admin;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class AdminRegistrationController implements MVCController {
                 request.getParameter("login"),
                 request.getParameter("password"));
 
-        String errorMessage = new AdminManager().createNewAdmin(newAdmin);
+        String errorMessage = new AdminManagerImpl().createNewAdmin(newAdmin);
 
         if (errorMessage.isEmpty()) {
             request.getSession().setAttribute("admin", newAdmin);

@@ -2,7 +2,7 @@ package MVC.MVCControllers.admin;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.AdminManager;
+import business.AdminManagerImpl;
 import entity.Admin;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class AdminAuthorizationController implements MVCController {
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) throws SQLException {
 
-        Admin currentAdmin = new AdminManager().CheckAuthorization(
+        Admin currentAdmin = new AdminManagerImpl().CheckAuthorization(
                 request.getParameter("login"),
                 request.getParameter("password"));
 

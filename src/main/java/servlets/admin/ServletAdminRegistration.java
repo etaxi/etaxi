@@ -1,6 +1,7 @@
 package servlets.admin;
 
 import business.AdminManager;
+import business.AdminManagerImpl;
 import entity.Admin;
 
 import javax.servlet.ServletException;
@@ -38,7 +39,7 @@ public class ServletAdminRegistration extends HttpServlet {
                 ((password == null || password.isEmpty()) ? "password; " : "");
 
         Boolean registrationSuccessful = false;
-        AdminManager adminManager = new AdminManager();
+        AdminManager adminManager = new AdminManagerImpl();
         if (message.isEmpty()) {
 
             try {

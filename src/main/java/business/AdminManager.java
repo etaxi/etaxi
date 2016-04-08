@@ -1,97 +1,27 @@
 package business;
 
-import dao.AdminDAO;
-import dao.jdbc.AdminDAOImpl;
 import entity.Admin;
 
 import java.sql.SQLException;
 
-/**
- * Created by Genady Zalesky on 29.03.2016
+/** Проект etaxi
+ * Created by D.Lazorkin on 08.04.2016.
+ * Интерфейс для реализации функций со стороны администраторов
  */
-public class AdminManager {
+public interface AdminManager {
 
-    private AdminDAO adminDAO;
+    Admin findAdminByLogin(String login) throws SQLException;
 
-    public AdminManager() {
+    Admin findAdminById(long Id) throws SQLException;
 
-        this.adminDAO = new AdminDAOImpl();
-    }
+    void createNewAdminInDataBase(Admin admin) throws SQLException;
 
-    public Admin findAdminByLogin(String login) throws SQLException {
+    String updateAdmin(Admin admin);
 
-        return adminDAO.getByLogin(login);
-    }
+    Admin CheckAuthorization(String login, String password);
 
-    public Admin findAdminById(long Id) throws SQLException {
+    String createNewAdmin(Admin admin);
 
-        return adminDAO.getById(Id);
-    }
+    boolean checkAdminByLogin(Admin admin);
 
-    public void createNewAdminInDataBase(Admin admin) throws SQLException {
-
-        admin.setAdminId(adminDAO.update(admin));
-    }
-
-    public String updateAdmin(Admin admin) {
-
-        if (!checkAdminByLogin(admin)) {
-            return "You can't use such login! The admin with such login already exists!";
-        } else {
-            try {
-                updateAdminInDataBase(admin);
-                return "";
-            } catch (SQLException e) {}
-        }
-        return "Data update failed! Please try again!";
-    }
-
-    private void updateAdminInDataBase(Admin admin) throws SQLException {
-
-        adminDAO.update(admin);
-    }
-
-    public Admin CheckAuthorization(String login, String password) {
-
-        Admin admin = null;
-        try {
-            admin = findAdminByLogin(login);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        if (admin != null) {
-            if (!admin.getPassword().equals(password)) {
-                return null;
-            }
-        }
-
-        return admin;
-    }
-
-    public String createNewAdmin(Admin admin) {
-
-        if (!checkAdminByLogin(admin)) {
-            return "You can't use such login! The admin with such login already exists!";
-        } else {
-            try {
-                createNewAdminInDataBase(admin);
-                return "";
-            } catch (SQLException e) {}
-        }
-        return  "Registration failed! Please try again!";
-    }
-
-    public boolean checkAdminByLogin(Admin admin) {
-        try {
-            Admin presentAdminWithSuchLogin = findAdminByLogin(admin.getLogin());
-            if ((presentAdminWithSuchLogin != null)
-                    && (presentAdminWithSuchLogin.getAdminId() != admin.getAdminId())) {
-                return false;
-            }
-        } catch (SQLException e) {
-            return false;
-        }
-        return true;
-    }
 }

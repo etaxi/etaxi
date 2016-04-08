@@ -37,7 +37,7 @@ public class DBConnection {
         Executor executor = new Executor(connection, "");
         executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
 
-        CustomerDAO customerDao = new CustomerDAOImpl(connection, databaseName);
+        CustomerDAO customerDao = new CustomerDAOImpl();
         customerDao.createTable();
 
         OrderDAO orderDao = new OrderDAOImpl(connection, databaseName);

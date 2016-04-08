@@ -3,7 +3,6 @@ package business;
 
 import dao.CustomerDAO;
 import dao.jdbc.CustomerDAOImpl;
-import dao.jdbc.DBConnection;
 import entity.Customer;
 
 import java.sql.SQLException;
@@ -17,8 +16,7 @@ public class CustomerManager {
     private CustomerDAO customerDAO;
 
     public CustomerManager() {
-        DBConnection dbService = new DBConnection();
-        this.customerDAO = new CustomerDAOImpl(dbService.getConnection(), dbService.getDatabaseName());
+        this.customerDAO = new CustomerDAOImpl();
     }
 
     public Customer findCustomerByLogin(String login) throws SQLException {

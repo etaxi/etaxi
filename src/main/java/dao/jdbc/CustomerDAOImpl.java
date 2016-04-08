@@ -13,15 +13,9 @@ import java.util.List;
  * */
 public class CustomerDAOImpl implements CustomerDAO {
 
-    private Executor executor;
-
-    public CustomerDAOImpl(Connection connection, String databaseName) {
-
-        this.executor = new Executor(connection, databaseName);
-
-    }
-
     public Customer getById(long id) throws SQLException {
+
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
             resultSet.next();
             return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
@@ -31,6 +25,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     public Customer getByLogin(String phone) throws SQLException {
+
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from customers where phone = '" + phone + "'", resultSet -> {
             if (resultSet.next()) {
                 return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
@@ -42,6 +38,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public long update(Customer customer) throws SQLException {
 
+        Executor executor = GetExecutor();
         if (customer.getCustomerId() > 0) {
             return executor.executeUpdate("UPDATE customers SET " +
                                    " name = '" + customer.getName() + "'," +
@@ -60,6 +57,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public void delete(Customer customer) throws SQLException {
 
+        Executor executor = GetExecutor();
         Connection connection = executor.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -84,6 +82,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     public List<Customer> getAll() throws SQLException {
+        Executor executor = GetExecutor();
         return executor.executeQuery("select * from customers ",
                 resultSet -> {
                     List<Customer> list = new ArrayList<Customer>();
@@ -99,6 +98,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     public void createTable() throws SQLException {
+        Executor executor = GetExecutor();
         executor.executeUpdate("CREATE TABLE IF NOT EXISTS customers(" +
                             "   Id bigint(9) NOT NULL auto_increment," +
                             "   name varchar(256)," +
@@ -106,6 +106,13 @@ public class CustomerDAOImpl implements CustomerDAO {
                             "   password varchar(256)," +
                             "   PRIMARY KEY (Id)" +
                             "   );");
+    }
+
+    private Executor GetExecutor() {
+
+        DBConnection dbService = new DBConnection();
+        return (new Executor(dbService.getConnection(), dbService.getDatabaseName()));
+
     }
 
 

@@ -2,7 +2,7 @@ package MVC.MVCControllers.taxi;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Order;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import java.util.List;
 public class TaxiOpenOrdersController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
-        List<Order> listOfOrders = new OrderManager().getOpenOrdersAll();
+        List<Order> listOfOrders = new OrderManagerImpl().getOpenOrdersAll();
         return new MVCModel("/taxi/TaxiOpenOrders.jsp", listOfOrders);
     }
 

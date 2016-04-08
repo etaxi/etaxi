@@ -3,13 +3,11 @@ package MVC.MVCControllers.taxi;
 import MVC.MVCController;
 import MVC.MVCModel;
 import business.TaxiManager;
+import business.TaxiManagerImpl;
 import entity.Taxi;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Aleks on 01.04.2016.
@@ -40,7 +38,7 @@ public class TaxiRegistrationController implements MVCController {
 
         if (message.isEmpty()) {
 
-            TaxiManager taxiManager = new TaxiManager();
+            TaxiManager taxiManager = new TaxiManagerImpl();
             Taxi newTaxi = new Taxi((long)0, name, car, phone, login, password);
             try {
                 message = " Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";

@@ -2,11 +2,10 @@ package MVC.MVCControllers.taxi;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.TaxiManager;
+import business.TaxiManagerImpl;
 import entity.Taxi;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 /**
@@ -32,7 +31,7 @@ public class TaxiAuthorizationController implements MVCController {
 
         Taxi taxi = null;
         try {
-            taxi = new TaxiManager().findTaxiByLogin(login);
+            taxi = new TaxiManagerImpl().findTaxiByLogin(login);
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,47 +1,21 @@
 package business;
 
-import dao.TaxiDAO;
-import dao.jdbc.TaxiDAOImpl;
 import entity.Taxi;
 
 import java.sql.SQLException;
 
-/** Проект etaxi
- * Класс для реализации функций над списком такси
+/**
+ * C/** Проект etaxi
+ * Интерфейс для реализации функций над объектами такси
  */
-public class TaxiManager {
+public interface TaxiManager {
 
-    private TaxiDAO taxiDAO;
+    Taxi findTaxiByLogin(String login) throws SQLException;
 
-    public TaxiManager() {
+    Taxi findTaxiById(long Id) throws SQLException;
 
-        this.taxiDAO = new TaxiDAOImpl();
-    }
+    void createNewTaxi(Taxi taxi) throws SQLException;
 
-    public Taxi findTaxiByLogin(String login) throws SQLException {
-
-        return taxiDAO.getByLogin(login);
-
-    }
-
-    public Taxi findTaxiById(long Id) throws SQLException {
-
-        return taxiDAO.getById(Id);
-
-    }
-
-    public void createNewTaxi(Taxi taxi) throws SQLException {
-
-        taxi.setTaxiId(taxiDAO.update(taxi));
-
-    }
-
-    public void updateTaxi(Taxi taxi) throws SQLException {
-
-        taxiDAO.update(taxi);
-
-    }
-
+    void updateTaxi(Taxi taxi) throws SQLException;
 
 }
-

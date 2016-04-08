@@ -2,11 +2,10 @@ package MVC.MVCControllers.taxi;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Order;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 /**
@@ -27,7 +26,7 @@ public class TaxiCancelOrderController implements MVCController {
             try {
                 order.setTaxiId((long) 0);
                 order.setOrderStatus(Order.OrderStatus.WAITING);
-                new OrderManager().updateOrder(order);
+                new OrderManagerImpl().updateOrder(order);
                 request.getSession().removeAttribute("order");
                 return new MVCModel("/taxi/TaxiCancelOrder.jsp", "");
             } catch (SQLException e) {

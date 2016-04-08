@@ -2,7 +2,7 @@ package MVC.MVCControllers.taxi;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Order;
 import entity.Taxi;
 
@@ -19,7 +19,7 @@ public class TaxiHistoryController implements MVCController {
         Taxi taxi = (Taxi)request.getSession().getAttribute("taxi");
 
         if (taxi != null) {
-            List<Order> listOfOrders = new OrderManager().getTaxiOrders(taxi.getTaxiId());
+            List<Order> listOfOrders = new OrderManagerImpl().getTaxiOrders(taxi.getTaxiId());
             return new MVCModel("/taxi/TaxiOpenOrders.jsp", listOfOrders);
         }
         else{

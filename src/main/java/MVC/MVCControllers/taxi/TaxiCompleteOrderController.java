@@ -2,11 +2,10 @@ package MVC.MVCControllers.taxi;
 
 import MVC.MVCController;
 import MVC.MVCModel;
-import business.OrderManager;
+import business.OrderManagerImpl;
 import entity.Order;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 /**
@@ -20,7 +19,7 @@ public class TaxiCompleteOrderController implements MVCController {
 
             try {
                 order.setOrderStatus(Order.OrderStatus.DELIVERED);
-                new OrderManager().updateOrder(order);
+                new OrderManagerImpl().updateOrder(order);
 
                 return new MVCModel("/taxi/TaxiCompleteOrder.jsp", "");
 

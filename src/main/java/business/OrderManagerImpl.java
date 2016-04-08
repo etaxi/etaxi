@@ -11,7 +11,7 @@ import java.util.List;
 
 /** Проект etaxi
  * Created by D.Lazorkin on 25.03.2016.
- * Класс для реализации функций над заказами
+ * Интерфейс для реализации функций над заказами
  */
 
 public class OrderManagerImpl implements OrderManager{

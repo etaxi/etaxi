@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
-@Component
+
 public class HelloWorldController implements MVCController {
 
     public MVCModel processRequest(HttpServletRequest req) {

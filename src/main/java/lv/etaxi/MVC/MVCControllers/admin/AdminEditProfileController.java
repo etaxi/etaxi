@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by Genady Zalesky on 07.04.2016
  */
-@Component
 public class AdminEditProfileController implements MVCController {
 
     @Override

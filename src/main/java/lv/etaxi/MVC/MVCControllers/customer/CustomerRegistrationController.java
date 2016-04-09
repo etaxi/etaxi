@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by D.Lazorkin on 31.03.2016.
  */
-@Component
+
 public class CustomerRegistrationController implements MVCController {
 
     @Override

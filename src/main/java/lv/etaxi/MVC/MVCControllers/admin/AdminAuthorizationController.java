@@ -12,7 +12,6 @@ import java.sql.SQLException;
 /**
  * Created by Genady Zalesky on 06.04.2016
  */
-@Component
 public class AdminAuthorizationController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {

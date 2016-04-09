@@ -4,7 +4,8 @@ import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.CustomerManagerImpl;
 import lv.etaxi.entity.Customer;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,8 +13,15 @@ import javax.servlet.http.HttpServletRequest;
  * Created by D.Lazorkin on 31.03.2016.
  */
 
-@Component
+@Controller
 public class CustomerRegistrationController implements MVCController {
+
+    @Autowired
+    CustomerManagerImpl customerManagerImpl;
+
+    public CustomerRegistrationController() {
+        this.customerManagerImpl = new CustomerManagerImpl();
+    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -31,7 +39,7 @@ public class CustomerRegistrationController implements MVCController {
                 request.getParameter("phone"),
                 request.getParameter("password"));
 
-        String errorMessage = new CustomerManagerImpl().createNewCustomer(newCustomer);
+        String errorMessage = customerManagerImpl.createNewCustomer(newCustomer);
 
         if (errorMessage.isEmpty()) {
             request.getSession().setAttribute("customer", newCustomer);

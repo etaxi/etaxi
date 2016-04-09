@@ -5,7 +5,7 @@ import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.TaxiManager;
 import lv.etaxi.business.TaxiManagerImpl;
 import lv.etaxi.entity.Taxi;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 /**
  * Created by Aleks on 01.04.2016.
  */
-
+@Controller
 public class TaxiRegistrationController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

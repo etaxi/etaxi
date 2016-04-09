@@ -4,7 +4,9 @@ import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.dao.jdbc.OrderDAOImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -14,9 +16,9 @@ import java.util.List;
  * Created by D.Lazorkin on 25.03.2016.
  * Интерфейс для реализации функций над заказами
  */
-
+@Service
 public class OrderManagerImpl implements OrderManager{
-
+    @Autowired
     private OrderDAO orderDAO;
 
     public OrderManagerImpl() {
@@ -24,12 +26,14 @@ public class OrderManagerImpl implements OrderManager{
         this.orderDAO = new OrderDAOImpl();
     }
 
+    @Transactional
     public void createNewOrder(Order order) throws SQLException {
 
         order.setOrderId(orderDAO.update(order));
 
     }
 
+    @Transactional
     public void updateOrder(Order order) throws SQLException {
 
         orderDAO.update(order);
@@ -42,6 +46,7 @@ public class OrderManagerImpl implements OrderManager{
 
     }
 
+    @Transactional
     public void deleteOrder(Order order) throws SQLException {
 
         orderDAO.delete(order);
@@ -73,6 +78,7 @@ public class OrderManagerImpl implements OrderManager{
         return  orderDAO.getOpenOrdersAll();
     }
 
+    @Transactional
     public Order createNewOrderInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime) {
 
         Order newOrder = new Order((long) 0, customer.getCustomerId(),
@@ -101,6 +107,7 @@ public class OrderManagerImpl implements OrderManager{
         }
     }
 
+    @Transactional
     public boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete) {
 
         Order currentOrder = findOrderById(orderIdToDelete);
@@ -115,7 +122,7 @@ public class OrderManagerImpl implements OrderManager{
         return false;
     }
 
-
+    @Transactional
     public  boolean updateOrderByIdByCustomer(Customer customer, String orderIdToUpdate, String fromAddress,
                                                String toAddress, String orderedDateTime, String feedback) {
 

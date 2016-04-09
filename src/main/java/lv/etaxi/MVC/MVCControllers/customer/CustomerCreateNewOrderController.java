@@ -5,7 +5,8 @@ import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManagerImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,8 +14,15 @@ import javax.servlet.http.HttpServletRequest;
  * Created by D.Lazorkin on 31.03.2016.
  */
 
-@Component
+@Controller
 public class CustomerCreateNewOrderController implements MVCController {
+
+    @Autowired
+    OrderManagerImpl orderManagerImpl;
+
+    public CustomerCreateNewOrderController() {
+        this.orderManagerImpl = new OrderManagerImpl();
+    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -35,7 +43,7 @@ public class CustomerCreateNewOrderController implements MVCController {
             return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
 
-        Order newOrder = new OrderManagerImpl().createNewOrderInDataBase(
+        Order newOrder = orderManagerImpl.createNewOrderInDataBase(
                 currentCustomer,
                 request.getParameter("fromAddress"),
                 request.getParameter("toAddress"),

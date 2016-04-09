@@ -4,7 +4,8 @@ import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.CustomerManagerImpl;
 import lv.etaxi.entity.Customer;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,8 +13,15 @@ import javax.servlet.http.HttpServletRequest;
  * Created by D.Lazorkin on 31.03.2016.
  */
 
-@Component
+@Controller
 public class CustomerEditProfileController implements MVCController {
+
+    @Autowired
+    CustomerManagerImpl customerManagerImpl;
+
+    public CustomerEditProfileController() {
+        this.customerManagerImpl = new CustomerManagerImpl();
+    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -38,7 +46,7 @@ public class CustomerEditProfileController implements MVCController {
         currentCustomer.setPhone(request.getParameter("phone"));
         currentCustomer.setPassword(request.getParameter("password"));
 
-        String errorMessage = new CustomerManagerImpl().updateCustomer(currentCustomer);
+        String errorMessage = customerManagerImpl.updateCustomer(currentCustomer);
 
         if (errorMessage.isEmpty()) {
             errorMessage = "The data change was made (" + currentCustomer.getName() + ")";

@@ -3,14 +3,18 @@ package lv.etaxi.business;
 import lv.etaxi.dao.AdminDAO;
 import lv.etaxi.dao.jdbc.AdminDAOImpl;
 import lv.etaxi.entity.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 
 /**
  * Created by Genady Zalesky on 29.03.2016
  */
+@Service
 public class AdminManagerImpl implements AdminManager {
-
+    @Autowired
     private AdminDAO adminDAO;
 
     public AdminManagerImpl() {
@@ -28,11 +32,13 @@ public class AdminManagerImpl implements AdminManager {
         return adminDAO.getById(Id);
     }
 
+    @Transactional
     public void createNewAdminInDataBase(Admin admin) throws SQLException {
 
         admin.setAdminId(adminDAO.update(admin));
     }
 
+    @Transactional
     public String updateAdmin(Admin admin) {
 
         if (!checkAdminByLogin(admin)) {
@@ -46,6 +52,7 @@ public class AdminManagerImpl implements AdminManager {
         return "Data update failed! Please try again!";
     }
 
+    @Transactional
     private void updateAdminInDataBase(Admin admin) throws SQLException {
 
         adminDAO.update(admin);
@@ -69,6 +76,7 @@ public class AdminManagerImpl implements AdminManager {
         return admin;
     }
 
+    @Transactional
     public String createNewAdmin(Admin admin) {
 
         if (!checkAdminByLogin(admin)) {

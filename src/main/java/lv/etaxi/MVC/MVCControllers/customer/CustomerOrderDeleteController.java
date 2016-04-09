@@ -4,15 +4,23 @@ import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManagerImpl;
 import lv.etaxi.entity.Customer;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by D.Lazorkin on 02.04.2016.
  */
-
+@Controller
 public class CustomerOrderDeleteController implements MVCController {
+
+    @Autowired
+    OrderManagerImpl orderManagerImpl;
+
+    public CustomerOrderDeleteController() {
+        this.orderManagerImpl = new OrderManagerImpl();
+    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -31,7 +39,7 @@ public class CustomerOrderDeleteController implements MVCController {
 
         String orderIdToDelete = request.getParameter("orderId");
 
-        String message = (new OrderManagerImpl().deleteOrderByIdByCustomer(currentCustomer, orderIdToDelete)) ?
+        String message = (orderManagerImpl.deleteOrderByIdByCustomer(currentCustomer, orderIdToDelete)) ?
                          "Your order (ID: " + orderIdToDelete + ") was deleted!" :
                          "Order information delete failed! Please try again!";
 

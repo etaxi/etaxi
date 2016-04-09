@@ -5,7 +5,8 @@ import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManagerImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -16,8 +17,15 @@ import java.util.List;
  * Created by D.Lazorkin on 02.04.2016.
  */
 
-@Component
+@Controller
 public class CustomerWriteFeedbacksController implements MVCController {
+
+    @Autowired
+    OrderManagerImpl orderManagerImpl;
+
+    public CustomerWriteFeedbacksController() {
+        this.orderManagerImpl = new OrderManagerImpl();
+    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
@@ -41,7 +49,7 @@ public class CustomerWriteFeedbacksController implements MVCController {
         Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
         Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
 
-        List<Order> listOfOrders = new OrderManagerImpl().getCompletedOrdersOfCustomer(
+        List<Order> listOfOrders = orderManagerImpl.getCompletedOrdersOfCustomer(
                 currentCustomer.getCustomerId(), orderedDateTimeBegin, orderedDateTimeEnd);
         return new MVCModel("/customer/CustomerWriteFeedbacksToOrders.jsp", listOfOrders, "");
     }

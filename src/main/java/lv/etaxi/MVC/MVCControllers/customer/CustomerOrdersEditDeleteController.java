@@ -5,7 +5,8 @@ import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManagerImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -15,8 +16,15 @@ import java.util.List;
 /**
  * Created by D.Lazorkin on 02.04.2016.
  */
-
+@Controller
 public class CustomerOrdersEditDeleteController implements MVCController {
+
+    @Autowired
+    OrderManagerImpl orderManagerImpl;
+
+    public CustomerOrdersEditDeleteController() {
+        this.orderManagerImpl = new OrderManagerImpl();
+    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
@@ -40,7 +48,7 @@ public class CustomerOrdersEditDeleteController implements MVCController {
         Timestamp orderedDateTimeBegin = Timestamp.valueOf(request.getParameter("orderedDateTimeBegin"));
         Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
 
-        List<Order> listOfOrders = new OrderManagerImpl().getOpenOrdersOfCustomer(
+        List<Order> listOfOrders = orderManagerImpl.getOpenOrdersOfCustomer(
                 currentCustomer.getCustomerId(), orderedDateTimeBegin, orderedDateTimeEnd);
         return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", listOfOrders, "");
 

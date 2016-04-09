@@ -2,7 +2,7 @@ package lv.etaxi.dao.jdbc;
 
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.entity.Order;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Order
  * */
-
+@Repository
 public class OrderDAOImpl implements OrderDAO {
 
     /**

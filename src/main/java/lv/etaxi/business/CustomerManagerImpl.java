@@ -3,7 +3,9 @@ package lv.etaxi.business;
 import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.jdbc.CustomerDAOImpl;
 import lv.etaxi.entity.Customer;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 
@@ -13,8 +15,9 @@ import java.sql.SQLException;
  * Класс для реализации функций со стороны клиента
  */
 
+@Service
 public class CustomerManagerImpl implements CustomerManager {
-
+    @Autowired
     private CustomerDAO customerDAO;
 
     public CustomerManagerImpl() {
@@ -34,12 +37,14 @@ public class CustomerManagerImpl implements CustomerManager {
 
     }
 
+    @Transactional
     public void createNewCustomerInDataBase(Customer customer) throws SQLException {
 
         customer.setCustomerId(customerDAO.update(customer));
 
     }
 
+    @Transactional
     public void updateCustomerInDataBase(Customer customer) throws SQLException {
 
         customerDAO.update(customer);
@@ -78,6 +83,7 @@ public class CustomerManagerImpl implements CustomerManager {
         return true;
     }
 
+    @Transactional
     public String updateCustomer(Customer customer) {
 
         if (!checkCustomerByLogin(customer)) {
@@ -92,6 +98,7 @@ public class CustomerManagerImpl implements CustomerManager {
         return "Data update failed! Please try again!";
     }
 
+    @Transactional
     public String createNewCustomer(Customer customer) {
 
         if (!checkCustomerByLogin(customer)) {

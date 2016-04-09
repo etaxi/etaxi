@@ -4,7 +4,7 @@ import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.AdminManagerImpl;
 import lv.etaxi.entity.Admin;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 /**
  * Created by Genady Zalesky on 06.04.2016
  */
-
+@Controller
 public class AdminRegistrationController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {

@@ -2,11 +2,11 @@ package lv.etaxi.MVC.MVCControllers.customer;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.OrderManager;
 import lv.etaxi.business.OrderManagerImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,8 +14,16 @@ import javax.servlet.http.HttpServletRequest;
  * Created by D.Lazorkin on 02.04.2016.
  */
 
-@Component
+@Controller
 public class CustomerOrderEditController implements MVCController {
+
+    @Autowired
+    OrderManagerImpl orderManagerImpl;
+
+    public CustomerOrderEditController() {
+        this.orderManagerImpl = new OrderManagerImpl();
+    }
+
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -27,10 +35,9 @@ public class CustomerOrderEditController implements MVCController {
 
         String orderId = request.getParameter("orderId");
 
-        OrderManager orderManager = new OrderManagerImpl();
-        Order currentOrder = orderManager.findOrderById(orderId);
+        Order currentOrder = orderManagerImpl.findOrderById(orderId);
 
-        return  orderManager.checkOrderChangePossibility(currentCustomer, currentOrder) ?
+        return  orderManagerImpl.checkOrderChangePossibility(currentCustomer, currentOrder) ?
                 new MVCModel("/customer/CustomerEditOrder.jsp", currentOrder, "") :
                 new MVCModel("/customer/CustomerMenu.jsp", null, "");
 
@@ -44,8 +51,7 @@ public class CustomerOrderEditController implements MVCController {
             return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
 
-        OrderManager orderManager = new OrderManagerImpl();
-        Boolean updateSuccessful = orderManager.updateOrderByIdByCustomer(
+        Boolean updateSuccessful = orderManagerImpl.updateOrderByIdByCustomer(
                 currentCustomer,
                 request.getParameter("orderId"),
                 request.getParameter("fromAddress"),
@@ -60,7 +66,7 @@ public class CustomerOrderEditController implements MVCController {
         if (updateSuccessful) {
             return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", null, message);
         } else {
-            Order currentOrder = orderManager.findOrderById(request.getParameter("orderId"));
+            Order currentOrder = orderManagerImpl.findOrderById(request.getParameter("orderId"));
             return new MVCModel("/customer/CustomerEditOrder.jsp", currentOrder, message);
         }
     }

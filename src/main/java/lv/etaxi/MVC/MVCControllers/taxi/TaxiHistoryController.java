@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Aleks on 01.04.2016.
  */
-@Component
+
 public class TaxiHistoryController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {

@@ -28,7 +28,7 @@ public class MVCFilter implements Filter {
 
         urlToControllerMap = new HashMap<>();
 
-        urlToControllerMap.put("/hello", getBean(HelloWorldController.class));
+       // urlToControllerMap.put("/hello", getBean(HelloWorldController.class));
 
         //urlToControllerMap.put("/customer", getBean(CustomerMenuController.class));
         //urlToControllerMap.put("/customer/customerAuthorization", getBean(CustomerAuthorizationController.class));

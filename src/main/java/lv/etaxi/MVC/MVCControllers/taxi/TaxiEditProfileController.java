@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by Aleks on 01.04.2016.
  */
-@Component
+
 public class TaxiEditProfileController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

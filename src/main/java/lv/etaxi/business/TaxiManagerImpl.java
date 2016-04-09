@@ -10,7 +10,6 @@ import java.sql.SQLException;
 /** Проект etaxi
  * Класс для реализации функций над списком такси
  */
-@Component
 public class TaxiManagerImpl implements TaxiManager {
 
     private TaxiDAO taxiDAO;

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by Genady Zalesky on 06.04.2016
  */
-
+@Component
 public class AdminSignOutController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

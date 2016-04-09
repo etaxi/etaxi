@@ -12,7 +12,7 @@ import java.sql.SQLException;
 /**
  * Created by Aleks on 01.04.2016.
  */
-
+@Component
 public class TaxiCancelOrderController implements MVCController {
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

@@ -13,7 +13,7 @@ import java.util.Properties;
  *  подключение к базе
  *  и первоначальное создание базы данных MySQL
  */
-@Component
+
 public class DBConnection {
     private static final String DB_CONFIG_FILE = "config.properties";
     private final Connection connection;

@@ -1,5 +1,5 @@
-<%@ page import="entity.Customer" %>
-<%@ page import="entity.Order" %>
+<%@ page import="lv.etaxi.entity.Customer" %>
+<%@ page import="lv.etaxi.entity.Order" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>

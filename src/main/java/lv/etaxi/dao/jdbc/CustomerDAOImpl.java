@@ -12,7 +12,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Customer
  * */
-@Component
+
 public class CustomerDAOImpl implements CustomerDAO {
 
     public Customer getById(long id) throws SQLException {

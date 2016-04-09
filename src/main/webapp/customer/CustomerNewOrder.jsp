@@ -1,4 +1,4 @@
-<%@ page import="entity.Customer" %>
+<%@ page import="lv.etaxi.entity.Customer" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>

@@ -13,7 +13,7 @@ import java.util.List;
  * Реализация управления объектами класса Admin
  * Created by Genady Zalesky on 27.03.2016
  */
-@Component
+
 public class AdminDAOImpl implements AdminDAO{
 
 

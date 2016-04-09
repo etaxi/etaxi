@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Created by D.Lazorkin on 02.04.2016.
  */
+
 @Component
 public class CustomerWriteFeedbacksController implements MVCController {
 

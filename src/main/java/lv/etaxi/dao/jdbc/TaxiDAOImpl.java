@@ -12,7 +12,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Taxi
  * */
-@Component
+
 public class TaxiDAOImpl implements TaxiDAO {
 
     public Taxi getById(long id) throws SQLException {

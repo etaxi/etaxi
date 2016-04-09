@@ -1,4 +1,4 @@
-<%@ page import="entity.Order" %>
+<%@ page import="lv.etaxi.entity.Order" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

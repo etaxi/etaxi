@@ -14,7 +14,7 @@ import java.util.List;
  * Created by D.Lazorkin on 25.03.2016.
  * Интерфейс для реализации функций над заказами
  */
-@Component
+
 public class OrderManagerImpl implements OrderManager{
 
     private OrderDAO orderDAO;

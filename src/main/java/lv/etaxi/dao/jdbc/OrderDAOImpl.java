@@ -13,7 +13,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Order
  * */
-@Component
+
 public class OrderDAOImpl implements OrderDAO {
 
     /**

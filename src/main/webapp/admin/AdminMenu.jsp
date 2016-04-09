@@ -1,4 +1,4 @@
-<%@ page import="entity.Admin" %><%--
+<%@ page import="lv.etaxi.entity.Admin" %><%--
   Created by IntelliJ IDEA.
   User: G
   Date: 29.03.2016

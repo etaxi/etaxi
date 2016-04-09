@@ -1,7 +1,8 @@
 package lv.etaxi.MVC;
 
-import lv.etaxi.MVC.MVCControllers.customer.HelloWorldController;
-import lv.etaxi.config.SpringAppConfig;
+import lv.etaxi.MVC.MVCControllers.admin.*;
+import lv.etaxi.MVC.MVCControllers.customer.*;
+import lv.etaxi.MVC.MVCControllers.taxi.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -18,53 +19,47 @@ import java.util.Map;
  */
 public class MVCFilter implements Filter {
 
-    private Map<String, MVCController> urlToControllerMap;
     private ApplicationContext springContext;
+    private Map<String, MVCController> urlToControllerMap;
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
         springContext = new AnnotationConfigApplicationContext(SpringAppConfig.class);
-
         urlToControllerMap = new HashMap<>();
 
-        urlToControllerMap.put("/hello", getBean(HelloWorldController.class));
+        urlToControllerMap.put("/customer", getBean(CustomerMenuController.class));
+        urlToControllerMap.put("/customer/customerAuthorization", getBean(CustomerAuthorizationController.class));
+        urlToControllerMap.put("/customer/customerRegistration", getBean(CustomerRegistrationController.class));
+        urlToControllerMap.put("/customer/customerEditProfile", getBean(CustomerEditProfileController.class));
+        urlToControllerMap.put("/customer/customerCreateNewOrder", getBean(CustomerCreateNewOrderController.class));
+        urlToControllerMap.put("/customer/customerHistoryOfOrders", getBean(CustomerHistoryOfOrdersController.class));
+        urlToControllerMap.put("/customer/customerEditDeleteOrders", getBean(CustomerOrdersEditDeleteController.class));
+        urlToControllerMap.put("/customer/customerDeleteOrder", getBean(CustomerOrderDeleteController.class));
+        urlToControllerMap.put("/customer/customerEditOrder", getBean(CustomerOrderEditController.class));
+        urlToControllerMap.put("/customer/customerWriteFeedbacksToOrders", getBean(CustomerWriteFeedbacksController.class));
+        urlToControllerMap.put("/customer/writeFeedbackToOrder", getBean(CustomerWriteFeedbackController.class));
+        urlToControllerMap.put("/customer/signOut", getBean(CustomerSignOutController.class));
 
-        //urlToControllerMap.put("/customer", getBean(CustomerMenuController.class));
-        //urlToControllerMap.put("/customer/customerAuthorization", getBean(CustomerAuthorizationController.class));
-        //urlToControllerMap.put("/customer/customerRegistration", getBean(CustomerRegistrationController.class));
+        urlToControllerMap.put("/taxi", getBean(TaxiMenuController.class));
+        urlToControllerMap.put("/taxi/registration", getBean(TaxiRegistrationController.class));
+        urlToControllerMap.put("/taxi/authorization", getBean(TaxiAuthorizationController.class));
+        urlToControllerMap.put("/taxi/logoff", getBean(TaxiLogoffController.class));
+        urlToControllerMap.put("/taxi/history", getBean(TaxiHistoryController.class));
+        urlToControllerMap.put("/taxi/openorders", getBean(TaxiOpenOrdersController.class));
+        urlToControllerMap.put("/taxi/takeorder", getBean(TaxiTakeOrderController.class));
+        urlToControllerMap.put("/taxi/completeorder", getBean(TaxiCompleteOrderController.class));
+        urlToControllerMap.put("/taxi/cancelorder", getBean(TaxiCancelOrderController.class));
+        urlToControllerMap.put("/taxi/editprofile", getBean(TaxiEditProfileController.class));
 
-//        urlToControllerMap.put("/customer/customerEditProfile", getBean(CustomerEditProfileController.class));
-//        urlToControllerMap.put("/customer/customerCreateNewOrder", getBean(CustomerCreateNewOrderController.class));
-//        urlToControllerMap.put("/customer/customerHistoryOfOrders", getBean(CustomerHistoryOfOrdersController.class));
-//        urlToControllerMap.put("/customer/customerEditDeleteOrders", getBean(CustomerOrdersEditDeleteController.class));
-//        urlToControllerMap.put("/customer/customerDeleteOrder", getBean(CustomerOrderDeleteController.class));
-//        urlToControllerMap.put("/customer/customerEditOrder", getBean(CustomerOrderEditController.class));
-//        urlToControllerMap.put("/customer/customerWriteFeedbacksToOrders", getBean(CustomerWriteFeedbacksController.class));
-//        urlToControllerMap.put("/customer/writeFeedbackToOrder", getBean(CustomerWriteFeedbackController.class));
-//        urlToControllerMap.put("/customer/signOut", getBean(CustomerSignOutController.class));
-
-
-//        urlToControllerMap.put("/taxi", getBean(TaxiMenuController.class));
-//        urlToControllerMap.put("/taxi/registration", getBean(TaxiRegistrationController.class));
-//        urlToControllerMap.put("/taxi/authorization", getBean(TaxiAuthorizationController.class));
-//        urlToControllerMap.put("/taxi/logoff", getBean(TaxiLogoffController.class));
-//        urlToControllerMap.put("/taxi/history", getBean(TaxiHistoryController.class));
-//        urlToControllerMap.put("/taxi/openorders", getBean(TaxiOpenOrdersController.class));
-//        urlToControllerMap.put("/taxi/takeorder", getBean(TaxiTakeOrderController.class));
-//        urlToControllerMap.put("/taxi/completeorder", getBean(TaxiCompleteOrderController.class));
-//        urlToControllerMap.put("/taxi/cancelorder", getBean(TaxiCancelOrderController.class));
-//        urlToControllerMap.put("/taxi/editprofile", getBean(TaxiEditProfileController.class));
-
-
-//        urlToControllerMap.put("/admin", getBean(AdminMenuController.class));
-//        urlToControllerMap.put("/admin/adminAuthorization", getBean(AdminAuthorizationController.class));
-//        urlToControllerMap.put("/admin/adminRegistration", getBean(AdminRegistrationController.class));
-//        urlToControllerMap.put("/admin/adminEditProfile", getBean(AdminEditProfileController.class));
-//        urlToControllerMap.put("/admin/signOut", getBean(AdminSignOutController.class));
+        urlToControllerMap.put("/admin", getBean(AdminMenuController.class));
+        urlToControllerMap.put("/admin/adminAuthorization", getBean(AdminAuthorizationController.class));
+        urlToControllerMap.put("/admin/adminRegistration", getBean(AdminRegistrationController.class));
+        urlToControllerMap.put("/admin/adminEditProfile", getBean(AdminEditProfileController.class));
+        urlToControllerMap.put("/admin/signOut", getBean(AdminSignOutController.class));
 
         /*
-        urlToControllerMap = new HashMap<>();
         urlToControllerMap.put("/customer", new CustomerMenuController());
         urlToControllerMap.put("/customer/customerAuthorization", new CustomerAuthorizationController());
         urlToControllerMap.put("/customer/customerRegistration", new CustomerRegistrationController());
@@ -95,6 +90,11 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/admin/adminEditProfile", new AdminEditProfileController());
         urlToControllerMap.put("/admin/signOut", new AdminSignOutController());
         */
+    }
+
+    private MVCController getBean(Class clazz) {
+
+        return (MVCController) springContext.getBean(clazz);
     }
 
     @Override
@@ -140,10 +140,6 @@ public class MVCFilter implements Filter {
 
     @Override
     public void destroy() {
-    }
-
-    private MVCController getBean(Class clazz) {
-        return (MVCController) springContext.getBean(clazz);
     }
 
 }

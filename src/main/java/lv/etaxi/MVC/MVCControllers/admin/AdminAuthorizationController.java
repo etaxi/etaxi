@@ -4,6 +4,7 @@ import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.AdminManagerImpl;
 import lv.etaxi.entity.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,15 @@ import java.sql.SQLException;
 
 @Controller
 public class AdminAuthorizationController implements MVCController {
+
+    @Autowired
+    AdminManagerImpl adminManagerImpl;
+
+    public AdminAuthorizationController() {
+
+        this.adminManagerImpl = new AdminManagerImpl();
+    }
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
 
@@ -24,7 +34,7 @@ public class AdminAuthorizationController implements MVCController {
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) throws SQLException {
 
-        Admin currentAdmin = new AdminManagerImpl().CheckAuthorization(
+        Admin currentAdmin = adminManagerImpl.CheckAuthorization(
                 request.getParameter("login"),
                 request.getParameter("password"));
 

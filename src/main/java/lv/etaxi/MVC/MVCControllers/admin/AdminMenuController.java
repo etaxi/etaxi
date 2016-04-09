@@ -12,6 +12,7 @@ import java.sql.SQLException;
  */
 @Controller
 public class AdminMenuController implements MVCController {
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
 

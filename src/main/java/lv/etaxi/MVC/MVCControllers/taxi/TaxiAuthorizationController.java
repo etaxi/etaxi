@@ -4,6 +4,7 @@ import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.TaxiManagerImpl;
 import lv.etaxi.entity.Taxi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,14 @@ import java.sql.SQLException;
  */
 @Controller
 public class TaxiAuthorizationController implements MVCController {
+
+    @Autowired
+    TaxiManagerImpl taxiManagerImpl;
+
+    public TaxiAuthorizationController() {
+
+        this.taxiManagerImpl = new TaxiManagerImpl();
+    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -33,7 +42,7 @@ public class TaxiAuthorizationController implements MVCController {
 
         Taxi taxi = null;
         try {
-            taxi = new TaxiManagerImpl().findTaxiByLogin(login);
+            taxi = taxiManagerImpl.findTaxiByLogin(login);
 
         } catch (SQLException e) {
             e.printStackTrace();

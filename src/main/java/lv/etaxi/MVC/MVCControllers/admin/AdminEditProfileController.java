@@ -4,6 +4,7 @@ import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.AdminManagerImpl;
 import lv.etaxi.entity.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AdminEditProfileController implements MVCController {
+
+    @Autowired
+    AdminManagerImpl adminManagerImpl;
+
+    public AdminEditProfileController() {
+
+        this.adminManagerImpl = new AdminManagerImpl();
+    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -38,7 +47,7 @@ public class AdminEditProfileController implements MVCController {
         currentAdmin.setLogin(request.getParameter("login"));
         currentAdmin.setPassword(request.getParameter("password"));
 
-        String errorMessage = new AdminManagerImpl().updateAdmin(currentAdmin);
+        String errorMessage = adminManagerImpl.updateAdmin(currentAdmin);
 
         if (errorMessage.isEmpty()) {
             errorMessage = "The data change was made (" + currentAdmin.getName() + ")";

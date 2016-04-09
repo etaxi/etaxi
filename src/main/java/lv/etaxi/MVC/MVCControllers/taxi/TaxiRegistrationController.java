@@ -2,9 +2,9 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.TaxiManager;
 import lv.etaxi.business.TaxiManagerImpl;
 import lv.etaxi.entity.Taxi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +15,15 @@ import java.sql.SQLException;
  */
 @Controller
 public class TaxiRegistrationController implements MVCController {
+
+    @Autowired
+    TaxiManagerImpl taxiManagerImpl;
+
+    public TaxiRegistrationController() {
+
+        this.taxiManagerImpl = new TaxiManagerImpl();
+    }
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
         return new MVCModel("/taxi/TaxiRegistration.jsp", "");
@@ -22,7 +31,6 @@ public class TaxiRegistrationController implements MVCController {
 
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) {
-       // Map<String, Object> pageVariables = new HashMap<>();
 
         String name     = request.getParameter("name");
         String phone    = request.getParameter("phone");
@@ -40,11 +48,10 @@ public class TaxiRegistrationController implements MVCController {
 
         if (message.isEmpty()) {
 
-            TaxiManager taxiManager = new TaxiManagerImpl();
             Taxi newTaxi = new Taxi((long)0, name, car, phone, login, password);
             try {
                 message = " Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";
-                taxiManager.createNewTaxi(newTaxi);
+                taxiManagerImpl.createNewTaxi(newTaxi);
             } catch (SQLException e) {
                 e.printStackTrace();
                 message = "Registration failed! Please try again!";

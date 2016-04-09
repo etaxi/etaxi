@@ -4,6 +4,7 @@ import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.AdminManagerImpl;
 import lv.etaxi.entity.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,15 @@ import java.sql.SQLException;
  */
 @Controller
 public class AdminRegistrationController implements MVCController {
+
+    @Autowired
+    AdminManagerImpl adminManagerImpl;
+
+    public AdminRegistrationController() {
+
+        this.adminManagerImpl = new AdminManagerImpl();
+    }
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
 
@@ -29,7 +39,7 @@ public class AdminRegistrationController implements MVCController {
                 request.getParameter("login"),
                 request.getParameter("password"));
 
-        String errorMessage = new AdminManagerImpl().createNewAdmin(newAdmin);
+        String errorMessage = adminManagerImpl.createNewAdmin(newAdmin);
 
         if (errorMessage.isEmpty()) {
             request.getSession().setAttribute("admin", newAdmin);

@@ -5,6 +5,7 @@ import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManagerImpl;
 import lv.etaxi.entity.Order;
 import lv.etaxi.entity.Taxi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,15 @@ import java.sql.SQLException;
  */
 @Controller
 public class TaxiTakeOrderController implements MVCController {
+
+    @Autowired
+    OrderManagerImpl orderManagerImpl;
+
+    public TaxiTakeOrderController() {
+
+        this.orderManagerImpl = new OrderManagerImpl();
+    }
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
         return null;
@@ -28,11 +38,11 @@ public class TaxiTakeOrderController implements MVCController {
 
 
             try {
-                Order order = new OrderManagerImpl().findOrderById(Long.parseLong(orderId));
+                Order order = orderManagerImpl.findOrderById(Long.parseLong(orderId));
                 Taxi taxi = (Taxi) request.getSession().getAttribute("taxi");
                 order.setTaxiId(taxi.getTaxiId());
                 order.setOrderStatus(Order.OrderStatus.TAKEN);
-                new OrderManagerImpl().updateOrder(order);
+                orderManagerImpl.updateOrder(order);
                 request.getSession().setAttribute("order", order);
 
                 return new MVCModel("/taxi/TaxiTakeOrder.jsp", "");

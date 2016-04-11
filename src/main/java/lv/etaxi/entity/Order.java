@@ -1,39 +1,74 @@
 package lv.etaxi.entity;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /** Проект etaxi
  * Класс для хранения данных заказа
  */
-public class Order {
 
+@Entity
+@Table(name = "orders")
+public class Order implements Serializable {
     public enum OrderStatus {WAITING, DRIVING, DELIVERED, TAKEN}
 
     // Идентификатор заказа
+    @Id
+    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
+
     // Клиент
+    @Column(name = "customerId", unique = false, updatable = true)
     private Long customerId;
+
     // Дата Время "2015-02-18T00:00:00" (ввода или последнего изменения заказа)
+    @Column(name = "datetime", unique = false, updatable = true)
     private Timestamp dateTime;
+
     // Дата Время "2015-02-18T00:00:00" (на которую такси заказано)
+    @Column(name = "ordereddatetime", unique = false, updatable = true)
     private Timestamp orderedDateTime;
+
     // статус (ждёт, едет, выполнен)
+    @Column(name = "orderStatus", unique = false, updatable = true)
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
     // откуда строка
+    @Column(name = "fromAdress", unique = false, updatable = true)
     private String fromAdress;
+
     // куда стока
+    @Column(name = "toAdress", unique = false, updatable = true)
     private String toAdress;
+
     // Такси
+    @Column(name = "taxiId", unique = false, updatable = true)
     private Long taxiId;
+
     // растояние
+    @Column(name = "distance", unique = false, updatable = true)
     private double distance;
+
     // стоимость
+    @Column(name = "price", unique = false, updatable = true)
     private double price;
+
     // rating  [1..10]
+    @Column(name = "rate", unique = false, updatable = true)
     private int rate;
+
     // отзыв
+    @Column(name = "feedback", unique = false, updatable = true)
     private String feedback;
 
+    //Important to Hibernate!
+    @SuppressWarnings("UnusedDeclaration")
+    public Order() {}
+
+    @SuppressWarnings("UnusedDeclaration")
     public Order(Long orderId, Long customerId, Timestamp dateTime, Timestamp orderedDateTime, OrderStatus orderStatus,
                  String fromAdress, String toAdress, Long taxiId, double distance,
                  double price, int rate, String feedback) {

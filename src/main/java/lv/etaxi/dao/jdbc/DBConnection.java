@@ -1,6 +1,10 @@
 package lv.etaxi.dao.jdbc;
 
-import org.springframework.stereotype.Component;
+import lv.etaxi.entity.Customer;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,7 +25,7 @@ public class DBConnection {
 
     public DBConnection() {
         this.connection = getMysqlConnection();
-        this.databaseName = getDatabaseNameFromFile();
+        this.databaseName = getDatabasePropertyFromFile("db.database");
     }
 
     public Connection getConnection() {
@@ -106,18 +110,48 @@ public class DBConnection {
         }
     }
 
-    private String getDatabaseNameFromFile(){
+    public Configuration getMySqlConfigurationForHibernate() {
+
+        Configuration configuration = new Configuration();
+        configuration.addAnnotatedClass(Customer.class);
+
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://" +
+                getDatabasePropertyFromFile("db.host") + ":"+
+                getDatabasePropertyFromFile("db.port") + "/" +
+                getDatabasePropertyFromFile("db.database"));
+        configuration.setProperty("hibernate.connection.username", getDatabasePropertyFromFile("db.login"));
+        configuration.setProperty("hibernate.connection.password", getDatabasePropertyFromFile("db.password"));
+        configuration.setProperty("hibernate.show_sql", "true");
+        //configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+
+        configuration.addAnnotatedClass(lv.etaxi.entity.Customer.class);
+        configuration.addAnnotatedClass(lv.etaxi.entity.Order.class);
+
+        return configuration;
+    }
+
+    public SessionFactory createSessionFactory(Configuration configuration) {
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+        builder.applySettings(configuration.getProperties());
+        ServiceRegistry serviceRegistry = builder.build();
+        return configuration.buildSessionFactory(serviceRegistry);
+    }
+
+    public static String getDatabasePropertyFromFile(String propertyName){
 
         Properties property = new Properties();
 
         try {
             property.load(DBConnection.class.getClassLoader().getResourceAsStream(DB_CONFIG_FILE));
-            return property.getProperty("db.database");
+            return property.getProperty(propertyName);
 
         } catch (IOException e) {
             System.err.println("Error: properties file not found!");
             return null;
         }
     }
+
 
 }

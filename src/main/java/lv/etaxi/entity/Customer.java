@@ -1,15 +1,34 @@
 package lv.etaxi.entity;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /** Проект etaxi
  * Класс для хранения данных клиента
  */
-public class Customer {
 
+@Entity
+@Table(name = "customers")
+public class Customer implements Serializable {
+    @Id
+    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;    // Идентификатор клиента
+
+    @Column(name = "name", unique = false, updatable = true)
     private String name;        // Имя, Фамилия
+
+    @Column(name = "phone", unique = true, updatable = true)
     private String phone;       // Телефон (он же логин)
+
+    @Column(name = "password", unique = false, updatable = true)
     private String password;    // пароль
 
+    //Important to Hibernate!
+    @SuppressWarnings("UnusedDeclaration")
+    public Customer() {}
+
+    @SuppressWarnings("UnusedDeclaration")
     public Customer(Long customerId, String name, String phone, String password) {
         this.customerId = customerId;
         this.name = name;
@@ -48,7 +67,6 @@ public class Customer {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     @Override
     public String toString() {

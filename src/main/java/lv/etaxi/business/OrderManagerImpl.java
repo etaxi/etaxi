@@ -1,15 +1,16 @@
 package lv.etaxi.business;
 
 import lv.etaxi.dao.OrderDAO;
-import lv.etaxi.dao.jdbc.OrderDAOImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /** Проект etaxi
@@ -18,13 +19,16 @@ import java.util.List;
  */
 @Service
 public class OrderManagerImpl implements OrderManager{
+
+    @Qualifier("orderHibernateDAOImpl")
     @Autowired
     private OrderDAO orderDAO;
 
-    public OrderManagerImpl() {
+//    public OrderManagerImpl() {
+//        this.orderDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
+//                new OrderHibernateDAOImpl() : new OrderDAOImpl();
+//    }
 
-        this.orderDAO = new OrderDAOImpl();
-    }
 
     @Transactional
     public void createNewOrder(Order order) throws SQLException {
@@ -82,7 +86,7 @@ public class OrderManagerImpl implements OrderManager{
     public Order createNewOrderInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime) {
 
         Order newOrder = new Order((long) 0, customer.getCustomerId(),
-                new Timestamp(new java.util.Date().getTime()),
+                new Timestamp(new Date().getTime()),
                 Timestamp.valueOf(orderedDateTime),
                 Order.OrderStatus.WAITING,
                 fromAddress, toAddress, (long) 0, 0, 0, 0, "");

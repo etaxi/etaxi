@@ -1,6 +1,7 @@
 package lv.etaxi.dao.jdbc;
 
-import lv.etaxi.entity.Customer;
+import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
+import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -36,7 +37,7 @@ public class DBConnection {
         return databaseName;
     }
 
-    public void createDataBaseWithTables() throws SQLException {
+    public void createDataBaseWithJDBC() throws SQLException {
 
         Executor executor = new Executor(connection, "");
         executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
@@ -48,6 +49,21 @@ public class DBConnection {
         new TaxiDAOImpl().createTable();
 
         new AdminDAOImpl().createTable();
+
+    }
+
+    public void createDataBaseWithHibernate() throws SQLException {
+
+        Executor executor = new Executor(connection, "");
+        executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
+
+        new CustomerHibernateDAOImpl().createTable();
+
+        new OrderHibernateDAOImpl().createTable();
+
+        //new TaxiHibernateDAOImpl().createTable();
+
+        //new AdminHibernateDAOImpl().createTable();
 
     }
 
@@ -113,7 +129,8 @@ public class DBConnection {
     public Configuration getMySqlConfigurationForHibernate() {
 
         Configuration configuration = new Configuration();
-        configuration.addAnnotatedClass(Customer.class);
+        configuration.addAnnotatedClass(lv.etaxi.entity.Customer.class);
+        configuration.addAnnotatedClass(lv.etaxi.entity.Order.class);
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
@@ -125,9 +142,6 @@ public class DBConnection {
         configuration.setProperty("hibernate.connection.password", getDatabasePropertyFromFile("db.password"));
         configuration.setProperty("hibernate.show_sql", "true");
         //configuration.setProperty("hibernate.hbm2ddl.auto", "create");
-
-        configuration.addAnnotatedClass(lv.etaxi.entity.Customer.class);
-        configuration.addAnnotatedClass(lv.etaxi.entity.Order.class);
 
         return configuration;
     }

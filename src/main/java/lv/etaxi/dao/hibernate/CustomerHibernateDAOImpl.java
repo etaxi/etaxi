@@ -3,10 +3,11 @@ package lv.etaxi.dao.hibernate;
 import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.jdbc.DBConnection;
 import lv.etaxi.entity.Customer;
+import lv.etaxi.entity.Order;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Repository;
+import org.springframework.context.annotation.Lazy;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.List;
  * Реализация управления объектами класса Customer
  * */
 @SuppressWarnings("ALL")
-@Repository
+//@Repository
+@Lazy
 public class CustomerHibernateDAOImpl implements CustomerDAO {
 
     private final SessionFactory sessionFactory;
@@ -26,20 +28,20 @@ public class CustomerHibernateDAOImpl implements CustomerDAO {
         this.sessionFactory = dbConnection.createSessionFactory(configuration);
     }
 
-    public Customer getById(long id) throws HibernateException {
+    public Customer getById(long id) throws SQLException {
 
         Session session = sessionFactory.openSession();
         return (Customer) session.get(Customer.class, id);
     }
 
-    public Customer getByLogin(String phone) throws HibernateException {
+    public Customer getByLogin(String phone) throws SQLException {
 
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Customer.class);
         return (Customer) criteria.add(Restrictions.eq("phone", phone)).uniqueResult();
     }
 
-    public long update(Customer customer) throws HibernateException {
+    public long update(Customer customer) throws SQLException {
 
         long id = customer.getCustomerId();
         Session session = sessionFactory.openSession();
@@ -55,21 +57,21 @@ public class CustomerHibernateDAOImpl implements CustomerDAO {
         return id;
     }
 
-    public void delete(Customer customer) throws HibernateException {
+    public void delete(Customer customer) throws SQLException {
 
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("FROM Order o where o.customerId = " + customer.getCustomerId());
+        List<Order> orderList = query.list();
+        for (Order order : orderList) {
+            session.delete(order);
+        }
         session.delete(customer);
         transaction.commit();
         session.close();
-
-            //connection.setAutoCommit(false);
-//            executor.executeUpdate("DELETE FROM customers WHERE Id=" + customer.getCustomerId());
-//            executor.executeUpdate("DELETE FROM orders WHERE orders.customerId=" + customer.getCustomerId());
-            //connection.commit();
     }
 
-    public List<Customer> getAll() throws HibernateException {
+    public List<Customer> getAll() throws SQLException {
 
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("FROM Customer");

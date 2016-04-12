@@ -1,3 +1,5 @@
+package databaseTests;
+
 import org.junit.Test;
 import lv.etaxi.dao.jdbc.DBConnection;
 
@@ -6,13 +8,13 @@ import java.sql.SQLException;
 /** Проект etaxi
  * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
  * */
-public class JUnitTestsForDatabaseCreation {
+public class TestForDatabaseCreationJDBC {
 
     @Test
-    public void testСreateDataBaseWithTables() throws SQLException {
+    public void testСreateDataBase() throws SQLException {
 
         DBConnection dbConnection = new DBConnection();
-        dbConnection.createDataBaseWithTables();
+        dbConnection.createDataBaseWithJDBC();
 
     }
 }

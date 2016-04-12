@@ -1,9 +1,11 @@
 package lv.etaxi.business;
 
 import lv.etaxi.dao.CustomerDAO;
+import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
+import lv.etaxi.dao.jdbc.CustomerDAOImpl;
+import lv.etaxi.dao.jdbc.DBConnection;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +20,14 @@ import java.sql.SQLException;
 @Service
 public class CustomerManagerImpl implements CustomerManager {
 
-    @Qualifier("customerHibernateDAOImpl")
+    //@Qualifier("customerHibernateDAOImpl")
     @Autowired
     private CustomerDAO customerDAO;
 
-//    public CustomerManagerImpl() {
-//        this.customerDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-//                new CustomerHibernateDAOImpl() : new CustomerDAOImpl();
-//    }
+    public CustomerManagerImpl() {
+        this.customerDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
+                            new CustomerHibernateDAOImpl() : new CustomerDAOImpl();
+    }
 
     public Customer findCustomerByLogin(String login) throws SQLException {
 

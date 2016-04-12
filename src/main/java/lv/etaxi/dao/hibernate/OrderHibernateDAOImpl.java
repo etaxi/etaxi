@@ -3,9 +3,12 @@ package lv.etaxi.dao.hibernate;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.dao.jdbc.DBConnection;
 import lv.etaxi.entity.Order;
-import org.hibernate.*;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.springframework.stereotype.Repository;
+import org.springframework.context.annotation.Lazy;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -15,7 +18,8 @@ import java.util.List;
  * Реализация управления объектами класса Order
  * */
 @SuppressWarnings("ALL")
-@Repository
+//@Repository
+@Lazy
 public class OrderHibernateDAOImpl implements OrderDAO {
 
     private final SessionFactory sessionFactory;
@@ -29,7 +33,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
     /**
      * Возвращает объект соответствующий записи с первичным ключом key или null
      */
-    public Order getById(long id) throws HibernateException {
+    public Order getById(long id) throws SQLException {
 
         Session session = sessionFactory.openSession();
         return (Order) session.get(Order.class, id);
@@ -38,7 +42,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
     /**
      * Сохраняет состояние объекта Order в базе данных (если ID нет, создаем новую запись)
      */
-    public long update(Order order) throws HibernateException {
+    public long update(Order order) throws SQLException {
 
         long id = order.getOrderId();
         Session session = sessionFactory.openSession();
@@ -57,7 +61,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
     /**
      * Удаляет запись об объекте из базы данных
      */
-    public void delete(Order order) throws HibernateException {
+    public void delete(Order order) throws SQLException {
 
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -69,20 +73,20 @@ public class OrderHibernateDAOImpl implements OrderDAO {
     /**
      * Возвращает список объектов соответствующих всем записям в базе данных
      */
-    public List<Order> getAll() throws HibernateException {
+    public List<Order> getAll() throws SQLException {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("FROM Order order by orderedDateTime ASC");
         return  query.list();
     }
 
-    public List<Order> getOpenOrdersAll() throws HibernateException {
+    public List<Order> getOpenOrdersAll() throws SQLException {
 
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("FROM Order o where o.orderStatus = '"+ Order.OrderStatus.WAITING +"' order by orderedDateTime ASC");
         return  query.list();
     }
 
-    public List<Order> getOpenOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws HibernateException {
+    public List<Order> getOpenOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
 
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("FROM Order o where o.orderStatus = '"+ Order.OrderStatus.WAITING +"'"+
@@ -92,7 +96,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
         return  query.list();
     }
 
-    public List<Order> getCompletedOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws HibernateException {
+    public List<Order> getCompletedOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
 
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("FROM Order o where o.orderStatus = '"+ Order.OrderStatus.WAITING + "'" +   //DELIVERED
@@ -102,7 +106,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
         return  query.list();
     }
 
-    public List<Order> getTaxiOrders(long id) throws HibernateException {
+    public List<Order> getTaxiOrders(long id) throws SQLException {
 
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("FROM Order o where o.taxiId = "+ id + " order by orderedDateTime ASC");
@@ -110,7 +114,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
     }
 
 
-    public List<Order> getCustomerOrders(long id, Timestamp begin, Timestamp end) throws HibernateException {
+    public List<Order> getCustomerOrders(long id, Timestamp begin, Timestamp end) throws SQLException {
 
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("FROM Order o where o.customerId = " + id  +

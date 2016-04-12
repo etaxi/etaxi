@@ -1,10 +1,12 @@
 package lv.etaxi.business;
 
 import lv.etaxi.dao.OrderDAO;
+import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
+import lv.etaxi.dao.jdbc.DBConnection;
+import lv.etaxi.dao.jdbc.OrderDAOImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +22,14 @@ import java.util.List;
 @Service
 public class OrderManagerImpl implements OrderManager{
 
-    @Qualifier("orderHibernateDAOImpl")
+    //@Qualifier("orderHibernateDAOImpl")
     @Autowired
     private OrderDAO orderDAO;
 
-//    public OrderManagerImpl() {
-//        this.orderDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-//                new OrderHibernateDAOImpl() : new OrderDAOImpl();
-//    }
+    public OrderManagerImpl() {
+        this.orderDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
+                         new OrderHibernateDAOImpl() : new OrderDAOImpl();
+    }
 
 
     @Transactional

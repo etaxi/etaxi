@@ -2,6 +2,7 @@ package lv.etaxi.dao.jdbc;
 
 import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
 import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
+import lv.etaxi.dao.hibernate.TaxiHibernateDAOImpl;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -61,7 +62,7 @@ public class DBConnection {
 
         new OrderHibernateDAOImpl().createTable();
 
-        //new TaxiHibernateDAOImpl().createTable();
+        new TaxiHibernateDAOImpl().createTable();
 
         //new AdminHibernateDAOImpl().createTable();
 
@@ -131,6 +132,7 @@ public class DBConnection {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(lv.etaxi.entity.Customer.class);
         configuration.addAnnotatedClass(lv.etaxi.entity.Order.class);
+        configuration.addAnnotatedClass(lv.etaxi.entity.Taxi.class);
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");

@@ -22,18 +22,6 @@ public class TestsForTaxiJDBC {
         return new TaxiDAOImpl();
     }
 
-    @Test
-    public void testNewTaxiRecord() throws SQLException {
-
-        TaxiBuilder taxiBuilder = TaxiBuilder.aTaxi()
-                .withName("Jenson Alexander Lyons Button")
-                .withLogin("Lyons")
-                .withPassword("lybutton");
-
-        Taxi taxi = taxiBuilder.build();
-        long newTaxiID = aTaxiDAO().update(taxi);
-    }
-
 
     @Test
     public void testNewTaxisRecord() throws SQLException {
@@ -110,18 +98,7 @@ public class TestsForTaxiJDBC {
 
     }
 
-    @Test
-    public void testGetListOfAllTaxis() throws SQLException {
 
-        TaxiDAO taxiDAO = aTaxiDAO();
-
-        Taxi taxi = TaxiBuilder.aTaxi().build();
-        taxiDAO.update(taxi);
-
-        List<Taxi> listOfTaxis = taxiDAO.getAll();
-        assertTrue(listOfTaxis.size()>0);
-
-    }
 
 
 }

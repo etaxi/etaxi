@@ -1,20 +1,60 @@
 package lv.etaxi.entity;
 
-/** Проект etaxi
- * Класс для хранения данных такси
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "taxis")
 public class Taxi {
 
-    private Long   taxiId;     // Идентификатор такси
-    private String name;     // Имя, Фамилия
-    private String phone;    // Телефон
-    private byte   taxiStatus; // статус (не работает, свободен, занят)
-    private String location; // местоположение десятичные градусы (вида 56.9613438,24.1900393)
-    private String car;      // машины, рег.номер, бортовой номер
-    private String login;    // логин
-    private String password; // пароль
-    private double rating;   // рейтинг по среднему значению отзывов
+    // Идентификатор такси
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(name = "Id", columnDefinition = "int(11)")
+    @Column(name = "Id")
+    private Long taxiId;
 
+    // Имя, Фамилия
+    //@Column(name = "name", columnDefinition = "char(100)" )
+    @Column(name = "name")
+    private String name;
+
+    // Телефон
+    //@Column(name = "phone", columnDefinition = "char(50)")
+    @Column(name = "phone")
+    private String phone;
+
+    // статус (не работает, свободен, занят)
+    //@Column(name = "taxiStatus", columnDefinition = "int(1)")
+    @Column(name = "taxiStatus")
+    private byte   taxiStatus;
+
+    // местоположение десятичные градусы (вида 56.9613438,24.1900393)
+    //@Column(name = "location", columnDefinition = "char(50)")
+    @Column(name = "location")
+    private String location;
+
+    // машины, рег.номер, бортовой номер
+    //@Column(name = "car", columnDefinition = "char(100)")
+    @Column(name = "car")
+    private String car;
+
+    // логин
+    //@Column(name = "login", columnDefinition = "char(50)" )
+    @Column(name = "login")
+    private String login;
+
+    // пароль
+    //@Column(name = "password", columnDefinition = "char(50)" )
+    @Column(name = "password")
+    private String password;
+
+    // рейтинг по среднему значению отзывов
+    //@Column(name = "rating", columnDefinition = "float(8,2)")
+    @Column(name = "rating")
+    private double rating;
+
+    //Important to Hibernate!
+    @SuppressWarnings("UnusedDeclaration")
     public Taxi(Long taxiId, String name, String car, String phone, String login, String password) {
         this.taxiId = taxiId;
         this.name = name;

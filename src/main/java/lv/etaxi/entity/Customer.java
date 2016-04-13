@@ -28,7 +28,6 @@ public class Customer implements Serializable {
     @SuppressWarnings("UnusedDeclaration")
     public Customer() {}
 
-    @SuppressWarnings("UnusedDeclaration")
     public Customer(Long customerId, String name, String phone, String password) {
         this.customerId = customerId;
         this.name = name;

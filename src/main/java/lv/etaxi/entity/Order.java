@@ -68,7 +68,6 @@ public class Order implements Serializable {
     @SuppressWarnings("UnusedDeclaration")
     public Order() {}
 
-    @SuppressWarnings("UnusedDeclaration")
     public Order(Long orderId, Long customerId, Timestamp dateTime, Timestamp orderedDateTime, OrderStatus orderStatus,
                  String fromAdress, String toAdress, Long taxiId, double distance,
                  double price, int rate, String feedback) {

@@ -57,6 +57,5 @@ public class TaxiManagerImpl implements TaxiManager {
 
     }
 
-
 }
 

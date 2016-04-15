@@ -1,5 +1,6 @@
-package lv.etaxi.business;
+package lv.etaxi.business.managers;
 
+import lv.etaxi.business.OrderManager;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
 import lv.etaxi.dao.jdbc.DBConnection;
@@ -20,7 +21,7 @@ import java.util.List;
  * Интерфейс для реализации функций над заказами
  */
 @Service
-public class OrderManagerImpl implements OrderManager{
+public class OrderManagerImpl implements OrderManager {
 
     //@Qualifier("orderHibernateDAOImpl")
     @Autowired

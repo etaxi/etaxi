@@ -1,7 +1,7 @@
 package lv.etaxi.servlets.admin;
 
 import lv.etaxi.business.AdminManager;
-import lv.etaxi.business.AdminManagerImpl;
+import lv.etaxi.business.managers.AdminManagerImpl;
 import lv.etaxi.entity.Admin;
 
 import javax.servlet.ServletException;

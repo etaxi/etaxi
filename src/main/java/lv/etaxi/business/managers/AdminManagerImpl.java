@@ -1,5 +1,6 @@
-package lv.etaxi.business;
+package lv.etaxi.business.managers;
 
+import lv.etaxi.business.AdminManager;
 import lv.etaxi.dao.AdminDAO;
 import lv.etaxi.dao.jdbc.AdminDAOImpl;
 import lv.etaxi.entity.Admin;

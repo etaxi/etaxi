@@ -1,7 +1,7 @@
 package lv.etaxi.servlets.taxi;
 
 import lv.etaxi.business.TaxiManager;
-import lv.etaxi.business.TaxiManagerImpl;
+import lv.etaxi.business.managers.TaxiManagerImpl;
 import lv.etaxi.entity.Taxi;
 
 import javax.servlet.ServletException;

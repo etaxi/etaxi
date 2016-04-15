@@ -2,7 +2,7 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.TaxiManagerImpl;
+import lv.etaxi.business.managers.TaxiManagerImpl;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

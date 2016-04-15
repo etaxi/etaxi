@@ -1,4 +1,4 @@
-package lv.etaxi.business;
+package lv.etaxi.business.security;
 
 /**
  * Created by Aleks on 03.03.2016.

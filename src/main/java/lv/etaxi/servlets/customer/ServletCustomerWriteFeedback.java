@@ -1,8 +1,8 @@
 package lv.etaxi.servlets.customer;
 
-import lv.etaxi.business.CustomerManagerImpl;
+import lv.etaxi.business.managers.CustomerManagerImpl;
 import lv.etaxi.business.OrderManager;
-import lv.etaxi.business.OrderManagerImpl;
+import lv.etaxi.business.managers.OrderManagerImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 

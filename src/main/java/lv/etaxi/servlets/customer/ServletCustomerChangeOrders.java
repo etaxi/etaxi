@@ -1,7 +1,7 @@
 package lv.etaxi.servlets.customer;
 
-import lv.etaxi.business.OrderManagerImpl;
-import lv.etaxi.business.ServletHelper;
+import lv.etaxi.business.managers.OrderManagerImpl;
+import lv.etaxi.servlets.ServletHelper;
 import lv.etaxi.entity.Order;
 
 import javax.servlet.ServletException;

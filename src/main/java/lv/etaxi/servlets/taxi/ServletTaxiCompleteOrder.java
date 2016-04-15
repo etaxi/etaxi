@@ -1,6 +1,6 @@
 package lv.etaxi.servlets.taxi;
 
-import lv.etaxi.business.OrderManagerImpl;
+import lv.etaxi.business.managers.OrderManagerImpl;
 import lv.etaxi.entity.Order;
 
 import javax.servlet.ServletException;

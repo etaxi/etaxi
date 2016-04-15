@@ -1,5 +1,6 @@
-package lv.etaxi.business;
+package lv.etaxi.business.managers;
 
+import lv.etaxi.business.CustomerManager;
 import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
 import lv.etaxi.dao.jdbc.CustomerDAOImpl;

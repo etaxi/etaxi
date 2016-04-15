@@ -1,4 +1,4 @@
-package lv.etaxi.business;
+package lv.etaxi.servlets;
 
 import lv.etaxi.entity.Order;
 import java.util.List;

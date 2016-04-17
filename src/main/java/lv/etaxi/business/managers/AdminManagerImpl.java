@@ -2,7 +2,9 @@ package lv.etaxi.business.managers;
 
 import lv.etaxi.business.AdminManager;
 import lv.etaxi.dao.AdminDAO;
+import lv.etaxi.dao.hibernate.AdminHibernateDAOImpl;
 import lv.etaxi.dao.jdbc.AdminDAOImpl;
+import lv.etaxi.dao.jdbc.DBConnection;
 import lv.etaxi.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,14 @@ import java.sql.SQLException;
  */
 @Service
 public class AdminManagerImpl implements AdminManager {
+
     @Autowired
     private AdminDAO adminDAO;
 
     public AdminManagerImpl() {
 
-        this.adminDAO = new AdminDAOImpl();
+        this.adminDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
+                new AdminHibernateDAOImpl() : new AdminDAOImpl();
     }
 
     public Admin findAdminByLogin(String login) throws SQLException {

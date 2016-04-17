@@ -1,8 +1,8 @@
 package lv.etaxi.dao.hibernate;
 
-import lv.etaxi.dao.CustomerDAO;
+import lv.etaxi.dao.AdminDAO;
 import lv.etaxi.dao.jdbc.DBConnection;
-import lv.etaxi.entity.Customer;
+import lv.etaxi.entity.Admin;
 import lv.etaxi.entity.Order;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
@@ -12,85 +12,88 @@ import org.springframework.context.annotation.Lazy;
 import java.sql.SQLException;
 import java.util.List;
 
-/** Проект etaxi
- * Реализация управления объектами класса Customer
- * */
+/**
+ * Created by Genady Zalesky on 17.04.2016
+ */
+
 @SuppressWarnings("ALL")
 //@Repository
 @Lazy
-public class CustomerHibernateDAOImpl implements CustomerDAO {
+public class AdminHibernateDAOImpl implements AdminDAO {
 
     private final SessionFactory sessionFactory;
 
-    public CustomerHibernateDAOImpl() {
+    public AdminHibernateDAOImpl() {
         DBConnection dbConnection = new DBConnection();
         Configuration configuration = dbConnection.getMySqlConfigurationForHibernate();
         this.sessionFactory = dbConnection.createSessionFactory(configuration);
     }
 
-    public Customer getById(long id) throws SQLException {
+    public Admin getById(long id) throws SQLException {
 
         Session session = sessionFactory.openSession();
-        return (Customer) session.get(Customer.class, id);
+        return (Admin) session.get(Admin.class, id);
     }
 
-    public Customer getByLogin(String phone) throws SQLException {
+
+    public Admin getByLogin(String login) throws SQLException {
 
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Customer.class);
-        return (Customer) criteria.add(Restrictions.eq("phone", phone)).uniqueResult();
+        Criteria criteria = session.createCriteria(Admin.class);
+        return (Admin) criteria.add(Restrictions.eq("login", login)).uniqueResult();
     }
 
-    public long update(Customer customer) throws SQLException {
+    public long update(Admin admin) throws SQLException {
 
-        long id = customer.getCustomerId();
+        long id = admin.getAdminId();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         if (id == 0) {
-            id = (Long) session.save(customer);
+            id = (Long) session.save(admin);
         }
         else {
-            session.update(customer);
+            session.update(admin);
         }
         transaction.commit();
         session.close();
         return id;
     }
 
-    public void delete(Customer customer) throws SQLException {
+
+    public void delete(Admin admin) throws SQLException {
 
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("FROM Order o where o.customerId = " + customer.getCustomerId());
+        Query query = session.createQuery("FROM Order o where o.customerId = " + admin.getAdminId());
         List<Order> orderList = query.list();
         for (Order order : orderList) {
             session.delete(order);
         }
-        session.delete(customer);
+        session.delete(admin);
         transaction.commit();
         session.close();
     }
 
-    public List<Customer> getAll() throws SQLException {
+
+    public List<Admin> getAll() throws SQLException {
 
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("FROM Customer");
+        Query query = session.createQuery("FROM Admin");
         return  query.list();
     }
-
+    
     public void createTable() throws SQLException {
 
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.createSQLQuery("CREATE TABLE IF NOT EXISTS customers(" +
-                            "   Id bigint(9) NOT NULL auto_increment," +
-                            "   name varchar(256)," +
-                            "   phone varchar(256)," +
-                            "   password varchar(256)," +
-                            "   PRIMARY KEY (Id)" +
-                            "   );").executeUpdate();
+                "   Id bigint(9) NOT NULL auto_increment," +
+                "   name varchar(256)," +
+                "   login varchar(256)," +
+                "   password varchar(256)," +
+                "   PRIMARY KEY (Id)" +
+                "   );").executeUpdate();
         transaction.commit();
         session.close();
     }
-
 }

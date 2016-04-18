@@ -1,11 +1,8 @@
 package lv.etaxi.business.managers;
 
 import lv.etaxi.business.TaxiManager;
-import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.TaxiDAO;
-import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
 import lv.etaxi.dao.hibernate.TaxiHibernateDAOImpl;
-import lv.etaxi.dao.jdbc.CustomerDAOImpl;
 import lv.etaxi.dao.jdbc.DBConnection;
 import lv.etaxi.dao.jdbc.TaxiDAOImpl;
 import lv.etaxi.entity.Taxi;
@@ -55,6 +52,13 @@ public class TaxiManagerImpl implements TaxiManager {
     public void updateTaxi(Taxi taxi) throws SQLException {
 
         taxiDAO.update(taxi);
+
+    }
+
+    @Transactional
+    public void deleteTaxi(Taxi taxi) throws SQLException {
+
+        taxiDAO.delete(taxi);
 
     }
 

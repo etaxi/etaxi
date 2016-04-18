@@ -47,7 +47,8 @@ public class CustomerCreateNewOrderController implements MVCController {
                 currentCustomer,
                 request.getParameter("fromAddress"),
                 request.getParameter("toAddress"),
-                request.getParameter("orderedDateTime"));
+                request.getParameter("orderedDateTime"),
+                request.getParameter("distance"));
 
         String message = (newOrder != null) ?
                           "New order was created (new order ID: " + newOrder.getOrderId() + ")" :

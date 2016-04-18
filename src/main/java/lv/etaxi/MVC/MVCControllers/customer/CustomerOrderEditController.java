@@ -57,7 +57,8 @@ public class CustomerOrderEditController implements MVCController {
                 request.getParameter("fromAddress"),
                 request.getParameter("toAddress"),
                 request.getParameter("orderedDateTime"),
-                "");
+                "",
+                Double.valueOf(request.getParameter("distance")));
 
         String message = (updateSuccessful) ?
                 "Order ID: " + request.getParameter("orderId") + " was changed!" :

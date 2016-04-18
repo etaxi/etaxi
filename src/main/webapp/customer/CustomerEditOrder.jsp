@@ -36,7 +36,7 @@
 
 <h2 class="form-signin-heading">Please, <%=customer.getName()%> change your order ID: <%=order.getOrderId()%></h2>
 
-<form class="form-signin" action="/customer/customerEditOrder" method="POST">
+<form id="register" class="form-signin" action="" method="POST">
 
     <label for="fromAddress" class="sr-only">Address from</label>
     <input input type="text" name="fromAddress" value="<%=order.getFromAdress()%>" id="fromAddress" class="form-control"
@@ -62,8 +62,21 @@
     </script>
 
     <input type="hidden" name="orderId" value="<%=order.getOrderId()%>"/>
+    <label for="distance" class="sr-only">Distance (km): </label>
+    <input input type="text" value="<%= (order==null)? 0.00 : order.getDistance()%>" name="distance" id="distance" class="form-control" placeholder="Distance">
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit new data</button>
+    <input type='hidden' name='returnPage' value="/customer/CustomerEditOrder.jsp">
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value ="/customer/getDistanceForOrder" onclick="changeFormAction(this.value)">Get distance</button>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value ="/customer/customerEditOrder" onclick="changeFormAction(this.value)">Submit new data</button>
+
+    <script type="text/javascript">
+        function changeFormAction(value) {
+            document.getElementById("register").action = value;
+        }
+    </script>
+
 </form>
 
 <b> ${message} </b>

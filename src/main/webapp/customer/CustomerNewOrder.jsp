@@ -1,4 +1,5 @@
 <%@ page import="lv.etaxi.entity.Customer" %>
+<%@ page import="lv.etaxi.entity.Order" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -30,22 +31,29 @@
 
 <br>
 
+<%
+    Order order = null;
+    try {
+        order = (Order) request.getAttribute("model");
+    }catch (Exception exception) {}
+%>
+
 <h1>New order creation</h1>
 
-<form class="form-signin" action="/customer/customerCreateNewOrder" method="POST">
+<form id="register" class="form-signin" action="" method="POST">
 
     <% Customer customer = (Customer) session.getAttribute("customer"); %>
     <div><h3>Please, <%=customer.getName()%> enter new order information: </h3></div>
 
     <label for="fromAddress" class="sr-only">Address from</label>
-    <input input type="text" name="fromAddress" id="fromAddress" class="form-control" placeholder="Ride from address" required autofocus>
+    <input input type="text" name="fromAddress" id="fromAddress" value="<%=(order==null)? "" : order.getFromAdress()%>" class="form-control" placeholder="Ride from address" required autofocus>
 
     <label for="toAddress" class="sr-only">Address to</label>
-    <input type="text" name="toAddress" id="toAddress" class="form-control" placeholder="Ride to address" required>
+    <input type="text" name="toAddress" id="toAddress" value="<%=(order==null)? "" : order.getToAdress()%>" class="form-control" placeholder="Ride to address" required>
 
     <div id="orderedDateTime" class="input-append date">
         <label for="orderedDateTimeInput">Date and time of ride:</label>
-        <input type="text" value="<%= new Timestamp(new java.util.Date().getTime())%>" name="orderedDateTime" id="orderedDateTimeInput" required>
+        <input type="text" value="<%= (order==null)? new Timestamp(new java.util.Date().getTime()) : order.getOrderedDateTime()%>" name="orderedDateTime" id="orderedDateTimeInput" required>
             <span class="add-on">
                 <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
             </span>
@@ -57,8 +65,23 @@
         });
     </script>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Create new order</button>
+    <label for="distance" class="sr-only">Distance (km): </label>
+    <input input type="text" value="<%= (order==null)? 0.00 : order.getDistance()%>" name="distance" id="distance" class="form-control" placeholder="Distance">
+
+    <input type='hidden' name='returnPage' value="/customer/CustomerNewOrder.jsp">
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value ="/customer/getDistanceForOrder" onclick="changeFormAction(this.value)">Get distance</button>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value ="/customer/customerCreateNewOrder" onclick="changeFormAction(this.value)">Create new order</button>
+
+    <script type="text/javascript">
+        function changeFormAction(value) {
+               document.getElementById("register").action = value;
+        }
+    </script>
+
 </form>
+
 
 <h3><%=request.getAttribute("message")%></h3>
 

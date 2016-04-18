@@ -18,29 +18,32 @@ public interface OrderManager{
 
     void updateOrder(Order order) throws SQLException;
 
-    public Order findOrderById(long Id) throws SQLException;
+    Order findOrderById(long Id) throws SQLException;
 
-    public void deleteOrder(Order order) throws SQLException;
+    void deleteOrder(Order order) throws SQLException;
 
-    public List<Order> getOrdersByCustomerId(long id, Timestamp begin, Timestamp end) throws SQLException;
+    List<Order> getOrdersByCustomerId(long id, Timestamp begin, Timestamp end) throws SQLException;
 
-    public List<Order> getOpenOrdersOfCustomer(long id, Timestamp begin, Timestamp end) throws SQLException;
+    List<Order> getOpenOrdersOfCustomer(long id, Timestamp begin, Timestamp end) throws SQLException;
 
-    public List<Order> getCompletedOrdersOfCustomer(long id, Timestamp begin, Timestamp end) throws SQLException;
+    List<Order> getCompletedOrdersOfCustomer(long id, Timestamp begin, Timestamp end) throws SQLException;
 
-    public List<Order> getTaxiOrders(long id) throws SQLException;
+    List<Order> getTaxiOrders(long id) throws SQLException;
 
-    public List<Order> getOpenOrdersAll() throws SQLException;
+    List<Order> getOpenOrdersAll() throws SQLException;
 
-    public Order createNewOrderInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime);
+    Order createNewOrderInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime, String distance);
 
-    public boolean checkOrderChangePossibility(Customer customer, Order order);
+    boolean checkOrderChangePossibility(Customer customer, Order order);
 
-    public Order findOrderById(String orderId);
+    Order findOrderById(String orderId);
 
-    public boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete);
+    boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete);
 
-    public  boolean updateOrderByIdByCustomer(Customer customer, String orderIdToUpdate, String fromAddress,
-                                              String toAddress, String orderedDateTime, String feedback);
+    boolean updateOrderByIdByCustomer(Customer customer, String orderIdToUpdate, String fromAddress,
+                                              String toAddress, String orderedDateTime, String feedback, Double distance);
+
+    double GetDistance(String addressFrom, String addressTo);
+
 }
 

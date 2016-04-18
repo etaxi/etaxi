@@ -131,3 +131,5 @@ Administrator
 17. Spring IoC   http://spring-projects.ru/guides/lessons/lesson-2/
 
 18. Виртуальная машина Java   http://ermak.cs.nstu.ru/trans/Trans472.htm
+
+19. GenericDAO    http://stackoverflow.com/questions/9954761/dao-design-pattern

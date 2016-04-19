@@ -118,4 +118,11 @@ public class CustomerManagerImpl implements CustomerManager {
         return "Registration failed! Please try again!";
     }
 
+    @Transactional
+    public void deleteCustomer(Customer customer) throws SQLException {
+
+        customerDAO.delete(customer);
+
+    }
+
 }

@@ -143,7 +143,7 @@ public class DBConnection {
         configuration.setProperty("hibernate.connection.username", getDatabasePropertyFromFile("db.login"));
         configuration.setProperty("hibernate.connection.password", getDatabasePropertyFromFile("db.password"));
         configuration.setProperty("hibernate.show_sql", "true");
-        //configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+        //configuration.setProperty("hibernate.hbm2ddl.auto", "validate");
 
         return configuration;
     }

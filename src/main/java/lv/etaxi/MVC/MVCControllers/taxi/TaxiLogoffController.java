@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class TaxiLogoffController implements MVCController {
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 

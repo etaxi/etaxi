@@ -2,7 +2,7 @@ package lv.etaxi.MVC.MVCControllers.customer;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.managers.OrderManagerImpl;
+import lv.etaxi.business.OrderManager;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,8 @@ import java.util.List;
 public class CustomerHistoryOfOrdersController implements MVCController {
 
     @Autowired
-    OrderManagerImpl orderManagerImpl;
+    OrderManager orderManagerImpl;
 
-    public CustomerHistoryOfOrdersController() {
-        this.orderManagerImpl = new OrderManagerImpl();
-    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {

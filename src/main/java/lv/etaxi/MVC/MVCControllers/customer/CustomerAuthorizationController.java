@@ -2,7 +2,7 @@ package lv.etaxi.MVC.MVCControllers.customer;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.managers.CustomerManagerImpl;
+import lv.etaxi.business.CustomerManager;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,11 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomerAuthorizationController implements MVCController {
 
     @Autowired
-    CustomerManagerImpl customerManagerImpl;
-
-    public CustomerAuthorizationController() {
-        this.customerManagerImpl = new CustomerManagerImpl();
-    }
+    CustomerManager customerManagerImpl;
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

@@ -3,17 +3,14 @@ package lv.etaxi.business.managers;
 import lv.etaxi.business.OrderManager;
 import lv.etaxi.business.direction.Direction;
 import lv.etaxi.dao.OrderDAO;
-import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
-import lv.etaxi.dao.jdbc.DBConnection;
-import lv.etaxi.dao.jdbc.OrderDAOImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -32,59 +29,56 @@ public class OrderManagerImpl implements OrderManager {
     @Autowired
     private OrderDAO orderDAO;
 
-    public OrderManagerImpl() {
-        this.orderDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-                         new OrderHibernateDAOImpl() : new OrderDAOImpl();
-    }
-
 
     @Transactional
     public void createNewOrder(Order order) throws SQLException {
 
         order.setOrderId(orderDAO.update(order));
-
     }
 
     @Transactional
     public void updateOrder(Order order) throws SQLException {
 
         orderDAO.update(order);
-
     }
 
+    @Transactional
     public Order findOrderById(long Id) throws SQLException {
 
         return orderDAO.getById(Id);
-
     }
 
     @Transactional
     public void deleteOrder(Order order) throws SQLException {
 
         orderDAO.delete(order);
-
     }
 
+    @Transactional
     public List<Order> getOrdersByCustomerId(long id, Timestamp begin, Timestamp end) throws SQLException {
 
         return orderDAO.getCustomerOrders(id, begin, end);
     }
 
+    @Transactional
     public List<Order> getOpenOrdersOfCustomer(long id, Timestamp begin, Timestamp end) throws SQLException {
 
         return orderDAO.getOpenOrdersOfCustomer(id, begin, end);
     }
 
+    @Transactional
     public List<Order> getCompletedOrdersOfCustomer(long id, Timestamp begin, Timestamp end) throws SQLException {
 
         return  orderDAO.getCompletedOrdersOfCustomer(id, begin, end);
     }
 
+    @Transactional
     public List<Order> getTaxiOrders(long id) throws SQLException {
 
         return  orderDAO.getTaxiOrders(id);
     }
 
+    @Transactional
     public List<Order> getOpenOrdersAll() throws SQLException {
 
         return  orderDAO.getOpenOrdersAll();
@@ -107,11 +101,12 @@ public class OrderManagerImpl implements OrderManager {
         }
     }
 
-
+    @Transactional
     public boolean checkOrderChangePossibility(Customer customer, Order order) {
         return  (order.getCustomerId() == customer.getCustomerId());
     }
 
+    @Transactional
     public Order findOrderById(String orderId) {
         try {
             return findOrderById(Long.valueOf(orderId));
@@ -161,7 +156,7 @@ public class OrderManagerImpl implements OrderManager {
         return false;
     }
 
-
+    @Transactional
     public double GetDistance(String addressFrom, String addressTo) {
 
         Direction direction = new Direction(addressFrom, addressTo);

@@ -2,14 +2,11 @@ package lv.etaxi.business.managers;
 
 import lv.etaxi.business.AdminManager;
 import lv.etaxi.dao.AdminDAO;
-import lv.etaxi.dao.hibernate.AdminHibernateDAOImpl;
-import lv.etaxi.dao.jdbc.AdminDAOImpl;
-import lv.etaxi.dao.jdbc.DBConnection;
 import lv.etaxi.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 
 /**
@@ -21,17 +18,14 @@ public class AdminManagerImpl implements AdminManager {
     @Autowired
     private AdminDAO adminDAO;
 
-    public AdminManagerImpl() {
 
-        this.adminDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-                new AdminHibernateDAOImpl() : new AdminDAOImpl();
-    }
-
+    @Transactional
     public Admin findAdminByLogin(String login) throws SQLException {
 
         return adminDAO.getByLogin(login);
     }
 
+    @Transactional
     public Admin findAdminById(long Id) throws SQLException {
 
         return adminDAO.getById(Id);
@@ -63,6 +57,7 @@ public class AdminManagerImpl implements AdminManager {
         adminDAO.update(admin);
     }
 
+    @Transactional
     public Admin CheckAuthorization(String login, String password) {
 
         Admin admin = null;
@@ -95,6 +90,7 @@ public class AdminManagerImpl implements AdminManager {
         return  "Registration failed! Please try again!";
     }
 
+    @Transactional
     public boolean checkAdminByLogin(Admin admin) {
         try {
             Admin presentAdminWithSuchLogin = findAdminByLogin(admin.getLogin());

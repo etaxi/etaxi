@@ -18,4 +18,6 @@ public interface TaxiManager {
 
     void updateTaxi(Taxi taxi) throws SQLException;
 
+    void deleteTaxi(Taxi taxi) throws SQLException;
+
 }

@@ -2,7 +2,7 @@ package lv.etaxi.MVC.MVCControllers.customer;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.managers.OrderManagerImpl;
+import lv.etaxi.business.OrderManager;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomerOrderDeleteController implements MVCController {
 
     @Autowired
-    OrderManagerImpl orderManagerImpl;
+    OrderManager orderManagerImpl;
 
-    public CustomerOrderDeleteController() {
-        this.orderManagerImpl = new OrderManagerImpl();
-    }
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

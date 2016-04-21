@@ -1,14 +1,12 @@
 package lv.etaxi.dao.hibernate;
 
 import lv.etaxi.dao.OrderDAO;
-import lv.etaxi.dao.jdbc.DBConnection;
 import lv.etaxi.entity.Order;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -18,24 +16,18 @@ import java.util.List;
  * Реализация управления объектами класса Order
  * */
 @SuppressWarnings("ALL")
-//@Repository
-@Lazy
+@Repository
 public class OrderHibernateDAOImpl implements OrderDAO {
 
-    private final SessionFactory sessionFactory;
-
-    public OrderHibernateDAOImpl() {
-        DBConnection dbConnection = new DBConnection();
-        Configuration configuration = dbConnection.getMySqlConfigurationForHibernate();
-        this.sessionFactory = dbConnection.createSessionFactory(configuration);
-    }
+    @Autowired
+    private SessionFactory sessionFactory;
 
     /**
      * Возвращает объект соответствующий записи с первичным ключом key или null
      */
     public Order getById(long id) throws SQLException {
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         return (Order) session.get(Order.class, id);
     }
 
@@ -45,16 +37,15 @@ public class OrderHibernateDAOImpl implements OrderDAO {
     public long update(Order order) throws SQLException {
 
         long id = order.getOrderId();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
+        //Transaction transaction = session.beginTransaction();
         if (id == 0) {
             id = (Long) session.save(order);
         }
         else {
             session.update(order);
         }
-        transaction.commit();
-        session.close();
+        //transaction.commit();
         return id;
     }
 
@@ -63,32 +54,31 @@ public class OrderHibernateDAOImpl implements OrderDAO {
      */
     public void delete(Order order) throws SQLException {
 
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
+        //Transaction transaction = session.beginTransaction();
         session.delete(order);
-        transaction.commit();
-        session.close();
+        //transaction.commit();
     }
 
     /**
      * Возвращает список объектов соответствующих всем записям в базе данных
      */
     public List<Order> getAll() throws SQLException {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("FROM Order order by orderedDateTime ASC");
         return  query.list();
     }
 
     public List<Order> getOpenOrdersAll() throws SQLException {
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("FROM Order o where o.orderStatus = '"+ Order.OrderStatus.WAITING +"' order by orderedDateTime ASC");
         return  query.list();
     }
 
     public List<Order> getOpenOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("FROM Order o where o.orderStatus = '"+ Order.OrderStatus.WAITING +"'"+
                 ((customerId != 0) ? " and o.customerId = " + customerId : "") + " " +
                 "AND (o.orderedDateTime  between '" + begin + "' AND '" + end + "') " +
@@ -98,7 +88,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
 
     public List<Order> getCompletedOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("FROM Order o where o.orderStatus = '"+ Order.OrderStatus.WAITING + "'" +   //DELIVERED
                 ((customerId != 0) ? " and o.customerId = " + customerId : "") + " " +
                 "AND (o.orderedDateTime  between '" + begin + "' AND '" + end + "') " +
@@ -108,7 +98,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
 
     public List<Order> getTaxiOrders(long id) throws SQLException {
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("FROM Order o where o.taxiId = "+ id + " order by orderedDateTime ASC");
         return  query.list();
     }
@@ -116,7 +106,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
 
     public List<Order> getCustomerOrders(long id, Timestamp begin, Timestamp end) throws SQLException {
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("FROM Order o where o.customerId = " + id  +
                 " AND (o.orderedDateTime  between '" + begin + "' AND '" + end + "') " +
                 " order by orderedDateTime ASC");
@@ -125,8 +115,8 @@ public class OrderHibernateDAOImpl implements OrderDAO {
 
     public void createTable() throws SQLException {
 
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
+        //Transaction transaction = session.beginTransaction();
         session.createSQLQuery("CREATE TABLE IF NOT EXISTS orders (" +
                 "  Id bigint(9) NOT NULL auto_increment," +
                 "  customerId bigint(9)," +
@@ -142,8 +132,7 @@ public class OrderHibernateDAOImpl implements OrderDAO {
                 "  feedback text," +
                 "  PRIMARY KEY (Id)" +
                 ");").executeUpdate();
-        transaction.commit();
-        session.close();
+        //transaction.commit();
     }
 
 }

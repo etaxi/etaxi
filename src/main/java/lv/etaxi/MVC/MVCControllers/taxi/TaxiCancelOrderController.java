@@ -2,7 +2,7 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.managers.OrderManagerImpl;
+import lv.etaxi.business.OrderManager;
 import lv.etaxi.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,7 @@ import java.sql.SQLException;
 public class TaxiCancelOrderController implements MVCController {
 
     @Autowired
-    OrderManagerImpl orderManagerImpl;
-
-    public TaxiCancelOrderController() {
-
-        this.orderManagerImpl = new OrderManagerImpl();
-    }
+    OrderManager orderManagerImpl;
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

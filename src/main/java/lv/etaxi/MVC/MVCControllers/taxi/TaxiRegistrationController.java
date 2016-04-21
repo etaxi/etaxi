@@ -2,7 +2,7 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.managers.TaxiManagerImpl;
+import lv.etaxi.business.TaxiManager;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,7 @@ import java.sql.SQLException;
 public class TaxiRegistrationController implements MVCController {
 
     @Autowired
-    TaxiManagerImpl taxiManagerImpl;
-
-    public TaxiRegistrationController() {
-
-        this.taxiManagerImpl = new TaxiManagerImpl();
-    }
+    TaxiManager taxiManagerImpl;
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

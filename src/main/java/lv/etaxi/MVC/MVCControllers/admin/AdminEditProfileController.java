@@ -2,7 +2,7 @@ package lv.etaxi.MVC.MVCControllers.admin;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.managers.AdminManagerImpl;
+import lv.etaxi.business.AdminManager;
 import lv.etaxi.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminEditProfileController implements MVCController {
 
     @Autowired
-    AdminManagerImpl adminManagerImpl;
-
-    public AdminEditProfileController() {
-
-        this.adminManagerImpl = new AdminManagerImpl();
-    }
+    AdminManager adminManagerImpl;
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {

@@ -1,18 +1,12 @@
 package lv.etaxi.business.managers;
 
 import lv.etaxi.business.TaxiManager;
-import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.TaxiDAO;
-import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
-import lv.etaxi.dao.hibernate.TaxiHibernateDAOImpl;
-import lv.etaxi.dao.jdbc.CustomerDAOImpl;
-import lv.etaxi.dao.jdbc.DBConnection;
-import lv.etaxi.dao.jdbc.TaxiDAOImpl;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 
 /** Проект etaxi
@@ -25,37 +19,35 @@ public class TaxiManagerImpl implements TaxiManager {
     @Autowired
     private TaxiDAO taxiDAO;
 
-    public TaxiManagerImpl() {
 
-        this.taxiDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-                new TaxiHibernateDAOImpl() : new TaxiDAOImpl();
-
-    }
-
+    @Transactional
     public Taxi findTaxiByLogin(String login) throws SQLException {
 
         return taxiDAO.getByLogin(login);
-
     }
 
+    @Transactional
     public Taxi findTaxiById(long Id) throws SQLException {
 
         return taxiDAO.getById(Id);
-
     }
 
     @Transactional
     public void createNewTaxi(Taxi taxi) throws SQLException {
 
         taxi.setTaxiId(taxiDAO.update(taxi));
-
     }
 
     @Transactional
     public void updateTaxi(Taxi taxi) throws SQLException {
 
         taxiDAO.update(taxi);
+    }
 
+    @Transactional
+    public void deleteTaxi(Taxi taxi) throws SQLException {
+
+        taxiDAO.delete(taxi);
     }
 
 }

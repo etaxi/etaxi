@@ -15,53 +15,58 @@ public class Taxi {
 
     // Имя, Фамилия
     //@Column(name = "name", columnDefinition = "char(100)" )
-    @Column(name = "name")
+    @Column(name = "name", unique = false, updatable = true)
     private String name;
 
     // Телефон
     //@Column(name = "phone", columnDefinition = "char(50)")
-    @Column(name = "phone")
+    @Column(name = "phone", unique = true, updatable = true)
     private String phone;
 
     // статус (не работает, свободен, занят)
     //@Column(name = "taxiStatus", columnDefinition = "int(1)")
-    @Column(name = "taxiStatus")
+    @Column(name = "taxiStatus", unique = false, updatable = true)
     private byte   taxiStatus;
 
     // местоположение десятичные градусы (вида 56.9613438,24.1900393)
     //@Column(name = "location", columnDefinition = "char(50)")
-    @Column(name = "location")
+    @Column(name = "location", unique = false, updatable = true)
     private String location;
 
     // машины, рег.номер, бортовой номер
     //@Column(name = "car", columnDefinition = "char(100)")
-    @Column(name = "car")
+    @Column(name = "car", unique = false, updatable = true)
     private String car;
 
     // логин
     //@Column(name = "login", columnDefinition = "char(50)" )
-    @Column(name = "login")
+    @Column(name = "login", unique = true, updatable = true)
     private String login;
 
     // пароль
     //@Column(name = "password", columnDefinition = "char(50)" )
-    @Column(name = "password")
+    @Column(name = "password", unique = false, updatable = true)
     private String password;
 
     // рейтинг по среднему значению отзывов
     //@Column(name = "rating", columnDefinition = "float(8,2)")
-    @Column(name = "rating")
+    @Column(name = "rating", unique = false, updatable = true)
     private double rating;
 
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
+    public Taxi() {}
+
     public Taxi(Long taxiId, String name, String car, String phone, String login, String password) {
         this.taxiId = taxiId;
         this.name = name;
-        this.car = car;
         this.phone = phone;
+        this.taxiStatus = 1;
+        this.location = "56.9613438,24.1900393";
+        this.car = car;
         this.login = login;
         this.password = password;
+        this.rating = 0;
     }
 
     public Long getTaxiId() {

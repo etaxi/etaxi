@@ -23,9 +23,10 @@ public interface CustomerManager {
 
     boolean checkCustomerByLogin(Customer customer);
 
-    public String updateCustomer(Customer customer);
+    String updateCustomer(Customer customer);
 
-    public String createNewCustomer(Customer customer);
+    String createNewCustomer(Customer customer);
 
+    void deleteCustomer(Customer customer) throws SQLException;
 }
 

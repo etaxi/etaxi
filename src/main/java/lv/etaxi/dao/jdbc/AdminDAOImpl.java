@@ -16,7 +16,6 @@ import java.util.List;
 @Repository
 public class AdminDAOImpl implements AdminDAO{
 
-
     public Admin getById(long id) throws SQLException {
         Executor executor = GetExecutor();
         return executor.executeQuery("select * from admins where Id=" + id, resultSet -> {

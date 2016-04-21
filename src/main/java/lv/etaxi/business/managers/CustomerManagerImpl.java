@@ -2,14 +2,11 @@ package lv.etaxi.business.managers;
 
 import lv.etaxi.business.CustomerManager;
 import lv.etaxi.dao.CustomerDAO;
-import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
-import lv.etaxi.dao.jdbc.CustomerDAOImpl;
-import lv.etaxi.dao.jdbc.DBConnection;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 
 /**
@@ -17,7 +14,6 @@ import java.sql.SQLException;
  * Created by D.Lazorkin on 25.03.2016.
  * Класс для реализации функций со стороны клиента
  */
-
 @Service
 public class CustomerManagerImpl implements CustomerManager {
 
@@ -25,37 +21,31 @@ public class CustomerManagerImpl implements CustomerManager {
     @Autowired
     private CustomerDAO customerDAO;
 
-    public CustomerManagerImpl() {
-        this.customerDAO = (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-                            new CustomerHibernateDAOImpl() : new CustomerDAOImpl();
-    }
-
+    @Transactional
     public Customer findCustomerByLogin(String login) throws SQLException {
 
         return customerDAO.getByLogin(login);
-
     }
 
+    @Transactional
     public Customer findCustomerById(long Id) throws SQLException {
 
         return customerDAO.getById(Id);
-
     }
 
     @Transactional
     public void createNewCustomerInDataBase(Customer customer) throws SQLException {
 
         customer.setCustomerId(customerDAO.update(customer));
-
     }
 
     @Transactional
     public void updateCustomerInDataBase(Customer customer) throws SQLException {
 
         customerDAO.update(customer);
-
     }
 
+    @Transactional
     public Customer CheckAuthorization(String login, String password) {
 
         Customer customer = null;
@@ -74,7 +64,7 @@ public class CustomerManagerImpl implements CustomerManager {
         return customer;
     }
 
-
+    @Transactional
     public boolean checkCustomerByLogin(Customer customer) {
         try {
             Customer presentCustomerWithSuchLogin = findCustomerByLogin(customer.getPhone());
@@ -116,6 +106,13 @@ public class CustomerManagerImpl implements CustomerManager {
             }
         }
         return "Registration failed! Please try again!";
+    }
+
+    @Transactional
+    public void deleteCustomer(Customer customer) throws SQLException {
+
+        customerDAO.delete(customer);
+
     }
 
 }

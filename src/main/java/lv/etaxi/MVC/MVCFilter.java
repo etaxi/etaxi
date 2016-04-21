@@ -3,6 +3,7 @@ package lv.etaxi.MVC;
 import lv.etaxi.MVC.MVCControllers.admin.*;
 import lv.etaxi.MVC.MVCControllers.customer.*;
 import lv.etaxi.MVC.MVCControllers.taxi.*;
+import lv.etaxi.config.SpringAppConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

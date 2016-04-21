@@ -2,7 +2,7 @@ package lv.etaxi.MVC.MVCControllers.customer;
 
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
-import lv.etaxi.business.managers.OrderManagerImpl;
+import lv.etaxi.business.OrderManager;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomerOrderEditController implements MVCController {
 
     @Autowired
-    OrderManagerImpl orderManagerImpl;
-
-    public CustomerOrderEditController() {
-        this.orderManagerImpl = new OrderManagerImpl();
-    }
+    OrderManager orderManagerImpl;
 
 
     @Override

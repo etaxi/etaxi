@@ -1,7 +1,7 @@
 package databaseTests;
 
 import lv.etaxi.dao.CustomerDAO;
-import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
+import lv.etaxi.dao.hibernate.CustomerDAOImpl;
 import lv.etaxi.entity.Customer;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class TestsForCustomerHibernate {
 
     public CustomerDAO aCustomerDAO() {
 
-        return new CustomerHibernateDAOImpl();
+        return new CustomerDAOImpl();
     }
 
 

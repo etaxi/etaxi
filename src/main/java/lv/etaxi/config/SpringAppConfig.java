@@ -4,11 +4,15 @@ import lv.etaxi.dao.AdminDAO;
 import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.dao.TaxiDAO;
-import lv.etaxi.dao.hibernate.AdminHibernateDAOImpl;
-import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
-import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
-import lv.etaxi.dao.hibernate.TaxiHibernateDAOImpl;
-import lv.etaxi.dao.jdbc.*;
+import lv.etaxi.dao.hibernate.AdminDAOImpl;
+import lv.etaxi.dao.hibernate.CustomerDAOImpl;
+import lv.etaxi.dao.hibernate.OrderDAOImpl;
+import lv.etaxi.dao.hibernate.TaxiDAOImpl;
+
+//import lv.etaxi.dao.jdbc.AdminDAOImpl;
+//import lv.etaxi.dao.jdbc.CustomerDAOImpl;
+//import lv.etaxi.dao.DBConnection;
+//import lv.etaxi.dao.jdbc.OrderDAOImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -105,29 +109,33 @@ public class SpringAppConfig {
     @Bean
     @Description("Задаем используемую реализацию интерфейса CustomerDAO")
     CustomerDAO customerDAO() {
-        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-                new CustomerHibernateDAOImpl() : new CustomerDAOImpl();
+//        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
+//                new CustomerHibernateDAOImpl() : new CustomerDAOImpl();
+        return new CustomerDAOImpl();
     }
 
     @Bean
     @Description("Задаем используемую реализацию интерфейса OrderDAO")
     OrderDAO orderDAO() {
-        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-                 new OrderHibernateDAOImpl() : new OrderDAOImpl();
+//        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
+//                 new OrderHibernateDAOImpl() : new OrderDAOImpl();
+        return new OrderDAOImpl();
     }
 
     @Bean
     @Description("Задаем используемую реализацию интерфейса TaxiDAO")
     TaxiDAO taxiDAO() {
-        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-                 new TaxiHibernateDAOImpl() : new TaxiDAOImpl();
+//        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
+//                 new TaxiDAOImpl() : new TaxiDAOImpl();
+        return new TaxiDAOImpl();
     }
 
     @Bean
     @Description("Задаем используемую реализацию интерфейса AdminDAO")
     AdminDAO adminDAO() {
-        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-                 new AdminHibernateDAOImpl() : new AdminDAOImpl();
+//        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
+//                 new AdminHibernateDAOImpl() : new AdminDAOImpl();
+        return new AdminDAOImpl();
     }
 
 

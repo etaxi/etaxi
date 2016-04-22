@@ -1,7 +1,7 @@
 package databaseTests;
 
 import org.junit.Test;
-import lv.etaxi.dao.jdbc.DBConnection;
+import lv.etaxi.dao.DBConnection;
 
 import java.sql.SQLException;
 

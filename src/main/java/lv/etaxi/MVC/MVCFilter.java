@@ -60,38 +60,6 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/admin/adminRegistration", getBean(AdminRegistrationController.class));
         urlToControllerMap.put("/admin/adminEditProfile", getBean(AdminEditProfileController.class));
         urlToControllerMap.put("/admin/signOut", getBean(AdminSignOutController.class));
-
-        /*
-        urlToControllerMap.put("/customer", new CustomerMenuController());
-        urlToControllerMap.put("/customer/customerAuthorization", new CustomerAuthorizationController());
-        urlToControllerMap.put("/customer/customerRegistration", new CustomerRegistrationController());
-        urlToControllerMap.put("/customer/customerEditProfile", new CustomerEditProfileController());
-        urlToControllerMap.put("/customer/customerCreateNewOrder", new CustomerCreateNewOrderController());
-        urlToControllerMap.put("/customer/customerHistoryOfOrders", new CustomerHistoryOfOrdersController());
-        urlToControllerMap.put("/customer/customerEditDeleteOrders", new CustomerOrdersEditDeleteController());
-        urlToControllerMap.put("/customer/customerDeleteOrder", new CustomerOrderDeleteController());
-        urlToControllerMap.put("/customer/customerEditOrder", new CustomerOrderEditController());
-        urlToControllerMap.put("/customer/customerWriteFeedbacksToOrders", new CustomerWriteFeedbacksController());
-        urlToControllerMap.put("/customer/writeFeedbackToOrder", new CustomerWriteFeedbackController());
-        urlToControllerMap.put("/customer/signOut", new CustomerSignOutController());
-
-        urlToControllerMap.put("/taxi", new TaxiMenuController());
-        urlToControllerMap.put("/taxi/registration", new TaxiRegistrationController());
-        urlToControllerMap.put("/taxi/authorization", new TaxiAuthorizationController());
-        urlToControllerMap.put("/taxi/logoff", new TaxiLogoffController());
-        urlToControllerMap.put("/taxi/history", new TaxiHistoryController());
-        urlToControllerMap.put("/taxi/openorders", new TaxiOpenOrdersController());
-        urlToControllerMap.put("/taxi/takeorder", new TaxiTakeOrderController());
-        urlToControllerMap.put("/taxi/completeorder", new TaxiCompleteOrderController());
-        urlToControllerMap.put("/taxi/cancelorder", new TaxiCancelOrderController());
-        urlToControllerMap.put("/taxi/editprofile", new TaxiEditProfileController());
-
-        urlToControllerMap.put("/admin", new AdminMenuController());
-        urlToControllerMap.put("/admin/adminAuthorization", new AdminAuthorizationController());
-        urlToControllerMap.put("/admin/adminRegistration", new AdminRegistrationController());
-        urlToControllerMap.put("/admin/adminEditProfile", new AdminEditProfileController());
-        urlToControllerMap.put("/admin/signOut", new AdminSignOutController());
-        */
     }
 
     private MVCController getBean(Class clazz) {

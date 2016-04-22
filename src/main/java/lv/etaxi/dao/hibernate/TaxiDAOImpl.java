@@ -5,6 +5,7 @@ import lv.etaxi.entity.Taxi;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
@@ -13,10 +14,10 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Taxi
  * */
-
+@Component("HibTaxiDAO")
 @SuppressWarnings("ALL")
 @Repository
-public class TaxiHibernateDAOImpl implements TaxiDAO {
+public class TaxiDAOImpl implements TaxiDAO {
 
     @Autowired
     private SessionFactory sessionFactory;

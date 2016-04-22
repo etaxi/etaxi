@@ -1,7 +1,10 @@
 package lv.etaxi.dao.jdbc;
 
+import lv.etaxi.dao.DBConnection;
+import lv.etaxi.dao.Executor;
 import lv.etaxi.dao.TaxiDAO;
 import lv.etaxi.entity.Taxi;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -12,6 +15,7 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Taxi
  * */
+@Component("JDBCTaxiDAO")
 @Repository
 public class TaxiDAOImpl implements TaxiDAO {
 

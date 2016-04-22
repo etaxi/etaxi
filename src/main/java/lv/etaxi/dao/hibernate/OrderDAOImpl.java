@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
@@ -15,9 +16,10 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Order
  * */
+@Component("HibOrderDAO")
 @SuppressWarnings("ALL")
 @Repository
-public class OrderHibernateDAOImpl implements OrderDAO {
+public class OrderDAOImpl implements OrderDAO {
 
     @Autowired
     private SessionFactory sessionFactory;

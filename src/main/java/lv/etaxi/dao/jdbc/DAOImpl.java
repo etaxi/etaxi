@@ -1,8 +1,8 @@
-package lv.etaxi.dao.hibernate;
+package lv.etaxi.dao.jdbc;
 
+import lv.etaxi.dao.DBConnection;
 import lv.etaxi.dao.DBException;
 import lv.etaxi.dao.GenericDAO;
-import lv.etaxi.dao.DBConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

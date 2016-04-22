@@ -1,7 +1,10 @@
 package lv.etaxi.dao.jdbc;
 
 import lv.etaxi.dao.AdminDAO;
+import lv.etaxi.dao.DBConnection;
+import lv.etaxi.dao.Executor;
 import lv.etaxi.entity.Admin;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -13,6 +16,7 @@ import java.util.List;
  * Реализация управления объектами класса Admin
  * Created by Genady Zalesky on 27.03.2016
  */
+@Component("JDBCCompanyDAO")
 @Repository
 public class AdminDAOImpl implements AdminDAO{
 

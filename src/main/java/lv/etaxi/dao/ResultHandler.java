@@ -1,4 +1,4 @@
-package lv.etaxi.dao.jdbc;
+package lv.etaxi.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

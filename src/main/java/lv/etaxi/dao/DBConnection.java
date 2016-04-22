@@ -1,8 +1,9 @@
-package lv.etaxi.dao.jdbc;
+package lv.etaxi.dao;
 
-import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
-import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
-import lv.etaxi.dao.hibernate.TaxiHibernateDAOImpl;
+import lv.etaxi.dao.hibernate.TaxiDAOImpl;
+import lv.etaxi.dao.jdbc.AdminDAOImpl;
+import lv.etaxi.dao.jdbc.CustomerDAOImpl;
+import lv.etaxi.dao.jdbc.OrderDAOImpl;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -39,7 +40,7 @@ public class DBConnection {
     }
 
     public void createDataBaseWithJDBC() throws SQLException {
-
+//ToDo вынести создание базы  - две имплементации работы с базой в одном классе
         Executor executor = new Executor(connection, "");
         executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
 
@@ -54,15 +55,15 @@ public class DBConnection {
     }
 
     public void createDataBaseWithHibernate() throws SQLException {
-
+//ToDo вынести создание базы
         Executor executor = new Executor(connection, "");
         executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
 
-        new CustomerHibernateDAOImpl().createTable();
+        new CustomerDAOImpl().createTable();
 
-        new OrderHibernateDAOImpl().createTable();
+        new OrderDAOImpl().createTable();
 
-        new TaxiHibernateDAOImpl().createTable();
+        new TaxiDAOImpl().createTable();
 
         //new AdminHibernateDAOImpl().createTable();
 

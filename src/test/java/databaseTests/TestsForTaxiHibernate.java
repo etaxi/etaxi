@@ -1,7 +1,7 @@
 package databaseTests;
 
 import lv.etaxi.dao.TaxiDAO;
-import lv.etaxi.dao.hibernate.TaxiHibernateDAOImpl;
+import lv.etaxi.dao.hibernate.TaxiDAOImpl;
 import lv.etaxi.entity.Taxi;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class TestsForTaxiHibernate {
 
     public TaxiDAO aTaxiDAO() {
-        return new TaxiHibernateDAOImpl();
+        return new TaxiDAOImpl();
     }
 
     @Test

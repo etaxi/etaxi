@@ -39,7 +39,7 @@ public class CustomerManagerImplTest {
     }
 
     public void deleteCustomer() throws Exception {
-        customerManagerImpl.deleteByObject(newCustomer);
+        customerManagerImpl.delete(newCustomer);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CustomerManagerImplTest {
         assertEquals(phone,    customerFind.getPhone());
         assertEquals(password, customerFind.getPassword());
 
-        customerManagerImpl.deleteByObject(customerFind);
+        customerManagerImpl.delete(customerFind);
 
         Customer customerFindAfterDelete = customerManagerImpl.findById(customerFind.getCustomerId());
         assertEquals(customerFindAfterDelete, null);
@@ -95,7 +95,7 @@ public class CustomerManagerImplTest {
         assertEquals(phone,         customerFindAfterUpdate.getPhone());
         assertEquals(password,      customerFindAfterUpdate.getPassword());
 
-        customerManagerImpl.deleteByObject(customerFindAfterUpdate);
+        customerManagerImpl.delete(customerFindAfterUpdate);
 
         Customer customerFindAfterDelete = customerManagerImpl.findById(customerFindAfterUpdate.getCustomerId());
         assertEquals(customerFindAfterDelete, null);

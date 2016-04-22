@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 /**
  * Created by Genady Zalesky on 07.04.2016
@@ -31,7 +32,7 @@ public class AdminEditProfileController implements MVCController {
     }
 
     @Override
-    public MVCModel handlePostRequest(HttpServletRequest request) {
+    public MVCModel handlePostRequest(HttpServletRequest request) throws SQLException {
 
         Admin currentAdmin = (Admin)request.getSession().getAttribute("admin");
         if (currentAdmin == null) {

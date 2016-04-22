@@ -18,27 +18,28 @@ public class AdminManagerImpl implements AdminManager {
     @Autowired
     private AdminDAO adminDAO;
 
-
     @Transactional
-    public Admin findByLogin(String login) throws SQLException {
+    public String create(Admin admin) throws SQLException {
 
-        return adminDAO.getByLogin(login);
+        if (!checkByLogin(admin)) {
+            return "You can't use such login! The admin with such login already exists!";
+        } else {
+            try {
+                createNewInDataBase(admin);
+                return "";
+            } catch (SQLException e) {}
+        }
+        return  "Registration failed! Please try again!";
     }
 
     @Transactional
-    public Admin findById(long Id) throws SQLException {
+    public void delete(Admin admin) throws SQLException {
 
-        return adminDAO.getById(Id);
+        adminDAO.delete(admin);
     }
 
     @Transactional
-    public void createNewInDataBase(Admin admin) throws SQLException {
-
-        admin.setAdminId(adminDAO.update(admin));
-    }
-
-    @Transactional
-    public String update(Admin admin) {
+    public String update(Admin admin) throws SQLException {
 
         if (!checkByLogin(admin)) {
             return "You can't use such login! The admin with such login already exists!";
@@ -49,6 +50,24 @@ public class AdminManagerImpl implements AdminManager {
             } catch (SQLException e) {}
         }
         return "Data update failed! Please try again!";
+    }
+
+    @Transactional
+    public Admin findById(long Id) throws SQLException {
+
+        return adminDAO.getById(Id);
+    }
+
+    @Transactional
+    public Admin findByLogin(String login) throws SQLException {
+
+        return adminDAO.getByLogin(login);
+    }
+
+    @Transactional
+    public void createNewInDataBase(Admin admin) throws SQLException {
+
+        admin.setAdminId(adminDAO.update(admin));
     }
 
     @Transactional
@@ -74,20 +93,6 @@ public class AdminManagerImpl implements AdminManager {
         }
 
         return admin;
-    }
-
-    @Transactional
-    public String create(Admin admin) {
-
-        if (!checkByLogin(admin)) {
-            return "You can't use such login! The admin with such login already exists!";
-        } else {
-            try {
-                createNewInDataBase(admin);
-                return "";
-            } catch (SQLException e) {}
-        }
-        return  "Registration failed! Please try again!";
     }
 
     @Transactional

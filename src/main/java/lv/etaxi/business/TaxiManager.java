@@ -10,14 +10,13 @@ import java.sql.SQLException;
  */
 public interface TaxiManager {
 
-    Taxi findByLogin(String login) throws SQLException;
-
-    Taxi findById(long Id) throws SQLException;
-
     void create(Taxi taxi) throws SQLException;
+
+    void delete(Taxi taxi) throws SQLException;
 
     void update(Taxi taxi) throws SQLException;
 
-    void deleteByObject(Taxi taxi) throws SQLException;
+    Taxi findById(long Id) throws SQLException;
 
+    Taxi findByLogin(String login) throws SQLException;
 }

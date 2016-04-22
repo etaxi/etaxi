@@ -40,7 +40,7 @@ public class TaxiManagerImplTest {
     }
 
     public void deleteTaxi() throws Exception {
-        taxiManagerImpl.deleteByObject(newTaxi);
+        taxiManagerImpl.delete(newTaxi);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class TaxiManagerImplTest {
         assertEquals(password, taxiFind .getPassword());
 
         //deleteTaxi();
-        taxiManagerImpl.deleteByObject(taxiFind);
+        taxiManagerImpl.delete(taxiFind);
 
         Taxi taxiFindAfterDelete = taxiManagerImpl.findById(taxi.getTaxiId());
         assertEquals(taxiFindAfterDelete, null);
@@ -98,7 +98,7 @@ public class TaxiManagerImplTest {
         assertEquals(taxiFindAfterUpdate.getPhone(),    phone);
         assertEquals(taxiFindAfterUpdate.getPassword(), password);
 
-        taxiManagerImpl.deleteByObject(taxiFind);
+        taxiManagerImpl.delete(taxiFind);
 
         Taxi taxiFindAfterDelete = taxiManagerImpl.findById(taxiFind.getTaxiId());
         assertEquals(taxiFindAfterDelete, null);

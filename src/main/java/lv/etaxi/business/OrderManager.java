@@ -16,11 +16,13 @@ public interface OrderManager{
 
     void create(Order order) throws SQLException;
 
+    void delete(Order order) throws SQLException;
+
     void update(Order order) throws SQLException;
 
     Order findById(long Id) throws SQLException;
 
-    void delete(Order order) throws SQLException;
+    Order findById(String orderId);
 
     List<Order> getOrdersByCustomerId(long id, Timestamp begin, Timestamp end) throws SQLException;
 
@@ -35,8 +37,6 @@ public interface OrderManager{
     Order createNewInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime, String distance);
 
     boolean checkChangePossibility(Customer customer, Order order);
-
-    Order findById(String orderId);
 
     boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete);
 

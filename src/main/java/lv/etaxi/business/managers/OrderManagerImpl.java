@@ -29,11 +29,16 @@ public class OrderManagerImpl implements OrderManager {
     @Autowired
     private OrderDAO orderDAO;
 
-
     @Transactional
     public void create(Order order) throws SQLException {
 
         order.setOrderId(orderDAO.update(order));
+    }
+
+    @Transactional
+    public void delete(Order order) throws SQLException {
+
+        orderDAO.delete(order);
     }
 
     @Transactional
@@ -49,9 +54,12 @@ public class OrderManagerImpl implements OrderManager {
     }
 
     @Transactional
-    public void delete(Order order) throws SQLException {
-
-        orderDAO.delete(order);
+    public Order findById(String orderId) {
+        try {
+            return findById(Long.valueOf(orderId));
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     @Transactional
@@ -104,15 +112,6 @@ public class OrderManagerImpl implements OrderManager {
     @Transactional
     public boolean checkChangePossibility(Customer customer, Order order) {
         return  (order.getCustomerId() == customer.getCustomerId());
-    }
-
-    @Transactional
-    public Order findById(String orderId) {
-        try {
-            return findById(Long.valueOf(orderId));
-        } catch (SQLException e) {
-            return null;
-        }
     }
 
     @Transactional

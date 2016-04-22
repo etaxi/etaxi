@@ -11,9 +11,15 @@ import java.sql.SQLException;
  */
 public interface CustomerManager {
 
-    Customer findByLogin(String login) throws SQLException;
+    String create(Customer customer);
+
+    void delete(Customer customer) throws SQLException;
+
+    String update(Customer customer);
 
     Customer findById(long Id) throws SQLException;
+
+    Customer findByLogin(String login) throws SQLException;
 
     void createNewInDataBase(Customer customer) throws SQLException;
 
@@ -23,10 +29,5 @@ public interface CustomerManager {
 
     boolean checkByLogin(Customer customer);
 
-    String update(Customer customer);
-
-    String create(Customer customer);
-
-    void deleteByObject(Customer customer) throws SQLException;
 }
 

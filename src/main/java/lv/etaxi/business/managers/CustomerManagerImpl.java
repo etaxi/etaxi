@@ -109,7 +109,7 @@ public class CustomerManagerImpl implements CustomerManager {
     }
 
     @Transactional
-    public void deleteByObject(Customer customer) throws SQLException {
+    public void delete(Customer customer) throws SQLException {
 
         customerDAO.delete(customer);
 

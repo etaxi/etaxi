@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfig.class)
-@Transactional
+//@Transactional
 public class TaxiManagerImplTest {
 
     String name     = "name123";
@@ -58,12 +58,15 @@ public class TaxiManagerImplTest {
         assertEquals(phone,    taxiFind .getPhone());
         assertEquals(password, taxiFind .getPassword());
 
-        taxiManagerImpl.deleteTaxi(taxiFind);
         //deleteTaxi();
+        taxiManagerImpl.deleteTaxi(taxiFind);
+
+        Taxi taxiFindAfterDelete = taxiManagerImpl.findTaxiById(taxi.getTaxiId());
+        assertEquals(taxiFindAfterDelete, null);
     }
 
     @Test
-    public void findCustomerByLogin() throws Exception {
+    public void findTaxiByLogin() throws Exception {
         createNewTaxi();
 
         Taxi taxiFind = taxiManagerImpl.findTaxiByLogin(login);
@@ -74,6 +77,9 @@ public class TaxiManagerImplTest {
         assertEquals(taxiFind.getPassword(), password);
 
         deleteTaxi();
+
+        Taxi taxiFindAfterDelete = taxiManagerImpl.findTaxiById(taxiFind.getTaxiId());
+        assertEquals(taxiFindAfterDelete, null);
     }
 
     @Test
@@ -86,12 +92,18 @@ public class TaxiManagerImplTest {
 
         taxiManagerImpl.updateTaxi(taxiFind);
 
-        assertNotNull(taxiFind);
-        assertEquals(taxiFind.getName(),     "name555");
-        assertEquals(taxiFind.getPhone(),    phone);
-        assertEquals(taxiFind.getPassword(), password);
+        taxiManagerImpl.updateTaxi(taxiFind);
+        Taxi taxiFindAfterUpdate = taxiManagerImpl.findTaxiById(taxiFind.getTaxiId());
+
+        assertNotNull(taxiFindAfterUpdate);
+        assertEquals(taxiFindAfterUpdate.getName(),     "name555");
+        assertEquals(taxiFindAfterUpdate.getPhone(),    phone);
+        assertEquals(taxiFindAfterUpdate.getPassword(), password);
 
         taxiManagerImpl.deleteTaxi(taxiFind);
+
+        Taxi taxiFindAfterDelete = taxiManagerImpl.findTaxiById(taxiFind.getTaxiId());
+        assertEquals(taxiFindAfterDelete, null);
     }
 
 

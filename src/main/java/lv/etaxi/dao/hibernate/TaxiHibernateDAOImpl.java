@@ -49,7 +49,7 @@ public class TaxiHibernateDAOImpl implements TaxiDAO {
 
     public void delete(Taxi taxi) throws SQLException {
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         //Transaction transaction = session.beginTransaction();
 //        Query query = session.createQuery("FROM Order o where o.taxiId = " + taxi.getTaxiId());
 //        List<Order> orderList = query.list();

@@ -20,12 +20,12 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfig.class)
-@Transactional
+//@Transactional
 public class CustomerManagerImplTest {
 
-    String name     = "name";
-    String phone    = "phone";
-    String password = "password";
+    String name     = "name123";
+    String phone    = "phone123";
+    String password = "password123";
 
     Customer newCustomer;
 
@@ -58,6 +58,9 @@ public class CustomerManagerImplTest {
         assertEquals(password, customerFind.getPassword());
 
         customerManagerImpl.deleteCustomer(customerFind);
+
+        Customer customerFindAfterDelete = customerManagerImpl.findCustomerById(customerFind.getCustomerId());
+        assertEquals(customerFindAfterDelete, null);
     }
 
     @Test
@@ -72,6 +75,9 @@ public class CustomerManagerImplTest {
         assertEquals(newCustomer.getPassword(), customer.getPassword());
 
         deleteCustomer();
+
+        Customer customerFindAfterDelete = customerManagerImpl.findCustomerById(customer.getCustomerId());
+        assertEquals(customerFindAfterDelete, null);
     }
 
     @Test
@@ -80,15 +86,21 @@ public class CustomerManagerImplTest {
         customerManagerImpl.createNewCustomer(customer);
 
         Customer customerFind = customerManagerImpl.findCustomerById(customer.getCustomerId());
-
         customerFind.setName("name555");
 
-        assertNotNull(customerFind);
-        assertEquals("name555",     customerFind.getName());
-        assertEquals(phone,    customerFind.getPhone());
-        assertEquals(password, customerFind.getPassword());
+        //ToDo  .updateCustomer  - не  хочет работать
+        customerManagerImpl.updateCustomerInDataBase(customerFind);
+        Customer customerFindAfterUpdate = customerManagerImpl.findCustomerById(customerFind.getCustomerId());
 
-        customerManagerImpl.deleteCustomer(customerFind);
+        assertNotNull(customerFindAfterUpdate);
+        assertEquals("name555",     customerFindAfterUpdate.getName());
+        assertEquals(phone,         customerFindAfterUpdate.getPhone());
+        assertEquals(password,      customerFindAfterUpdate.getPassword());
+
+        customerManagerImpl.deleteCustomer(customerFindAfterUpdate);
+
+        Customer customerFindAfterDelete = customerManagerImpl.findCustomerById(customerFindAfterUpdate.getCustomerId());
+        assertEquals(customerFindAfterDelete, null);
     }
 
     @Test
@@ -103,6 +115,8 @@ public class CustomerManagerImplTest {
         assertEquals(newCustomer.getPassword(), customer.getPassword());
 
         deleteCustomer();
-    }
 
+        Customer customerFindAfterDelete = customerManagerImpl.findCustomerById(customer.getCustomerId());
+        assertEquals(customerFindAfterDelete, null);
+    }
 }

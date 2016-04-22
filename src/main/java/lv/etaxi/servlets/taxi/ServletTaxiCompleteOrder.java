@@ -25,9 +25,9 @@ public class ServletTaxiCompleteOrder extends HttpServlet {
             long orderId = Long.parseLong((String) request.getSession().getAttribute("orderId"));
 
             try {
-                Order order = new OrderManagerImpl().findOrderById(orderId);
+                Order order = new OrderManagerImpl().findById(orderId);
                 order.setOrderStatus(Order.OrderStatus.DELIVERED);
-                new OrderManagerImpl().updateOrder(order);
+                new OrderManagerImpl().update(order);
                 request.setAttribute("message", "Completed order Id=" + orderId);
                 request.getRequestDispatcher("/taxi/TaxiMenuAuthorized.jsp").forward(request, response);
                 response.setContentType("text/html;charset=utf-8");

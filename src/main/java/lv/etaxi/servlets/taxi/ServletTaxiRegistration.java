@@ -51,7 +51,7 @@ public class ServletTaxiRegistration extends HttpServlet {
             Taxi newTaxi = new Taxi((long)0, name, car, phone, login, password);
             try {
                 message = "Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";
-                taxiManager.createNewTaxi(newTaxi);
+                taxiManager.create(newTaxi);
             } catch (SQLException e) {
                 e.printStackTrace();
                 message = "Registration failed! Please try again!";

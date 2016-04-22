@@ -25,7 +25,7 @@ public class ServletAdminEditProfile extends HttpServlet {
 
             Admin currentAdmin = null;
             try {
-                currentAdmin = new AdminManagerImpl().findAdminById((long) request.getSession().getAttribute("adminId"));
+                currentAdmin = new AdminManagerImpl().findById((long) request.getSession().getAttribute("adminId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -54,7 +54,7 @@ public class ServletAdminEditProfile extends HttpServlet {
             AdminManager adminManager = new AdminManagerImpl();
             Admin currentAdmin = null;
             try {
-                currentAdmin = adminManager.findAdminById((long) request.getSession().getAttribute("adminId"));
+                currentAdmin = adminManager.findById((long) request.getSession().getAttribute("adminId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -75,13 +75,13 @@ public class ServletAdminEditProfile extends HttpServlet {
                 currentAdmin.setLogin(login);
 
                 try {
-                    Admin presentAdminWthSuchLogin = adminManager.findAdminByLogin(currentAdmin.getLogin());
+                    Admin presentAdminWthSuchLogin = adminManager.findByLogin(currentAdmin.getLogin());
                     if ((presentAdminWthSuchLogin != null)
                             && (presentAdminWthSuchLogin.getAdminId() != currentAdmin.getAdminId())) {
                         message = "You can't use this login! The admin with such login already present!";
                     }
                     else{
-                        adminManager.updateAdmin(currentAdmin);
+                        adminManager.update(currentAdmin);
                         message = "The data change is made (" + currentAdmin.getName() + ")";
                         registrationSuccessful = true;
                     }

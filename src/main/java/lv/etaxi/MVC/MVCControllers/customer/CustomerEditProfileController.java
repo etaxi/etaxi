@@ -42,7 +42,7 @@ public class CustomerEditProfileController implements MVCController {
         currentCustomer.setPhone(request.getParameter("phone"));
         currentCustomer.setPassword(request.getParameter("password"));
 
-        String errorMessage = customerManagerImpl.updateCustomer(currentCustomer);
+        String errorMessage = customerManagerImpl.update(currentCustomer);
 
         if (errorMessage.isEmpty()) {
             errorMessage = "The data change was made (" + currentCustomer.getName() + ")";

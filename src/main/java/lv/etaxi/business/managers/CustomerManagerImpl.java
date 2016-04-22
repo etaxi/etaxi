@@ -22,25 +22,25 @@ public class CustomerManagerImpl implements CustomerManager {
     private CustomerDAO customerDAO;
 
     @Transactional
-    public Customer findCustomerByLogin(String login) throws SQLException {
+    public Customer findByLogin(String login) throws SQLException {
 
         return customerDAO.getByLogin(login);
     }
 
     @Transactional
-    public Customer findCustomerById(long Id) throws SQLException {
+    public Customer findById(long Id) throws SQLException {
 
         return customerDAO.getById(Id);
     }
 
     @Transactional
-    public void createNewCustomerInDataBase(Customer customer) throws SQLException {
+    public void createNewInDataBase(Customer customer) throws SQLException {
 
         customer.setCustomerId(customerDAO.update(customer));
     }
 
     @Transactional
-    public void updateCustomerInDataBase(Customer customer) throws SQLException {
+    public void updateInDataBase(Customer customer) throws SQLException {
 
         customerDAO.update(customer);
     }
@@ -50,7 +50,7 @@ public class CustomerManagerImpl implements CustomerManager {
 
         Customer customer = null;
         try {
-            customer = findCustomerByLogin(login);
+            customer = findByLogin(login);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,9 +65,9 @@ public class CustomerManagerImpl implements CustomerManager {
     }
 
     @Transactional
-    public boolean checkCustomerByLogin(Customer customer) {
+    public boolean checkByLogin(Customer customer) {
         try {
-            Customer presentCustomerWithSuchLogin = findCustomerByLogin(customer.getPhone());
+            Customer presentCustomerWithSuchLogin = findByLogin(customer.getPhone());
             if ((presentCustomerWithSuchLogin != null)
                     && (presentCustomerWithSuchLogin.getCustomerId() != customer.getCustomerId())) {
                 return false;
@@ -79,13 +79,13 @@ public class CustomerManagerImpl implements CustomerManager {
     }
 
     @Transactional
-    public String updateCustomer(Customer customer) {
+    public String update(Customer customer) {
 
-        if (!checkCustomerByLogin(customer)) {
+        if (!checkByLogin(customer)) {
             return "You can't use such phone! The customer with such phone already present!";
         } else {
             try {
-                updateCustomerInDataBase(customer);
+                updateInDataBase(customer);
                 return "";
             } catch (SQLException e) {
             }
@@ -94,13 +94,13 @@ public class CustomerManagerImpl implements CustomerManager {
     }
 
     @Transactional
-    public String createNewCustomer(Customer customer) {
+    public String create(Customer customer) {
 
-        if (!checkCustomerByLogin(customer)) {
+        if (!checkByLogin(customer)) {
             return "You can't use such phone! The customer with such phone already present!";
         } else {
             try {
-                createNewCustomerInDataBase(customer);
+                createNewInDataBase(customer);
                 return "";
             } catch (SQLException e) {
             }
@@ -109,7 +109,7 @@ public class CustomerManagerImpl implements CustomerManager {
     }
 
     @Transactional
-    public void deleteCustomer(Customer customer) throws SQLException {
+    public void deleteByObject(Customer customer) throws SQLException {
 
         customerDAO.delete(customer);
 

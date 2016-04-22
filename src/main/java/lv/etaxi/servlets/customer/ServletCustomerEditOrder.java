@@ -30,14 +30,14 @@ public class ServletCustomerEditOrder extends HttpServlet {
 
             Customer currentCustomer = null;
             try {
-                currentCustomer = new CustomerManagerImpl().findCustomerById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = new CustomerManagerImpl().findById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             Order orderToEdit = null;
             try {
-                orderToEdit = new OrderManagerImpl().findOrderById(Long.valueOf(orderIdToEdit));
+                orderToEdit = new OrderManagerImpl().findById(Long.valueOf(orderIdToEdit));
                 if (orderToEdit.getCustomerId() == request.getSession().getAttribute("customerId")) {
                     changeIsPossible = true;
                 }
@@ -84,7 +84,7 @@ public class ServletCustomerEditOrder extends HttpServlet {
                         Order.OrderStatus.WAITING,
                         fromAddress, toAddress, (long) 0, 0, 0, 0, "");
                 try {
-                    new OrderManagerImpl().updateOrder(updatedOrder);
+                    new OrderManagerImpl().update(updatedOrder);
                     updateSuccessful = true;
                     message = "Order ID: " + updatedOrder.getOrderId() + " was changed!";
                 } catch (SQLException e) {

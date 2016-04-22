@@ -35,7 +35,7 @@ public class AdminRegistrationController implements MVCController {
                 request.getParameter("login"),
                 request.getParameter("password"));
 
-        String errorMessage = adminManagerImpl.createNewAdmin(newAdmin);
+        String errorMessage = adminManagerImpl.create(newAdmin);
 
         if (errorMessage.isEmpty()) {
             request.getSession().setAttribute("admin", newAdmin);

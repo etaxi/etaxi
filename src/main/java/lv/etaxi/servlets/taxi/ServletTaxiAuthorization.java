@@ -25,7 +25,7 @@ public class ServletTaxiAuthorization extends HttpServlet {
 
         Taxi taxi = null;
         try {
-            taxi = new TaxiManagerImpl().findTaxiByLogin(login);
+            taxi = new TaxiManagerImpl().findByLogin(login);
 
         } catch (SQLException e) {
             e.printStackTrace();

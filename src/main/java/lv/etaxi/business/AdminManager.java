@@ -10,18 +10,18 @@ import java.sql.SQLException;
  */
 public interface AdminManager {
 
-    Admin findAdminByLogin(String login) throws SQLException;
+    Admin findByLogin(String login) throws SQLException;
 
-    Admin findAdminById(long Id) throws SQLException;
+    Admin findById(long Id) throws SQLException;
 
-    void createNewAdminInDataBase(Admin admin) throws SQLException;
+    void createNewInDataBase(Admin admin) throws SQLException;
 
-    String updateAdmin(Admin admin);
+    String update(Admin admin);
 
     Admin CheckAuthorization(String login, String password);
 
-    String createNewAdmin(Admin admin);
+    String create(Admin admin);
 
-    boolean checkAdminByLogin(Admin admin);
+    boolean checkByLogin(Admin admin);
 
 }

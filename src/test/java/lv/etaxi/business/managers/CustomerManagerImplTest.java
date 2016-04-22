@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.transaction.Transactional;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -37,29 +35,29 @@ public class CustomerManagerImplTest {
     }
 
     public void createNewCustomer() throws Exception {
-        customerManagerImpl.createNewCustomer(newCustomer);
+        customerManagerImpl.create(newCustomer);
     }
 
     public void deleteCustomer() throws Exception {
-        customerManagerImpl.deleteCustomer(newCustomer);
+        customerManagerImpl.deleteByObject(newCustomer);
     }
 
     @Test
     public void findCustomerById() throws Exception {
-        //createNewCustomer();
+        //create NewCustomer();
         Customer customer= new Customer((long)0, name, phone, password);
-        customerManagerImpl.createNewCustomer(customer);
+        customerManagerImpl.create(customer);
 
-        Customer customerFind = customerManagerImpl.findCustomerById(customer.getCustomerId());
+        Customer customerFind = customerManagerImpl.findById(customer.getCustomerId());
 
         assertNotNull(customerFind);
         assertEquals(name,     customerFind.getName());
         assertEquals(phone,    customerFind.getPhone());
         assertEquals(password, customerFind.getPassword());
 
-        customerManagerImpl.deleteCustomer(customerFind);
+        customerManagerImpl.deleteByObject(customerFind);
 
-        Customer customerFindAfterDelete = customerManagerImpl.findCustomerById(customerFind.getCustomerId());
+        Customer customerFindAfterDelete = customerManagerImpl.findById(customerFind.getCustomerId());
         assertEquals(customerFindAfterDelete, null);
     }
 
@@ -67,7 +65,7 @@ public class CustomerManagerImplTest {
     public void findCustomerByLogin() throws Exception {
         createNewCustomer();
 
-        Customer customer = customerManagerImpl.findCustomerByLogin(phone);
+        Customer customer = customerManagerImpl.findByLogin(phone);
 
         assertNotNull(customer);
         assertEquals(newCustomer.getName(),     customer.getName());
@@ -76,30 +74,30 @@ public class CustomerManagerImplTest {
 
         deleteCustomer();
 
-        Customer customerFindAfterDelete = customerManagerImpl.findCustomerById(customer.getCustomerId());
+        Customer customerFindAfterDelete = customerManagerImpl.findById(customer.getCustomerId());
         assertEquals(customerFindAfterDelete, null);
     }
 
     @Test
     public void updateCustomer() throws Exception {
         Customer customer= new Customer((long)0, name, phone, password);
-        customerManagerImpl.createNewCustomer(customer);
+        customerManagerImpl.create(customer);
 
-        Customer customerFind = customerManagerImpl.findCustomerById(customer.getCustomerId());
+        Customer customerFind = customerManagerImpl.findById(customer.getCustomerId());
         customerFind.setName("name555");
 
-        //ToDo  .updateCustomer  - не  хочет работать
-        customerManagerImpl.updateCustomerInDataBase(customerFind);
-        Customer customerFindAfterUpdate = customerManagerImpl.findCustomerById(customerFind.getCustomerId());
+        //ToDo  .update Customer  - не  хочет работать
+        customerManagerImpl.updateInDataBase(customerFind);
+        Customer customerFindAfterUpdate = customerManagerImpl.findById(customerFind.getCustomerId());
 
         assertNotNull(customerFindAfterUpdate);
         assertEquals("name555",     customerFindAfterUpdate.getName());
         assertEquals(phone,         customerFindAfterUpdate.getPhone());
         assertEquals(password,      customerFindAfterUpdate.getPassword());
 
-        customerManagerImpl.deleteCustomer(customerFindAfterUpdate);
+        customerManagerImpl.deleteByObject(customerFindAfterUpdate);
 
-        Customer customerFindAfterDelete = customerManagerImpl.findCustomerById(customerFindAfterUpdate.getCustomerId());
+        Customer customerFindAfterDelete = customerManagerImpl.findById(customerFindAfterUpdate.getCustomerId());
         assertEquals(customerFindAfterDelete, null);
     }
 
@@ -116,7 +114,7 @@ public class CustomerManagerImplTest {
 
         deleteCustomer();
 
-        Customer customerFindAfterDelete = customerManagerImpl.findCustomerById(customer.getCustomerId());
+        Customer customerFindAfterDelete = customerManagerImpl.findById(customer.getCustomerId());
         assertEquals(customerFindAfterDelete, null);
     }
 }

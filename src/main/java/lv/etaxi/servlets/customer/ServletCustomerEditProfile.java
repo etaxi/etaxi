@@ -24,7 +24,7 @@ public class ServletCustomerEditProfile extends HttpServlet {
 
             Customer currentCustomer = null;
             try {
-                currentCustomer = new CustomerManagerImpl().findCustomerById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = new CustomerManagerImpl().findById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -53,7 +53,7 @@ public class ServletCustomerEditProfile extends HttpServlet {
             CustomerManager customerManager = new CustomerManagerImpl();
             Customer currentCustomer = null;
             try {
-                currentCustomer = customerManager.findCustomerById((long) request.getSession().getAttribute("customerId"));
+                currentCustomer = customerManager.findById((long) request.getSession().getAttribute("customerId"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -74,13 +74,13 @@ public class ServletCustomerEditProfile extends HttpServlet {
                 currentCustomer.setPhone(phone);
 
                 try {
-                    Customer presentCustomerWthSuchLogin = customerManager.findCustomerByLogin(currentCustomer.getPhone());
+                    Customer presentCustomerWthSuchLogin = customerManager.findByLogin(currentCustomer.getPhone());
                     if ((presentCustomerWthSuchLogin != null)
                             && (presentCustomerWthSuchLogin.getCustomerId() != currentCustomer.getCustomerId())) {
                         message = "You can't use such phone! The customer with such phone already present!";
                     }
                     else{
-                        customerManager.updateCustomerInDataBase(currentCustomer);
+                        customerManager.updateInDataBase(currentCustomer);
                         message = "The data change is made (" + currentCustomer.getName() + ")";
                         registrationSuccessful = true;
                     }

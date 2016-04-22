@@ -42,7 +42,7 @@ public class AdminEditProfileController implements MVCController {
         currentAdmin.setLogin(request.getParameter("login"));
         currentAdmin.setPassword(request.getParameter("password"));
 
-        String errorMessage = adminManagerImpl.updateAdmin(currentAdmin);
+        String errorMessage = adminManagerImpl.update(currentAdmin);
 
         if (errorMessage.isEmpty()) {
             errorMessage = "The data change was made (" + currentAdmin.getName() + ")";

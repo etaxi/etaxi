@@ -20,27 +20,27 @@ public class AdminManagerImpl implements AdminManager {
 
 
     @Transactional
-    public Admin findAdminByLogin(String login) throws SQLException {
+    public Admin findByLogin(String login) throws SQLException {
 
         return adminDAO.getByLogin(login);
     }
 
     @Transactional
-    public Admin findAdminById(long Id) throws SQLException {
+    public Admin findById(long Id) throws SQLException {
 
         return adminDAO.getById(Id);
     }
 
     @Transactional
-    public void createNewAdminInDataBase(Admin admin) throws SQLException {
+    public void createNewInDataBase(Admin admin) throws SQLException {
 
         admin.setAdminId(adminDAO.update(admin));
     }
 
     @Transactional
-    public String updateAdmin(Admin admin) {
+    public String update(Admin admin) {
 
-        if (!checkAdminByLogin(admin)) {
+        if (!checkByLogin(admin)) {
             return "You can't use such login! The admin with such login already exists!";
         } else {
             try {
@@ -62,7 +62,7 @@ public class AdminManagerImpl implements AdminManager {
 
         Admin admin = null;
         try {
-            admin = findAdminByLogin(login);
+            admin = findByLogin(login);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -77,13 +77,13 @@ public class AdminManagerImpl implements AdminManager {
     }
 
     @Transactional
-    public String createNewAdmin(Admin admin) {
+    public String create(Admin admin) {
 
-        if (!checkAdminByLogin(admin)) {
+        if (!checkByLogin(admin)) {
             return "You can't use such login! The admin with such login already exists!";
         } else {
             try {
-                createNewAdminInDataBase(admin);
+                createNewInDataBase(admin);
                 return "";
             } catch (SQLException e) {}
         }
@@ -91,9 +91,9 @@ public class AdminManagerImpl implements AdminManager {
     }
 
     @Transactional
-    public boolean checkAdminByLogin(Admin admin) {
+    public boolean checkByLogin(Admin admin) {
         try {
-            Admin presentAdminWithSuchLogin = findAdminByLogin(admin.getLogin());
+            Admin presentAdminWithSuchLogin = findByLogin(admin.getLogin());
             if ((presentAdminWithSuchLogin != null)
                     && (presentAdminWithSuchLogin.getAdminId() != admin.getAdminId())) {
                 return false;

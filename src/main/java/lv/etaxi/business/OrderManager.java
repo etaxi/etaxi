@@ -14,13 +14,13 @@ import java.util.List;
 
 public interface OrderManager{
 
-    void createNewOrder(Order order) throws SQLException;
+    void create(Order order) throws SQLException;
 
-    void updateOrder(Order order) throws SQLException;
+    void update(Order order) throws SQLException;
 
-    Order findOrderById(long Id) throws SQLException;
+    Order findById(long Id) throws SQLException;
 
-    void deleteOrder(Order order) throws SQLException;
+    void delete(Order order) throws SQLException;
 
     List<Order> getOrdersByCustomerId(long id, Timestamp begin, Timestamp end) throws SQLException;
 
@@ -32,11 +32,11 @@ public interface OrderManager{
 
     List<Order> getOpenOrdersAll() throws SQLException;
 
-    Order createNewOrderInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime, String distance);
+    Order createNewInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime, String distance);
 
-    boolean checkOrderChangePossibility(Customer customer, Order order);
+    boolean checkChangePossibility(Customer customer, Order order);
 
-    Order findOrderById(String orderId);
+    Order findById(String orderId);
 
     boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete);
 

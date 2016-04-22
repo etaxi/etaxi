@@ -28,9 +28,9 @@ public class ServletCustomerDeleteOrder extends HttpServlet {
             Order orderToDelete = null;
             OrderManager orderManager = new OrderManagerImpl();
             try {
-                orderToDelete = orderManager.findOrderById(Long.valueOf(orderIdToDelete));
+                orderToDelete = orderManager.findById(Long.valueOf(orderIdToDelete));
                 if (orderToDelete.getCustomerId() == request.getSession().getAttribute("customerId")) {
-                    orderManager.deleteOrder(orderToDelete);
+                    orderManager.delete(orderToDelete);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

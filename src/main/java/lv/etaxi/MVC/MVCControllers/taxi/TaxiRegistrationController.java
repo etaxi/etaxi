@@ -46,7 +46,7 @@ public class TaxiRegistrationController implements MVCController {
             Taxi newTaxi = new Taxi((long)0, name, car, phone, login, password);
             try {
                 message = " Registration successful (new taxi ID: " + newTaxi.getTaxiId() + ")";
-                taxiManagerImpl.createNewTaxi(newTaxi);
+                taxiManagerImpl.create(newTaxi);
             } catch (SQLException e) {
                 e.printStackTrace();
                 message = "Registration failed! Please try again!";

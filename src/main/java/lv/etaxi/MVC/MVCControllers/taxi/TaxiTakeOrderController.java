@@ -33,11 +33,11 @@ public class TaxiTakeOrderController implements MVCController {
 
 
             try {
-                Order order = orderManagerImpl.findOrderById(Long.parseLong(orderId));
+                Order order = orderManagerImpl.findById(Long.parseLong(orderId));
                 Taxi taxi = (Taxi) request.getSession().getAttribute("taxi");
                 order.setTaxiId(taxi.getTaxiId());
                 order.setOrderStatus(Order.OrderStatus.TAKEN);
-                orderManagerImpl.updateOrder(order);
+                orderManagerImpl.update(order);
                 request.getSession().setAttribute("order", order);
 
                 return new MVCModel("/taxi/TaxiTakeOrder.jsp", "");

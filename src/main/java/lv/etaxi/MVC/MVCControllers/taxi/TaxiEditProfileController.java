@@ -43,7 +43,7 @@ public class TaxiEditProfileController implements MVCController {
         currentTaxi.setLogin(request.getParameter("login"));
         currentTaxi.setPassword(request.getParameter("password"));
 
-        taxiManagerImpl.updateTaxi(currentTaxi);
+        taxiManagerImpl.update(currentTaxi);
         return new MVCModel("/taxi/TaxiMenu.jsp", "");
 
     }

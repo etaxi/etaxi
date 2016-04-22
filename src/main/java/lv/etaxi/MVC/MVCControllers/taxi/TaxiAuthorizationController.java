@@ -37,7 +37,7 @@ public class TaxiAuthorizationController implements MVCController {
 
         Taxi taxi = null;
         try {
-            taxi = taxiManagerImpl.findTaxiByLogin(login);
+            taxi = taxiManagerImpl.findByLogin(login);
 
         } catch (SQLException e) {
             e.printStackTrace();

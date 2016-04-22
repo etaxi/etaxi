@@ -36,7 +36,7 @@ public class CustomerRegistrationController implements MVCController {
                 request.getParameter("phone"),
                 request.getParameter("password"));
 
-        String errorMessage = customerManagerImpl.createNewCustomer(newCustomer);
+        String errorMessage = customerManagerImpl.create(newCustomer);
 
         if (errorMessage.isEmpty()) {
             request.getSession().setAttribute("customer", newCustomer);

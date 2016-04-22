@@ -42,12 +42,12 @@ public class ServletCustomerRegistration extends HttpServlet {
         if (message.isEmpty()) {
 
             try {
-                if (customerManager.findCustomerByLogin(phone) != null) {
+                if (customerManager.findByLogin(phone) != null) {
                     message = "You can't use such phone! The customer with such phone already present!";
                 }
                 else {
                     Customer newCustomer = new Customer((long)0, name, phone, password);
-                    customerManager.createNewCustomer(newCustomer);
+                    customerManager.create(newCustomer);
 
                     message = "Registration successful: " + newCustomer.getName();
                     registrationSuccessful = true;

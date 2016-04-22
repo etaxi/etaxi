@@ -25,7 +25,7 @@ public class ServletCustomerAuthorization extends HttpServlet {
 
         Customer customer = null;
         try {
-            customer = new CustomerManagerImpl().findCustomerByLogin(login);
+            customer = new CustomerManagerImpl().findByLogin(login);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -22,11 +22,11 @@ public class ServletTaxiTakeOrder extends HttpServlet {
             String orderId     = request.getParameter("orderId");
 
             try {
-                Order order = new OrderManagerImpl().findOrderById(Long.parseLong(orderId));
+                Order order = new OrderManagerImpl().findById(Long.parseLong(orderId));
                 Long taxiId = (long) request.getSession().getAttribute("taxiID");
                 order.setTaxiId(taxiId);
                 order.setOrderStatus(Order.OrderStatus.TAKEN);
-                new OrderManagerImpl().updateOrder(order);
+                new OrderManagerImpl().update(order);
                 request.getSession().setAttribute("orderId", orderId);
 
                 request.setAttribute("message", "Taken order Id="+ order.getOrderId());

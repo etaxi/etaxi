@@ -31,10 +31,10 @@ public class ServletTaxiCancelOrder extends HttpServlet {
 
             long orderId = Long.parseLong((String) request.getSession().getAttribute("orderId"));
             try {
-                Order order = new OrderManagerImpl().findOrderById(orderId);
+                Order order = new OrderManagerImpl().findById(orderId);
                 order.setTaxiId((long) 0);
                 order.setOrderStatus(Order.OrderStatus.WAITING);
-                new OrderManagerImpl().updateOrder(order);
+                new OrderManagerImpl().update(order);
                 request.getSession().removeAttribute("orderId");
 
                 request.setAttribute("message", "Canceled order Id=" + orderId);

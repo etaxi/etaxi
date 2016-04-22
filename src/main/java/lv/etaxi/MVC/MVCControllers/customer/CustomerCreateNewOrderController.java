@@ -40,7 +40,7 @@ public class CustomerCreateNewOrderController implements MVCController {
             return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
 
-        Order newOrder = orderManagerImpl.createNewOrderInDataBase(
+        Order newOrder = orderManagerImpl.createNewInDataBase(
                 currentCustomer,
                 request.getParameter("fromAddress"),
                 request.getParameter("toAddress"),

@@ -31,25 +31,25 @@ public class OrderManagerImpl implements OrderManager {
 
 
     @Transactional
-    public void createNewOrder(Order order) throws SQLException {
+    public void create(Order order) throws SQLException {
 
         order.setOrderId(orderDAO.update(order));
     }
 
     @Transactional
-    public void updateOrder(Order order) throws SQLException {
+    public void update(Order order) throws SQLException {
 
         orderDAO.update(order);
     }
 
     @Transactional
-    public Order findOrderById(long Id) throws SQLException {
+    public Order findById(long Id) throws SQLException {
 
         return orderDAO.getById(Id);
     }
 
     @Transactional
-    public void deleteOrder(Order order) throws SQLException {
+    public void delete(Order order) throws SQLException {
 
         orderDAO.delete(order);
     }
@@ -85,7 +85,7 @@ public class OrderManagerImpl implements OrderManager {
     }
 
     @Transactional
-    public Order createNewOrderInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime, String distance) {
+    public Order createNewInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime, String distance) {
 
         Order newOrder = new Order((long) 0, customer.getCustomerId(),
                 new Timestamp(new Date().getTime()),
@@ -94,7 +94,7 @@ public class OrderManagerImpl implements OrderManager {
                 fromAddress, toAddress, (long) 0,
                 Double.valueOf(distance), 0, 0, "");
         try {
-            createNewOrder(newOrder);
+            create(newOrder);
             return newOrder;
         } catch (SQLException e) {
             return null;
@@ -102,14 +102,14 @@ public class OrderManagerImpl implements OrderManager {
     }
 
     @Transactional
-    public boolean checkOrderChangePossibility(Customer customer, Order order) {
+    public boolean checkChangePossibility(Customer customer, Order order) {
         return  (order.getCustomerId() == customer.getCustomerId());
     }
 
     @Transactional
-    public Order findOrderById(String orderId) {
+    public Order findById(String orderId) {
         try {
-            return findOrderById(Long.valueOf(orderId));
+            return findById(Long.valueOf(orderId));
         } catch (SQLException e) {
             return null;
         }
@@ -118,11 +118,11 @@ public class OrderManagerImpl implements OrderManager {
     @Transactional
     public boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete) {
 
-        Order currentOrder = findOrderById(orderIdToDelete);
+        Order currentOrder = findById(orderIdToDelete);
         if (currentOrder != null) {
-            if (checkOrderChangePossibility(customer, currentOrder)) {
+            if (checkChangePossibility(customer, currentOrder)) {
                 try {
-                    deleteOrder(currentOrder);
+                    delete(currentOrder);
                     return true;
                 } catch (SQLException e) {}
             }
@@ -134,10 +134,10 @@ public class OrderManagerImpl implements OrderManager {
     public  boolean updateOrderByIdByCustomer(Customer customer, String orderIdToUpdate, String fromAddress,
                                                String toAddress, String orderedDateTime, String feedback, Double distance) {
 
-        Order currentOrder = findOrderById(orderIdToUpdate);
+        Order currentOrder = findById(orderIdToUpdate);
         if (currentOrder != null) {
 
-            if (checkOrderChangePossibility(customer, currentOrder)) {
+            if (checkChangePossibility(customer, currentOrder)) {
 
                 currentOrder.setFromAdress((fromAddress.isEmpty()) ? currentOrder.getFromAdress() : fromAddress);
                 currentOrder.setToAdress((toAddress.isEmpty()) ? currentOrder.getToAdress() : toAddress);
@@ -147,7 +147,7 @@ public class OrderManagerImpl implements OrderManager {
                 currentOrder.setDistance((distance==0.0) ? currentOrder.getDistance() : distance);
 
                 try {
-                    updateOrder(currentOrder);
+                    update(currentOrder);
                     return true;
                 } catch (SQLException e) {}
             }

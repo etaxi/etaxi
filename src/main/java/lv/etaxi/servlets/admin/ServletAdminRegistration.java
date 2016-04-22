@@ -43,12 +43,12 @@ public class ServletAdminRegistration extends HttpServlet {
         if (message.isEmpty()) {
 
             try {
-                if (adminManager.findAdminByLogin(login) != null) {
+                if (adminManager.findByLogin(login) != null) {
                     message = "You can't use such login! The admin with such login already present!";
                 }
                 else {
                     Admin newAdmin = new Admin((long)0, name, login, password);
-                    adminManager.createNewAdmin(newAdmin);
+                    adminManager.create(newAdmin);
 
                     message = "Registration successful: " + newAdmin.getName();
                     registrationSuccessful = true;

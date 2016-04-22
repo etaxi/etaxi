@@ -30,9 +30,9 @@ public class CustomerWriteFeedbackController implements MVCController {
 
         String orderId = request.getParameter("orderId");
 
-        Order currentOrder = orderManagerImpl.findOrderById(orderId);
+        Order currentOrder = orderManagerImpl.findById(orderId);
 
-        return  (orderManagerImpl.checkOrderChangePossibility(currentCustomer, currentOrder)) ?
+        return  (orderManagerImpl.checkChangePossibility(currentCustomer, currentOrder)) ?
                 new MVCModel("/customer/CustomerWriteFeedbackToOrder.jsp", currentOrder, "") :
                 new MVCModel("/customer/CustomerMenu.jsp", null, "");
 
@@ -60,7 +60,7 @@ public class CustomerWriteFeedbackController implements MVCController {
         if (updateSuccessful) {
             return new MVCModel("/customer/CustomerWriteFeedbacksToOrders.jsp", null, message);
         } else {
-            Order currentOrder = orderManagerImpl.findOrderById(request.getParameter("orderId"));
+            Order currentOrder = orderManagerImpl.findById(request.getParameter("orderId"));
             return new MVCModel("/customer/CustomerWriteFeedbackToOrder.jsp", currentOrder, message);
         }
     }

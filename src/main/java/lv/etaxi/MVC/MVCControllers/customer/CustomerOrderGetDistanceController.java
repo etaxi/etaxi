@@ -39,7 +39,7 @@ public class CustomerOrderGetDistanceController implements MVCController {
 
         Order currentOrder = null;
         try {
-            currentOrder = orderManagerImpl.findOrderById(request.getParameter("orderId"));
+            currentOrder = orderManagerImpl.findById(request.getParameter("orderId"));
         } catch (Exception e) {
             currentOrder = new Order();
             currentOrder.setFromAdress(request.getParameter("fromAddress"));

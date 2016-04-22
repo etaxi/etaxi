@@ -33,7 +33,7 @@ public class TaxiCancelOrderController implements MVCController {
             try {
                 order.setTaxiId((long) 0);
                 order.setOrderStatus(Order.OrderStatus.WAITING);
-                orderManagerImpl.updateOrder(order);
+                orderManagerImpl.update(order);
                 request.getSession().removeAttribute("order");
                 return new MVCModel("/taxi/TaxiCancelOrder.jsp", "");
             } catch (SQLException e) {

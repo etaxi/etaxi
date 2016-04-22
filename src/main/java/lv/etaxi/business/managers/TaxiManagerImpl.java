@@ -21,31 +21,31 @@ public class TaxiManagerImpl implements TaxiManager {
 
 
     @Transactional
-    public Taxi findTaxiByLogin(String login) throws SQLException {
+    public Taxi findByLogin(String login) throws SQLException {
 
         return taxiDAO.getByLogin(login);
     }
 
     @Transactional
-    public Taxi findTaxiById(long Id) throws SQLException {
+    public Taxi findById(long Id) throws SQLException {
 
         return taxiDAO.getById(Id);
     }
 
     @Transactional
-    public void createNewTaxi(Taxi taxi) throws SQLException {
+    public void create(Taxi taxi) throws SQLException {
 
         taxi.setTaxiId(taxiDAO.update(taxi));
     }
 
     @Transactional
-    public void updateTaxi(Taxi taxi) throws SQLException {
+    public void update(Taxi taxi) throws SQLException {
 
         taxiDAO.update(taxi);
     }
 
     @Transactional
-    public void deleteTaxi(Taxi taxi) throws SQLException {
+    public void deleteByObject(Taxi taxi) throws SQLException {
 
         taxiDAO.delete(taxi);
     }

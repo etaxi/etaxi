@@ -31,9 +31,9 @@ public class CustomerOrderEditController implements MVCController {
 
         String orderId = request.getParameter("orderId");
 
-        Order currentOrder = orderManagerImpl.findOrderById(orderId);
+        Order currentOrder = orderManagerImpl.findById(orderId);
 
-        return  orderManagerImpl.checkOrderChangePossibility(currentCustomer, currentOrder) ?
+        return  orderManagerImpl.checkChangePossibility(currentCustomer, currentOrder) ?
                 new MVCModel("/customer/CustomerEditOrder.jsp", currentOrder, "") :
                 new MVCModel("/customer/CustomerMenu.jsp", null, "");
 
@@ -63,7 +63,7 @@ public class CustomerOrderEditController implements MVCController {
         if (updateSuccessful) {
             return new MVCModel("/customer/CustomerEditDeleteOrders.jsp", null, message);
         } else {
-            Order currentOrder = orderManagerImpl.findOrderById(request.getParameter("orderId"));
+            Order currentOrder = orderManagerImpl.findById(request.getParameter("orderId"));
             return new MVCModel("/customer/CustomerEditOrder.jsp", currentOrder, message);
         }
     }

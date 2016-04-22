@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.transaction.Transactional;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -38,20 +36,20 @@ public class TaxiManagerImplTest {
     }
 
     public void createNewTaxi() throws Exception {
-        taxiManagerImpl.createNewTaxi(newTaxi);
+        taxiManagerImpl.create(newTaxi);
     }
 
     public void deleteTaxi() throws Exception {
-        taxiManagerImpl.deleteTaxi(newTaxi);
+        taxiManagerImpl.deleteByObject(newTaxi);
     }
 
     @Test
     public void findTaxiById() throws Exception {
-        //createNewCustomer();
+        //create NewCustomer();
         Taxi taxi = new Taxi((long)0, name, car, phone, login, password);
-        taxiManagerImpl.createNewTaxi(taxi);
+        taxiManagerImpl.create(taxi);
 
-        Taxi taxiFind = taxiManagerImpl.findTaxiById(taxi.getTaxiId());
+        Taxi taxiFind = taxiManagerImpl.findById(taxi.getTaxiId());
 
         assertNotNull(taxiFind);
         assertEquals(name,     taxiFind .getName());
@@ -59,9 +57,9 @@ public class TaxiManagerImplTest {
         assertEquals(password, taxiFind .getPassword());
 
         //deleteTaxi();
-        taxiManagerImpl.deleteTaxi(taxiFind);
+        taxiManagerImpl.deleteByObject(taxiFind);
 
-        Taxi taxiFindAfterDelete = taxiManagerImpl.findTaxiById(taxi.getTaxiId());
+        Taxi taxiFindAfterDelete = taxiManagerImpl.findById(taxi.getTaxiId());
         assertEquals(taxiFindAfterDelete, null);
     }
 
@@ -69,7 +67,7 @@ public class TaxiManagerImplTest {
     public void findTaxiByLogin() throws Exception {
         createNewTaxi();
 
-        Taxi taxiFind = taxiManagerImpl.findTaxiByLogin(login);
+        Taxi taxiFind = taxiManagerImpl.findByLogin(login);
 
         assertNotNull(taxiFind);
         assertEquals(taxiFind.getName(),     name);
@@ -78,31 +76,31 @@ public class TaxiManagerImplTest {
 
         deleteTaxi();
 
-        Taxi taxiFindAfterDelete = taxiManagerImpl.findTaxiById(taxiFind.getTaxiId());
+        Taxi taxiFindAfterDelete = taxiManagerImpl.findById(taxiFind.getTaxiId());
         assertEquals(taxiFindAfterDelete, null);
     }
 
     @Test
     public void updateTaxi() throws Exception {
         Taxi taxi = new Taxi((long)0, name, car, phone, login, password);
-        taxiManagerImpl.createNewTaxi(taxi);
+        taxiManagerImpl.create(taxi);
 
-        Taxi taxiFind = taxiManagerImpl.findTaxiById(taxi.getTaxiId());
+        Taxi taxiFind = taxiManagerImpl.findById(taxi.getTaxiId());
         taxiFind.setName("name555");
 
-        taxiManagerImpl.updateTaxi(taxiFind);
+        taxiManagerImpl.update(taxiFind);
 
-        taxiManagerImpl.updateTaxi(taxiFind);
-        Taxi taxiFindAfterUpdate = taxiManagerImpl.findTaxiById(taxiFind.getTaxiId());
+        taxiManagerImpl.update(taxiFind);
+        Taxi taxiFindAfterUpdate = taxiManagerImpl.findById(taxiFind.getTaxiId());
 
         assertNotNull(taxiFindAfterUpdate);
         assertEquals(taxiFindAfterUpdate.getName(),     "name555");
         assertEquals(taxiFindAfterUpdate.getPhone(),    phone);
         assertEquals(taxiFindAfterUpdate.getPassword(), password);
 
-        taxiManagerImpl.deleteTaxi(taxiFind);
+        taxiManagerImpl.deleteByObject(taxiFind);
 
-        Taxi taxiFindAfterDelete = taxiManagerImpl.findTaxiById(taxiFind.getTaxiId());
+        Taxi taxiFindAfterDelete = taxiManagerImpl.findById(taxiFind.getTaxiId());
         assertEquals(taxiFindAfterDelete, null);
     }
 

@@ -27,7 +27,7 @@ public class TaxiCompleteOrderController implements MVCController {
 
             try {
                 order.setOrderStatus(Order.OrderStatus.DELIVERED);
-                orderManagerImpl.updateOrder(order);
+                orderManagerImpl.update(order);
 
                 return new MVCModel("/taxi/TaxiCompleteOrder.jsp", "");
 

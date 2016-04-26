@@ -2,6 +2,7 @@ package lv.etaxi.business.managers;
 
 import lv.etaxi.business.AdminManager;
 import lv.etaxi.dao.AdminDAO;
+import lv.etaxi.dao.DBException;
 import lv.etaxi.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,9 @@ public class AdminManagerImpl implements AdminManager {
         if (!checkByLogin(admin)) {
             return "You can't use such login! The admin with such login already exists!";
         } else {
-            try {
-                createNewInDataBase(admin);
-                return "";
-            } catch (SQLException e) {}
+            createNewInDataBase(admin);
+            return "";
         }
-        return  "Registration failed! Please try again!";
     }
 
     @Transactional
@@ -44,12 +42,9 @@ public class AdminManagerImpl implements AdminManager {
         if (!checkByLogin(admin)) {
             return "You can't use such login! The admin with such login already exists!";
         } else {
-            try {
-                updateAdminInDataBase(admin);
-                return "";
-            } catch (SQLException e) {}
+            updateAdminInDataBase(admin);
+            return "";
         }
-        return "Data update failed! Please try again!";
     }
 
     @Transactional
@@ -67,7 +62,7 @@ public class AdminManagerImpl implements AdminManager {
     @Transactional
     public void createNewInDataBase(Admin admin) throws SQLException {
 
-        admin.setAdminId(adminDAO.update(admin));
+        admin.setAdminId(adminDAO.create(admin));
     }
 
     @Transactional
@@ -77,14 +72,10 @@ public class AdminManagerImpl implements AdminManager {
     }
 
     @Transactional
-    public Admin CheckAuthorization(String login, String password) {
+    public Admin CheckAuthorization(String login, String password) throws SQLException {
 
         Admin admin = null;
-        try {
-            admin = findByLogin(login);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        admin = findByLogin(login);
 
         if (admin != null) {
             if (!admin.getPassword().equals(password)) {
@@ -96,14 +87,10 @@ public class AdminManagerImpl implements AdminManager {
     }
 
     @Transactional
-    public boolean checkByLogin(Admin admin) {
-        try {
-            Admin presentAdminWithSuchLogin = findByLogin(admin.getLogin());
-            if ((presentAdminWithSuchLogin != null)
-                    && (presentAdminWithSuchLogin.getAdminId() != admin.getAdminId())) {
-                return false;
-            }
-        } catch (SQLException e) {
+    public boolean checkByLogin(Admin admin) throws SQLException {
+        Admin presentAdminWithSuchLogin = findByLogin(admin.getLogin());
+        if ((presentAdminWithSuchLogin != null)
+                && (presentAdminWithSuchLogin.getAdminId() != admin.getAdminId())) {
             return false;
         }
         return true;

@@ -1,6 +1,7 @@
 package lv.etaxi.business.managers;
 
 import lv.etaxi.business.TaxiManager;
+import lv.etaxi.dao.DBException;
 import lv.etaxi.dao.TaxiDAO;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class TaxiManagerImpl implements TaxiManager {
     @Transactional
     public void create(Taxi taxi) throws SQLException {
 
-        taxi.setTaxiId(taxiDAO.update(taxi));
+        taxi.setTaxiId(taxiDAO.create(taxi));
     }
 
     @Transactional

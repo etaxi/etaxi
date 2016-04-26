@@ -47,7 +47,7 @@ public class TestsForOrderJDBC {
                 .withOrderStatus(Order.OrderStatus.DELIVERED);
 
         Order order = orderBuilder.build();
-        long newOrderID = aOrderDAO().update(order);
+        long newOrderID = aOrderDAO().create(order);
     }
 
 
@@ -66,10 +66,10 @@ public class TestsForOrderJDBC {
                 .withOrderStatus(Order.OrderStatus.WAITING);
 
         Order order1 = orderBuilder.build();
-        long newOrderID1 = orderDAO.update(order1);
+        long newOrderID1 = orderDAO.create(order1);
 
         Order order2 = orderBuilder.aOrder().build();  //USE "DEFAULT ORDER"
-        long newOrderID2 = orderDAO.update(order2);
+        long newOrderID2 = orderDAO.create(order2);
 
     }
 
@@ -90,7 +90,7 @@ public class TestsForOrderJDBC {
 
         Order order = orderBuilder.build();
 
-        order.setOrderId(orderDAO.update(order));
+        order.setOrderId(orderDAO.create(order));
         order.setOrderStatus(Order.OrderStatus.DELIVERED);
         orderDAO.update(order);
     }
@@ -110,7 +110,7 @@ public class TestsForOrderJDBC {
                 .withOrderStatus(Order.OrderStatus.WAITING);
 
         Order order = orderBuilder.build();
-        order.setOrderId(orderDAO.update(order));
+        order.setOrderId(orderDAO.create(order));
 
         Order orderGetById = orderDAO.getById(order.getOrderId());
         assertTrue(order.getOrderId().equals(orderGetById.getOrderId()));
@@ -122,7 +122,7 @@ public class TestsForOrderJDBC {
         OrderDAO orderDAO = aOrderDAO();
 
         Order order = OrderBuilder.aOrder().build();
-        order.setOrderId(orderDAO.update(order));
+        order.setOrderId(orderDAO.create(order));
 
         int countOfOrdersBeforeDeleteOperation = orderDAO.getAll().size();
 
@@ -152,11 +152,11 @@ public class TestsForOrderJDBC {
 
         Customer customer = CustomerBuilder.aCustomer().build();
         CustomerDAO customerDAO = new CustomerDAOImpl();
-        customer.setCustomerId(customerDAO.update(customer));
+        customer.setCustomerId(customerDAO.create(customer));
 
         Taxi taxi = TaxiBuilder.aTaxi().build();
         TaxiDAO taxiDAO = new TaxiDAOImpl();
-        taxi.setTaxiId(taxiDAO.update(taxi));
+        taxi.setTaxiId(taxiDAO.create(taxi));
 
         OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withCustomerID(customer.getCustomerId())

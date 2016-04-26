@@ -34,10 +34,10 @@ public class TestsForTaxiJDBC {
                 .withPassword("sebastian12345");
 
         Taxi taxi1 = taxiBuilder.build();
-        long newTaxiID1 = taxiDAO.update(taxi1);
+        long newTaxiID1 = taxiDAO.create(taxi1);
 
         Taxi taxi2 = TaxiBuilder.aTaxi().build();  //USE "DEFAULT USER"
-        long newTaxiID2 = taxiDAO.update(taxi2);
+        long newTaxiID2 = taxiDAO.create(taxi2);
 
     }
 
@@ -55,7 +55,7 @@ public class TestsForTaxiJDBC {
                 .withPassword("lewis123");
 
         Taxi taxi = taxiBuilder.build();
-        taxi.setTaxiId(taxiDAO.update(taxi));
+        taxi.setTaxiId(taxiDAO.create(taxi));
         taxi.setName("Jenson Alexander Lyons Button");
         taxiDAO.update(taxi);
 
@@ -74,7 +74,7 @@ public class TestsForTaxiJDBC {
                 .withPassword("matki");
 
         Taxi taxi = taxiBuilder.build();
-        taxi.setTaxiId(taxiDAO.update(taxi));
+        taxi.setTaxiId(taxiDAO.create(taxi));
 
         Taxi taxiGetById = taxiDAO.getById(taxi.getTaxiId());
         assertEquals(taxi.getTaxiId(), taxiGetById.getTaxiId());
@@ -86,7 +86,7 @@ public class TestsForTaxiJDBC {
         TaxiDAO taxiDAO = aTaxiDAO();
 
         Taxi taxi = TaxiBuilder.aTaxi().build();
-        taxi.setTaxiId(taxiDAO.update(taxi));
+        taxi.setTaxiId(taxiDAO.create(taxi));
 
         int countOfTaxisBeforeDeleteOperation = taxiDAO.getAll().size();
 

@@ -2,6 +2,7 @@ package lv.etaxi.business.managers;
 
 import lv.etaxi.business.OrderManager;
 import lv.etaxi.business.direction.Direction;
+import lv.etaxi.dao.DBException;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
@@ -32,7 +33,7 @@ public class OrderManagerImpl implements OrderManager {
     @Transactional
     public void create(Order order) throws SQLException {
 
-        order.setOrderId(orderDAO.update(order));
+        order.setOrderId(orderDAO.create(order));
     }
 
     @Transactional
@@ -49,7 +50,6 @@ public class OrderManagerImpl implements OrderManager {
 
     @Transactional
     public Order findById(long Id) throws SQLException {
-
         return orderDAO.getById(Id);
     }
 
@@ -110,12 +110,12 @@ public class OrderManagerImpl implements OrderManager {
     }
 
     @Transactional
-    public boolean checkChangePossibility(Customer customer, Order order) {
+    public boolean checkChangePossibility(Customer customer, Order order){
         return  (order.getCustomerId() == customer.getCustomerId());
     }
 
     @Transactional
-    public boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete) {
+    public boolean deleteOrderByIdByCustomer(Customer customer, String orderIdToDelete){
 
         Order currentOrder = findById(orderIdToDelete);
         if (currentOrder != null) {
@@ -131,7 +131,7 @@ public class OrderManagerImpl implements OrderManager {
 
     @Transactional
     public  boolean updateOrderByIdByCustomer(Customer customer, String orderIdToUpdate, String fromAddress,
-                                               String toAddress, String orderedDateTime, String feedback, Double distance) {
+                                              String toAddress, String orderedDateTime, String feedback, Double distance) {
 
         Order currentOrder = findById(orderIdToUpdate);
         if (currentOrder != null) {
@@ -141,14 +141,15 @@ public class OrderManagerImpl implements OrderManager {
                 currentOrder.setFromAdress((fromAddress.isEmpty()) ? currentOrder.getFromAdress() : fromAddress);
                 currentOrder.setToAdress((toAddress.isEmpty()) ? currentOrder.getToAdress() : toAddress);
                 currentOrder.setOrderedDateTime((orderedDateTime.isEmpty()) ? currentOrder.getOrderedDateTime()
-                                                                            : Timestamp.valueOf(orderedDateTime));
+                        : Timestamp.valueOf(orderedDateTime));
                 currentOrder.setFeedback((feedback.isEmpty()) ? currentOrder.getFeedback() : feedback);
-                currentOrder.setDistance((distance==0.0) ? currentOrder.getDistance() : distance);
+                currentOrder.setDistance((distance == 0.0) ? currentOrder.getDistance() : distance);
 
                 try {
                     update(currentOrder);
                     return true;
-                } catch (SQLException e) {}
+                } catch (SQLException e) {
+                }
             }
         }
 
@@ -156,7 +157,7 @@ public class OrderManagerImpl implements OrderManager {
     }
 
     @Transactional
-    public double GetDistance(String addressFrom, String addressTo) {
+    public double GetDistance(String addressFrom, String addressTo){
 
         Direction direction = new Direction(addressFrom, addressTo);
         final Map<String, String> params = direction.putParameters();

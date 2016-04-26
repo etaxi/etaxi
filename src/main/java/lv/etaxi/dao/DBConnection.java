@@ -1,6 +1,6 @@
 package lv.etaxi.dao;
 
-import lv.etaxi.dao.hibernate.TaxiDAOImpl;
+import lv.etaxi.dao.jdbc.TaxiDAOImpl;
 import lv.etaxi.dao.jdbc.AdminDAOImpl;
 import lv.etaxi.dao.jdbc.CustomerDAOImpl;
 import lv.etaxi.dao.jdbc.OrderDAOImpl;

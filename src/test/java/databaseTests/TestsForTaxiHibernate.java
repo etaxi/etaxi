@@ -27,7 +27,7 @@ public class TestsForTaxiHibernate {
                 .withPassword("lybutton");
 
         Taxi taxi = taxiBuilder.build();
-        long newTaxiID = aTaxiDAO().update(taxi);
+        long newTaxiID = aTaxiDAO().create(taxi);
     }
 
 
@@ -40,7 +40,7 @@ public class TestsForTaxiHibernate {
                 .withPassword("sebastian12345");
 
         Taxi taxi = taxiBuilder.build();
-        long newTaxiID = aTaxiDAO().update(taxi);
+        long newTaxiID = aTaxiDAO().create(taxi);
 
     }
 

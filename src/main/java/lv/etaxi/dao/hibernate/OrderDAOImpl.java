@@ -1,5 +1,6 @@
 package lv.etaxi.dao.hibernate;
 
+import lv.etaxi.dao.DBException;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.entity.Order;
 import org.hibernate.Query;
@@ -19,57 +20,43 @@ import java.util.List;
 @Component("HibOrderDAO")
 @SuppressWarnings("ALL")
 @Repository
-public class OrderDAOImpl implements OrderDAO {
+public class OrderDAOImpl extends DAOImpl<Order> implements OrderDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    /**
-     * Возвращает объект соответствующий записи с первичным ключом key или null
-     */
+    public long create(Order order) throws SQLException {
+
+        Session session = sessionFactory.getCurrentSession();
+        long id = (Long) session.save(order);
+        return id;
+    }
+
+    public void update(Order order) throws SQLException {
+
+        Session session = sessionFactory.getCurrentSession();
+        session.update(order);
+    }
+
+    public void delete(Order order) throws SQLException {
+
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(order);
+    }
+
+
+    public List<Order> getAll() throws SQLException {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM Order order by orderedDateTime ASC");
+        return  query.list();
+    }
+
     public Order getById(long id) throws SQLException {
 
         Session session = sessionFactory.getCurrentSession();
         return (Order) session.get(Order.class, id);
     }
 
-    /**
-     * Сохраняет состояние объекта Order в базе данных (если ID нет, создаем новую запись)
-     */
-    public long update(Order order) throws SQLException {
-
-        long id = order.getOrderId();
-        Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
-        if (id == 0) {
-            id = (Long) session.save(order);
-        }
-        else {
-            session.update(order);
-        }
-        //transaction.commit();
-        return id;
-    }
-
-    /**
-     * Удаляет запись об объекте из базы данных
-     */
-    public void delete(Order order) throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
-        session.delete(order);
-        //transaction.commit();
-    }
-
-    /**
-     * Возвращает список объектов соответствующих всем записям в базе данных
-     */
-    public List<Order> getAll() throws SQLException {
-        Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM Order order by orderedDateTime ASC");
-        return  query.list();
-    }
 
     public List<Order> getOpenOrdersAll() throws SQLException {
 

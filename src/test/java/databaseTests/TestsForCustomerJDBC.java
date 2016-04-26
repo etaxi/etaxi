@@ -32,7 +32,7 @@ public class TestsForCustomerJDBC {
 
         Customer customer = customerBuilder.build();
 
-        long newCustmerID = aCustomerDAO().update(customer);
+        long newCustmerID = aCustomerDAO().create(customer);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class TestsForCustomerJDBC {
                 .withPassword("olgazvonova");
 
         Customer customer = customerBuilder.build();
-        long newCustmerID = aCustomerDAO().update(customer);
+        long newCustmerID = aCustomerDAO().create(customer);
     }
 
     @Test
@@ -56,10 +56,10 @@ public class TestsForCustomerJDBC {
                 .withPassword("olg12345");
 
         Customer customer1 = customerBuilder.build();
-        long newCustmerID1 = customerDAO.update(customer1);
+        long newCustmerID1 = customerDAO.create(customer1);
 
         Customer customer2 = customerBuilder.aCustomer().build();  //USE "DEFAULT USER"
-        long newCustmerID2 = customerDAO.update(customer2);
+        long newCustmerID2 = customerDAO.create(customer2);
 
     }
 
@@ -75,7 +75,7 @@ public class TestsForCustomerJDBC {
                 .withPassword("lesk123");
 
         Customer customer = customerBuilder.build();
-        customer.setCustomerId(customerDAO.update(customer));
+        customer.setCustomerId(customerDAO.create(customer));
         customer.setName("Olga Leskova");
         customerDAO.update(customer);
 
@@ -93,7 +93,7 @@ public class TestsForCustomerJDBC {
                 .withPassword("lesk123");
 
         Customer customer = customerBuilder.build();
-        customer.setCustomerId(customerDAO.update(customer));
+        customer.setCustomerId(customerDAO.create(customer));
 
         Customer customerGetById = customerDAO.getById(customer.getCustomerId());
         assertEquals(customer.getCustomerId(), customerGetById.getCustomerId());
@@ -105,7 +105,7 @@ public class TestsForCustomerJDBC {
         CustomerDAO customerDAO = aCustomerDAO();
 
         Customer customer = CustomerBuilder.aCustomer().build();
-        customer.setCustomerId(customerDAO.update(customer));
+        customer.setCustomerId(customerDAO.create(customer));
 
         int countOfCustomersBeforeDeleteOperation = customerDAO.getAll().size();
 

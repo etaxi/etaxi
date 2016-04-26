@@ -1,7 +1,7 @@
 package lv.etaxi.dao.hibernate;
 
 import lv.etaxi.dao.DBException;
-import lv.etaxi.dao.GenericDAO;
+import lv.etaxi.dao.BaseDAO;
 import lv.etaxi.dao.DBConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,19 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
+import java.sql.SQLException;
 import java.util.List;
 
 
 @Transactional
-    public abstract class DAOImpl<T> extends DBConnection implements GenericDAO<T> {
+    public abstract class DAOImpl<T> extends DBConnection implements BaseDAO<T> {
 
         private Class<T> persistentClass;
 
-        @SuppressWarnings("unchecked")
-        public DAOImpl() {
-            this.persistentClass = (Class<T>) ((ParameterizedType) getClass().
-                    getGenericSuperclass()).getActualTypeArguments()[0];
-        }
+    //ToDo надо разобраться
+//        @SuppressWarnings("unchecked")
+//        public DAOImpl() {
+//            this.persistentClass = (Class<T>) ((ParameterizedType) getClass().
+//                    getGenericSuperclass()).getActualTypeArguments()[0];
+//        }
 
         @Autowired
         public SessionFactory sessionFactory;
@@ -31,30 +33,27 @@ import java.util.List;
         }
 
         @Override
-        public void create(T type) throws DBException {
-            getCurrentSession().persist(type);
+        public long create(T entity) throws SQLException {
+            return (Long) getCurrentSession().save(entity);
+        }
+
+       @Override
+        public void update(T entity) throws SQLException {
+            getCurrentSession().update(entity);
         }
 
         @Override
-        public T getById(Long id) throws DBException {
+        public void delete(T entity) throws SQLException {
+            getCurrentSession().delete(entity);
+        }
+
+        @Override
+        public T getById(long id) throws SQLException {
             return (T) getCurrentSession().get(persistentClass, id);
         }
 
         @Override
-        public void delete(Long id) throws DBException {
-            Session session = sessionFactory.getCurrentSession();
-            T type = (T) session.get(persistentClass, id);
-            session.delete(type);
-        }
-
-        @Override
-        public long update(T type) throws DBException {
-            getCurrentSession().update(type);
-            return 0;
-        }
-
-        @Override
-        public List<T> getAll() throws DBException {
+        public List<T> getAll() throws SQLException {
             return getCurrentSession().createCriteria(persistentClass).list();
         }
     }

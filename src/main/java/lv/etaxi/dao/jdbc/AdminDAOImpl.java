@@ -20,43 +20,23 @@ import java.util.List;
 @Repository
 public class AdminDAOImpl implements AdminDAO{
 
-    public Admin getById(long id) throws SQLException {
-        Executor executor = GetExecutor();
-        return executor.executeQuery("select * from admins where Id=" + id, resultSet -> {
-            resultSet.next();
-            return new Admin(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                    resultSet.getString(4));
-
-        });
-    }
-
-    public Admin getByLogin(String login) throws SQLException {
-        Executor executor = GetExecutor();
-        return executor.executeQuery("select * from admins where login = '" + login + "'", resultSet -> {
-            if (resultSet.next()) {
-                return new Admin(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getString(4));
-            }
-            else return null;
-        });
-    }
-
-    public long update(Admin admin) throws SQLException {
+    public long create(Admin admin) throws SQLException {
 
         Executor executor = GetExecutor();
-        if (admin.getAdminId() > 0) {
-            return executor.executeUpdate("UPDATE admins SET " +
-                    " name = '" + admin.getName() + "'," +
-                    " login = '" + admin.getLogin() + "'," +
-                    " password = '" + admin.getPassword() + "'" +
-                    " WHERE id=" + admin.getAdminId());
-        }
-        else {
             return executor.executeUpdate("INSERT INTO admins (name, login, password) VALUES (" +
                     "'" + admin.getName() + "'," +
                     "'" + admin.getLogin() + "'," +
                     "'" + admin.getPassword() + "')");
-        }
+    }
+
+    public void update(Admin admin) throws SQLException {
+
+        Executor executor = GetExecutor();
+        executor.executeUpdate("UPDATE admins SET " +
+                    " name = '" + admin.getName() + "'," +
+                    " login = '" + admin.getLogin() + "'," +
+                    " password = '" + admin.getPassword() + "'" +
+                    " WHERE id=" + admin.getAdminId());
     }
 
     public void delete(Admin admin) throws SQLException {
@@ -83,6 +63,7 @@ public class AdminDAOImpl implements AdminDAO{
         }
     }
 
+
     public List<Admin> getAll() throws SQLException {
         Executor executor = GetExecutor();
         return executor.executeQuery("select * from admins ",
@@ -97,6 +78,28 @@ public class AdminDAOImpl implements AdminDAO{
                     return list;
                 }
         );
+    }
+
+    public Admin getById(long id) throws SQLException {
+        Executor executor = GetExecutor();
+        return executor.executeQuery("select * from admins where Id=" + id, resultSet -> {
+            resultSet.next();
+            return new Admin(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                    resultSet.getString(4));
+
+        });
+    }
+
+
+    public Admin getByLogin(String login) throws SQLException {
+        Executor executor = GetExecutor();
+        return executor.executeQuery("select * from admins where login = '" + login + "'", resultSet -> {
+            if (resultSet.next()) {
+                return new Admin(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4));
+            }
+            else return null;
+        });
     }
 
     public void createTable() throws SQLException {

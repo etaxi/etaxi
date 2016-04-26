@@ -20,42 +20,9 @@ import java.util.List;
 @Repository
 public class OrderDAOImpl implements OrderDAO {
 
-    /**
-     * Возвращает объект соответствующий записи с первичным ключом key или null
-     */
-    public Order getById(long id) throws SQLException {
-        Executor executor = GetExecutor();
-        return executor.executeQuery("select * from orders where Id=" + id, resultSet -> {
-            resultSet.next();
-            return new Order(resultSet.getLong(1), resultSet.getLong(2), resultSet.getTimestamp(3), resultSet.getTimestamp(4),
-                    Order.DetermineOrderStatus(resultSet.getString(5)), resultSet.getString(6),
-                    resultSet.getString(7), resultSet.getLong(8), resultSet.getDouble(9), resultSet.getDouble(10),
-                    resultSet.getInt(11), resultSet.getString(12));
-        });
-    }
-
-    /**
-     * Сохраняет состояние объекта Order в базе данных (если ID нет, создаем новую запись)
-     */
-    public long update(Order order) throws SQLException {
+    public long create(Order order) throws SQLException {
 
         Executor executor = GetExecutor();
-        if (order.getOrderId() > 0) {
-            return executor.executeUpdate("UPDATE orders SET " +
-                    " customerId = '" + order.getCustomerId() + "'," +
-                    " datetime = '" + order.getDateTime() + "'," +
-                    " ordereddatetime = '" + order.getOrderedDateTime() + "'," +
-                    " orderStatus = '" + order.getOrderStatus().toString() + "'," +
-                    " fromAdress = '" + order.getFromAdress() + "'," +
-                    " toAdress = '" + order.getToAdress() + "'," +
-                    " taxiId = '" + order.getTaxiId() + "'," +
-                    " distance = '" + order.getDistance() + "'," +
-                    " price = '" + order.getPrice() + "'," +
-                    " rate = '" + order.getRate() + "'," +
-                    " feedback = '" + order.getFeedback() + "'" +
-                    " WHERE id=" + order.getOrderId());
-        }
-        else {
             return executor.executeUpdate("INSERT INTO orders (customerId, datetime, ordereddatetime, orderStatus, " +
                     "fromAdress, toAdress, taxiId, distance, price, rate, feedback) VALUES (" +
                     "'" + order.getCustomerId() + "'," +
@@ -69,26 +36,50 @@ public class OrderDAOImpl implements OrderDAO {
                     "'" + order.getPrice() + "'," +
                     "'" + order.getRate() + "'," +
                     "'" + order.getFeedback() + "')");
-        }
     }
 
-    /**
-     * Удаляет запись об объекте из базы данных
-     */
+    public void update(Order order) throws SQLException {
+
+        Executor executor = GetExecutor();
+         executor.executeUpdate("UPDATE orders SET " +
+                    " customerId = '" + order.getCustomerId() + "'," +
+                    " datetime = '" + order.getDateTime() + "'," +
+                    " ordereddatetime = '" + order.getOrderedDateTime() + "'," +
+                    " orderStatus = '" + order.getOrderStatus().toString() + "'," +
+                    " fromAdress = '" + order.getFromAdress() + "'," +
+                    " toAdress = '" + order.getToAdress() + "'," +
+                    " taxiId = '" + order.getTaxiId() + "'," +
+                    " distance = '" + order.getDistance() + "'," +
+                    " price = '" + order.getPrice() + "'," +
+                    " rate = '" + order.getRate() + "'," +
+                    " feedback = '" + order.getFeedback() + "'" +
+                    " WHERE id=" + order.getOrderId());
+    }
+
     public void delete(Order order) throws SQLException {
         Executor executor = GetExecutor();
         executor.executeUpdate("delete from orders where Id=" + order.getOrderId());
     }
 
-    /**
-     * Возвращает список объектов соответствующих всем записям в базе данных
-     */
+
     public List<Order> getAll() throws SQLException {
         Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
     }
+
+    public Order getById(long id) throws SQLException {
+        Executor executor = GetExecutor();
+        return executor.executeQuery("select * from orders where Id=" + id, resultSet -> {
+            resultSet.next();
+            return new Order(resultSet.getLong(1), resultSet.getLong(2), resultSet.getTimestamp(3), resultSet.getTimestamp(4),
+                    Order.DetermineOrderStatus(resultSet.getString(5)), resultSet.getString(6),
+                    resultSet.getString(7), resultSet.getLong(8), resultSet.getDouble(9), resultSet.getDouble(10),
+                    resultSet.getInt(11), resultSet.getString(12));
+        });
+    }
+
 
     public List<Order> getOpenOrdersAll() throws SQLException {
         Executor executor = GetExecutor();

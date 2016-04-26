@@ -19,46 +19,27 @@ import java.util.List;
 @Repository
 public class TaxiDAOImpl implements TaxiDAO {
 
-    public Taxi getById(long id) throws SQLException {
-        Executor executor = GetExecutor();
-        return executor.executeQuery("select Id, name, car, phone, login, password from taxis where Id=" + id, resultSet -> {
-            resultSet.next();
-            return new Taxi(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                    resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
-        });
-    }
-
-    public Taxi getByLogin(String login) throws SQLException {
-        Executor executor = GetExecutor();
-        return executor.executeQuery("select * from taxis where login = '" + login + "'", resultSet -> {
-            resultSet.next();
-            return new Taxi(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                    resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
-
-        });
-    }
-
-    public long update(Taxi taxi) throws SQLException {
+    public long create(Taxi taxi) throws SQLException {
 
         Executor executor = GetExecutor();
-        if (taxi.getTaxiId() > 0) {
-            return executor.executeUpdate("UPDATE taxis SET " +
-                    " name = '" + taxi.getName() + "'," +
-                    " car = '" + taxi.getCar() + "'," +
-                    " phone = '" + taxi.getPhone() + "'," +
-                    " login = '" + taxi.getLogin() + "'," +
-                    " password = '" + taxi.getPassword() + "'" +
-                    " WHERE id=" + taxi.getTaxiId());
-        }
-        else {
             return executor.executeUpdate("INSERT INTO taxis (name, car, phone, login, password) VALUES (" +
                     "'" + taxi.getName() + "'," +
                     "'" + taxi.getCar() + "'," +
                     "'" + taxi.getPhone() + "'," +
                     "'" + taxi.getLogin() + "'," +
                     "'" + taxi.getPassword() + "')");
-        }
+    }
 
+    public void update(Taxi taxi) throws SQLException {
+
+        Executor executor = GetExecutor();
+         executor.executeUpdate("UPDATE taxis SET " +
+                    " name = '" + taxi.getName() + "'," +
+                    " car = '" + taxi.getCar() + "'," +
+                    " phone = '" + taxi.getPhone() + "'," +
+                    " login = '" + taxi.getLogin() + "'," +
+                    " password = '" + taxi.getPassword() + "'" +
+                    " WHERE id=" + taxi.getTaxiId());
     }
 
     public void delete(Taxi taxi) throws SQLException {
@@ -87,6 +68,7 @@ public class TaxiDAOImpl implements TaxiDAO {
 
     }
 
+
     public List<Taxi> getAll() throws SQLException {
         Executor executor = GetExecutor();
         return executor.executeQuery("select Id, name, car, phone, login, password from taxis ",
@@ -103,6 +85,26 @@ public class TaxiDAOImpl implements TaxiDAO {
                     return list;
                 }
         );
+    }
+
+    public Taxi getById(long id) throws SQLException {
+        Executor executor = GetExecutor();
+        return executor.executeQuery("select Id, name, car, phone, login, password from taxis where Id=" + id, resultSet -> {
+            resultSet.next();
+            return new Taxi(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                    resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
+        });
+    }
+
+
+    public Taxi getByLogin(String login) throws SQLException {
+        Executor executor = GetExecutor();
+        return executor.executeQuery("select * from taxis where login = '" + login + "'", resultSet -> {
+            resultSet.next();
+            return new Taxi(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                    resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
+
+        });
     }
 
     public void createTable() throws SQLException {

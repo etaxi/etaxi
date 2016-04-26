@@ -1,5 +1,6 @@
 package lv.etaxi.business;
 
+import lv.etaxi.dao.DBException;
 import lv.etaxi.entity.Admin;
 
 import java.sql.SQLException;
@@ -22,8 +23,8 @@ public interface AdminManager {
 
     void createNewInDataBase(Admin admin) throws SQLException;
 
-    Admin CheckAuthorization(String login, String password);
+    Admin CheckAuthorization(String login, String password) throws SQLException;
 
-    boolean checkByLogin(Admin admin);
+    boolean checkByLogin(Admin admin) throws SQLException;
 
 }

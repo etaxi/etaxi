@@ -20,46 +20,23 @@ import java.util.List;
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
 
-    public Customer getById(long id) throws SQLException {
+    public long create(Customer customer) throws SQLException {
 
         Executor executor = GetExecutor();
-        return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
-            resultSet.next();
-            return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                                       resultSet.getString(4));
-
-        });
-    }
-
-    public Customer getByLogin(String phone) throws SQLException {
-
-        Executor executor = GetExecutor();
-        return executor.executeQuery("select * from customers where phone = '" + phone + "'", resultSet -> {
-            if (resultSet.next()) {
-                return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getString(4));
-            }
-            else return null;
-        });
-    }
-
-    public long update(Customer customer) throws SQLException {
-
-        Executor executor = GetExecutor();
-        if (customer.getCustomerId() > 0) {
-            return executor.executeUpdate("UPDATE customers SET " +
-                                   " name = '" + customer.getName() + "'," +
-                                   " phone = '" + customer.getPhone() + "'," +
-                                   " password = '" + customer.getPassword() + "'" +
-                                   " WHERE id=" + customer.getCustomerId());
-        }
-        else {
             return executor.executeUpdate("INSERT INTO customers (name, phone, password) VALUES (" +
-                                    "'" + customer.getName() + "'," +
-                                    "'" + customer.getPhone() + "'," +
-                                    "'" + customer.getPassword() + "')");
-        }
+                    "'" + customer.getName() + "'," +
+                    "'" + customer.getPhone() + "'," +
+                    "'" + customer.getPassword() + "')");
+    }
 
+    public void update(Customer customer) throws SQLException {
+
+        Executor executor = GetExecutor();
+            executor.executeUpdate("UPDATE customers SET " +
+                    " name = '" + customer.getName() + "'," +
+                    " phone = '" + customer.getPhone() + "'," +
+                    " password = '" + customer.getPassword() + "'" +
+                    " WHERE id=" + customer.getCustomerId());
     }
 
     public void delete(Customer customer) throws SQLException {
@@ -102,6 +79,30 @@ public class CustomerDAOImpl implements CustomerDAO {
                     return list;
                 }
         );
+    }
+
+    public Customer getById(long id) throws SQLException {
+
+        Executor executor = GetExecutor();
+        return executor.executeQuery("select * from customers where Id=" + id, resultSet -> {
+            resultSet.next();
+            return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                                       resultSet.getString(4));
+
+        });
+    }
+
+
+    public Customer getByLogin(String phone) throws SQLException {
+
+        Executor executor = GetExecutor();
+        return executor.executeQuery("select * from customers where phone = '" + phone + "'", resultSet -> {
+            if (resultSet.next()) {
+                return new Customer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4));
+            }
+            else return null;
+        });
     }
 
     public void createTable() throws SQLException {

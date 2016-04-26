@@ -2,6 +2,7 @@ package lv.etaxi.business.managers;
 
 import lv.etaxi.business.CustomerManager;
 import lv.etaxi.dao.CustomerDAO;
+import lv.etaxi.dao.DBException;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,40 @@ public class CustomerManagerImpl implements CustomerManager {
     private CustomerDAO customerDAO;
 
     @Transactional
-    public Customer findByLogin(String login) throws SQLException {
+    public String create(Customer customer) {
 
-        return customerDAO.getByLogin(login);
+        if (!checkByLogin(customer)) {
+            return "You can't use such phone! The customer with such phone already present!";
+        } else {
+            try {
+                createNewInDataBase(customer);
+                return "";
+            } catch (SQLException e) {
+            }
+        }
+        return "Registration failed! Please try again!";
+    }
+
+    @Transactional
+    public String update(Customer customer) {
+
+        if (!checkByLogin(customer)) {
+            return "You can't use such phone! The customer with such phone already present!";
+        } else {
+            try {
+                updateInDataBase(customer);
+                return "";
+            } catch (SQLException e) {
+            }
+        }
+        return "Data update failed! Please try again!";
+    }
+
+    @Transactional
+    public void delete(Customer customer) throws SQLException {
+
+        customerDAO.delete(customer);
+
     }
 
     @Transactional
@@ -33,10 +65,17 @@ public class CustomerManagerImpl implements CustomerManager {
         return customerDAO.getById(Id);
     }
 
+
+    @Transactional
+    public Customer findByLogin(String login) throws SQLException {
+
+        return customerDAO.getByLogin(login);
+    }
+
     @Transactional
     public void createNewInDataBase(Customer customer) throws SQLException {
 
-        customer.setCustomerId(customerDAO.update(customer));
+        customer.setCustomerId(customerDAO.create(customer));
     }
 
     @Transactional
@@ -78,41 +117,6 @@ public class CustomerManagerImpl implements CustomerManager {
         return true;
     }
 
-    @Transactional
-    public String update(Customer customer) {
 
-        if (!checkByLogin(customer)) {
-            return "You can't use such phone! The customer with such phone already present!";
-        } else {
-            try {
-                updateInDataBase(customer);
-                return "";
-            } catch (SQLException e) {
-            }
-        }
-        return "Data update failed! Please try again!";
-    }
-
-    @Transactional
-    public String create(Customer customer) {
-
-        if (!checkByLogin(customer)) {
-            return "You can't use such phone! The customer with such phone already present!";
-        } else {
-            try {
-                createNewInDataBase(customer);
-                return "";
-            } catch (SQLException e) {
-            }
-        }
-        return "Registration failed! Please try again!";
-    }
-
-    @Transactional
-    public void delete(Customer customer) throws SQLException {
-
-        customerDAO.delete(customer);
-
-    }
 
 }

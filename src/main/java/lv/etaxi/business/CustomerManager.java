@@ -1,6 +1,7 @@
 package lv.etaxi.business;
 
 
+import lv.etaxi.dao.DBException;
 import lv.etaxi.entity.Customer;
 
 import java.sql.SQLException;

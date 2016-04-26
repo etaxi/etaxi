@@ -1,6 +1,8 @@
 package lv.etaxi.dao.hibernate;
 
+import lv.etaxi.dao.BaseDAO;
 import lv.etaxi.dao.CustomerDAO;
+import lv.etaxi.dao.DBException;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 import org.hibernate.*;
@@ -18,10 +20,42 @@ import java.util.List;
 @Component("HibCustomerDAO")
 @SuppressWarnings("ALL")
 @Repository
-public class CustomerDAOImpl implements CustomerDAO {
+public class CustomerDAOImpl extends DAOImpl<Customer> implements CustomerDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    public long create(Customer customer) throws SQLException {
+
+        Session session = sessionFactory.getCurrentSession();
+        long id = (Long) session.save(customer);
+        return id;
+    }
+
+    public void update(Customer customer) throws SQLException {
+
+        Session session = sessionFactory.getCurrentSession();
+        session.update(customer);
+    }
+
+    public void delete(Customer customer) throws SQLException {
+
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM Order o where o.customerId = " + customer.getCustomerId());
+        List<Order> orderList = query.list();
+        for (Order order : orderList) {
+            session.delete(order);
+        }
+        session.delete(customer);
+    }
+
+
+    public List<Customer> getAll() throws SQLException {
+
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM Customer");
+        return  query.list();
+    }
 
     public Customer getById(long id) throws SQLException {
 
@@ -29,46 +63,12 @@ public class CustomerDAOImpl implements CustomerDAO {
         return (Customer) session.get(Customer.class, id);
     }
 
+
     public Customer getByLogin(String phone) throws SQLException {
 
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Customer.class);
         return (Customer) criteria.add(Restrictions.eq("phone", phone)).uniqueResult();
-    }
-
-    public long update(Customer customer) throws SQLException {
-
-        long id = customer.getCustomerId();
-        Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
-        if (id == 0) {
-            id = (Long) session.save(customer);
-        }
-        else {
-            session.update(customer);
-        }
-        //transaction.commit();
-        return id;
-    }
-
-    public void delete(Customer customer) throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("FROM Order o where o.customerId = " + customer.getCustomerId());
-        List<Order> orderList = query.list();
-        for (Order order : orderList) {
-            session.delete(order);
-        }
-        session.delete(customer);
-        //transaction.commit();
-    }
-
-    public List<Customer> getAll() throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM Customer");
-        return  query.list();
     }
 
     public void createTable() throws SQLException {

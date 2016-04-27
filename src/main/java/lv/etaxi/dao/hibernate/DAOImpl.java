@@ -47,6 +47,7 @@ import java.util.List;
             getCurrentSession().delete(entity);
         }
 
+    //ToDo    не работает  persistentClass
         @Override
         public T getById(long id) throws SQLException {
             return (T) getCurrentSession().get(persistentClass, id);

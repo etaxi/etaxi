@@ -20,42 +20,42 @@ import java.util.List;
 @Component("HibAdminDAO")
 @SuppressWarnings("ALL")
 @Repository
-public class AdminDAOImpl implements AdminDAO {
+public class AdminDAOImpl extends DAOImpl<Admin> implements AdminDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public long create(Admin admin) throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        long id = (Long) session.save(admin);
-        return id;
-    }
-
-    public void update(Admin admin) throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        session.update(admin);
-    }
-
-    public void delete(Admin admin) throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM Order o where o.customerId = " + admin.getAdminId());
-        List<Order> orderList = query.list();
-        for (Order order : orderList) {
-            session.delete(order);
-        }
-        session.delete(admin);
-    }
-
-
-    public List<Admin> getAll() throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM Admin");
-        return  query.list();
-    }
+//    public long create(Admin admin) throws SQLException {
+//
+//        Session session = sessionFactory.getCurrentSession();
+//        long id = (Long) session.save(admin);
+//        return id;
+//    }
+//
+//    public void update(Admin admin) throws SQLException {
+//
+//        Session session = sessionFactory.getCurrentSession();
+//        session.update(admin);
+//    }
+//
+//    public void delete(Admin admin) throws SQLException {
+//
+//        Session session = sessionFactory.getCurrentSession();
+//        Query query = session.createQuery("FROM Order o where o.customerId = " + admin.getAdminId());
+//        List<Order> orderList = query.list();
+//        for (Order order : orderList) {
+//            session.delete(order);
+//        }
+//        session.delete(admin);
+//    }
+//
+//
+//    public List<Admin> getAll() throws SQLException {
+//
+//        Session session = sessionFactory.getCurrentSession();
+//        Query query = session.createQuery("FROM Admin");
+//        return  query.list();
+//    }
 
     public Admin getById(long id) throws SQLException {
 

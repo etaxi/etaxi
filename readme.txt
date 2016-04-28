@@ -133,3 +133,5 @@ Administrator
 18. Виртуальная машина Java   http://ermak.cs.nstu.ru/trans/Trans472.htm
 
 19. GenericDAO    http://stackoverflow.com/questions/9954761/dao-design-pattern
+
+20. SQL Foren Key   http://denis.in.ua/foreign-keys-in-mysql.htm

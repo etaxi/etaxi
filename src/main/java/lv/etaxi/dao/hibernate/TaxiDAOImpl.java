@@ -55,10 +55,10 @@ public class TaxiDAOImpl extends DAOImpl<Taxi> implements TaxiDAO {
 //        return  query.list();
 //    }
 //
-//    public Taxi getById(long id) throws SQLException {
-//        Session session = sessionFactory.getCurrentSession();
-//        return (Taxi) session.get(Taxi.class, id);
-//    }
+    public Taxi getById(long id) throws SQLException {
+        Session session = sessionFactory.getCurrentSession();
+        return (Taxi) session.get(Taxi.class, id);
+    }
 
 
     public Taxi getByLogin(String login) throws SQLException {

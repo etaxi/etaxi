@@ -70,6 +70,7 @@ public class TaxiManagerImplTest {
         Taxi taxiFind = taxiManagerImpl.findByLogin(login);
 
         assertNotNull(taxiFind);
+
         assertEquals(taxiFind.getName(),     name);
         assertEquals(taxiFind.getPhone(),    phone);
         assertEquals(taxiFind.getPassword(), password);

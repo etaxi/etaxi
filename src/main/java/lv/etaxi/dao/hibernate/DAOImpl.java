@@ -14,16 +14,15 @@ import java.util.List;
 
 
 @Transactional
-    public abstract class DAOImpl<T> extends DBConnection implements BaseDAO<T> {
+    public abstract class DAOImpl<T> implements BaseDAO<T> {
 
         private Class<T> persistentClass;
 
-    //ToDo надо разобраться
-//        @SuppressWarnings("unchecked")
-//        public DAOImpl() {
-//            this.persistentClass = (Class<T>) ((ParameterizedType) getClass().
-//                    getGenericSuperclass()).getActualTypeArguments()[0];
-//        }
+        @SuppressWarnings("unchecked")
+        public DAOImpl() {
+            this.persistentClass = (Class<T>) ((ParameterizedType) getClass().
+                    getGenericSuperclass()).getActualTypeArguments()[0];
+        }
 
         @Autowired
         public SessionFactory sessionFactory;
@@ -47,7 +46,6 @@ import java.util.List;
             getCurrentSession().delete(entity);
         }
 
-    //ToDo    не работает  persistentClass
         @Override
         public T getById(long id) throws SQLException {
             return (T) getCurrentSession().get(persistentClass, id);

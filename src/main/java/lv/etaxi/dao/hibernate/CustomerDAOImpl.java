@@ -25,45 +25,6 @@ public class CustomerDAOImpl extends DAOImpl<Customer> implements CustomerDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-//    public long create(Customer customer) throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        long id = (Long) session.save(customer);
-//        return id;
-//    }
-//
-//    public void update(Customer customer) throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        session.update(customer);
-//    }
-//
-//    public void delete(Customer customer) throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        Query query = session.createQuery("FROM Order o where o.customerId = " + customer.getCustomerId());
-//        List<Order> orderList = query.list();
-//        for (Order order : orderList) {
-//            session.delete(order);
-//        }
-//        session.delete(customer);
-//    }
-//
-//
-//    public List<Customer> getAll() throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        Query query = session.createQuery("FROM Customer");
-//        return  query.list();
-//    }
-
-    public Customer getById(long id) throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        return (Customer) session.get(Customer.class, id);
-    }
-
-
     public Customer getByLogin(String phone) throws SQLException {
 
         Session session = sessionFactory.getCurrentSession();

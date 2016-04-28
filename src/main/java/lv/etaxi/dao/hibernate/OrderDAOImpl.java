@@ -25,39 +25,6 @@ public class OrderDAOImpl extends DAOImpl<Order> implements OrderDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-//    public long create(Order order) throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        long id = (Long) session.save(order);
-//        return id;
-//    }
-//
-//    public void update(Order order) throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        session.update(order);
-//    }
-//
-//    public void delete(Order order) throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        session.delete(order);
-//    }
-//
-//
-//    public List<Order> getAll() throws SQLException {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query query = session.createQuery("FROM Order order by orderedDateTime ASC");
-//        return  query.list();
-//    }
-
-    public Order getById(long id) throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        return (Order) session.get(Order.class, id);
-    }
-
-
     public List<Order> getOpenOrdersAll() throws SQLException {
 
         Session session = sessionFactory.getCurrentSession();

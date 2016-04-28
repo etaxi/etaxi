@@ -23,44 +23,6 @@ public class TaxiDAOImpl extends DAOImpl<Taxi> implements TaxiDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-//    public long create(Taxi taxi) throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        long id = (Long) session.save(taxi);
-//        return id;
-//    }
-//
-//    public void update(Taxi taxi) throws SQLException {
-//
-//        long id = taxi.getTaxiId();
-//        Session session = sessionFactory.getCurrentSession();
-//        session.update(taxi);
-//    }
-//
-//    public void delete(Taxi taxi) throws SQLException {
-//
-//        Session session = sessionFactory.getCurrentSession();
-//            // Query query = session.createQuery("FROM Order o where o.taxiId = " + taxi.getTaxiId());
-//            // List<Order> orderList = query.list();
-//            // for (Order order : orderList) {
-//            //   session.delete(order);
-//            // }
-//        session.delete(taxi);
-//    }
-//
-//
-//    public List<Taxi> getAll() throws SQLException {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query query = session.createQuery("FROM Taxis");
-//        return  query.list();
-//    }
-//
-    public Taxi getById(long id) throws SQLException {
-        Session session = sessionFactory.getCurrentSession();
-        return (Taxi) session.get(Taxi.class, id);
-    }
-
-
     public Taxi getByLogin(String login) throws SQLException {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Taxi.class);

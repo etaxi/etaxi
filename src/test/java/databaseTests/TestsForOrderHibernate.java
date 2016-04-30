@@ -3,7 +3,7 @@ package databaseTests;
 import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.dao.TaxiDAO;
-import lv.etaxi.dao.hibernate.OrderDAOImpl;
+import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
 import lv.etaxi.dao.jdbc.CustomerDAOImpl;
 import lv.etaxi.dao.jdbc.TaxiDAOImpl;
 import lv.etaxi.entity.Customer;
@@ -30,7 +30,7 @@ public class TestsForOrderHibernate {
 
     public OrderDAO aOrderDAO() {
 
-        return new OrderDAOImpl();
+        return new OrderHibernateDAOImpl();
 
     }
 

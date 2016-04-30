@@ -4,7 +4,6 @@ import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.DBConnection;
 import lv.etaxi.dao.Executor;
 import lv.etaxi.entity.Customer;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -16,7 +15,6 @@ import java.util.List;
  * Реализация управления объектами класса Customer
  * */
 
-@Component("JDBCCustomerDAO")
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
 
@@ -105,16 +103,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         });
     }
 
-    public void createTable() throws SQLException {
-        Executor executor = GetExecutor();
-        executor.executeUpdate("CREATE TABLE IF NOT EXISTS customers(" +
-                            "   Id bigint(9) NOT NULL auto_increment," +
-                            "   name varchar(256)," +
-                            "   phone varchar(256)," +
-                            "   password varchar(256)," +
-                            "   PRIMARY KEY (Id)" +
-                            "   );");
-    }
 
     private Executor GetExecutor() {
 

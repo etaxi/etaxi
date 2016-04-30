@@ -4,7 +4,6 @@ import lv.etaxi.dao.AdminDAO;
 import lv.etaxi.dao.DBConnection;
 import lv.etaxi.dao.Executor;
 import lv.etaxi.entity.Admin;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -16,7 +15,6 @@ import java.util.List;
  * Реализация управления объектами класса Admin
  * Created by Genady Zalesky on 27.03.2016
  */
-@Component("JDBCCompanyDAO")
 @Repository
 public class AdminDAOImpl implements AdminDAO{
 
@@ -100,17 +98,6 @@ public class AdminDAOImpl implements AdminDAO{
             }
             else return null;
         });
-    }
-
-    public void createTable() throws SQLException {
-        Executor executor = GetExecutor();
-        executor.executeUpdate("CREATE TABLE IF NOT EXISTS admins(" +
-                "   Id bigint(9) NOT NULL auto_increment," +
-                "   name varchar(256)," +
-                "   login varchar(256)," +
-                "   password varchar(256)," +
-                "   PRIMARY KEY (Id)" +
-                "   );");
     }
 
     private Executor GetExecutor() {

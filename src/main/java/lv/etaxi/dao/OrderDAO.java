@@ -27,9 +27,5 @@ public interface OrderDAO extends BaseDAO<Order> {
     /** Возвращает список заказов по клиенту*/
     List<Order> getCustomerOrders(long id, Timestamp begin, Timestamp end) throws SQLException;
 
-
-    /** Создает таблицу в базе данных для хранения объектов класса Order */
-    void createTable() throws SQLException;
-
 }
 

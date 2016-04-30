@@ -18,7 +18,6 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfig.class)
-//@Transactional
 public class CustomerManagerImplTest {
 
     String name     = "name123";
@@ -86,7 +85,6 @@ public class CustomerManagerImplTest {
         Customer customerFind = customerManagerImpl.findById(customer.getCustomerId());
         customerFind.setName("name555");
 
-        //ToDo  .update Customer  - не  хочет работать
         customerManagerImpl.updateInDataBase(customerFind);
         Customer customerFindAfterUpdate = customerManagerImpl.findById(customerFind.getCustomerId());
 

@@ -1,20 +1,27 @@
 package databaseTests;
 
+import lv.etaxi.dao.databaseCreation.DatabaseCreation;
+import lv.etaxi.dao.databaseCreation.jdbc.DatabaseCreationJDBCImpl;
 import org.junit.Test;
-import lv.etaxi.dao.DBConnection;
 
 import java.sql.SQLException;
 
 /** Проект etaxi
- * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
+ * JUnit тесты для проекта etaxi (создание базы данных и таблиц в базе данных)
  * */
 public class TestForDatabaseCreationJDBC {
 
     @Test
     public void testСreateDataBase() throws SQLException {
 
-        DBConnection dbConnection = new DBConnection();
-        dbConnection.createDataBaseWithJDBC();
+        DatabaseCreation databaseCreation = new DatabaseCreationJDBCImpl();
+
+        databaseCreation.createDatabase(true);
+        databaseCreation.createTableForCustomers();
+        databaseCreation.createTableForAdmins();
+        databaseCreation.createTableForTaxi();
+        databaseCreation.createTableForOrders();
 
     }
+
 }

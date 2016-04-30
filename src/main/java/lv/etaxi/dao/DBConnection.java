@@ -1,14 +1,5 @@
 package lv.etaxi.dao;
 
-import lv.etaxi.dao.jdbc.TaxiDAOImpl;
-import lv.etaxi.dao.jdbc.AdminDAOImpl;
-import lv.etaxi.dao.jdbc.CustomerDAOImpl;
-import lv.etaxi.dao.jdbc.OrderDAOImpl;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -37,36 +28,6 @@ public class DBConnection {
 
     public String getDatabaseName() {
         return databaseName;
-    }
-
-    public void createDataBaseWithJDBC() throws SQLException {
-//ToDo вынести создание базы  - две имплементации работы с базой в одном классе
-        Executor executor = new Executor(connection, "");
-        executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
-
-        new CustomerDAOImpl().createTable();
-
-        new OrderDAOImpl().createTable();
-
-        new TaxiDAOImpl().createTable();
-
-        new AdminDAOImpl().createTable();
-
-    }
-
-    public void createDataBaseWithHibernate() throws SQLException {
-//ToDo вынести создание базы
-        Executor executor = new Executor(connection, "");
-        executor.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
-
-        new CustomerDAOImpl().createTable();
-
-        new OrderDAOImpl().createTable();
-
-        new TaxiDAOImpl().createTable();
-
-        //new AdminHibernateDAOImpl().createTable();
-
     }
 
 
@@ -103,16 +64,13 @@ public class DBConnection {
             String port = property.getProperty("db.port");
             String login = property.getProperty("db.login");
             String password = property.getProperty("db.password");
-            //String database = property.getProperty("db.database");
 
             StringBuilder url = new StringBuilder();
             url.
-                     append("jdbc:mysql://")     //db type
+                     append("jdbc:mysql://")
                     .append(host)
                     .append(":")
                     .append(port)
-                    //.append("/")
-                    //.append(database)
                     .append("?")
                     .append("user=")
                     .append(login)
@@ -128,33 +86,6 @@ public class DBConnection {
         }
     }
 
-    public Configuration getMySqlConfigurationForHibernate() {
-
-        Configuration configuration = new Configuration();
-        configuration.addAnnotatedClass(lv.etaxi.entity.Customer.class);
-        configuration.addAnnotatedClass(lv.etaxi.entity.Order.class);
-        configuration.addAnnotatedClass(lv.etaxi.entity.Taxi.class);
-
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://" +
-                getDatabasePropertyFromFile("db.host") + ":"+
-                getDatabasePropertyFromFile("db.port") + "/" +
-                getDatabasePropertyFromFile("db.database"));
-        configuration.setProperty("hibernate.connection.username", getDatabasePropertyFromFile("db.login"));
-        configuration.setProperty("hibernate.connection.password", getDatabasePropertyFromFile("db.password"));
-        configuration.setProperty("hibernate.show_sql", "true");
-        //configuration.setProperty("hibernate.hbm2ddl.auto", "validate");
-
-        return configuration;
-    }
-
-    public SessionFactory createSessionFactory(Configuration configuration) {
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-        builder.applySettings(configuration.getProperties());
-        ServiceRegistry serviceRegistry = builder.build();
-        return configuration.buildSessionFactory(serviceRegistry);
-    }
 
     public static String getDatabasePropertyFromFile(String propertyName){
 
@@ -169,6 +100,5 @@ public class DBConnection {
             return null;
         }
     }
-
 
 }

@@ -1,18 +1,15 @@
 package lv.etaxi.config;
 
-import lv.etaxi.dao.AdminDAO;
-import lv.etaxi.dao.CustomerDAO;
-import lv.etaxi.dao.OrderDAO;
-import lv.etaxi.dao.TaxiDAO;
-import lv.etaxi.dao.hibernate.AdminDAOImpl;
-import lv.etaxi.dao.hibernate.CustomerDAOImpl;
-import lv.etaxi.dao.hibernate.OrderDAOImpl;
-import lv.etaxi.dao.hibernate.TaxiDAOImpl;
-
-//import lv.etaxi.dao.jdbc.AdminDAOImpl;
-//import lv.etaxi.dao.jdbc.CustomerDAOImpl;
-//import lv.etaxi.dao.DBConnection;
-//import lv.etaxi.dao.jdbc.OrderDAOImpl;
+import lv.etaxi.dao.*;
+import lv.etaxi.dao.databaseCreation.DatabaseCreation;
+import lv.etaxi.dao.databaseCreation.hibernate.DatabaseCreationHibernateImpl;
+import lv.etaxi.dao.hibernate.AdminHibernateDAOImpl;
+import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
+import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
+import lv.etaxi.dao.jdbc.AdminDAOImpl;
+import lv.etaxi.dao.jdbc.CustomerDAOImpl;
+import lv.etaxi.dao.jdbc.OrderDAOImpl;
+import lv.etaxi.dao.jdbc.TaxiDAOImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,13 +27,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-
 import java.beans.PropertyVetoException;
 import java.util.Properties;
 
-/**
- * Created by D.Lazorkin on 08.04.2016.
- */
 
 @Configuration
 @ComponentScan (basePackages = {"lv.etaxi"} )
@@ -105,38 +98,37 @@ public class SpringAppConfig {
         return new HibernateTransactionManager(sessionFactory);
     }
 
+    private Boolean checkHibernateOption() {
+        return  DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES");
+    }
 
     @Bean
     @Description("Задаем используемую реализацию интерфейса CustomerDAO")
     CustomerDAO customerDAO() {
-//        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-//                new CustomerHibernateDAOImpl() : new CustomerDAOImpl();
-        return new CustomerDAOImpl();
+        return  checkHibernateOption() ? new CustomerHibernateDAOImpl() : new CustomerDAOImpl();
     }
 
     @Bean
     @Description("Задаем используемую реализацию интерфейса OrderDAO")
     OrderDAO orderDAO() {
-//        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-//                 new OrderHibernateDAOImpl() : new OrderDAOImpl();
-        return new OrderDAOImpl();
+        return  checkHibernateOption() ? new OrderHibernateDAOImpl() : new OrderDAOImpl();
     }
 
     @Bean
     @Description("Задаем используемую реализацию интерфейса TaxiDAO")
     TaxiDAO taxiDAO() {
-//        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-//                 new TaxiDAOImpl() : new TaxiDAOImpl();
-        return new TaxiDAOImpl();
+        return  checkHibernateOption() ? new TaxiDAOImpl() : new TaxiDAOImpl();
     }
 
     @Bean
     @Description("Задаем используемую реализацию интерфейса AdminDAO")
     AdminDAO adminDAO() {
-//        return  (DBConnection.getDatabasePropertyFromFile("db.hibernate").equals("YES")) ?
-//                 new AdminHibernateDAOImpl() : new AdminDAOImpl();
-        return new AdminDAOImpl();
+        return  checkHibernateOption() ? new AdminHibernateDAOImpl() : new AdminDAOImpl();
     }
 
+    @Bean
+    DatabaseCreation DatabaseCreation() {
+        return new DatabaseCreationHibernateImpl();
+    }
 
 }

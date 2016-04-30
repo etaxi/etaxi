@@ -1,9 +1,13 @@
 package databaseTests;
 
+import lv.etaxi.config.SpringAppConfig;
 import lv.etaxi.dao.CustomerDAO;
-import lv.etaxi.dao.hibernate.CustomerDAOImpl;
+import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
 import lv.etaxi.entity.Customer;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,13 +19,15 @@ import static org.junit.Assert.assertTrue;
  * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
  * */
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringAppConfig.class)
+
 public class TestsForCustomerHibernate {
 
     public CustomerDAO aCustomerDAO() {
 
-        return new CustomerDAOImpl();
+        return new CustomerHibernateDAOImpl();
     }
-
 
     @Test
     public void testNewCustomerRecord() throws SQLException {

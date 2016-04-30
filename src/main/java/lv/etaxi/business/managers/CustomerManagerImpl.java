@@ -2,7 +2,6 @@ package lv.etaxi.business.managers;
 
 import lv.etaxi.business.CustomerManager;
 import lv.etaxi.dao.CustomerDAO;
-import lv.etaxi.dao.DBException;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import java.sql.SQLException;
 @Service
 public class CustomerManagerImpl implements CustomerManager {
 
-    //@Qualifier("customerHibernateDAOImpl")
     @Autowired
     private CustomerDAO customerDAO;
 

@@ -25,6 +25,7 @@
         <h3 class="form-signin-heading">To address: <%=order.getToAdress()%> </h3>
         <h3 class="form-signin-heading">Date&Time of ride: <%=order.getOrderedDateTime()%></h3>
         <h3 class="form-signin-heading">Distance (km): <%=order.getDistance()%></h3>
+        <h3 class="form-signin-heading">Price of ride (EUR): <%=order.getPrice()%></h3>
 
         <label for="feedback" class="sr-only">Feedback</label>
         <input type="text" name="feedback" id="feedback" value="<%=order.getFeedback()%>" class="form-control" placeholder="Feedback" required>

@@ -48,6 +48,7 @@ public class CustomerOrderGetDistanceController implements MVCController {
         }
 
         currentOrder.setDistance(orderManagerImpl.GetDistance(request.getParameter("fromAddress"), request.getParameter("toAddress")));
+        currentOrder.setPrice(orderManagerImpl.getPriceOfRide(currentOrder.getDistance()));
 
         return new MVCModel(request.getParameter("returnPage"), currentOrder, "");
     }

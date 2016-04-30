@@ -1,7 +1,6 @@
 package lv.etaxi.business.managers;
 
 import lv.etaxi.business.TaxiManager;
-import lv.etaxi.dao.DBException;
 import lv.etaxi.dao.TaxiDAO;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import java.sql.SQLException;
 @Service
 public class TaxiManagerImpl implements TaxiManager {
 
-    //@Qualifier("customerHibernateDAOImpl")
     @Autowired
     private TaxiDAO taxiDAO;
 

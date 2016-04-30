@@ -2,7 +2,6 @@ package lv.etaxi.business.managers;
 
 import lv.etaxi.business.OrderManager;
 import lv.etaxi.business.direction.Direction;
-import lv.etaxi.dao.DBException;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
@@ -26,7 +25,6 @@ import java.util.Map;
 @Service
 public class OrderManagerImpl implements OrderManager {
 
-    //@Qualifier("orderHibernateDAOImpl")
     @Autowired
     private OrderDAO orderDAO;
 
@@ -92,6 +90,7 @@ public class OrderManagerImpl implements OrderManager {
         return  orderDAO.getOpenOrdersAll();
     }
 
+
     @Transactional
     public Order createNewInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime, String distance) {
 
@@ -100,7 +99,7 @@ public class OrderManagerImpl implements OrderManager {
                 Timestamp.valueOf(orderedDateTime),
                 Order.OrderStatus.WAITING,
                 fromAddress, toAddress, (long) 0,
-                Double.valueOf(distance), 0, 0, "");
+                Double.valueOf(distance), getPriceOfRide(Double.valueOf(distance)), 0, "");
         try {
             create(newOrder);
             return newOrder;
@@ -131,7 +130,7 @@ public class OrderManagerImpl implements OrderManager {
 
     @Transactional
     public  boolean updateOrderByIdByCustomer(Customer customer, String orderIdToUpdate, String fromAddress,
-                                              String toAddress, String orderedDateTime, String feedback, Double distance) {
+                                              String toAddress, String orderedDateTime, String feedback, double distance, double price) {
 
         Order currentOrder = findById(orderIdToUpdate);
         if (currentOrder != null) {
@@ -144,6 +143,7 @@ public class OrderManagerImpl implements OrderManager {
                         : Timestamp.valueOf(orderedDateTime));
                 currentOrder.setFeedback((feedback.isEmpty()) ? currentOrder.getFeedback() : feedback);
                 currentOrder.setDistance((distance == 0.0) ? currentOrder.getDistance() : distance);
+                currentOrder.setPrice((price == 0.0) ? currentOrder.getPrice() : price);
 
                 try {
                     update(currentOrder);
@@ -177,6 +177,10 @@ public class OrderManagerImpl implements OrderManager {
         String distanceAsString = direction.distance(location);
         Double distance = Double.valueOf(distanceAsString.replaceAll("км","").replaceAll(",",".").trim());
         return distance;
+    }
+
+    public double getPriceOfRide(double distance) {
+        return (1.5 + distance * 0.3);
     }
 }
 

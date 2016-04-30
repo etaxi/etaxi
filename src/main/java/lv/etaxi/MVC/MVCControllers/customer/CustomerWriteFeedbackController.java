@@ -51,7 +51,7 @@ public class CustomerWriteFeedbackController implements MVCController {
                 request.getParameter("orderId"),
                 "", "", "",
                 request.getParameter("feedback"),
-                0.00);
+                0.00, 0.00);
 
         String message = (updateSuccessful) ?
                 "Order ID: " + request.getParameter("orderId") + " was changed!" :

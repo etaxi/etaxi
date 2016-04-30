@@ -4,7 +4,6 @@ import lv.etaxi.dao.DBConnection;
 import lv.etaxi.dao.Executor;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.entity.Order;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -16,7 +15,6 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Order
  * */
-@Component("JDBCOrderDAO")
 @Repository
 public class OrderDAOImpl implements OrderDAO {
 
@@ -144,25 +142,6 @@ public class OrderDAOImpl implements OrderDAO {
                                      "ORDER BY ordereddatetime ASC",
                 resultSet -> addOrderToListFromResultSet(resultSet)
         );
-    }
-
-    public void createTable() throws SQLException {
-        Executor executor = GetExecutor();
-        executor.executeUpdate("CREATE TABLE IF NOT EXISTS orders (" +
-                "  Id bigint(9) NOT NULL auto_increment," +
-                "  customerId bigint(9)," +
-                "  datetime datetime," +
-                "  ordereddatetime datetime," +
-                "  orderStatus text," +
-                "  fromAdress text," +
-                "  toAdress text," +
-                "  taxiId bigint(9)," +
-                "  distance double," +
-                "  price double," +
-                "  rate int(2)," +
-                "  feedback text," +
-                "  PRIMARY KEY (Id)" +
-                ");");
     }
 
     private Executor GetExecutor() {

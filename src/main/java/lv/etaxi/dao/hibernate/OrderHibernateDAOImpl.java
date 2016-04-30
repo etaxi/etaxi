@@ -1,13 +1,11 @@
 package lv.etaxi.dao.hibernate;
 
-import lv.etaxi.dao.DBException;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.entity.Order;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
@@ -17,10 +15,9 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Order
  * */
-@Component("HibOrderDAO")
 @SuppressWarnings("ALL")
 @Repository
-public class OrderDAOImpl extends DAOImpl<Order> implements OrderDAO {
+public class OrderHibernateDAOImpl extends DAOImpl<Order> implements OrderDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -68,27 +65,4 @@ public class OrderDAOImpl extends DAOImpl<Order> implements OrderDAO {
                 " order by orderedDateTime ASC");
         return  query.list();
     }
-
-    public void createTable() throws SQLException {
-
-        Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
-        session.createSQLQuery("CREATE TABLE IF NOT EXISTS orders (" +
-                "  Id bigint(9) NOT NULL auto_increment," +
-                "  customerId bigint(9)," +
-                "  datetime datetime," +
-                "  ordereddatetime datetime," +
-                "  orderStatus text," +
-                "  fromAdress text," +
-                "  toAdress text," +
-                "  taxiId bigint(9)," +
-                "  distance double," +
-                "  price double," +
-                "  rate int(2)," +
-                "  feedback text," +
-                "  PRIMARY KEY (Id)" +
-                ");").executeUpdate();
-        //transaction.commit();
-    }
-
 }

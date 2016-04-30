@@ -4,7 +4,6 @@ import lv.etaxi.dao.DBConnection;
 import lv.etaxi.dao.Executor;
 import lv.etaxi.dao.TaxiDAO;
 import lv.etaxi.entity.Taxi;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -15,7 +14,6 @@ import java.util.List;
 /** Проект etaxi
  * Реализация управления объектами класса Taxi
  * */
-@Component("JDBCTaxiDAO")
 @Repository
 public class TaxiDAOImpl implements TaxiDAO {
 
@@ -105,22 +103,6 @@ public class TaxiDAOImpl implements TaxiDAO {
                     resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
 
         });
-    }
-
-    public void createTable() throws SQLException {
-        Executor executor = GetExecutor();
-        executor.executeUpdate("CREATE TABLE IF NOT EXISTS taxis (" +
-                "  Id bigint(9) NOT NULL auto_increment," +
-                "  name varchar(256)," +
-                "  phone varchar(256)," +
-                "  taxiStatus int(1)," +
-                "  location varchar(256)," +
-                "  car varchar(256)," +
-                "  login varchar(256)," +
-                "  password varchar(256)," +
-                "  rating double," +
-                "  PRIMARY KEY  (Id)" +
-                ");");
     }
 
     private Executor GetExecutor() {

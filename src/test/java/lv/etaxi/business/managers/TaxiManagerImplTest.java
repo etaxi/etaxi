@@ -17,7 +17,6 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfig.class)
-//@Transactional
 public class TaxiManagerImplTest {
 
     String name     = "name123";

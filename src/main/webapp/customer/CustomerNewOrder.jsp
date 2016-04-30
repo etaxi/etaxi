@@ -66,11 +66,14 @@
     </script>
 
     <label for="distance" class="sr-only">Distance (km): </label>
-    <input input type="text" value="<%= (order==null)? 0.00 : order.getDistance()%>" name="distance" id="distance" class="form-control" placeholder="Distance">
+    <input input type="text" value="<%= (order==null)? 0.00 : order.getDistance()%>" name="distance" id="distance" class="form-control" placeholder="Distance" readonly>
+
+    <label for="price" class="sr-only">Price of ride (EUR): </label>
+    <input input type="text" value="<%= (order==null)? 0.00 : order.getPrice()%>" name="price" id="price" class="form-control" placeholder="Price" readonly>
 
     <input type='hidden' name='returnPage' value="/customer/CustomerNewOrder.jsp">
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit" value ="/customer/getDistanceForOrder" onclick="changeFormAction(this.value)">Get distance</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value ="/customer/getDistanceForOrder" onclick="changeFormAction(this.value)">Get distance and price</button>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit" value ="/customer/customerCreateNewOrder" onclick="changeFormAction(this.value)">Create new order</button>
 

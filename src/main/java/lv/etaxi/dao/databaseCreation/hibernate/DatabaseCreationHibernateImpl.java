@@ -1,21 +1,25 @@
 package lv.etaxi.dao.databaseCreation.hibernate;
 
+import lv.etaxi.dao.DBConnection;
 import lv.etaxi.dao.databaseCreation.DatabaseCreation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 
 /**
  * Created by D.Lazorkin on 30.04.2016.
  */
-@Component
+@Component("databaseCreation")
+@Transactional
 public class DatabaseCreationHibernateImpl implements DatabaseCreation {
 
     @Autowired
     private SessionFactory sessionFactory;
+
 
     public void createTableForCustomers() throws SQLException {
 
@@ -80,7 +84,13 @@ public class DatabaseCreationHibernateImpl implements DatabaseCreation {
 
     public void createDatabase(boolean dropDatabase) throws SQLException {
 
+        DBConnection dbConnection = new DBConnection();
 
+        Session session = sessionFactory.getCurrentSession();
+//        if (dropDatabase) {
+//            session.createSQLQuery("DROP DATABASE IF EXISTS " + databaseName).executeUpdate();
+//        }
+        session.createSQLQuery("CREATE DATABASE IF NOT EXISTS " + dbConnection.getDatabasePropertyFromFile("db.database")).executeUpdate();
 
     }
 }

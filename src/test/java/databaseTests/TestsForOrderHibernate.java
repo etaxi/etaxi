@@ -1,15 +1,19 @@
 package databaseTests;
 
+import lv.etaxi.config.SpringAppConfig;
 import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.dao.TaxiDAO;
-import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
 import lv.etaxi.dao.jdbc.CustomerDAOImpl;
 import lv.etaxi.dao.jdbc.TaxiDAOImpl;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 import lv.etaxi.entity.Taxi;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -21,17 +25,17 @@ import static org.junit.Assert.assertTrue;
  * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
  * */
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringAppConfig.class)
+
 public class TestsForOrderHibernate {
+
+    @Autowired
+    private OrderDAO orderDAO;
 
     private Timestamp getCurrentDate() {
 
         return new Timestamp(new java.util.Date().getTime());
-    }
-
-    public OrderDAO aOrderDAO() {
-
-        return new OrderHibernateDAOImpl();
-
     }
 
     @Test
@@ -47,14 +51,12 @@ public class TestsForOrderHibernate {
                 .withOrderStatus(Order.OrderStatus.DELIVERED);
 
         Order order = orderBuilder.build();
-        long newOrderID = aOrderDAO().create(order);
+        long newOrderID = orderDAO.create(order);
     }
 
 
     @Test
     public void testNewOrdersRecords() throws SQLException {
-
-        OrderDAO orderDAO = aOrderDAO();
 
         OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withFromAdress("Dzerbenes 14")
@@ -76,8 +78,6 @@ public class TestsForOrderHibernate {
     @Test
     public void testUpdateOrderRecord() throws SQLException {
 
-        OrderDAO orderDAO = aOrderDAO();
-
         OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withFromAdress("Dzerbenes 89a")
                 .withToAdress("Stirnu 18")
@@ -98,8 +98,6 @@ public class TestsForOrderHibernate {
     @Test
     public void testGetOrderByID() throws SQLException {
 
-        OrderDAO orderDAO = aOrderDAO();
-
         OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withFromAdress("Dzerbenes 89a")
                 .withToAdress("Stirnu 18")
@@ -119,8 +117,6 @@ public class TestsForOrderHibernate {
     @Test
     public void testDeleteOrderByID() throws SQLException {
 
-        OrderDAO orderDAO = aOrderDAO();
-
         Order order = OrderBuilder.aOrder().build();
         order.setOrderId(orderDAO.create(order));
 
@@ -137,10 +133,8 @@ public class TestsForOrderHibernate {
     @Test
     public void testGetListOfAllOrders() throws SQLException {
 
-        OrderDAO orderDAO = aOrderDAO();
-
         Order order = OrderBuilder.aOrder().build();
-        orderDAO.update(order);
+        orderDAO.create(order);
 
         List<Order> listOfOrders = orderDAO.getAll();
         assertTrue(listOfOrders.size()>0);
@@ -170,7 +164,7 @@ public class TestsForOrderHibernate {
                 .withOrderStatus(Order.OrderStatus.DELIVERED);
 
         Order order = orderBuilder.build();
-        aOrderDAO().update(order);
+        orderDAO.create(order);
     }
 
 }

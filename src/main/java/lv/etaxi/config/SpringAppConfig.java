@@ -1,8 +1,6 @@
 package lv.etaxi.config;
 
 import lv.etaxi.dao.*;
-import lv.etaxi.dao.databaseCreation.DatabaseCreation;
-import lv.etaxi.dao.databaseCreation.hibernate.DatabaseCreationHibernateImpl;
 import lv.etaxi.dao.hibernate.AdminHibernateDAOImpl;
 import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
 import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
@@ -124,11 +122,6 @@ public class SpringAppConfig {
     @Description("Задаем используемую реализацию интерфейса AdminDAO")
     AdminDAO adminDAO() {
         return  checkHibernateOption() ? new AdminHibernateDAOImpl() : new AdminDAOImpl();
-    }
-
-    @Bean
-    DatabaseCreation DatabaseCreation() {
-        return new DatabaseCreationHibernateImpl();
     }
 
 }

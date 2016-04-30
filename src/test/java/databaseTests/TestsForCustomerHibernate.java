@@ -2,10 +2,10 @@ package databaseTests;
 
 import lv.etaxi.config.SpringAppConfig;
 import lv.etaxi.dao.CustomerDAO;
-import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
 import lv.etaxi.entity.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -24,10 +24,8 @@ import static org.junit.Assert.assertTrue;
 
 public class TestsForCustomerHibernate {
 
-    public CustomerDAO aCustomerDAO() {
-
-        return new CustomerHibernateDAOImpl();
-    }
+    @Autowired
+    private CustomerDAO customerDAO;
 
     @Test
     public void testNewCustomerRecord() throws SQLException {
@@ -38,7 +36,7 @@ public class TestsForCustomerHibernate {
 
         Customer customer = customerBuilder.build();
 
-        long newCustmerID = aCustomerDAO().create(customer);
+        long newCustmerID = customerDAO.create(customer);
     }
 
     @Test
@@ -49,13 +47,11 @@ public class TestsForCustomerHibernate {
                 .withPassword("olgazvonova");
 
         Customer customer = customerBuilder.build();
-        long newCustmerID = aCustomerDAO().create(customer);
+        long newCustmerID = customerDAO.create(customer);
     }
 
     @Test
     public void testNewCustomersRecord() throws SQLException {
-
-        CustomerDAO customerDAO = aCustomerDAO();
 
         CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
                 .withName("Oleg Vasiljevs")
@@ -71,8 +67,6 @@ public class TestsForCustomerHibernate {
 
     @Test
     public void testUpdateCustomerRecord() throws SQLException {
-
-        CustomerDAO customerDAO = aCustomerDAO();
 
         CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
                 .withId((long) 0)
@@ -90,8 +84,6 @@ public class TestsForCustomerHibernate {
     @Test
     public void testGetCustomerByID() throws SQLException {
 
-        CustomerDAO customerDAO = aCustomerDAO();
-
         CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
                 .withId((long) 0)
                 .withName("Leskova")
@@ -107,8 +99,6 @@ public class TestsForCustomerHibernate {
 
     @Test
     public void testDeleteCustomerByID() throws SQLException {
-
-        CustomerDAO customerDAO = aCustomerDAO();
 
         Customer customer = CustomerBuilder.aCustomer().build();
         customer.setCustomerId(customerDAO.create(customer));
@@ -126,10 +116,8 @@ public class TestsForCustomerHibernate {
     @Test
     public void testGetListOfAllCustomers() throws SQLException {
 
-        CustomerDAO customerDAO = aCustomerDAO();
-
         Customer customer = CustomerBuilder.aCustomer().build();
-        customerDAO.update(customer);
+        customerDAO.create(customer);
 
         List<Customer> listOfCustomers = customerDAO.getAll();
         assertTrue(listOfCustomers.size()>0);

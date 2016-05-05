@@ -31,7 +31,7 @@ public class TaxiManagerImplTest {
     TaxiManager taxiManagerImpl;
 
     public TaxiManagerImplTest() {
-        newTaxi = new Taxi((long)0, name, car, phone, login, password);
+        newTaxi = new Taxi((long) 0, name, car, phone, login, password);
     }
 
     public void createNewTaxi() throws Exception {
@@ -44,8 +44,8 @@ public class TaxiManagerImplTest {
 
     @Test
     public void findTaxiById() throws Exception {
-        //create NewCustomer();
-        Taxi taxi = new Taxi((long)0, name, car, phone, login, password);
+
+        Taxi taxi = new Taxi((long) 0, name, car, phone, login, password);
         taxiManagerImpl.create(taxi);
 
         Taxi taxiFind = taxiManagerImpl.findById(taxi.getTaxiId());
@@ -55,21 +55,20 @@ public class TaxiManagerImplTest {
         assertEquals(phone,    taxiFind .getPhone());
         assertEquals(password, taxiFind .getPassword());
 
-        //deleteTaxi();
         taxiManagerImpl.delete(taxiFind);
 
-        Taxi taxiFindAfterDelete = taxiManagerImpl.findById(taxi.getTaxiId());
+        Taxi taxiFindAfterDelete = taxiManagerImpl.findById(taxiFind.getTaxiId());
         assertEquals(taxiFindAfterDelete, null);
     }
 
     @Test
     public void findTaxiByLogin() throws Exception {
+
         createNewTaxi();
 
         Taxi taxiFind = taxiManagerImpl.findByLogin(login);
 
         assertNotNull(taxiFind);
-
         assertEquals(taxiFind.getName(),     name);
         assertEquals(taxiFind.getPhone(),    phone);
         assertEquals(taxiFind.getPassword(), password);
@@ -82,7 +81,7 @@ public class TaxiManagerImplTest {
 
     @Test
     public void updateTaxi() throws Exception {
-        Taxi taxi = new Taxi((long)0, name, car, phone, login, password);
+        Taxi taxi = new Taxi((long) 0, name, car, phone, login, password);
         taxiManagerImpl.create(taxi);
 
         Taxi taxiFind = taxiManagerImpl.findById(taxi.getTaxiId());

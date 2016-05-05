@@ -30,7 +30,6 @@ public class CustomerOrderEditController implements MVCController {
         }
 
         String orderId = request.getParameter("orderId");
-
         Order currentOrder = orderManagerImpl.findById(orderId);
 
         return  orderManagerImpl.checkChangePossibility(currentCustomer, currentOrder) ?

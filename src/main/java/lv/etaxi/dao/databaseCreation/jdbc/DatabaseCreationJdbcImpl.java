@@ -48,7 +48,9 @@ public class DatabaseCreationJDBCImpl implements DatabaseCreation {
                 "  price double," +
                 "  rate int(2)," +
                 "  feedback text," +
-                "  PRIMARY KEY (Id)" +
+                "  PRIMARY KEY (Id)," +
+                "  FOREIGN KEY (customerId) REFERENCES customers(Id)," +
+                "  FOREIGN KEY (taxiId) REFERENCES taxis(Id)" +
                 ");");
     }
 

@@ -22,7 +22,6 @@ public class CustomerHibernateDAOImpl extends DAOImpl<Customer> implements Custo
     private SessionFactory sessionFactory;
 
     public Customer getByLogin(String phone) throws SQLException {
-
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Customer.class);
         return (Customer) criteria.add(Restrictions.eq("phone", phone)).uniqueResult();

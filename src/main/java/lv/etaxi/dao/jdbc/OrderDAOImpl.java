@@ -71,9 +71,9 @@ public class OrderDAOImpl implements OrderDAO {
         Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders where Id=" + id, resultSet -> {
             resultSet.next();
-            return new Order(resultSet.getLong(1), resultSet.getLong(2), resultSet.getTimestamp(3), resultSet.getTimestamp(4),
+            return new Order((Long) resultSet.getObject(1), (Long) resultSet.getObject(2), resultSet.getTimestamp(3), resultSet.getTimestamp(4),
                     Order.DetermineOrderStatus(resultSet.getString(5)), resultSet.getString(6),
-                    resultSet.getString(7), resultSet.getLong(8), resultSet.getDouble(9), resultSet.getDouble(10),
+                    resultSet.getString(7), (Long) resultSet.getObject(8), resultSet.getDouble(9), resultSet.getDouble(10),
                     resultSet.getInt(11), resultSet.getString(12));
         });
     }
@@ -119,14 +119,14 @@ public class OrderDAOImpl implements OrderDAO {
 
         List<Order> list = new ArrayList<Order>();
         while (resultSet.next()) {
-            list.add(new Order(resultSet.getLong(1),
-                    resultSet.getLong(2),
+            list.add(new Order((Long) resultSet.getObject(1),
+                    (Long) resultSet.getObject(2),
                     resultSet.getTimestamp(3),
                     resultSet.getTimestamp(4),
                     Order.DetermineOrderStatus(resultSet.getString(5)),
                     resultSet.getString(6),
                     resultSet.getString(7),
-                    resultSet.getLong(8),
+                    (Long) resultSet.getObject(8),
                     resultSet.getDouble(9),
                     resultSet.getDouble(10),
                     resultSet.getInt(11),

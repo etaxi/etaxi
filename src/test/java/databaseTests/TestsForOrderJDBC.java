@@ -1,14 +1,8 @@
 package databaseTests;
 
-import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.OrderDAO;
-import lv.etaxi.dao.TaxiDAO;
-import lv.etaxi.dao.jdbc.CustomerDAOImpl;
 import lv.etaxi.dao.jdbc.OrderDAOImpl;
-import lv.etaxi.dao.jdbc.TaxiDAOImpl;
-import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
-import lv.etaxi.entity.Taxi;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -145,32 +139,6 @@ public class TestsForOrderJDBC {
         List<Order> listOfOrders = orderDAO.getAll();
         assertTrue(listOfOrders.size()>0);
 
-    }
-
-    @Test
-    public void testNewOrderRecordWithNewCustomerAndTaxi() throws SQLException {
-
-        Customer customer = CustomerBuilder.aCustomer().build();
-        CustomerDAO customerDAO = new CustomerDAOImpl();
-        customer.setCustomerId(customerDAO.create(customer));
-
-        Taxi taxi = TaxiBuilder.aTaxi().build();
-        TaxiDAO taxiDAO = new TaxiDAOImpl();
-        taxi.setTaxiId(taxiDAO.create(taxi));
-
-        OrderBuilder orderBuilder = OrderBuilder.aOrder()
-                .withCustomerID(customer.getCustomerId())
-                .withTaxiID(taxi.getTaxiId())
-                .withFromAdress("Anninmuizas 6")
-                .withToAdress("Kr.Barona 89")
-                .withPrice(23.05)
-                .withDistance(14.5)
-                .withDate(getCurrentDate())
-                .withOrderedDate(getCurrentDate())
-                .withOrderStatus(Order.OrderStatus.DELIVERED);
-
-        Order order = orderBuilder.build();
-        aOrderDAO().update(order);
     }
 
 }

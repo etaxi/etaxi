@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -94,11 +95,11 @@ public class OrderManagerImpl implements OrderManager {
     @Transactional
     public Order createNewInDataBase(Customer customer, String fromAddress, String toAddress, String orderedDateTime, String distance) {
 
-        Order newOrder = new Order((long) 0, customer.getCustomerId(),
+        Order newOrder = new Order(null, customer.getCustomerId(),
                 new Timestamp(new Date().getTime()),
                 Timestamp.valueOf(orderedDateTime),
                 Order.OrderStatus.WAITING,
-                fromAddress, toAddress, (long) 0,
+                fromAddress, toAddress, null,
                 Double.valueOf(distance), getPriceOfRide(Double.valueOf(distance)), 0, "");
         try {
             create(newOrder);
@@ -180,7 +181,7 @@ public class OrderManagerImpl implements OrderManager {
     }
 
     public double getPriceOfRide(double distance) {
-        return (1.5 + distance * 0.3);
+        return BigDecimal.valueOf((1.5 + distance * 0.3)).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 }
 

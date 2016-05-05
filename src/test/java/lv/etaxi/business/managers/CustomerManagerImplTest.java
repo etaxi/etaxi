@@ -43,7 +43,7 @@ public class CustomerManagerImplTest {
 
     @Test
     public void findCustomerById() throws Exception {
-        //create NewCustomer();
+
         Customer customer= new Customer((long)0, name, phone, password);
         customerManagerImpl.create(customer);
 

@@ -26,7 +26,7 @@ public class Taxi {
     // статус (не работает, свободен, занят)
     //@Column(name = "taxiStatus", columnDefinition = "int(1)")
     @Column(name = "taxiStatus", unique = false, updatable = true)
-    private byte   taxiStatus;
+    private Byte  taxiStatus;
 
     // местоположение десятичные градусы (вида 56.9613438,24.1900393)
     //@Column(name = "location", columnDefinition = "char(50)")
@@ -51,7 +51,7 @@ public class Taxi {
     // рейтинг по среднему значению отзывов
     //@Column(name = "rating", columnDefinition = "float(8,2)")
     @Column(name = "rating", unique = false, updatable = true)
-    private double rating;
+    private Double rating;
 
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
@@ -66,7 +66,7 @@ public class Taxi {
         this.car = car;
         this.login = login;
         this.password = password;
-        this.rating = 0;
+        this.rating = 0.0;
     }
 
     public Long getTaxiId() {

@@ -1,7 +1,14 @@
 package databaseTests;
 
+import lv.etaxi.dao.CustomerDAO;
+import lv.etaxi.dao.TaxiDAO;
+import lv.etaxi.dao.jdbc.CustomerDAOImpl;
+import lv.etaxi.dao.jdbc.TaxiDAOImpl;
+import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
+import lv.etaxi.entity.Taxi;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -10,7 +17,6 @@ import java.sql.Timestamp;
  */
 
 class OrderBuilder {
-
 
     public static final Long DEFAULT_ID = (long) 0;
     public static final Order.OrderStatus DEFAULT_ORDERSTATUS = Order.OrderStatus.WAITING;
@@ -32,8 +38,8 @@ class OrderBuilder {
     private String feedback = DEFAULT_FEEDBACK;
     private Timestamp dateTime = new Timestamp(new java.util.Date().getTime());
     private Timestamp orderedDateTime = new Timestamp(new java.util.Date().getTime());
-    private Long customerId = (long) 0;
-    private Long taxiId = (long) 0;
+    private Long customerId = null;
+    private Long taxiId = null;
 
 
     private OrderBuilder() {
@@ -42,6 +48,21 @@ class OrderBuilder {
     public static OrderBuilder aOrder() {
         return new OrderBuilder();
     }
+
+    private Customer CreateNewCustomer() throws SQLException {
+        Customer customer = CustomerBuilder.aCustomer().build();
+        CustomerDAO customerDAO = new CustomerDAOImpl();
+        customer.setCustomerId(customerDAO.create(customer));
+        return  customer;
+    }
+
+    private Taxi CreateTaxi() throws SQLException {
+        Taxi taxi = TaxiBuilder.aTaxi().build();
+        TaxiDAO taxiDAO = new TaxiDAOImpl();
+        taxi.setTaxiId(taxiDAO.create(taxi));
+        return taxi;
+    }
+
 
     public OrderBuilder withId(long id) {
         this.id = id;
@@ -93,16 +114,15 @@ class OrderBuilder {
         return this;
     }
 
-    public OrderBuilder withCustomerID(long customerId) {
+    public OrderBuilder withCustomerID(Long customerId) {
         this.customerId = customerId;
         return this;
     }
 
-    public OrderBuilder withTaxiID(long taxiId) {
+    public OrderBuilder withTaxiID(Long taxiId) {
         this.taxiId = taxiId;
         return this;
     }
-
 
     public OrderBuilder withNoOrderStatus() {
         this.orderStatus = null;
@@ -126,9 +146,11 @@ class OrderBuilder {
                 .withRate(rate);
     }
 
-    public Order build() {
-        return new Order(id, customerId, dateTime, orderedDateTime, orderStatus, fromAdress, toAdress,
-                taxiId, distance, price, rate, feedback);
+    public Order build() throws SQLException {
+        Customer customer = CreateNewCustomer();
+        Taxi taxi = CreateTaxi();
+
+        return new Order(id, customer.getCustomerId(), dateTime, orderedDateTime, orderStatus, fromAdress, toAdress,
+                taxi.getTaxiId(), distance, price, rate, feedback);
     }
 }
-

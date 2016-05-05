@@ -23,6 +23,11 @@ public class Order implements Serializable {
     @Column(name = "customerId", unique = false, updatable = true)
     private Long customerId;
 
+    // Клиент - объект (не используем в функционале системы, только для теста свзей таблиц Hibernate)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @PrimaryKeyJoinColumn
+    private Customer customer;
+
     // Дата Время "2015-02-18T00:00:00" (ввода или последнего изменения заказа)
     @Column(name = "datetime", unique = false, updatable = true)
     private Timestamp dateTime;
@@ -47,6 +52,11 @@ public class Order implements Serializable {
     // Такси
     @Column(name = "taxiId", unique = false, updatable = true)
     private Long taxiId;
+
+    // Такси - объект (не используем в функционале системы, только для теста свзей таблиц Hibernate)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @PrimaryKeyJoinColumn
+    private Taxi taxi;
 
     // растояние
     @Column(name = "distance", unique = false, updatable = true)
@@ -179,6 +189,26 @@ public class Order implements Serializable {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    public Customer getCustomer() {
+        return this.customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Taxi getTaxi() {
+        return taxi;
+    }
+
+    public void setTaxi(Taxi taxi) {
+        this.taxi = taxi;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 
     @Override

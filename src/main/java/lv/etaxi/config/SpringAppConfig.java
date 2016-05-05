@@ -4,6 +4,7 @@ import lv.etaxi.dao.*;
 import lv.etaxi.dao.hibernate.AdminHibernateDAOImpl;
 import lv.etaxi.dao.hibernate.CustomerHibernateDAOImpl;
 import lv.etaxi.dao.hibernate.OrderHibernateDAOImpl;
+import lv.etaxi.dao.hibernate.TaxiHibernateDAOImpl;
 import lv.etaxi.dao.jdbc.AdminDAOImpl;
 import lv.etaxi.dao.jdbc.CustomerDAOImpl;
 import lv.etaxi.dao.jdbc.OrderDAOImpl;
@@ -115,7 +116,7 @@ public class SpringAppConfig {
     @Bean
     @Description("Задаем используемую реализацию интерфейса TaxiDAO")
     TaxiDAO taxiDAO() {
-        return  checkHibernateOption() ? new TaxiDAOImpl() : new TaxiDAOImpl();
+        return  checkHibernateOption() ? new TaxiHibernateDAOImpl() : new TaxiDAOImpl();
     }
 
     @Bean

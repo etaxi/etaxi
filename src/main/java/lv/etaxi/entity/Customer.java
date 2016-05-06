@@ -2,6 +2,7 @@ package lv.etaxi.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /** Проект etaxi
  * Класс для хранения данных клиента
@@ -24,6 +25,10 @@ public class Customer implements Serializable {
     @Column(name = "password", unique = false, updatable = true)
     private String password;    // пароль
 
+    //Не используем в функционале, добавлен только для пробы связей Hibernate
+    @OneToMany(mappedBy="customerId", fetch=FetchType.EAGER)
+    private List<Order> listOfOrders;
+
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
     public Customer() {}
@@ -33,6 +38,14 @@ public class Customer implements Serializable {
         this.name = name;
         this.phone = phone;
         this.password = password;
+    }
+
+    public List<Order> getListOfOrders() {
+        return listOfOrders;
+    }
+
+    public void setListOfOrders(List<Order> listOfOrders) {
+        this.listOfOrders = listOfOrders;
     }
 
     public Long getCustomerId() {

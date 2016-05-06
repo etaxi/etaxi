@@ -53,6 +53,10 @@ public class Taxi {
     @Column(name = "rating", unique = false, updatable = true)
     private Double rating;
 
+//    //Не используем в функционале, добавлен только для пробы связей Hibernate
+//    @OneToMany(mappedBy="taxiId", fetch=FetchType.EAGER)
+//    private List<Order> listOfOrders;
+
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
     public Taxi() {}
@@ -68,6 +72,14 @@ public class Taxi {
         this.password = password;
         this.rating = 0.0;
     }
+
+//    public List<Order> getListOfOrders() {
+//        return listOfOrders;
+//    }
+//
+//    public void setListOfOrders(List<Order> listOfOrders) {
+//        this.listOfOrders = listOfOrders;
+//    }
 
     public Long getTaxiId() {
         return taxiId;

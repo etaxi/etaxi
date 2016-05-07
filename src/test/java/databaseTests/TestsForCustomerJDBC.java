@@ -36,17 +36,6 @@ public class TestsForCustomerJDBC {
     }
 
     @Test
-    public void testNew1000CustomersRecord() throws SQLException {
-
-        CustomerBuilder customerBuilder = CustomerBuilder.aCustomer()
-                .withName("Olga Zvonova")
-                .withPassword("olgazvonova");
-
-        Customer customer = customerBuilder.build();
-        long newCustmerID = aCustomerDAO().create(customer);
-    }
-
-    @Test
     public void testNewCustomersRecord() throws SQLException {
 
         CustomerDAO customerDAO = aCustomerDAO();

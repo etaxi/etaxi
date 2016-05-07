@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
  */
 
-class OrderBuilder {
+public class OrderBuilder {
 
     public static final Long DEFAULT_ID = (long) 0;
     public static final Order.OrderStatus DEFAULT_ORDERSTATUS = Order.OrderStatus.WAITING;
@@ -147,6 +147,7 @@ class OrderBuilder {
     }
 
     public Order build() throws SQLException {
+
         Customer customer = CreateNewCustomer();
         Taxi taxi = CreateTaxi();
 

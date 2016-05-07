@@ -6,7 +6,7 @@ import lv.etaxi.entity.Customer;
  * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
  * */
 
-class CustomerBuilder {
+public class CustomerBuilder {
 
     public static final Long   DEFAULT_ID = (long) 0;
     public static final String DEFAULT_NAME = "Oleg Ivanov";

@@ -42,7 +42,7 @@ public class OrderHibernateDAOImpl extends DAOImpl<Order> implements OrderDAO {
     public List<Order> getCompletedOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
 
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM Order o where o.orderStatus = '"+ Order.OrderStatus.WAITING + "'" +   //DELIVERED
+        Query query = session.createQuery("FROM Order o where o.orderStatus = '"+ Order.OrderStatus.DELIVERED + "'" +
                 ((customerId != 0) ? " and o.customerId = " + customerId : "") + " " +
                 "AND (o.orderedDateTime  between '" + begin + "' AND '" + end + "') " +
                 " order by orderedDateTime ASC");

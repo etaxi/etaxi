@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfig.class)
 
-public class OrderManagerTestWithMockito {
+public class OrderManagerImplTestWithMockito {
 
     @Autowired
     private OrderManager orderManagerImpl;
@@ -125,71 +125,26 @@ public class OrderManagerTestWithMockito {
 
 
     @Test
-    public void createNewInDataBaseTest() throws SQLException {
+    public void getDistanceTest() throws SQLException {
 
-        Customer customer = mock(Customer.class);
-        when(customer.getCustomerId()).thenReturn(createNewCustomerInDataBase());
+        String addressFrom = "Latvija, Rīga, Āzenes iela, 12";
+        String addressTo = "Latvija, Rīga, Kronvalda bulvāris, 2";
 
-        Order order = orderManagerImpl.createNewInDataBase(
-                customer,
-                "Brivibas 1",
-                "Brivibas 124",
-                getCurrentDate().toString(),
-                "12.34");
+        OrderManagerImpl orderManagerImpl = mock(OrderManagerImpl.class);
+        when(orderManagerImpl.GetDistance(addressFrom, addressTo)).thenReturn(5.6);
 
-        assertNotNull(order);
+        double distance = orderManagerImpl.GetDistance(addressFrom, addressTo);
+        assertTrue(distance == 5.6);
     }
 
     @Test
-    public void deleteOrderByIdByCustomerTest() throws SQLException {
+    public void getPriceOfRideTest() throws SQLException {
 
-        Customer customer = mock(Customer.class);
-        when(customer.getCustomerId()).thenReturn(createNewCustomerInDataBase());
+        OrderManagerImpl orderManagerImpl = mock(OrderManagerImpl.class);
+        when(orderManagerImpl.getPriceOfRide(12)).thenReturn(6.10);
 
-        Order order = orderManagerImpl.createNewInDataBase(
-                customer,
-                "Brivibas 1",
-                "Brivibas 124",
-                getCurrentDate().toString(),
-                "12.34");
-
-        orderManagerImpl.deleteOrderByIdByCustomer(customer, order.getOrderId().toString());
-
-        Order orderFind = orderManagerImpl.findById(order.getOrderId());
-        assertNull(orderFind);
-
-    }
-
-    @Test
-    public void updateOrderByIdByCustomer() throws SQLException {
-
-        String newFromAdress = "Elizabetes 12";
-        String newToAdress = "Strautu 19";
-        Double newDistance = 22.00;
-        Double newPrice = 6.78;
-        String newFeedback = "Good ride!";
-
-        Customer customer = mock(Customer.class);
-        when(customer.getCustomerId()).thenReturn(createNewCustomerInDataBase());
-
-        Order order = orderManagerImpl.createNewInDataBase(
-                customer,
-                "Brivibas 1",
-                "Brivibas 124",
-                getCurrentDate().toString(),
-                "12.34");
-
-        orderManagerImpl.updateOrderByIdByCustomer(customer, order.getOrderId().toString(), newFromAdress,
-                newToAdress, getCurrentDate().toString(), newFeedback, newDistance, newPrice);
-
-        Order orderFind = orderManagerImpl.findById(order.getOrderId());
-
-        assertNotNull(orderFind);
-        assertEquals(newFromAdress, orderFind.getFromAdress());
-        assertEquals(newToAdress, orderFind.getToAdress());
-        assertEquals(newFeedback, orderFind.getFeedback());
-        assertTrue(newPrice == orderFind.getPrice());
-        assertTrue(newDistance == orderFind.getDistance());
+        double priceOfRide = orderManagerImpl.getPriceOfRide(12);
+        assertTrue(priceOfRide == 6.10);
     }
 
 }

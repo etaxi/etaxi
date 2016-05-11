@@ -1,5 +1,5 @@
-<%@ page import="lv.etaxi.entity.Customer" %>
-<%@ page import="lv.etaxi.entity.Order" %>
+<%@ page import="lv.etaxi.dto.CustomerDTO" %>
+<%@ page import="lv.etaxi.dto.OrderDTO" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -32,9 +32,9 @@
 <br>
 
 <%
-    Order order = null;
+    OrderDTO order = null;
     try {
-        order = (Order) request.getAttribute("model");
+        order = (OrderDTO) request.getAttribute("model");
     }catch (Exception exception) {}
 %>
 

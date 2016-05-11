@@ -3,7 +3,9 @@ package lv.etaxi.MVC.MVCControllers.customer;
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManager;
-import lv.etaxi.entity.Customer;
+import lv.etaxi.dto.CustomerDTO;
+import lv.etaxi.dto.OrderDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,11 +25,14 @@ public class CustomerHistoryOfOrdersController implements MVCController {
     @Autowired
     OrderManager orderManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
-        Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
-        if (currentCustomer == null) {
+
+        CustomerDTO currentCustomerDTO = (CustomerDTO) request.getSession().getAttribute("customerDTO");
+        if (currentCustomerDTO == null) {
             return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
 
@@ -37,8 +42,8 @@ public class CustomerHistoryOfOrdersController implements MVCController {
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) throws SQLException {
 
-        Customer currentCustomer = (Customer) request.getSession().getAttribute("customer");
-        if (currentCustomer == null) {
+        CustomerDTO currentCustomerDTO = (CustomerDTO) request.getSession().getAttribute("customerDTO");
+        if (currentCustomerDTO == null) {
             return new MVCModel("/customer/CustomerMenu.jsp", null, "");
         }
 
@@ -46,9 +51,12 @@ public class CustomerHistoryOfOrdersController implements MVCController {
         Timestamp orderedDateTimeEnd = Timestamp.valueOf(request.getParameter("orderedDateTimeEnd"));
 
         List<Order> listOfOrders = orderManagerImpl.getOrdersByCustomerId(
-                currentCustomer.getCustomerId(), orderedDateTimeBegin, orderedDateTimeEnd);
+                currentCustomerDTO.getCustomerId(),
+                orderedDateTimeBegin,
+                orderedDateTimeEnd);
 
-        return new MVCModel("/customer/CustomerListOrders.jsp", listOfOrders, "");
+        List<OrderDTO> listOfOrdersDTO = convertorDTO.convertOrderListToDTOList(listOfOrders);
+        return new MVCModel("/customer/CustomerListOrders.jsp", listOfOrdersDTO, "");
 
     }
 

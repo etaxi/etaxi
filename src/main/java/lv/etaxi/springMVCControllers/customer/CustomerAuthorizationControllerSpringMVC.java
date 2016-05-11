@@ -1,22 +1,24 @@
-package lv.etaxi.MVC.MVCControllers.customer;
+package lv.etaxi.springMVCControllers.customer;
 
-import lv.etaxi.MVC.MVCController;
-import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.CustomerManager;
 import lv.etaxi.dto.CustomerDTO;
 import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by D.Lazorkin on 31.03.2016.
+ * Created by D.Lazorkin on 11.05.2016.
  */
 
 @Controller
-public class CustomerAuthorizationController implements MVCController {
+public class CustomerAuthorizationControllerSpringMVC {
 
     @Autowired
     CustomerManager customerManagerImpl;
@@ -24,14 +26,15 @@ public class CustomerAuthorizationController implements MVCController {
     @Autowired
     СonvertorDTO convertorDTO;
 
-    @Override
-    public MVCModel handleGetRequest(HttpServletRequest request) {
+    @RequestMapping(value = "/customer/customerAuthorization", method = {RequestMethod.GET})
+    public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        return new MVCModel("/customer/CustomerAuthorization.jsp", null, "");
+        return new ModelAndView("/customer/CustomerAuthorization", "model", null);
     }
 
-    @Override
-    public MVCModel handlePostRequest(HttpServletRequest request) {
+
+    @RequestMapping(value = "/customer/customerAuthorization", method = {RequestMethod.POST})
+    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
 
         Customer currentCustomer = customerManagerImpl.CheckAuthorization(
                 request.getParameter("login"),
@@ -41,10 +44,11 @@ public class CustomerAuthorizationController implements MVCController {
             // сохраняем пользователя в сессию, для дальнейшей идентификации клиента в системе
             CustomerDTO currentCustomerDTO = convertorDTO.convertCustomerToDTO(currentCustomer);
             request.getSession().setAttribute("customerDTO", currentCustomerDTO);
-            return new MVCModel("/customer/CustomerMenu.jsp", currentCustomerDTO, "Authorization successful: " + currentCustomerDTO.getName());
+
+            return new ModelAndView("/customer/CustomerMenu", "model",  currentCustomerDTO);
         }
         else {
-            return  new MVCModel("/customer/CustomerMenu.jsp", null, "Wrong login or password!");
+            return new ModelAndView("/customer/CustomerMenu", "model",  null);
         }
     }
 

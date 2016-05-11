@@ -1,5 +1,5 @@
-<%@ page import="lv.etaxi.entity.Customer" %>
-<%@ page import="lv.etaxi.entity.Order" %>
+<%@ page import="lv.etaxi.dto.CustomeDTOr" %>
+<%@ page import="lv.etaxi.dto.OrderDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,8 +14,8 @@
 <div class="container">
     <form class="form-signin" action="/customer/writeFeedbackToOrder" method="POST">
 
-        <%  Customer customer = (Customer)session.getAttribute("customer");
-            Order order = (Order)request.getAttribute("model");
+        <%  CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO");
+            OrderDTO order = (OrderDTO) request.getAttribute("model");
         %>
 
         <h2 class="form-signin-heading">Please, <%=customer.getName()%> write feedback to order ID: <%=order.getOrderId()%></h2>

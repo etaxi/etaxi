@@ -1,5 +1,5 @@
-<%@ page import="lv.etaxi.entity.Customer" %>
-<%@ page import="lv.etaxi.entity.Order" %>
+<%@ page import="lv.etaxi.dto.CustomerDTO" %>
+<%@ page import="lv.etaxi.dto.OrderDTO" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
@@ -29,7 +29,7 @@
 
 <a href="/customer"> Main customer menu </a> <br>
 
-<%  Customer customer = (Customer)session.getAttribute("customer"); %>
+<%  CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO"); %>
 <div><h3>History of <%=customer.getName()%> orders by period:</h3></div>
 
 <form class="form-signin" action='/customer/customerHistoryOfOrders' method="POST">
@@ -84,29 +84,26 @@
         <tr>
             <td width="50"><b>Id</b></td>
             <td width="50"><b>Customer ID</b></td>
-            <td width="100"><b>Date&Time</b></td>
             <td width="100"><b>Ordered Date&Time</b></td>
             <td width="100"><b>Status</b></td>
             <td width="200"><b>From address</b></td>
             <td width="200"><b>To address</b></td>
-            <td width="50"><b>Taxi ID </b></td>
-            <td width="50"><b>Distance </b></td>
-            <td width="50"><b>Price </b></td>
-            <td width="50"><b>Rate </b></td>
-            <td width="200"><b>Feedback </b></td>
+            <td width="50"><b>Taxi ID</b></td>
+            <td width="50"><b>Distance</b></td>
+            <td width="50"><b>Price</b></td>
+            <td width="50"><b>Rate</b></td>
+            <td width="200"><b>Feedback</b></td>
         </tr>
 
         <%
-            List<Order> listOfOrders = (ArrayList<Order>) request.getAttribute("model");
-            for (Order order : listOfOrders) {
+            List<OrderDTO> listOfOrders = (ArrayList<OrderDTO>) request.getAttribute("model");
+            for (OrderDTO order : listOfOrders) {
 
         %>
         <tr>
             <td width="50"><%=order.getOrderId()%>
             </td>
             <td width="50"><%=order.getCustomerId()%>
-            </td>
-            <td width="100"><%=order.getDateTime()%>
             </td>
             <td width="100"><%=order.getOrderedDateTime()%>
             </td>

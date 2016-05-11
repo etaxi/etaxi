@@ -3,6 +3,8 @@ package lv.etaxi.MVC.MVCControllers.customer;
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.CustomerManager;
+import lv.etaxi.dto.CustomerDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +21,13 @@ public class CustomerRegistrationController implements MVCController {
     @Autowired
     CustomerManager customerManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
         return new MVCModel("/customer/CustomerRegistration.jsp", null, "Please, enter information about new customer!");
-
     }
 
     @Override
@@ -43,7 +46,8 @@ public class CustomerRegistrationController implements MVCController {
             errorMessage = "Registration successful: " + newCustomer.getName();
         }
 
-        return new MVCModel("/customer/CustomerMenu.jsp", newCustomer, errorMessage);
+        CustomerDTO newCustomerDTO = convertorDTO.convertCustomerToDTO(newCustomer);
+        return new MVCModel("/customer/CustomerMenu.jsp", newCustomerDTO, errorMessage);
     }
 
 }

@@ -1,4 +1,5 @@
 <%@ page import="lv.etaxi.entity.Customer" %>
+<%@ page import="lv.etaxi.dto.CustomerDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,7 +8,7 @@
 <body>
 
     <%
-        Customer customer = (Customer)session.getAttribute("customer");
+        CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO");
         if (customer != null) {  %>
             <div id="menu"> <jsp:include page="/customer/CustomerMenuAuthorized.jsp" /> </div>
         <%}

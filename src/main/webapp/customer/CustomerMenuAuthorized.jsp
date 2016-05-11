@@ -1,4 +1,4 @@
-<%@ page import="lv.etaxi.entity.Customer" %>
+<%@ page import="lv.etaxi.dto.CustomerDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<%  Customer customer = (Customer)session.getAttribute("customer"); %>
+<%  CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO"); %>
 <div><h3>Welcome, <%=customer.getName()%> (phone: <%=customer.getPhone()%>)</h3></div>
 
 <h3>Customer menu:</h3>

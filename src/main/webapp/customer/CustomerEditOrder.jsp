@@ -1,5 +1,5 @@
-<%@ page import="lv.etaxi.entity.Customer" %>
-<%@ page import="lv.etaxi.entity.Order" %>
+<%@ page import="lv.etaxi.dto.CustomerDTO" %>
+<%@ page import="lv.etaxi.dto.OrderDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
@@ -30,8 +30,8 @@
 
 <br>
 
-<%  Customer customer = (Customer)session.getAttribute("customer");
-    Order order = (Order)request.getAttribute("model");
+<%  CustomerDTO customer = (CustomerDTO)session.getAttribute("customer");
+    OrderDTO order = (OrderDTO)request.getAttribute("model");
 %>
 
 <h2 class="form-signin-heading">Please, <%=customer.getName()%> change your order ID: <%=order.getOrderId()%></h2>

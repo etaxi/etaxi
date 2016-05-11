@@ -1,4 +1,4 @@
-<%@ page import="lv.etaxi.entity.Customer" %>
+<%@ page import="lv.etaxi.dto.Customer" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,7 +12,7 @@
 
     <h1>Customer data change</h1>
 
-    <%  Customer customer = (Customer)session.getAttribute("customer");%>
+    <%  CustomerDTO customer = (CustomerDTO)session.getAttribute("customerDTO");%>
 
     <form role="form" name = form1 action="/customer/customerEditProfile" method="POST">
         <div class="form-group">

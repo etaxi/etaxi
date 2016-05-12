@@ -1,5 +1,6 @@
 <%@ page import="lv.etaxi.dto.CustomerDTO" %>
 <%@ page import="lv.etaxi.dto.OrderDTO" %>
+<%@ page import="lv.etaxi.MVC.MVCModel" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
@@ -98,8 +99,10 @@
         </tr>
 
         <%
-            List<OrderDTO> listOfOrders = (ArrayList<OrderDTO>) request.getAttribute("model");
-            for (OrderDTO order : listOfOrders) {
+            MVCModel model = (MVCModel) request.getAttribute("model");
+            List<OrderDTO> listOfOrders = (List<OrderDTO>) model.getData();
+            if (listOfOrders != null) {
+                for (OrderDTO order : listOfOrders) {
 
         %>
         <tr>
@@ -134,13 +137,20 @@
         </tr>
 
         <%
-         }}
+         }}}
         %>
 
     </table>
 </div>
 
-<h3><%=request.getAttribute("message")%></h3>
+<%
+    if (request.getAttribute("model") != null) {
+        MVCModel model = (MVCModel) request.getAttribute("model");
+%>
+<h3><%=model.getMessage()%></h3>
+<%
+    }
+%>
 
 </body>
 </html>

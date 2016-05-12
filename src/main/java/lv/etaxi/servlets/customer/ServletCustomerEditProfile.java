@@ -5,7 +5,6 @@ import lv.etaxi.business.managers.CustomerManagerImpl;
 import lv.etaxi.entity.Customer;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,7 @@ import java.sql.SQLException;
 /**
  * Created by D.Lazorkin on 25.03.2016.
  */
-@WebServlet(name = "ServletCustomerEditProfile", urlPatterns = {"/customer/editProfileCustomer"})
+//@WebServlet(name = "ServletCustomerEditProfile", urlPatterns = {"/customer/editProfileCustomer"})
 public class ServletCustomerEditProfile extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

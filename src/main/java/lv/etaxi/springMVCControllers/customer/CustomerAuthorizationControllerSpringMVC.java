@@ -1,5 +1,6 @@
 package lv.etaxi.springMVCControllers.customer;
 
+import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.CustomerManager;
 import lv.etaxi.dto.CustomerDTO;
 import lv.etaxi.dto.СonvertorDTO;
@@ -32,7 +33,6 @@ public class CustomerAuthorizationControllerSpringMVC {
         return new ModelAndView("/customer/CustomerAuthorization", "model", null);
     }
 
-
     @RequestMapping(value = "/customer/customerAuthorization", method = {RequestMethod.POST})
     public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
 
@@ -45,10 +45,14 @@ public class CustomerAuthorizationControllerSpringMVC {
             CustomerDTO currentCustomerDTO = convertorDTO.convertCustomerToDTO(currentCustomer);
             request.getSession().setAttribute("customerDTO", currentCustomerDTO);
 
-            return new ModelAndView("/customer/CustomerMenu", "model",  currentCustomerDTO);
+            return new ModelAndView("/customer/CustomerMenu", "model",
+                                                      new MVCModel(null, currentCustomerDTO,
+                                                                    "Authorization successful: " + currentCustomerDTO.getName()));
+
         }
         else {
-            return new ModelAndView("/customer/CustomerMenu", "model",  null);
+            return new ModelAndView("/customer/CustomerMenu", "model",
+                                    new MVCModel(null, null, "Wrong login or password!"));
         }
     }
 

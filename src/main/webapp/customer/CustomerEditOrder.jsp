@@ -1,5 +1,6 @@
 <%@ page import="lv.etaxi.dto.CustomerDTO" %>
 <%@ page import="lv.etaxi.dto.OrderDTO" %>
+<%@ page import="lv.etaxi.MVC.MVCModel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
@@ -9,7 +10,6 @@
     <link rel="stylesheet" type="text/css" media="screen"
           href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 </head>
-
 
 <body>
 
@@ -30,8 +30,13 @@
 
 <br>
 
-<%  CustomerDTO customer = (CustomerDTO)session.getAttribute("customer");
-    OrderDTO order = (OrderDTO)request.getAttribute("model");
+<%
+    MVCModel model = null;  OrderDTO order = null;
+    CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO");
+    if (request.getAttribute("model") != null) {
+        model = (MVCModel) request.getAttribute("model");
+        order = (OrderDTO) model.getData();
+    }
 %>
 
 <h2 class="form-signin-heading">Please, <%=customer.getName()%> change your order ID: <%=order.getOrderId()%></h2>
@@ -83,7 +88,7 @@
 
 </form>
 
-<b> ${message} </b>
+<h3><%= (model !=null) ? model.getMessage() : "" %></h3>
 
 </body>
 </html>

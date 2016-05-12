@@ -99,7 +99,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     public List<Order> getCompletedOrdersOfCustomer(long customerId, Timestamp begin, Timestamp end) throws SQLException {
         Executor executor = GetExecutor();
-        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.WAITING + "'" +  //DELIVERED
+        return executor.executeQuery("select * from orders where orderStatus='" + Order.OrderStatus.DELIVERED + "'" +
                         ((customerId != 0) ? " and customerId = " + customerId : "") + " " +
                         "AND (ordereddatetime  between '" + begin + "' AND '" + end + "') " +
                         "ORDER BY ordereddatetime ASC",

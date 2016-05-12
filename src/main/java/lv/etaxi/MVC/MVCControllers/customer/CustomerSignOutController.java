@@ -27,8 +27,8 @@ public class CustomerSignOutController implements MVCController {
 
     private MVCModel signOutUser(HttpServletRequest request) {
 
-        if (request.getSession().getAttribute("customer") != null) {
-            request.getSession().removeAttribute("customer");
+        if (request.getSession().getAttribute("customerDTO") != null) {
+            request.getSession().removeAttribute("customerDTO");
         }
         return new MVCModel("/customer/CustomerMenu.jsp", null, "");
     }

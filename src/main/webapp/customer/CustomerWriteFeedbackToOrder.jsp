@@ -1,5 +1,6 @@
-<%@ page import="lv.etaxi.dto.CustomeDTOr" %>
+<%@ page import="lv.etaxi.dto.CustomerDTO" %>
 <%@ page import="lv.etaxi.dto.OrderDTO" %>
+<%@ page import="lv.etaxi.MVC.MVCModel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,13 +15,17 @@
 <div class="container">
     <form class="form-signin" action="/customer/writeFeedbackToOrder" method="POST">
 
-        <%  CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO");
-            OrderDTO order = (OrderDTO) request.getAttribute("model");
+        <%
+            MVCModel model = null;  OrderDTO order = null;
+            CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO");
+            if (request.getAttribute("model") != null) {
+                model = (MVCModel) request.getAttribute("model");
+                order = (OrderDTO) model.getData();
+            }
         %>
 
         <h2 class="form-signin-heading">Please, <%=customer.getName()%> write feedback to order ID: <%=order.getOrderId()%></h2>
 
-        <h3 class="form-signin-heading">Date&Time of registration: <%=order.getDateTime()%> </h3>
         <h3 class="form-signin-heading">From address: <%=order.getFromAdress()%> </h3>
         <h3 class="form-signin-heading">To address: <%=order.getToAdress()%> </h3>
         <h3 class="form-signin-heading">Date&Time of ride: <%=order.getOrderedDateTime()%></h3>
@@ -35,7 +40,8 @@
     </form>
 </div> <!-- /container -->
 
-<h3><%=request.getAttribute("message")%></h3>
+
+<h3><%= (model !=null) ? model.getMessage() : "" %></h3>
 
 </body>
 </html>

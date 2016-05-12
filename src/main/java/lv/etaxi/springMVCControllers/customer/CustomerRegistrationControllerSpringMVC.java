@@ -1,5 +1,6 @@
 package lv.etaxi.springMVCControllers.customer;
 
+import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.CustomerManager;
 import lv.etaxi.dto.CustomerDTO;
 import lv.etaxi.dto.СonvertorDTO;
@@ -30,7 +31,8 @@ public class CustomerRegistrationControllerSpringMVC {
     @RequestMapping(value = "/customer/customerRegistration", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        return new ModelAndView("/customer/CustomerRegistration", "model", null);
+        return new ModelAndView("/customer/CustomerRegistration", "model",
+                                new MVCModel(null, null, "Please, enter information about new customer!"));
     }
 
 
@@ -51,7 +53,7 @@ public class CustomerRegistrationControllerSpringMVC {
             errorMessage = "Registration successful: " + newCustomerDTO.getName();
         }
 
-        return new ModelAndView("/customer/CustomerMenu", "model", newCustomerDTO);
+        return new ModelAndView("/customer/CustomerMenu", "model", new MVCModel(null, newCustomerDTO, errorMessage));
     }
 
 }

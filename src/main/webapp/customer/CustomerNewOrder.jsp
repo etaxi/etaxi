@@ -1,5 +1,6 @@
 <%@ page import="lv.etaxi.dto.CustomerDTO" %>
 <%@ page import="lv.etaxi.dto.OrderDTO" %>
+<%@ page import="lv.etaxi.MVC.MVCModel" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -10,7 +11,6 @@
     <link rel="stylesheet" type="text/css" media="screen"
           href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 </head>
-
 
 <body>
 
@@ -31,18 +31,20 @@
 
 <br>
 
+
 <%
-    OrderDTO order = null;
-    try {
-        order = (OrderDTO) request.getAttribute("model");
-    }catch (Exception exception) {}
+    MVCModel model = null;  OrderDTO order = null;
+    if (request.getAttribute("model") != null) {
+        model = (MVCModel) request.getAttribute("model");
+        order = (OrderDTO) model.getData();
+    }
 %>
 
 <h1>New order creation</h1>
 
 <form id="register" class="form-signin" action="" method="POST">
 
-    <% Customer customer = (Customer) session.getAttribute("customer"); %>
+    <% CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO"); %>
     <div><h3>Please, <%=customer.getName()%> enter new order information: </h3></div>
 
     <label for="fromAddress" class="sr-only">Address from</label>
@@ -79,14 +81,13 @@
 
     <script type="text/javascript">
         function changeFormAction(value) {
-               document.getElementById("register").action = value;
+           document.getElementById("register").action = value;
         }
     </script>
 
 </form>
 
-
-<h3><%=request.getAttribute("message")%></h3>
+<h3><%= (model !=null) ? model.getMessage() : "" %></h3>
 
 </body>
 </html>

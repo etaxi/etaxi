@@ -1,3 +1,5 @@
+
+<%@ page import="lv.etaxi.MVC.MVCModel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -24,7 +26,14 @@
     </form>
 </div> <!-- /container -->
 
-<h3><%=request.getAttribute("message")%></h3>
+   <%
+     if (request.getAttribute("model") != null) {
+         MVCModel model = (MVCModel) request.getAttribute("model");
+   %>
+     <h3><%=model.getMessage()%></h3>
+   <%
+     }
+   %>
 
 </body>
 </html>

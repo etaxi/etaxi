@@ -1,4 +1,5 @@
-<%@ page import="lv.etaxi.dto.Customer" %>
+<%@ page import="lv.etaxi.dto.CustomerDTO" %>
+<%@ page import="lv.etaxi.MVC.MVCModel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,7 +13,7 @@
 
     <h1>Customer data change</h1>
 
-    <%  CustomerDTO customer = (CustomerDTO)session.getAttribute("customerDTO");%>
+    <%  CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO");%>
 
     <form role="form" name = form1 action="/customer/customerEditProfile" method="POST">
         <div class="form-group">
@@ -28,9 +29,16 @@
             <input type="password" name="password" value="<%=customer.getPassword()%>" placeholder="Password" class="form-control" id="pwd" required>
         </div>
         <input type="submit" value="Save data" style='width:265px;'>
-
-        <h3><%=request.getAttribute("message")%></h3>
     </form>
+
+    <%
+        if (request.getAttribute("model") != null) {
+            MVCModel model = (MVCModel) request.getAttribute("model");
+    %>
+            <h3><%=model.getMessage()%></h3>
+    <%
+        }
+    %>
 
 </div> <!-- /container -->
 

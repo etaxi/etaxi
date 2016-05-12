@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class MainMenuController {
+public class MainMenuControllerSpringMVC {
 
     @RequestMapping(value = "/", method = {RequestMethod.GET})
     public ModelAndView processRequest(HttpServletRequest request) {

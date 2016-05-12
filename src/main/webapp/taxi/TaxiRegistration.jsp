@@ -34,5 +34,12 @@
 
 </form>
 
+<% String data = (String)request.getAttribute("model");
+    if (data != null) {%>
+<%=data +" "%>
+
+<%}
+%>
+
 </body>
 </html>

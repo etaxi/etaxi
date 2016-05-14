@@ -56,7 +56,7 @@ public class TaxiAuthorizationControllerSpringMVC { // implements MVCController 
         // сохраняем логин (телефон) в сессию, для дальнейшей идентификации
         request.getSession().setAttribute("taxi", taxi);
 
-        ModelAndView modelAndView = new ModelAndView("/taxi/TaxiAuthorization", "model", null);
+        ModelAndView modelAndView = new ModelAndView("/taxi/TaxiMenu", "model", null);
         return modelAndView;
 
         //return new MVCModel("/taxi/TaxiMenu.jsp", "");

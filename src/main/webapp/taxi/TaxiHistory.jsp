@@ -29,6 +29,11 @@
             <td width="50"><b>Rate </b></td>
             <td width="200"><b>Feedback </b></td>
         </tr>
+
+        <%
+            if (request.getAttribute("model") != null) {
+        %>
+
         <%
             List<Order> listOfOrders = (ArrayList<Order>)request.getAttribute("model");
             for (Order order : listOfOrders) {
@@ -49,7 +54,8 @@
                 <td width="200"><%=order.getFeedback()%></td>
             </tr>
         <%}
-            if (listOfOrders.size()==0) {
+        } else {
+
         %>
         <script language="Javascript">
             <!--

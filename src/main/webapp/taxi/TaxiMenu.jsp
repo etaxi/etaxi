@@ -1,4 +1,5 @@
 <%@ page import="lv.etaxi.entity.Taxi" %>
+<%@ page import="lv.etaxi.entity.Order" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,9 +19,11 @@
     <%}%>
 
 
-<% String data = (String)request.getAttribute("model");
-    if (data != null) {%>
-<%=data +" "%>
+<% Order data = (Order)session.getAttribute("order");
+    if (data != null) {
+        String orderText = "FROM: " + data.getFromAdress() + " TO: " + data.getToAdress();
+%>
+<%="Actual order : " + orderText +" "%>
 
 <%}
 %>

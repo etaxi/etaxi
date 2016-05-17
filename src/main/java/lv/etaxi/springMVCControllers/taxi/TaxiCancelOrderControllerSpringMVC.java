@@ -1,6 +1,9 @@
 package lv.etaxi.springMVCControllers.taxi;
 
+import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManager;
+import lv.etaxi.dto.OrderDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,13 +21,23 @@ public class TaxiCancelOrderControllerSpringMVC {
     @Autowired
     OrderManager orderManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
+
     @RequestMapping(value = "/taxi/cancelorder", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 
         if (request.getSession().getAttribute("taxi") != null) {
-            Order order = (Order) request.getSession().getAttribute("order");
+
+            if (request.getSession().getAttribute("order") == null){
+                ModelAndView modelAndView = new ModelAndView("/taxi/TaxiCancelOrder", "model", "");
+                return modelAndView;
+            }
+
+            OrderDTO orderDTO = (OrderDTO) request.getSession().getAttribute("order");
 
             try {
+                Order order = convertorDTO.convertOrderFromDTO(orderDTO);
                 order.setTaxiId((long) 0);
                 order.setOrderStatus(Order.OrderStatus.WAITING);
                 orderManagerImpl.update(order);

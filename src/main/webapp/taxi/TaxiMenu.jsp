@@ -1,5 +1,5 @@
-<%@ page import="lv.etaxi.entity.Taxi" %>
-<%@ page import="lv.etaxi.entity.Order" %>
+<%@ page import="lv.etaxi.dto.TaxiDTO" %>
+<%@ page import="lv.etaxi.dto.OrderDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,10 +8,10 @@
 <body>
 
 <%
-    Taxi taxi = (Taxi)session.getAttribute("taxi");
-    if (taxi != null) {  %>
+    TaxiDTO taxiDTO = (TaxiDTO) session.getAttribute("taxi");
+    if (taxiDTO != null) {  %>
         <div id="menu"> <jsp:include page="/taxi/TaxiMenuAuthorized.jsp" /> </div>>
-        <div><b>Hello, <%=taxi.getName()%>   <%=taxi.getCar()%>!</b></div>
+        <div><b>Hello, <%=taxiDTO.getName()%>   <%=taxiDTO.getCar()%>!</b></div>
         <div><a href="/taxi/logoff">Exit</a></div>
     <%}
     else {%>
@@ -19,9 +19,9 @@
     <%}%>
 
 
-<% Order data = (Order)session.getAttribute("order");
-    if (data != null) {
-        String orderText = "FROM: " + data.getFromAdress() + " TO: " + data.getToAdress();
+<% OrderDTO orderDTO = (OrderDTO)session.getAttribute("order");
+    if (orderDTO != null) {
+        String orderText = "FROM: " + orderDTO.getFromAdress() + " TO: " + orderDTO.getToAdress();
 %>
 <%="Actual order : " + orderText +" "%>
 

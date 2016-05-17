@@ -1,6 +1,9 @@
 package lv.etaxi.springMVCControllers.taxi;
 
 import lv.etaxi.business.OrderManager;
+import lv.etaxi.dto.OrderDTO;
+import lv.etaxi.dto.TaxiDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +24,19 @@ public class TaxiOpenOrdersControllerSpringMVC {
     @Autowired
     OrderManager orderManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
+
     @RequestMapping(value = "/taxi/openorders", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 
-        Taxi taxi = (Taxi)request.getSession().getAttribute("taxi");
+        TaxiDTO taxiDTO = (TaxiDTO) request.getSession().getAttribute("taxi");
 
-        if (taxi != null)
+        if (taxiDTO != null)
         {
             List<Order> listOfOrders = orderManagerImpl.getOpenOrdersAll();
-            ModelAndView modelAndView = new ModelAndView("/taxi/TaxiOpenOrders", "model", listOfOrders);
+            List<OrderDTO> listOfOrdersDTO = convertorDTO.convertOrderListToDTOList(listOfOrders);
+            ModelAndView modelAndView = new ModelAndView("/taxi/TaxiOpenOrders", "model", listOfOrdersDTO);
             return modelAndView;
         }
         else{

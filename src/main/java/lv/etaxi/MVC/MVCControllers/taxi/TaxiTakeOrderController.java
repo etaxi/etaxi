@@ -3,6 +3,8 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManager;
+import lv.etaxi.dto.OrderDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class TaxiTakeOrderController implements MVCController {
 
     @Autowired
     OrderManager orderManagerImpl;
+
+    @Autowired
+    СonvertorDTO convertorDTO;
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -38,7 +43,8 @@ public class TaxiTakeOrderController implements MVCController {
                 order.setTaxiId(taxi.getTaxiId());
                 order.setOrderStatus(Order.OrderStatus.TAKEN);
                 orderManagerImpl.update(order);
-                request.getSession().setAttribute("order", order);
+                OrderDTO orderDTO = convertorDTO.convertOrderToDTO(order);
+                request.getSession().setAttribute("order", orderDTO);
 
                 return new MVCModel("/taxi/TaxiTakeOrder.jsp", "");
 

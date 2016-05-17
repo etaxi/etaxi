@@ -3,6 +3,8 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.TaxiManager;
+import lv.etaxi.dto.TaxiDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ public class TaxiAuthorizationController implements MVCController {
 
     @Autowired
     TaxiManager taxiManagerImpl;
+
+    @Autowired
+    СonvertorDTO convertorDTO;
 
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
@@ -48,7 +53,9 @@ public class TaxiAuthorizationController implements MVCController {
         }
 
         // сохраняем логин (телефон) в сессию, для дальнейшей идентификации
-        request.getSession().setAttribute("taxi", taxi);
+
+        TaxiDTO currentTaxiDTO = convertorDTO.convertTaxiToDTO(taxi);
+        request.getSession().setAttribute("taxi", currentTaxiDTO);
 
         return new MVCModel("/taxi/TaxiMenu.jsp", "");
 

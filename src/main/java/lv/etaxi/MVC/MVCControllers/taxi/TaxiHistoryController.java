@@ -3,6 +3,8 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManager;
+import lv.etaxi.dto.TaxiDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,15 @@ public class TaxiHistoryController implements MVCController {
     @Autowired
     OrderManager orderManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) throws SQLException {
-        Taxi taxi = (Taxi)request.getSession().getAttribute("taxi");
+        TaxiDTO taxiDTO = (TaxiDTO) request.getSession().getAttribute("taxi");
 
-        if (taxi != null) {
-            List<Order> listOfOrders = orderManagerImpl.getTaxiOrders(taxi.getTaxiId());
+        if (taxiDTO != null) {
+            List<Order> listOfOrders = orderManagerImpl.getTaxiOrders(taxiDTO.getTaxiId());
             return new MVCModel("/taxi/TaxiOpenOrders.jsp", listOfOrders);
         }
         else{

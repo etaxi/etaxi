@@ -2,6 +2,9 @@ package lv.etaxi.springMVCControllers.taxi;
 
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManager;
+import lv.etaxi.dto.OrderDTO;
+import lv.etaxi.dto.TaxiDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +25,19 @@ public class TaxiHistoryControllerSpringMVC {
     @Autowired
     OrderManager orderManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
 
     @RequestMapping(value = "/taxi/history", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 
-        Taxi taxi = (Taxi)request.getSession().getAttribute("taxi");
+        TaxiDTO taxiDTO = (TaxiDTO)request.getSession().getAttribute("taxi");
 
-        if (taxi != null)
+        if (taxiDTO != null)
         {
-            List<Order> listOfOrders = orderManagerImpl.getTaxiOrders(taxi.getTaxiId());
-            ModelAndView modelAndView = new ModelAndView("/taxi/TaxiHistory", "model", listOfOrders);
+            List<Order> listOfOrders = orderManagerImpl.getTaxiOrders(taxiDTO.getTaxiId());
+            List<OrderDTO> listOfOrdersDTO = convertorDTO.convertOrderListToDTOList(listOfOrders);
+            ModelAndView modelAndView = new ModelAndView("/taxi/TaxiHistory", "model", listOfOrdersDTO);
             return modelAndView;
         }
         else{

@@ -3,6 +3,8 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManager;
+import lv.etaxi.dto.OrderDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class TaxiCancelOrderController implements MVCController {
     @Autowired
     OrderManager orderManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
 
@@ -28,9 +33,10 @@ public class TaxiCancelOrderController implements MVCController {
                 return new MVCModel("/taxi/TaxiMenu.jsp", "You don't have order to cancel");
             }
 
-            Order order = (Order) request.getSession().getAttribute("order");
+            OrderDTO orderDTO = (OrderDTO) request.getSession().getAttribute("order");
 
             try {
+                Order order = convertorDTO.convertOrderFromDTO(orderDTO);
                 order.setTaxiId((long) 0);
                 order.setOrderStatus(Order.OrderStatus.WAITING);
                 orderManagerImpl.update(order);

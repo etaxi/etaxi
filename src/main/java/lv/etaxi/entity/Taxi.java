@@ -73,14 +73,6 @@ public class Taxi {
         this.rating = 0.0;
     }
 
-//    public List<Order> getListOfOrders() {
-//        return listOfOrders;
-//    }
-//
-//    public void setListOfOrders(List<Order> listOfOrders) {
-//        this.listOfOrders = listOfOrders;
-//    }
-
     public Long getTaxiId() {
         return taxiId;
     }

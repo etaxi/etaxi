@@ -1,6 +1,6 @@
-<%@ page import="lv.etaxi.entity.Order" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="lv.etaxi.dto.OrderDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -35,23 +35,23 @@
         %>
 
         <%
-            List<Order> listOfOrders = (ArrayList<Order>)request.getAttribute("model");
-            for (Order order : listOfOrders) {
+            List<OrderDTO> listOfOrdersDTO = (ArrayList<OrderDTO>)request.getAttribute("model");
+            for (OrderDTO orderDTO : listOfOrdersDTO) {
 
         %>
             <tr>
-                <td width="50"><%=order.getOrderId()%></td>
-                <td width="50"><%=order.getCustomerId()%></td>
-                <td width="100"><%=order.getDateTime()%></td>
-                <td width="100"><%=order.getOrderedDateTime()%></td>
-                <td width="100"><%=order.getOrderStatus()%></td>
-                <td width="200"><%=order.getFromAdress()%></td>
-                <td width="200"><%=order.getToAdress()%></td>
-                <td width="50"><%=order.getTaxiId()%></td>
-                <td width="50"><%=order.getDistance()%></td>
-                <td width="50"><%=order.getPrice()%></td>
-                <td width="50"><%=order.getRate()%></td>
-                <td width="200"><%=order.getFeedback()%></td>
+                <td width="50"><%=orderDTO.getOrderId()%></td>
+                <td width="50"><%=orderDTO.getCustomerId()%></td>
+                <td width="100"><%=orderDTO.getOrderedDateTime()%></td>
+                <td width="100"><%=orderDTO.getOrderedDateTime()%></td>
+                <td width="100"><%=orderDTO.getOrderStatus()%></td>
+                <td width="200"><%=orderDTO.getFromAdress()%></td>
+                <td width="200"><%=orderDTO.getToAdress()%></td>
+                <td width="50"><%=orderDTO.getTaxiId()%></td>
+                <td width="50"><%=orderDTO.getDistance()%></td>
+                <td width="50"><%=orderDTO.getPrice()%></td>
+                <td width="50"><%=orderDTO.getRate()%></td>
+                <td width="200"><%=orderDTO.getFeedback()%></td>
             </tr>
         <%}
         } else {

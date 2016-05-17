@@ -1,6 +1,8 @@
 package lv.etaxi.springMVCControllers.taxi;
 
 import lv.etaxi.business.TaxiManager;
+import lv.etaxi.dto.TaxiDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,13 @@ import java.sql.SQLException;
  * Created by Aleks on 01.04.2016.
  */
 @Controller
-public class TaxiAuthorizationControllerSpringMVC { // implements MVCController {
+public class TaxiAuthorizationControllerSpringMVC {
 
     @Autowired
     TaxiManager taxiManagerImpl;
+
+    @Autowired
+    СonvertorDTO convertorDTO;
 
     @RequestMapping(value = "/taxi/authorization", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -53,13 +58,12 @@ public class TaxiAuthorizationControllerSpringMVC { // implements MVCController 
             return modelAndView;
         }
 
-        // сохраняем логин (телефон) в сессию, для дальнейшей идентификации
-        request.getSession().setAttribute("taxi", taxi);
+        // сохраняем логин в сессию, для дальнейшей идентификации
+        TaxiDTO currentTaxiDTO = convertorDTO.convertTaxiToDTO(taxi);
+        request.getSession().setAttribute("taxi", currentTaxiDTO);
 
         ModelAndView modelAndView = new ModelAndView("/taxi/TaxiMenu", "model", null);
         return modelAndView;
-
-        //return new MVCModel("/taxi/TaxiMenu.jsp", "");
 
     }
 

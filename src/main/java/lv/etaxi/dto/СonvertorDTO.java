@@ -2,6 +2,7 @@ package lv.etaxi.dto;
 
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
+import lv.etaxi.entity.Taxi;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -34,6 +35,35 @@ public class СonvertorDTO {
                     customerDTO.getName(),
                     customerDTO.getPhone(),
                     customerDTO.getPassword());
+        }
+        return null;
+    }
+
+
+    public TaxiDTO convertTaxiToDTO(Taxi taxi) {
+
+        if (taxi != null) {
+            return new TaxiDTO(
+                    taxi.getTaxiId(),
+                    taxi.getName(),
+                    taxi.getCar(),
+                    taxi.getPhone(),
+                    taxi.getLogin(),
+                    taxi.getPassword());
+        }
+        return null;
+    }
+
+    public Taxi convertTaxiFromDTO(TaxiDTO taxiDTO) {
+
+        if (taxiDTO != null) {
+            return new Taxi(
+                    taxiDTO.getTaxiId(),
+                    taxiDTO.getName(),
+                    taxiDTO.getCar(),
+                    taxiDTO.getPhone(),
+                    taxiDTO.getLogin(),
+                    taxiDTO.getPassword());
         }
         return null;
     }

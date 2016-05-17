@@ -2,6 +2,9 @@ package lv.etaxi.springMVCControllers.taxi;
 
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.OrderManager;
+import lv.etaxi.dto.OrderDTO;
+import lv.etaxi.dto.TaxiDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class TaxiTakeOrderControllerSpringMVC{
     @Autowired
     OrderManager orderManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
+
     @RequestMapping(value = "/taxi/takeorder", method = {RequestMethod.GET})
     public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
         return null;
@@ -32,14 +38,14 @@ public class TaxiTakeOrderControllerSpringMVC{
         if (request.getSession().getAttribute("taxi") != null) {
             String orderId     = request.getParameter("orderId");
 
-
             try {
                 Order order = orderManagerImpl.findById(Long.parseLong(orderId));
-                Taxi taxi = (Taxi) request.getSession().getAttribute("taxi");
-                order.setTaxiId(taxi.getTaxiId());
+                TaxiDTO taxiDTO = (TaxiDTO) request.getSession().getAttribute("taxi");
+                order.setTaxiId(taxiDTO.getTaxiId());
                 order.setOrderStatus(Order.OrderStatus.TAKEN);
                 orderManagerImpl.update(order);
-                request.getSession().setAttribute("order", order);
+                OrderDTO orderDTO = convertorDTO.convertOrderToDTO(order);
+                request.getSession().setAttribute("order", orderDTO);
 
                 ModelAndView modelAndView = new ModelAndView("/taxi/TaxiTakeOrder", "model", "");
                 return modelAndView;

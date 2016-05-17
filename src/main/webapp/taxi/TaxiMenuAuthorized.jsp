@@ -1,4 +1,4 @@
-<%@ page import="lv.etaxi.entity.Taxi" %>
+<%@ page import="lv.etaxi.dto.TaxiDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -25,8 +25,8 @@
 <a href="/taxi/completeorder">Complete the order</a><br>
 <a href="/taxi/logoff">Logoff</a><br>
 
-    <%  Taxi taxi = (Taxi)session.getAttribute("taxi"); %>
-    <div><b>Hello, <%=taxi.getName()%>   <%=taxi.getCar()%>!</b></div>
+    <%  TaxiDTO taxiDTO = (TaxiDTO) session.getAttribute("taxi"); %>
+    <div><b>Hello, <%=taxiDTO.getName()%>   <%=taxiDTO.getCar()%>!</b></div>
 <br>
 
 <%-- <div id="message">< <b> ${message} </b> </div>>

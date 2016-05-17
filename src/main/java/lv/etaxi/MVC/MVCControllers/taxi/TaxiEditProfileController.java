@@ -3,6 +3,8 @@ package lv.etaxi.MVC.MVCControllers.taxi;
 import lv.etaxi.MVC.MVCController;
 import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.TaxiManager;
+import lv.etaxi.dto.TaxiDTO;
+import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Taxi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class TaxiEditProfileController implements MVCController {
     @Autowired
     TaxiManager taxiManagerImpl;
 
+    @Autowired
+    СonvertorDTO convertorDTO;
+
     @Override
     public MVCModel handleGetRequest(HttpServletRequest request) {
         Taxi currentTaxi = (Taxi) request.getSession().getAttribute("taxi");
@@ -32,17 +37,18 @@ public class TaxiEditProfileController implements MVCController {
 
     @Override
     public MVCModel handlePostRequest(HttpServletRequest request) throws SQLException {
-        Taxi currentTaxi = (Taxi) request.getSession().getAttribute("taxi");
-        if (currentTaxi == null) {
+        TaxiDTO currentTaxiDTO = (TaxiDTO) request.getSession().getAttribute("taxi");
+        if (currentTaxiDTO == null) {
             return new MVCModel("/taxi/TaxiMenu.jsp", "");
         }
 
-        currentTaxi.setName(request.getParameter("name"));
-        currentTaxi.setCar(request.getParameter("car"));
-        currentTaxi.setPhone(request.getParameter("phone"));
-        currentTaxi.setLogin(request.getParameter("login"));
-        currentTaxi.setPassword(request.getParameter("password"));
+        currentTaxiDTO.setName(request.getParameter("name"));
+        currentTaxiDTO.setCar(request.getParameter("car"));
+        currentTaxiDTO.setPhone(request.getParameter("phone"));
+        currentTaxiDTO.setLogin(request.getParameter("login"));
+        currentTaxiDTO.setPassword(request.getParameter("password"));
 
+        Taxi currentTaxi = convertorDTO.convertTaxiFromDTO(currentTaxiDTO);
         taxiManagerImpl.update(currentTaxi);
         return new MVCModel("/taxi/TaxiMenu.jsp", "");
 

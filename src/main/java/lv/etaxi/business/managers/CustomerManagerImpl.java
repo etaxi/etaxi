@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Проект etaxi
@@ -63,6 +64,11 @@ public class CustomerManagerImpl implements CustomerManager {
         return customerDAO.getById(Id);
     }
 
+    @Transactional
+    public List<Customer> getAllCustomers() throws SQLException {
+
+        return customerDAO.getAll();
+    }
 
     @Transactional
     public Customer findByLogin(String login) throws SQLException {

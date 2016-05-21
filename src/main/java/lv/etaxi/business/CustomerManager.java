@@ -1,10 +1,10 @@
 package lv.etaxi.business;
 
 
-import lv.etaxi.dao.DBException;
 import lv.etaxi.entity.Customer;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /** Проект etaxi
  * Created by D.Lazorkin on 25.03.2016.
@@ -29,6 +29,8 @@ public interface CustomerManager {
     Customer CheckAuthorization(String login, String password);
 
     boolean checkByLogin(Customer customer);
+
+    List<Customer> getAllCustomers() throws SQLException;
 
 }
 

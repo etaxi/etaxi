@@ -7,8 +7,12 @@
 </head>
 <body>
 
-<%  CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO"); %>
+<% CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO");
+    if (customer != null) { %>
 <div><h3>Welcome, <%=customer.getName()%> (phone: <%=customer.getPhone()%>)</h3></div>
+<%
+    }
+%>
 
 <h3>Customer menu:</h3>
 

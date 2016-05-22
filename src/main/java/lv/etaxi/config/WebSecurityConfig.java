@@ -29,8 +29,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/customer/**").access("hasRole('ROLE_CUSTOMER')")
                 .antMatchers("/taxi/**").access("hasRole('ROLE_TAXI')")
-                .and().formLogin().permitAll()
+                .and().formLogin().loginPage("/loginSpringSecurity").permitAll()
                 .and().logout().permitAll();
+
+        http.csrf().disable();
     }
 
     private void customersInMemoryAuthentication(AuthenticationManagerBuilder authentication) {

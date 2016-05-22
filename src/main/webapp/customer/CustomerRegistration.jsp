@@ -11,6 +11,9 @@
     <h1>New customer registration</h1>
 
     <form role="form" name = form1 action="/customer/customerRegistration" method="POST">
+
+        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+
         <div class="form-group">
             <label for="usr">Name, Surname:</label>
             <input type="text" name="name" placeholder= "Name" class="form-control" id="usr" required>
@@ -32,7 +35,8 @@
     if (request.getAttribute("model") != null) {
         MVCModel model = (MVCModel) request.getAttribute("model");
 %>
-<h3><%=model.getMessage()%></h3>
+<h3><%=model.getMessage()%>
+</h3>
 <%
     }
 %>

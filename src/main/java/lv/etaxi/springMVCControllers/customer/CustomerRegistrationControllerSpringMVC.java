@@ -53,7 +53,8 @@ public class CustomerRegistrationControllerSpringMVC {
             errorMessage = "Registration successful: " + newCustomerDTO.getName();
         }
 
-        return new ModelAndView("/customer/CustomerMenu", "model", new MVCModel(null, newCustomerDTO, errorMessage));
+        //return new ModelAndView("/customer/CustomerMenu", "model", new MVCModel(null, newCustomerDTO, errorMessage));
+        return new ModelAndView("/index", "model", new MVCModel(null, newCustomerDTO, errorMessage));
     }
 
 }

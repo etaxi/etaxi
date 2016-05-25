@@ -13,7 +13,7 @@
             <div id="menu"> <jsp:include page="/customer/CustomerMenuAuthorized.jsp" /> </div>
         <%}
         else {%>
-            <div id="menu"> <jsp:include page="/customer/CustomerAuthorization.jsp" /> </div>
+            <div id="menu"> <jsp:include page="/index.jsp" /> </div>
         <%}
     %>
 

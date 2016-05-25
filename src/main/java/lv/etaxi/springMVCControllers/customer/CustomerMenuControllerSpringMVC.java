@@ -6,6 +6,7 @@ import lv.etaxi.dto.CustomerDTO;
 import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +33,7 @@ public class CustomerMenuControllerSpringMVC  {
     @RequestMapping(value = "/customer", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 
-        Object userDetailsImpl = org.springframework.security.core.context.SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
-
+        Object userDetailsImpl = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userName = ((User) userDetailsImpl).getUsername();
 
         Customer currentCustomer = customerManagerImpl.findByLogin(userName);

@@ -13,11 +13,22 @@
 <%--</div>--%>
 <h1> Please, login to ETAXI </h1>
 <h3> SPRING SECURITY authentication </h3>
+
 <BR>
+
 <form th:action="@{/login}" method="post">
     <div><label> Login:    <input type="text" name="username"/> </label></div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
     <div><input type="submit" value="Sign In"/></div>
 </form>
+
+<BR>
+
+<div class="container">
+    <form class="form-signin" action="/customer/customerRegistration" method="GET">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">New customer registration</button>
+    </form>
+</div>
+
 </body>
 </html>

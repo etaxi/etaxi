@@ -1,7 +1,7 @@
 package lv.etaxi.business.managers;
 
-import databaseTests.CustomerBuilder;
-import databaseTests.OrderBuilder;
+import lv.etaxi.builders.CustomerBuilder;
+import lv.etaxi.builders.OrderBuilder;
 import lv.etaxi.business.CustomerManager;
 import lv.etaxi.business.OrderManager;
 import lv.etaxi.config.SpringAppConfig;

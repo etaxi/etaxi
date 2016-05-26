@@ -1,7 +1,7 @@
 package lv.etaxi.business.managers;
 
-import databaseTests.CustomerBuilder;
-import databaseTests.OrderBuilder;
+import lv.etaxi.builders.CustomerBuilder;
+import lv.etaxi.builders.OrderBuilder;
 import lv.etaxi.business.CustomerManager;
 import lv.etaxi.business.OrderManager;
 import lv.etaxi.config.SpringAppConfig;
@@ -42,7 +42,7 @@ public class OrderManagerImplTest {
     @Test
     public void createOrderTest() throws SQLException {
 
-        OrderBuilder orderBuilder = databaseTests.OrderBuilder.aOrder()
+        OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withFromAdress("Brivibas 123")
                 .withToAdress("Terbatas 34a")
                 .withPrice(12.45)
@@ -68,7 +68,7 @@ public class OrderManagerImplTest {
         Double newDistance = 22.00;
         Double newPrice = 6.78;
 
-        OrderBuilder orderBuilder = databaseTests.OrderBuilder.aOrder()
+        OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withFromAdress("Brivibas 123")
                 .withToAdress("Terbatas 34a")
                 .withPrice(12.45)
@@ -98,7 +98,7 @@ public class OrderManagerImplTest {
     @Test
     public void DeleteOrderTest() throws SQLException {
 
-        OrderBuilder orderBuilder = databaseTests.OrderBuilder.aOrder()
+        OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withFromAdress("Brivibas 1")
                 .withToAdress("Terbatas 7")
                 .withPrice(12.45)
@@ -120,7 +120,7 @@ public class OrderManagerImplTest {
     @Test
     public void getOpenOrdersAllTest() throws SQLException {
 
-        Order order = databaseTests.OrderBuilder.aOrder().build();
+        Order order = OrderBuilder.aOrder().build();
         orderManagerImpl.create(order);
 
         List<Order> listOfOrders = orderManagerImpl.getOpenOrdersAll();
@@ -152,7 +152,7 @@ public class OrderManagerImplTest {
         Customer customer = CustomerBuilder.aCustomer().build();
         customerManagerImpl.createNewInDataBase(customer);
 
-        OrderBuilder orderBuilder = databaseTests.OrderBuilder.aOrder()
+        OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withFromAdress("Brivibas 1")
                 .withToAdress("Terbatas 7")
                 .withPrice(12.45)
@@ -178,7 +178,7 @@ public class OrderManagerImplTest {
         Customer customer = CustomerBuilder.aCustomer().build();
         customerManagerImpl.createNewInDataBase(customer);
 
-        OrderBuilder orderBuilder = databaseTests.OrderBuilder.aOrder()
+        OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withOrderedDate(currentDate)
                 .withDate(currentDate)
                 .withOrderStatus(Order.OrderStatus.WAITING);
@@ -204,7 +204,7 @@ public class OrderManagerImplTest {
         Customer customer = CustomerBuilder.aCustomer().build();
         customerManagerImpl.createNewInDataBase(customer);
 
-        OrderBuilder orderBuilder = databaseTests.OrderBuilder.aOrder()
+        OrderBuilder orderBuilder = OrderBuilder.aOrder()
                 .withFromAdress("Brivibas 1")
                 .withToAdress("Terbatas 7")
                 .withPrice(12.45)

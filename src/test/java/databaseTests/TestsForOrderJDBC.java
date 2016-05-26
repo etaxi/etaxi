@@ -1,5 +1,6 @@
 package databaseTests;
 
+import lv.etaxi.builders.OrderBuilder;
 import lv.etaxi.dao.OrderDAO;
 import lv.etaxi.dao.jdbc.OrderDAOImpl;
 import lv.etaxi.entity.Order;

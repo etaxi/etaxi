@@ -1,4 +1,4 @@
-package databaseTests;
+package lv.etaxi.builders;
 
 import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.TaxiDAO;

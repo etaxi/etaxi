@@ -1,11 +1,11 @@
-package databaseTests;
+package lv.etaxi.builders;
 
 import lv.etaxi.entity.Taxi;
 
 /** Проект etaxi
  * JUnit тесты для проекта etaxi (design patterns "Object Mother" and "Test Data Builder")
  * */
-class TaxiBuilder {
+public class TaxiBuilder {
 
     public static final Long   DEFAULT_ID = (long) 0;
     public static final String DEFAULT_NAME = "Fernando Alonso Díaz";

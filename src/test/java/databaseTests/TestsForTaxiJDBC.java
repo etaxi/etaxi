@@ -1,12 +1,12 @@
 package databaseTests;
 
+import lv.etaxi.builders.TaxiBuilder;
 import lv.etaxi.dao.TaxiDAO;
 import lv.etaxi.dao.jdbc.TaxiDAOImpl;
 import lv.etaxi.entity.Taxi;
 import org.junit.Test;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

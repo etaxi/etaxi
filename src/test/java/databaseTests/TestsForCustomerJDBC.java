@@ -1,5 +1,6 @@
 package databaseTests;
 
+import lv.etaxi.builders.CustomerBuilder;
 import lv.etaxi.dao.CustomerDAO;
 import lv.etaxi.dao.jdbc.CustomerDAOImpl;
 import lv.etaxi.entity.Customer;

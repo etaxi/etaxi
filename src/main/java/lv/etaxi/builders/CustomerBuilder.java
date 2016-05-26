@@ -1,4 +1,4 @@
-package databaseTests;
+package lv.etaxi.builders;
 
 import lv.etaxi.entity.Customer;
 

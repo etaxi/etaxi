@@ -18,4 +18,6 @@ public interface BaseDAO<T> {
 
         List<T> getAll() throws SQLException;
 
-        }
+        T getByLogin(String login) throws SQLException;
+
+}

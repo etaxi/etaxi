@@ -65,4 +65,9 @@ public class OrderHibernateDAOImpl extends DAOImpl<Order> implements OrderDAO {
                 " order by orderedDateTime ASC");
         return  query.list();
     }
+
+    @Override
+    public Order getByLogin(String login) throws SQLException {
+        return null;
+    }
 }

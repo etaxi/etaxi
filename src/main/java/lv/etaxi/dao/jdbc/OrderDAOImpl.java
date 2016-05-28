@@ -67,6 +67,11 @@ public class OrderDAOImpl implements OrderDAO {
         );
     }
 
+    @Override
+    public Order getByLogin(String login) throws SQLException {
+        return null;
+    }
+
     public Order getById(long id) throws SQLException {
         Executor executor = GetExecutor();
         return executor.executeQuery("select * from orders where Id=" + id, resultSet -> {
@@ -150,5 +155,7 @@ public class OrderDAOImpl implements OrderDAO {
         return (new Executor(dbService.getConnection(), dbService.getDatabaseName()));
 
     }
+
+
 
 }

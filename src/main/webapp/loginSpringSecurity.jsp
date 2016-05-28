@@ -30,5 +30,12 @@
     </form>
 </div>
 
+
+<div class="container">
+    <form class="form-signin" action="/taxi/registration" method="GET">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">New taxi driver registration</button>
+    </form>
+</div>
+
 </body>
 </html>

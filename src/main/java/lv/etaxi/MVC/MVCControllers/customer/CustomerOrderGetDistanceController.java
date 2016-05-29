@@ -7,6 +7,7 @@ import lv.etaxi.dto.CustomerDTO;
 import lv.etaxi.dto.OrderDTO;
 import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -33,7 +34,7 @@ public class CustomerOrderGetDistanceController implements MVCController {
     }
 
     @Override
-    public MVCModel handlePostRequest(HttpServletRequest request) {
+    public MVCModel handlePostRequest(HttpServletRequest request) throws JSONException {
 
         CustomerDTO currentCustomerDTO = (CustomerDTO) request.getSession().getAttribute("customerDTO");
         if (currentCustomerDTO == null) {

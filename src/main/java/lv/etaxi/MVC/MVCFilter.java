@@ -4,6 +4,7 @@ import lv.etaxi.MVC.MVCControllers.admin.*;
 import lv.etaxi.MVC.MVCControllers.customer.*;
 import lv.etaxi.MVC.MVCControllers.taxi.*;
 import lv.etaxi.config.SpringAppConfig;
+import org.json.JSONException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -87,6 +88,8 @@ public class MVCFilter implements Filter {
                 try {
                     model = controller.handlePostRequest(request);
                 } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

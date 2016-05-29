@@ -1,5 +1,7 @@
 package lv.etaxi.MVC;
 
+import org.json.JSONException;
+
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
@@ -10,6 +12,6 @@ public interface MVCController {
 
     MVCModel handleGetRequest(HttpServletRequest request) throws SQLException;
 
-    MVCModel handlePostRequest(HttpServletRequest request) throws SQLException;
+    MVCModel handlePostRequest(HttpServletRequest request) throws SQLException, JSONException;
 
 }

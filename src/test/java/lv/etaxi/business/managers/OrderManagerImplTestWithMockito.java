@@ -7,6 +7,7 @@ import lv.etaxi.business.OrderManager;
 import lv.etaxi.config.SpringAppConfig;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
+import org.json.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,7 @@ public class OrderManagerImplTestWithMockito {
 
 
     @Test
-    public void getDistanceTest() throws SQLException {
+    public void getDistanceTest() throws SQLException, JSONException {
 
         String addressFrom = "Latvija, Rīga, Āzenes iela, 12";
         String addressTo = "Latvija, Rīga, Kronvalda bulvāris, 2";

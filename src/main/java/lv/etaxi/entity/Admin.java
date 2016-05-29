@@ -1,14 +1,33 @@
 package lv.etaxi.entity;
 
 
-public class Admin {
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.io.Serializable;
 
-    private Long adminId;       // Идентификатор
+public class Admin implements Serializable {
+
+    @Id
+    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long adminId;    // Идентификатор
+
+    @Column(name = "name", unique = false, updatable = true)
     private String name;        // Имя, Фамилия
-    private String login;    // логин
+
+    @Column(name = "login", unique = true, updatable = true)
+    private String login;       //логин
+
+    @Column(name = "password", unique = false, updatable = true)
     private String password;    // пароль
 
-    public Admin(Long adminId, String name, String login, String password){
+    //Important to Hibernate!
+    @SuppressWarnings("UnusedDeclaration")
+    public Admin() {}
+
+       public Admin(Long adminId, String name, String login, String password){
 
         this.adminId = adminId;
         this.name = name;

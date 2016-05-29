@@ -6,6 +6,7 @@ import lv.etaxi.dto.CustomerDTO;
 import lv.etaxi.dto.OrderDTO;
 import lv.etaxi.dto.СonvertorDTO;
 import lv.etaxi.entity.Order;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,7 @@ public class CustomerOrderGetDistanceControllerSpringMVC {
     }
 
     @RequestMapping(value = "/customer/getDistanceForOrder", method = {RequestMethod.POST})
-    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) throws JSONException {
 
         CustomerDTO currentCustomerDTO = (CustomerDTO) request.getSession().getAttribute("customerDTO");
         if (currentCustomerDTO == null) {

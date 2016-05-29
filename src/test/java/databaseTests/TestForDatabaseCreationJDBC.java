@@ -1,7 +1,7 @@
 package databaseTests;
 
 import lv.etaxi.dao.databaseCreation.DatabaseCreation;
-import lv.etaxi.dao.databaseCreation.jdbc.DatabaseCreationJDBCImpl;
+import lv.etaxi.dao.databaseCreation.jdbc.DatabaseCreationJdbcImpl;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ public class TestForDatabaseCreationJDBC {
     @Test
     public void testСreateDataBase() throws SQLException {
 
-        DatabaseCreation databaseCreation = new DatabaseCreationJDBCImpl();
+        DatabaseCreation databaseCreation = new DatabaseCreationJdbcImpl();
 
         databaseCreation.createDatabase(true);
         databaseCreation.createTableForCustomers();

@@ -158,7 +158,7 @@ public class OrderManagerImpl implements OrderManager {
     }
 
     @Transactional
-    public double GetDistance(String addressFrom, String addressTo){
+    public double GetDistance(String addressFrom, String addressTo) throws JSONException {
 
         Direction direction = new Direction(addressFrom, addressTo);
         final Map<String, String> params = direction.putParameters();

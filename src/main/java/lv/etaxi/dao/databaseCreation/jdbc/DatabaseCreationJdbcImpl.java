@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * Created by D.Lazorkin on 30.04.2016.
  */
-public class DatabaseCreationJDBCImpl implements DatabaseCreation {
+public class DatabaseCreationJdbcImpl implements DatabaseCreation {
 
     public void createTableForCustomers() throws SQLException {
         Executor executor = GetExecutor();

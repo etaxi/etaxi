@@ -2,6 +2,7 @@ package lv.etaxi.business;
 
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
+import org.json.JSONException;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -43,7 +44,7 @@ public interface OrderManager{
     boolean updateOrderByIdByCustomer(Customer customer, String orderIdToUpdate, String fromAddress,
                                       String toAddress, String orderedDateTime, String feedback, double distance, double price);
 
-    double GetDistance(String addressFrom, String addressTo);
+    double GetDistance(String addressFrom, String addressTo) throws JSONException;
 
     double getPriceOfRide(double distance);
 

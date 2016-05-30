@@ -1,5 +1,6 @@
 package lv.etaxi.dto;
 
+import lv.etaxi.entity.Admin;
 import lv.etaxi.entity.Customer;
 import lv.etaxi.entity.Order;
 import lv.etaxi.entity.Taxi;
@@ -64,6 +65,30 @@ public class СonvertorDTO {
                     taxiDTO.getPhone(),
                     taxiDTO.getLogin(),
                     taxiDTO.getPassword());
+        }
+        return null;
+    }
+
+    public AdminDTO convertAdminToDTO(Admin admin) {
+
+        if (admin!= null) {
+            return new AdminDTO(
+                    admin.getAdminId(),
+                    admin.getName(),
+                    admin.getLogin(),
+                    admin.getPassword());
+        }
+        return null;
+    }
+
+    public Admin convertAdminFromDTO(AdminDTO adminDTO) {
+
+        if (adminDTO!= null) {
+            return new Admin(
+                    adminDTO.getAdminId(),
+                    adminDTO.getName(),
+                    adminDTO.getLogin(),
+                    adminDTO.getPassword());
         }
         return null;
     }

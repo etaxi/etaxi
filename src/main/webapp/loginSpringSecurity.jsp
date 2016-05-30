@@ -37,5 +37,11 @@
     </form>
 </div>
 
+<div class="container">
+    <form class="form-signin" action="/admin/adminRegistration" method="GET">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">New admin registration</button>
+    </form>
+</div>
+
 </body>
 </html>

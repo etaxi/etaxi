@@ -30,7 +30,7 @@ public class AdminEditProfileControllerSpringMVC {
     @RequestMapping(value = "/admin/adminEditProfile", method = {RequestMethod.GET})
     public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        AdminDTO currentAdminDTO = (AdminDTO) request.getSession().getAttribute("taxi");
+        AdminDTO currentAdminDTO = (AdminDTO) request.getSession().getAttribute("admin");
         if (currentAdminDTO == null) {
             ModelAndView modelAndView = new ModelAndView("/admin/AdminMenu", "model", "");
             return modelAndView;

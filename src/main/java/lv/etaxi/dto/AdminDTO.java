@@ -18,34 +18,45 @@ public class AdminDTO {
         this.password = password;
     }
 
+    public Long getAdminId() {
+
+        return adminId;
+    }
+
     public String getName() {
+
         return name;
     }
 
     public String getLogin() {
+
         return login;
     }
 
     public String getPassword() {
+
         return password;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public void setLogin(String login) {
+
         this.login = login;
     }
 
     public void setPassword(String password) {
+
         this.password = password;
     }
 
     @Override
     public String toString() {
 
-        return "{" +
+        return "AdminDTO{" +
                 "\"adminId\":" + "\"" + adminId + "\"" +
                 ", \"name\":" + "\"" + name + "\"" +
                 ", \"login\":" + "\"" + login + "\"" +

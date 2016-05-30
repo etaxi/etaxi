@@ -1,5 +1,6 @@
 package lv.etaxi.springMVCControllers.admin;
 
+import lv.etaxi.MVC.MVCModel;
 import lv.etaxi.business.AdminManager;
 import lv.etaxi.dto.AdminDTO;
 import lv.etaxi.dto.СonvertorDTO;
@@ -29,40 +30,29 @@ public class AdminAuthorizationControllerSpringMVC {
     @RequestMapping(value = "/admin/adminAuthorization", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        ModelAndView modelAndView = new ModelAndView("/admin/AdminAuthorization", "model", null);
-        return modelAndView;
-
+        return new ModelAndView("/admin/AdminAuthorization", "model", null);
     }
 
     @RequestMapping(value = "/admin/adminAuthorization", method = {RequestMethod.POST})
-    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        Admin currentAdmin = adminManagerImpl.CheckAuthorization(
+                request.getParameter("login"),
+                request.getParameter("password"));
 
-        if (login == null || password == null) {
-            ModelAndView modelAndView = new ModelAndView("/admin/AdminAuthorization", "model", null);
-            return modelAndView;
+        if (currentAdmin != null) {
+            // сохраняем пользователя в сессию, для дальнейшей идентификации клиента в системе
+            AdminDTO currentAdminDTO = convertorDTO.convertAdminToDTO(currentAdmin);
+            request.getSession().setAttribute("adminDTO", currentAdminDTO);
+
+            return new ModelAndView("/admin/AdminMenu", "model",
+                    new MVCModel(null, currentAdminDTO,
+                            "Authorization successful: " + currentAdminDTO.getName()));
+
         }
-
-        Admin admin = null;
-        try {
-            admin = adminManagerImpl.findByLogin(login);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        else {
+            return new ModelAndView("/admin/AdminMenu", "model",
+                    new MVCModel(null, null, "Wrong login or password!"));
         }
-
-        if (admin == null || !admin.getPassword().equals(password)) {
-            ModelAndView modelAndView = new ModelAndView("/admin/AdminAuthorization", "model", null);
-            return modelAndView;
-        }
-
-        // сохраняем логин в сессию, для дальнейшей идентификации
-        AdminDTO currentAdminDTO = convertorDTO.convertAdminToDTO(admin);
-        request.getSession().setAttribute("admin", currentAdminDTO);
-
-        ModelAndView modelAndView = new ModelAndView("/admin/AdminMenu", "model", null);
-        return modelAndView;
     }
 }

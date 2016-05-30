@@ -7,9 +7,9 @@ import java.util.List;
 /** Проект etaxi
  * Класс для хранения данных клиента
  */
-
 @Entity
 @Table(name = "customers")
+
 public class Customer implements Serializable {
     @Id
     @Column(name = "Id")

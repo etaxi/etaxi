@@ -1,16 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: G
-  Date: 29.03.2016
-  Time: 13:25
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+
+<jsp:include page="/admin/AdminMenu.jsp" />
 
 <div class="container">
 
@@ -32,10 +27,12 @@
         <input type="submit" value="Register new admin" style='width:265px;'>
     </form>
 
-</div> <!-- /container -->
+        <% String data = (String)request.getAttribute("model");
+    if (data != null) {%>
+        <%=data +" "%>
 
-
-<h3><%=request.getAttribute("message")%></h3>
+        <%}
+%>
 
 </body>
 </html>

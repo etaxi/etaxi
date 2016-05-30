@@ -1,24 +1,20 @@
-<%@ page import="lv.etaxi.entity.Admin" %><%--
-  Created by IntelliJ IDEA.
-  User: G
-  Date: 29.03.2016
-  Time: 13:23
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="lv.etaxi.dto.AdminDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+
 <%
-    Admin admin = (Admin) session.getAttribute("admin");
-    if (admin != null) {  %>
+    AdminDTO adminDTO = (AdminDTO) session.getAttribute("adminDTO");
+    if (adminDTO != null) {  %>
 <div id="menu"> <jsp:include page="/admin/AdminMenuAuthorized.jsp" /> </div>
 <%}
 else {%>
-<div id="menu"> <jsp:include page="/admin/AdminAuthorization.jsp" /> </div>
+<div id="menu"> <jsp:include page="/index.jsp" /> </div>
 <%}
 %>
+
 </body>
 </html>

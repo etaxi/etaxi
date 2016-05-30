@@ -12,6 +12,8 @@
 </head>
 <body>
 
+<jsp:include page="/admin/AdminMenu.jsp" />
+
 <h1>Admin authorization</h1>
 <div class="container">
     <form class="form-signin" action="/admin/adminAuthorization" method="POST">

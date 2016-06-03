@@ -11,7 +11,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="staticRes/favicon.ico">
 
     <title>eTaxi (Spring Security authentication)</title>
 
@@ -55,15 +55,19 @@
 
 
 <div class="container">
-<form th:action="@{/login}" method="post">
+<form class="form-signin" th:action="@{/login}" method="post">
     <h2 class="form-signin-heading">Please, login to eTAXI</h2>
-    <label  for="inputLogin"> Login: </label>
-    <input type="text" name="username" id="inputLogin">
-    <label for="inputPassword"> Password: </label>
-    <input type="password" name="password" id = "inputPassword">
+    <label  for="inputLogin"> Login: </label> <BR>
+    <input type="text" name="username" id="inputLogin" placeholder="Phone (+371xxxxxxxx)" required autofocus> <BR>
+    <label for="inputPassword"> Password: </label> <BR>
+    <input type="password" name="password" id = "inputPassword" placeholder="Password" required> <BR>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
 </div>
+
+<BR>
+<BR>
+<BR>
 
 <div class="container">
     <form class="form-signin" action="/customer/customerRegistration" method="GET">

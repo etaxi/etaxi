@@ -6,10 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,14 +14,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="staticRes/favicon.ico">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 
-    <title>eTaxi - customer</title>
+    <title>eTaxi (new order)</title>
 
     <!-- Bootstrap core CSS -->
     <link href="staticRes/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="staticRes/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="staticRes/style.css" rel="stylesheet">
@@ -42,6 +41,7 @@
 </head>
 
 <body>
+
 
 <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
@@ -67,12 +67,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/customer"> Main menu </a>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer/signOut">Sing out</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer"> Main menu </a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
 
-<br>
+<BR>
 
 <%
     MVCModel model = null;  OrderDTO order = null;
@@ -85,20 +92,22 @@
 
 <div class="container">
 
-<h2 class="form-signin-heading">Please, <%=customer.getName()%> change your order (order ID: <%=order.getOrderId()%> ) </h2>
-
 <form id="register" class="form-signin" action="" method="POST">
 
-    <label for="fromAddress" class="sr-only">Address from</label>
+    <h3>Please, <%=customer.getName()%> change your order (order ID: <%=order.getOrderId()%>) </h3>
+
+    <BR>
+
+    <label for="fromAddress">Address from</label> <BR>
     <input input type="text" name="fromAddress" value="<%=order.getFromAdress()%>" id="fromAddress" class="form-control"
            placeholder="Ride from address" autofocus required>
 
-    <label for="toAddress" class="sr-only">Address to</label>
+    <label for="toAddress">Address to</label> <BR>
     <input type="text" name="toAddress" value="<%=order.getToAdress()%>" id="toAddress" class="form-control"
            placeholder="Ride to address" required>
 
     <div id="orderedDateTime" class="input-append date">
-        <label for="orderedDateTimeInput">Date and time of ride:</label>
+        <label for="orderedDateTimeInput">Date and time of ride:</label> <BR>
         <input type="text" value="<%=order.getOrderedDateTime()%>" name="orderedDateTime" id="orderedDateTimeInput"
                required>
             <span class="add-on">
@@ -114,10 +123,10 @@
 
     <input type="hidden" name="orderId" value="<%=order.getOrderId()%>"/>
 
-    <label for="distance" class="sr-only">Distance (km): </label>
+    <label for="distance">Distance (km): </label> <BR>
     <input input type="text" value="<%= (order==null)? 0.00 : order.getDistance()%>" name="distance" id="distance" class="form-control" placeholder="Distance" readonly>
 
-    <label for="price" class="sr-only">Price of ride (EUR): </label>
+    <label for="price">Price of ride (EUR): </label> <BR>
     <input input type="text" value="<%= (order==null)? 0.00 : order.getPrice()%>" name="price" id="price" class="form-control" placeholder="Price" readonly>
 
     <input type='hidden' name='returnPage' value="/customer/CustomerEditOrder.jsp">
@@ -132,13 +141,13 @@
         }
     </script>
 
+    <BR>
+
+    <h3><%= (model != null) ? model.getMessage() : "" %></h3>
+
 </form>
 
-</div> <!-- /container -->
-
-<BR>
-
-<h3><%= (model != null) ? model.getMessage() : "" %></h3>
+</div>
 
 
 <!-- Bootstrap core JavaScript

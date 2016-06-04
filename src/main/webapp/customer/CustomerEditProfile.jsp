@@ -5,10 +5,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,13 +14,13 @@
     <meta name="author" content="">
     <link rel="icon" href="staticRes/favicon.ico">
 
-    <title>eTaxi - customer</title>
+    <title>eTaxi (edit profile)</title>
 
     <!-- Bootstrap core CSS -->
     <link href="staticRes/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="staticRes/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="staticRes/style.css" rel="stylesheet">
@@ -54,6 +50,9 @@
             </button>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer/signOut">Sing out</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
                     <li class="active"><a href="/customer"> Main menu </a></li>
                 </ul>
             </div>
@@ -82,22 +81,19 @@
             <label for="pwd">Password:</label>
             <input type="password" name="password" value="<%=customer.getPassword()%>" placeholder="Password" class="form-control" id="pwd" required>
         </div>
-        <input type="submit" value="Save new data" style='width:265px;'>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save new data</button>
     </form>
 
-</div> <!-- /container -->
+    <BR>
 
-<BR>
-
-<div class="container">
- <%
-   if (request.getAttribute("model") != null) {
-      MVCModel model = (MVCModel) request.getAttribute("model");
- %>
-      <h4> <%=model.getMessage()%> </h4>
- <%
-    }
- %>
+    <%
+        if (request.getAttribute("model") != null) {
+            MVCModel model = (MVCModel) request.getAttribute("model");
+    %>
+          <h4> <%=model.getMessage()%> </h4>
+    <%
+        }
+    %>
 </div>
 
 

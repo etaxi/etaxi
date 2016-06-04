@@ -55,7 +55,7 @@ public class CustomerEditProfileControllerSpringMVC {
         String errorMessage = customerManagerImpl.update(currentCustomer);
 
         if (errorMessage.isEmpty()) {
-            errorMessage = "The data change was made (" + currentCustomerDTO.getName() + ")";
+            errorMessage = "Your data change has made (" + currentCustomerDTO.getName() + ")";
             return new ModelAndView("/customer/CustomerMenu", "model", new MVCModel(null, currentCustomerDTO, errorMessage));
         } else {
             return new ModelAndView("/customer/CustomerEditProfile", "model", new MVCModel(null, null, errorMessage));

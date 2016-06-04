@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="staticRes/favicon.ico">
 
-    <title>eTaxi (Spring Security authentication)</title>
+    <title>eTaxi (New  customer registration)</title>
 
     <!-- Bootstrap core CSS -->
     <link href="staticRes/css/bootstrap.min.css" rel="stylesheet">
@@ -53,38 +53,36 @@
     </div>
 </nav>
 
-<div class="container">
-
-    <h1>New customer registration</h1>
+<div class="container" align="left">
 
     <form class="form-signin" action="/customer/customerRegistration" method="POST">
 
+            <h2>New customer registration</h2> <BR>
+
             <label for="usr">Your name, surname:</label> <BR>
-            <input type="text" name="name" placeholder= "Name" class="form-control" id="usr" required> <BR> <BR>
+            <input type="text" name="name" placeholder= "Name, surname" class="form-control" id="usr" required> <BR> <BR>
 
             <label for="phone">Phone (login):</label> <BR>
-            <input type="text" name="phone" placeholder= "you phone (+371xxxxxxx)" class="form-control" id="phone" required> <BR> <BR>
+            <input type="text" name="phone" placeholder= "Your phone (+371xxxxxxx)" class="form-control" id="phone" required> <BR> <BR>
 
             <label for="pwd">Password:</label> <BR>
             <input type="password" name="password" placeholder="Password" class="form-control" id="pwd" required> <BR> <BR>
 
-            <input type="submit" value="Register new customer" style='width:265px;'>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Register new customer</button>
+
+        <BR>
+
+        <%
+            if (request.getAttribute("model") != null) {
+                MVCModel model = (MVCModel) request.getAttribute("model");
+        %>
+        <h3><%=model.getMessage()%></h3>
+        <%
+            }
+        %>
 
     </form>
 
-</div> <!-- /container -->
-
-<BR>
-
-<div class="container">
-    <%
-        if (request.getAttribute("model") != null) {
-            MVCModel model = (MVCModel) request.getAttribute("model");
-    %>
-    <h4> <%=model.getMessage()%> </h4>
-    <%
-        }
-    %>
 </div>
 
 

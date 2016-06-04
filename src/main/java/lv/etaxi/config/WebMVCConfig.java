@@ -29,20 +29,23 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/*")
                 .addResourceLocations("/index.html");
 
+        registry.addResourceHandler("/customer/staticRes/**")
+                .addResourceLocations("/customer/staticRes/");
+
         registry.addResourceHandler("/staticRes/**")
                 .addResourceLocations("/staticRes/");
 
-        registry.addResourceHandler("/staticRes/css/**")
-                .addResourceLocations("/staticRes/css/");
-
-        registry.addResourceHandler("/staticRes/fonts/**")
-                .addResourceLocations("/staticRes/fonts/");
-
-        registry.addResourceHandler("/staticRes/img/**")
-                .addResourceLocations("/staticRes/img/");
-
-        registry.addResourceHandler("/staticRes/js/**")
-                .addResourceLocations("/staticRes/js/");
+//        registry.addResourceHandler("/staticRes/css/**")
+//                .addResourceLocations("/staticRes/css/");
+//
+//        registry.addResourceHandler("/staticRes/fonts/**")
+//                .addResourceLocations("/staticRes/fonts/");
+//
+//        registry.addResourceHandler("/staticRes/img/**")
+//                .addResourceLocations("/staticRes/img/");
+//
+//        registry.addResourceHandler("/staticRes/js/**")
+//                .addResourceLocations("/staticRes/js/");
 
     }
 }

@@ -5,10 +5,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,13 +14,13 @@
     <meta name="author" content="">
     <link rel="icon" href="staticRes/favicon.ico">
 
-    <title>eTaxi - customer</title>
+    <title>eTaxi (customer main menu)</title>
 
     <!-- Bootstrap core CSS -->
     <link href="staticRes/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="staticRes/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="staticRes/style.css" rel="stylesheet">
@@ -42,52 +38,63 @@
 
 <body>
 
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/customer/signOut">Sing out</a>
+        </div>
+    </div>
+</nav>
+
+
 <% CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO");
     if (customer != null) { %>
-<div><h3>Welcome, <%=customer.getName()%> (phone: <%=customer.getPhone()%>)</h3></div>
+<div>
+    <h2> Welcome, <%=customer.getName()%> to eTaxi system </h2>
+    <h3> (your registered phone: <%=customer.getPhone()%>) </h3>
+</div>
 <%
     }
 %>
 
-<h3> Customer menu: </h3>
+<BR>
+
+<div>
+
+<h4> Please, select one of such options: </h4>
 
 <BR>
 
-<a href="/customer/customerEditProfile">Edit profile</a><br>
-<a href="/customer/customerCreateNewOrder">Create new order</a><br>
-<a href="/customer/customerHistoryOfOrders">History of your orders</a><br>
-<a href="/customer/customerEditDeleteOrders">Change data of opened orders</a><br>
-<a href="/customer/customerWriteFeedbacksToOrders">Write feedback to completed orders</a><br><br>
-<a href="/customer/signOut">Sing out</a><br>
-
-<BR>
-
-<ul class="nav navbar-nav">
-    <li><a href="#">Home</a></li>
-    <li class="dropdown"><a href="" data-toggle="dropdown"> Customer menu options: <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-        <li><a href="/customer/customerEditProfile">Edit profile</a><br></li>
-        <li><a href="/customer/customerCreateNewOrder">Create new order</a><br></li>
-        <li><a href="/customer/customerHistoryOfOrders">History of your orders</a><br></li>
-        <li><a href="/customer/customerEditDeleteOrders">Change data of opened orders</a><br></li>
-        <li><a href="/customer/customerWriteFeedbacksToOrders">Write feedback to completed orders</a><br></li>
-        </ul>
-    </li>
-    <li class="active"><a href="/customer/signOut">Sing out</a></li>
+<ul type="square" title="Customer menu:">
+    <li><a href="/customer/customerEditProfile">Edit profile</a></li><BR>
+    <li><a href="/customer/customerCreateNewOrder">Create new order</a></li><BR>
+    <li><a href="/customer/customerHistoryOfOrders">All history of your orders</a></li><BR>
+    <li><a href="/customer/customerEditDeleteOrders">Change data of opened orders</a></li><BR>
+    <li><a href="/customer/customerWriteFeedbacksToOrders">Write feedback to completed orders</a></li>
 </ul>
 
+</div>
+
 <BR>
 
-
-<%
-    if (request.getAttribute("model") != null) {
-        MVCModel model = (MVCModel) request.getAttribute("model");
-%>
-<h3><%=model.getMessage()%></h3>
-<%
-    }
-%>
-
+<div>
+    <%
+        if (request.getAttribute("model") != null) {
+            MVCModel model = (MVCModel) request.getAttribute("model");
+    %>
+    <h3>    <%=model.getMessage()%> </h3>
+    <%
+        }
+    %>
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

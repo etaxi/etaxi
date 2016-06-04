@@ -7,10 +7,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,14 +15,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="staticRes/favicon.ico">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 
-    <title>eTaxi - customer</title>
+    <title>eTaxi (new order)</title>
 
     <!-- Bootstrap core CSS -->
     <link href="staticRes/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="staticRes/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="staticRes/style.css" rel="stylesheet">
@@ -58,6 +57,7 @@
         src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
 </script>
 
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -68,7 +68,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/customer"> Main menu </a>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer/signOut">Sing out</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer"> Main menu </a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
@@ -85,26 +92,31 @@
 
 <div class="container">
 
-<h2>New customer registration</h2>
-
 <form id="register" class="form-signin" action="" method="POST">
 
     <% CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO"); %>
-    <div><h3>Please, <%=customer.getName()%> enter new order information: </h3></div>
+    <h3>Please, <%=customer.getName()%> enter new order information: </h3>
 
-    <label for="fromAddress" class="sr-only">Address from</label>
-    <input input type="text" name="fromAddress" id="fromAddress" value="<%=(order==null)? "" : order.getFromAdress()%>" class="form-control" placeholder="Ride from address" required autofocus>
+    <BR>
 
-    <label for="toAddress" class="sr-only">Address to</label>
-    <input type="text" name="toAddress" id="toAddress" value="<%=(order==null)? "" : order.getToAdress()%>" class="form-control" placeholder="Ride to address" required>
+    <div class="form-group">
+        <label for="fromAddress">Address from</label> <BR>
+        <input type="text" name="fromAddress" id="fromAddress" value="<%=(order==null)? "" : order.getFromAdress()%>" class="form-control" placeholder="Ride from address" required autofocus>
+    </div>
+
+    <div class="form-group">
+        <label for="toAddress">Address to</label>  <BR>
+        <input type="text" name="toAddress" id="toAddress" value="<%=(order==null)? "" : order.getToAdress()%>" class="form-control" placeholder="Ride to address" required>
+    </div>
 
     <div id="orderedDateTime" class="input-append date">
-        <label for="orderedDateTimeInput">Date and time of ride:</label>
+        <label for="orderedDateTimeInput">Date and time of ride:</label> <BR>
         <input type="text" value="<%= (order==null)? new Timestamp(new java.util.Date().getTime()) : order.getOrderedDateTime()%>" name="orderedDateTime" id="orderedDateTimeInput" required>
             <span class="add-on">
                 <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
             </span>
     </div>
+
     <script type="text/javascript">
         $('#orderedDateTime').datetimepicker({
             format: 'yyyy-MM-dd hh:mm:ss',
@@ -112,11 +124,17 @@
         });
     </script>
 
-    <label for="distance" class="sr-only">Distance (km): </label>
-    <input input type="text" value="<%= (order==null)? 0.00 : order.getDistance()%>" name="distance" id="distance" class="form-control" placeholder="Distance" readonly>
+    <BR>
 
-    <label for="price" class="sr-only">Price of ride (EUR): </label>
-    <input input type="text" value="<%= (order==null)? 0.00 : order.getPrice()%>" name="price" id="price" class="form-control" placeholder="Price" readonly>
+    <div class="form-group">
+        <label for="distance">Distance (km): </label>
+        <input type="text" value="<%= (order==null)? 0.00 : order.getDistance()%>" name="distance" id="distance" class="form-control" placeholder="Distance" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Price of ride (EUR): </label>
+        <input type="text" value="<%= (order==null)? 0.00 : order.getPrice()%>" name="price" id="price" class="form-control" placeholder="Price" readonly>
+    </div>
 
     <input type='hidden' name='returnPage' value="/customer/CustomerNewOrder.jsp">
 
@@ -130,13 +148,13 @@
         }
     </script>
 
+    <BR>
+
+    <h3><%= (model != null) ? model.getMessage() : "" %></h3>
+
 </form>
 
-</div> <!-- /container -->
-
-<BR>
-
-<h3><%= (model != null) ? model.getMessage() : "" %></h3>
+</div>
 
 
 <!-- Bootstrap core JavaScript

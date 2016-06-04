@@ -6,10 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,14 +14,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="staticRes/favicon.ico">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 
-    <title>eTaxi - customer</title>
+    <title>eTaxi (new order)</title>
 
     <!-- Bootstrap core CSS -->
     <link href="staticRes/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="staticRes/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="staticRes/style.css" rel="stylesheet">
@@ -41,6 +40,22 @@
     <![endif]-->
 </head>
 
+<body>
+
+
+<script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+<script type="text/javascript"
+        src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+</script>
+<script type="text/javascript"
+        src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+</script>
+<script type="text/javascript"
+        src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+</script>
+
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -52,15 +67,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/customer"> Main menu </a>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer/signOut">Sing out</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer"> Main menu </a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
 
 
-<h1>Edit order</h1>
-
-<div class="container">
+<div align="left" class="container">
     <form class="form-signin" action="/customer/writeFeedbackToOrder" method="POST">
 
         <%
@@ -72,10 +92,10 @@
             }
         %>
 
-        <h2 class="form-signin-heading">Please, <%=customer.getName()%> write feedback to order ID: <%=order.getOrderId()%></h2>
+        <h2 class="form-signin-heading">Please, <%=customer.getName()%> write feedback to your order (ID: <%=order.getOrderId()%>)</h2>
         <h3 class="form-signin-heading">From address: <%=order.getFromAdress()%> </h3>
         <h3 class="form-signin-heading">To address: <%=order.getToAdress()%> </h3>
-        <h3 class="form-signin-heading">Date&Time of ride: <%=order.getOrderedDateTime()%></h3>
+        <h3 class="form-signin-heading">Date and time of ride: <%=order.getOrderedDateTime()%></h3>
         <h3 class="form-signin-heading">Distance (km): <%=order.getDistance()%></h3>
         <h3 class="form-signin-heading">Price of ride (EUR): <%=order.getPrice()%></h3>
 
@@ -84,12 +104,13 @@
 
         <input type="hidden" name="orderId" value="<%=order.getOrderId()%>"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Send feedback</button>
+
+        <BR>
+
+        <h3><%= (model != null) ? model.getMessage() : "" %></h3>
+
     </form>
-</div> <!-- /container -->
-
-<BR>
-
-<h3> <%= (model !=null) ? model.getMessage() : "" %> </h3>
+</div>
 
 
 <!-- Bootstrap core JavaScript

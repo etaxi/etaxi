@@ -69,7 +69,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/customer"> Main menu </a>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer/signOut">Sing out</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/customer"> Main menu </a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
@@ -77,12 +84,15 @@
 <BR>
 
 <%  CustomerDTO customer = (CustomerDTO) session.getAttribute("customerDTO"); %>
-<div><h3><%=customer.getName()%>, you can write feedbacks to completed orders by period:</h3></div>
+
+<div>
 
 <form class="form-signin" action='/customer/customerWriteFeedbacksToOrders' method="POST">
 
+    <h3><%=customer.getName()%>, you can write feedbacks to completed orders by period:</h3>
+
     <div id="orderedDateTimeBegin" class="input-append date">
-        <label for="orderedDateTimeBeginInput"> Period from: </label>
+        <label for="orderedDateTimeBeginInput"> Period from: </label> <BR>
         <input type="text"
                value="<%= new Timestamp(new java.util.Date(System.currentTimeMillis() - 2628000000l).getTime())%>"
                name="orderedDateTimeBegin" id="orderedDateTimeBeginInput"
@@ -100,7 +110,7 @@
 
 
     <div id="orderedDateTimeEnd" class="input-append date">
-        <label for="orderedDateTimeEndInput"> to: </label>
+        <label for="orderedDateTimeEndInput"> Period to: </label> <BR>
         <input type="text"
                value="<%= new Timestamp(new java.util.Date(System.currentTimeMillis() + 2628000000l).getTime())%>"
                name="orderedDateTimeEnd" id="orderedDateTimeEndInput"
@@ -118,7 +128,7 @@
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Show orders by period</button>
 </form>
-
+</div>
 
 <div align="left">
 
@@ -176,10 +186,10 @@
             </td>
             <td>
                 <form action='/customer/writeFeedbackToOrder' method='get'>
-                <input type='hidden' name='orderId' value="<%=order.getOrderId()%>">
-                <input type='submit' value='Write feedback'/></form>
+                    <input type='hidden' name='orderId' value="<%=order.getOrderId()%>">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Write feedback</button>
+                </form>
             </td>
-
         </tr>
 
         <%
@@ -187,19 +197,19 @@
         %>
 
     </table>
-</div>
 
-<BR>
+    <BR>
+    <BR>
 
-<div align="left">
-<%
-   if (request.getAttribute("model") != null) {
-       MVCModel model = (MVCModel) request.getAttribute("model");
-%>
-<h4> <%=model.getMessage()%> </h4>
-<%
-   }
-%>
+    <form>
+        <%  if (request.getAttribute("model") != null) {
+            MVCModel model = (MVCModel) request.getAttribute("model");
+        %>
+        <h4> <%=model.getMessage()%> </h4>
+        <%
+            }
+        %>
+    </form>
 </div>
 
 <!-- Bootstrap core JavaScript

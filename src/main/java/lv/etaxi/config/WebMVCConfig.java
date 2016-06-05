@@ -32,6 +32,9 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/customer/staticRes/**")
                 .addResourceLocations("/customer/staticRes/");
 
+        registry.addResourceHandler("/taxi/staticRes/**")
+                .addResourceLocations("/taxi/staticRes/");
+
         registry.addResourceHandler("/staticRes/**")
                 .addResourceLocations("/staticRes/");
 

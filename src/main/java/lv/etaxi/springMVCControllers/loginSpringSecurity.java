@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class LoginSpringSecurity {
+class LoginSpringSecurity {
 
     @RequestMapping(value = "/loginSpringSecurity", method = {RequestMethod.GET})
     public ModelAndView processRequest(HttpServletRequest request) {

@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/customer/customerRegistration").permitAll()
                 .antMatchers("/","/customer/staticRes/**").permitAll()
                 .antMatchers("/","/taxi/registration").permitAll()
+                .antMatchers("/","/taxi/staticRes/**").permitAll()
                 .antMatchers("/","/admin/adminRegistration").permitAll()
                 .antMatchers("/staticRes/**").permitAll()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")

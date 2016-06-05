@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+import java.util.List;
 
 /** Проект etaxi
  * Класс для реализации функций над списком такси
@@ -46,6 +47,12 @@ public class TaxiManagerImpl implements TaxiManager {
     public Taxi findByLogin(String login) throws SQLException {
 
         return taxiDAO.getByLogin(login);
+    }
+
+    @Transactional
+    public List<Taxi> getAllTaxis() throws SQLException {
+
+        return taxiDAO.getAll();
     }
 }
 

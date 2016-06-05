@@ -38,7 +38,7 @@ public class TaxiMenuControllerSpringMVC {
 
         if (currentTaxi != null) {
             TaxiDTO currentTaxiDTO = convertorDTO.convertTaxiToDTO(currentTaxi);
-            request.getSession().setAttribute("taxiDTO", currentTaxiDTO);
+            request.getSession().setAttribute("taxi", currentTaxiDTO);
         }
 
         ModelAndView modelAndView = new ModelAndView("/taxi/TaxiMenu", "model", null);

@@ -1,9 +1,9 @@
 package lv.etaxi.business;
 
-import lv.etaxi.dao.DBException;
 import lv.etaxi.entity.Taxi;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * C/** Проект etaxi
@@ -20,4 +20,6 @@ public interface TaxiManager {
     Taxi findById(long Id) throws SQLException;
 
     Taxi findByLogin(String login) throws SQLException;
+
+    List<Taxi> getAllTaxis() throws SQLException;
 }

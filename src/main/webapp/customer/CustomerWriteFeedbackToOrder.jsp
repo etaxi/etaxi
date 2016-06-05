@@ -93,13 +93,31 @@
         %>
 
         <h2 class="form-signin-heading">Please, <%=customer.getName()%> write feedback to your order (ID: <%=order.getOrderId()%>)</h2>
-        <h3 class="form-signin-heading">From address: <%=order.getFromAdress()%> </h3>
-        <h3 class="form-signin-heading">To address: <%=order.getToAdress()%> </h3>
-        <h3 class="form-signin-heading">Date and time of ride: <%=order.getOrderedDateTime()%></h3>
-        <h3 class="form-signin-heading">Distance (km): <%=order.getDistance()%></h3>
-        <h3 class="form-signin-heading">Price of ride (EUR): <%=order.getPrice()%></h3>
 
-        <label for="feedback" class="sr-only">Feedback</label>
+        <label for="fromAddress">Address from</label> <BR>
+        <input type="text" name="fromAddress" value="<%=order.getFromAdress()%>" id="fromAddress" class="form-control"
+               placeholder="Ride from address" readonly>
+
+        <label for="toAddress">Address to</label> <BR>
+        <input type="text" name="toAddress" value="<%=order.getToAdress()%>" id="toAddress" class="form-control"
+               placeholder="Ride to address" readonly>
+
+        <div id="orderedDateTime" class="input-append date">
+            <label for="orderedDateTimeInput">Date and time of ride:</label> <BR>
+            <input type="text" value="<%=order.getOrderedDateTime()%>" name="orderedDateTime" id="orderedDateTimeInput"
+                   readonly>
+            <span class="add-on">
+                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+            </span>
+        </div>
+
+        <label for="distance">Distance (km): </label> <BR>
+        <input input type="text" value="<%= (order==null)? 0.00 : order.getDistance()%>" name="distance" id="distance" class="form-control" placeholder="Distance" readonly>
+
+        <label for="price">Price of ride (EUR): </label> <BR>
+        <input input type="text" value="<%= (order==null)? 0.00 : order.getPrice()%>" name="price" id="price" class="form-control" placeholder="Price" readonly>
+
+        <label for="feedback">Feedback</label>
         <input type="text" name="feedback" id="feedback" value="<%=order.getFeedback()%>" class="form-control" placeholder="Feedback" required>
 
         <input type="hidden" name="orderId" value="<%=order.getOrderId()%>"/>

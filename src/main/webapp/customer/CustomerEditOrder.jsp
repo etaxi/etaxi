@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" media="screen"
           href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 
+    <link href="staticRes/menustyle.css" rel="stylesheet" type="text/css">
+
     <title>eTaxi (new order)</title>
 
     <!-- Bootstrap core CSS -->

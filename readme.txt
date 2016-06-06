@@ -135,3 +135,5 @@ Administrator
 19. GenericDAO    http://stackoverflow.com/questions/9954761/dao-design-pattern
 
 20. SQL Foren Key   http://denis.in.ua/foreign-keys-in-mysql.htm
+
+21. создание одностраничных веб-приложений  (Spring MVC и AngularJs)  https://habrahabr.ru/company/piter/blog/269217/

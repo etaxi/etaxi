@@ -1,11 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>JSP page</title>
+    <title>Registration</title>
 </head>
 <body>
 
 <jsp:include page="/taxi/TaxiMenu.jsp" />
+<div class="container">
 
 <h1>New taxi registration</h1>
 
@@ -40,6 +41,6 @@
 
 <%}
 %>
-
+</div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <%@ include file="/taxi/staticRes/head.html" %>
 </head>
 <body>
 
@@ -11,8 +11,6 @@
     TaxiDTO taxiDTO = (TaxiDTO) session.getAttribute("taxi");
     if (taxiDTO != null) {  %>
         <div id="menu"> <jsp:include page="/taxi/TaxiMenuAuthorized.jsp" /> </div>>
-<%--        <div><b>Hello, <%=taxiDTO.getName()%>   <%=taxiDTO.getCar()%>!</b></div>
-        <div><a href="/taxi/logoff">Exit</a></div>--%>
     <%}
     else {%>
         <div id="menu"> <jsp:include page="/taxi/TaxiMenuNotAuthorized.jsp" /> </div>
@@ -28,5 +26,6 @@
 <%}
 %>
 
+<%@ include file="/taxi/staticRes/coreJavaScript.html" %>
 </body>
 </html>

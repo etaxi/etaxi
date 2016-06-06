@@ -10,16 +10,17 @@
 
 <jsp:include page="/taxi/TaxiMenu.jsp" />
 
-<h1>View all open orders</h1>
+<div class="container">
 
-<form name="orderId" action="/taxi/takeorder" method="post">
-        Order ID: <input type="text" name="orderId" /> <br/>
-        <input type="submit" value="Take order" />
-</form>
+    <h1>View all open orders</h1>
 
-<div align="center">
+    <form name="orderId" action="/taxi/takeorder" method="post">
+            Order ID: <input type="text" name="orderId" /> <br/>
+            <input type="submit" value="Take order" />
+    </form>
 
-    <table align="center" border="1" width="950">
+
+    <table class="table">
         <tr>
             <td width="50"><b>Id</b></td>
             <td width="50"><b>Customer ID</b></td>
@@ -72,7 +73,6 @@
 
     </table>
 </div>
-
 
 </body>
 </html>

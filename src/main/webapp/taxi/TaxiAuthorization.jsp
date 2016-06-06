@@ -1,14 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>JSP page</title>
+    <title>Taxi authorization</title>
 </head>
 <body>
 
 <jsp:include page="/taxi/TaxiMenu.jsp" />
 
-<h1>Taxi authorization</h1>
 <div class="container">
+<h1>Taxi authorization</h1>
     <form class="form-signin" action="/taxi/authorization" method="POST">
         <h2 class="form-signin-heading">Dear taxi driver, please sign in</h2>
         <label for="inputEmail" class="sr-only">Phone</label>

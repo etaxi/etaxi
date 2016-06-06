@@ -4,9 +4,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>edit profile</title>
 </head>
 <body>
+
+<div class="container">
 
 <jsp:include page="/taxi/TaxiMenu.jsp" />
 
@@ -39,7 +41,7 @@
 
     <h3><%=request.getAttribute("message")%></h3>
 </form>
-
+</div>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>history</title>
 </head>
 <body>
 
@@ -12,9 +12,9 @@
 
 <h1>View the history of your completed orders</h1>
 
-<div align="center">
+<div class="container">
 
-    <table align="center" border="1" width="950">
+    <table class="table">
         <tr>
             <td width="50"><b>Id</b></td>
             <td width="50"><b>Customer ID</b></td>

@@ -137,3 +137,5 @@ Administrator
 20. SQL Foren Key   http://denis.in.ua/foreign-keys-in-mysql.htm
 
 21. создание одностраничных веб-приложений  (Spring MVC и AngularJs)  https://habrahabr.ru/company/piter/blog/269217/
+
+22. сравнение Angular и React   https://habrahabr.ru/post/274523/

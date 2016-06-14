@@ -139,3 +139,5 @@ Administrator
 21. создание одностраничных веб-приложений  (Spring MVC и AngularJs)  https://habrahabr.ru/company/piter/blog/269217/
 
 22. сравнение Angular и React   https://habrahabr.ru/post/274523/
+
+23. Spring Boot   + REST     https://spring.io/guides/gs/rest-service/

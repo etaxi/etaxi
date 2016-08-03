@@ -141,3 +141,5 @@ Administrator
 22. сравнение Angular и React   https://habrahabr.ru/post/274523/
 
 23. Spring Boot   + REST     https://spring.io/guides/gs/rest-service/
+
+24. Структура приложений   http://javatalks.ru/topics/16739?page=1#80068
